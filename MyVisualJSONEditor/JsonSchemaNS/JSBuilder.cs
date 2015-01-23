@@ -41,6 +41,23 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                     }
                     break;  
                 case(JSchemaType.Array):
+
+                    JToken widgetExt = sh.ExtensionData.FirstOrDefault(x => x.Key == "widget").Value;
+                    if (widgetExt != null)
+                    {
+                        switch (widgetExt.ToString())
+                        {
+                            case("combobox"):
+                                ComboBox combo = new ComboBox();
+                                //@todo
+                                CreateBinding(combo, ComboBox.ItemsSourceProperty, "Posts", DataContext);
+                                CreateBinding(combo, ComboBox.SelectedItemProperty, "SelectedPost", DataContext);
+                                combo.DisplayMemberPath = "PostName";
+                                control.Items.Add( WrapWithLabel(combo, sh.Title));
+                                return;
+                        }
+                    }
+
                     DockPanel dock = new DockPanel() { LastChildFill = true };
                     ItemsControl itemsControl = new ItemsControl();
                     Grid grid = new Grid();
@@ -63,12 +80,15 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                     dock.Children.Add(itemsControl);
                     control.Items.Add(dock);
                     JSchema oneSchema =  sh.Items.First();
-                    foreach(JToken item in data.ToList())
+                    if (data != null)
                     {
-                        ItemsControl inner = new ItemsControl();
-                        var wrap = WrapListItem(inner);
-                        itemsControl.Items.Add(wrap);
-                        Build(inner, oneSchema, item, DataContext); //@todo  here i use of one First() Schema
+                        foreach (JToken item in data.ToList())
+                        {
+                            ItemsControl inner = new ItemsControl();
+                            var wrap = WrapListItem(inner);
+                            itemsControl.Items.Add(wrap);
+                            Build(inner, oneSchema, item, DataContext); //@todo  here i use of one First() Schema
+                        }
                     }
                     return;
                 case(JSchemaType.Integer):
@@ -105,7 +125,31 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                     TextBox tb = new TextBox();
                     tb.MaxLength = (int?)sh.MaximumLength ?? int.MaxValue;
                     tb.IsReadOnly = sh.IsReadonly();
-                    tb.SetBinding(TextBox.TextProperty, CreateBinding(data, DataContext));
+                    MultiBinding mBinding = new MultiBinding();
+                    mBinding.Converter = new MultiConverter();
+                    Binding oBinding = CreateBinding(data, DataContext);
+                    mBinding.Bindings.Add(oBinding);
+                    Binding tBinding = GetBinding(sh, DataContext);
+                    if (tBinding != null)
+                    {
+                        mBinding.Bindings.Add(tBinding);
+                    }
+                    mBinding.Mode = BindingMode.TwoWay;
+                    mBinding.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
+                    mBinding.NotifyOnTargetUpdated = true;
+                    mBinding.NotifyOnSourceUpdated = true;
+                    tb.SetBinding(TextBox.TextProperty, mBinding);
+                    tb.TargetUpdated += (se, ar) => {
+                        MultiBindingExpression b = BindingOperations.GetMultiBindingExpression(se as TextBox, TextBox.TextProperty);
+                        if (b != null)
+                        {
+                            b.BindingExpressions.First().UpdateSource();
+                            b.UpdateSource();
+                        }
+                    };
+                    tb.SourceUpdated += (se2, ar2) => {
+                        return;
+                    };
                     //
                     tb.KeyUp += (s, args) => {
                         TextBox textBox = s as TextBox;
@@ -156,13 +200,33 @@ namespace MyVisualJSONEditor.JsonSchemaNS
             }
         }
 
+        public class MultiConverter : IMultiValueConverter
+        {
+            public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+            {
+                if (values.Count() > 1 && values[1] != null)
+                    return values[1];
+                return values[0];
+            }
+
+            public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+            {
+                int sourcesNum = targetTypes.Count();
+                object[] values = new object[sourcesNum];
+                for (int i = 0; i < sourcesNum; i++)
+                    values[i] = value;
+                return values;
+            }
+        }
+
         private static Binding CreateBinding(JToken data, object DataContext)
         {
             Binding binding = new Binding();
             binding.Source = DataContext;
             binding.Path = new PropertyPath(string.Format("[{0}]", data.Path));
             binding.Mode = BindingMode.TwoWay;
-            binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            binding.NotifyOnTargetUpdated = true;
+            binding.NotifyOnSourceUpdated = true;
             return binding;
         }
 
@@ -213,10 +277,22 @@ namespace MyVisualJSONEditor.JsonSchemaNS
             {
                 string path = bindingExt.SelectToken("path").ToString();
                 binding = new Binding(path);
-                binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                JToken mode = bindingExt.SelectToken("mode");
+                if (mode != null)
+                {
+                    binding.Mode = (BindingMode)Enum.Parse(typeof(BindingMode), mode.ToString(), true);
+                }
                 binding.Source = DataContext;
             }
             return binding;
+        }
+
+        private static void CreateBinding(FrameworkElement el, DependencyProperty dp, string path, object DataContext)
+        {
+            Binding binding = new Binding(path);
+            binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            binding.Source = DataContext;
+            el.SetBinding(dp, binding);
         }
 
     }

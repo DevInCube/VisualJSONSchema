@@ -43,11 +43,38 @@
 				},
 				"PostName": {
 					"title" : "Post name",
-					"type": "string"
+					"type": "string",
+					"binding" : {
+						"path" : "SelectedPost.PostName",
+						"mode" : "TwoWay"
+					}
 				},
 				"Post": {
 					"title" : "Post",
-					"type": "string"
+					"type": "string",
+					"readonly" : true
+				},
+				"PostList" : {
+					"title" : "Posts",
+					"type" : "array",
+					"widget" :"combobox",
+					"items" : {
+						
+						"title" : "item",
+						"type" : "object",
+
+						"properties" : 
+						{
+							"PostName" : {
+								"type" : "string"
+							},
+							"PostId" : {
+								"type" : "string"
+							}
+						},
+						"required" : [ "PostName", "PostId" ],
+						"additionalProperties": false,
+					}
 				}
 			},
 

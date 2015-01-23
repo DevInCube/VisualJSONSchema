@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -94,7 +95,10 @@ namespace MyVisualJSONEditor.ViewModels
             get
             {
                 if (JObject != null)
-                    return JObject.SelectToken(key);
+                {
+                    object val = JObject.SelectToken(key).ToObject<object>();
+                    return val;
+                }
                 return null;
             }
             set
@@ -115,8 +119,30 @@ namespace MyVisualJSONEditor.ViewModels
             }
         }
 
+
+        public class Post
+        {
+            public string PostId { get; set; }
+            public string PostName { get; set; }
+        }
+        private Post _SelectedPost;
+        public ObservableCollection<Post> Posts { get; private set; }
+        public Post SelectedPost
+        {
+            get { return _SelectedPost; }
+            set
+            {
+                _SelectedPost = value;
+                OnPropertyChanged("SelectedPost");
+            }
+        }
+
         public MainWindowVM()
         {
+            Posts = new ObservableCollection<Post>();
+            Posts.Add(new Post() { PostName = "Post1", PostId = "1"});
+            Posts.Add(new Post() { PostName = "Post12", PostId = "12" });
+            Posts.Add(new Post() { PostName = "Post123", PostId = "123" });
             this.PropertyChanged += MainWindowVM_PropertyChanged;
             Control = new ItemsControl();
             Schema = MyVisualJSONEditor.Properties.Resources.Schema;

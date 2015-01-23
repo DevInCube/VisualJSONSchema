@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:MyVisualJSONEditor.ViewModels"
         xmlns:conv="clr-namespace:MyVisualJSONEditor.Views.Converters"
-        xmlns:fctb="clr-namespace:FastColoredTextBoxNS;assembly=FastColoredTextBox"
         Title="{Binding DbHost}" Height="600" Width="1000">
     <Window.DataContext>
         <vm:MainWindowVM/>
