@@ -1,0 +1,49 @@
+{
+	"Store":
+	{
+		"ParamSet":
+		{
+			"DbHost":"127.0.0.1",
+			"DbPort": 5432,
+			"DbName":"autocode",
+			"DbUser":"autocode",
+			"DbPass": "autocode",
+			"PostName":"EdgeServer",
+			"Post":"69e86fa7-e1ad-4e68-96b7-b910f40bdb49"
+		}
+	},
+
+	"SocketApi": 
+	{
+		"ParamSet": 
+		{
+			"Host": "127.0.0.1",
+			"Port": 14
+		}
+	},
+	 "FileApi":
+	 {
+	   "AddFactReact":
+	   [
+		 {
+		   "ParamSet":
+		   {
+			 "Channel":0,
+			 "Prefix":"",
+			 "Suffix":"",
+			 "Dir":"/tmp/edge/event_store/store/0"
+		   }
+		 },
+		 {
+		   "ParamSet":
+		   {
+			 "Channel":1,
+			 "Prefix":"",
+			 "Suffix":"",
+			 "Dir":"/etc/edge/event_store/store/1"
+		   }
+		 }
+	   ]
+	 }
+
+ }

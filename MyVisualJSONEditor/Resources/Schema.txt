@@ -1,0 +1,201 @@
+
+ {
+	"id" : "http://vit.com.ua/edgeserver/eventstore#",
+	"$schema": "http://json-schema.org/draft-04/schema#",
+
+	"title" : "EventStore main.xconf",
+	"type" : "object",
+
+	"definitions" : {
+
+		"DbStore.ParamSet" : {
+
+			"type" : "object",
+
+			"properties": {
+					
+				"DbHost": {
+					"title" : "Host",
+					"type": "string",
+					"format": "ipv4",
+					"default": "127.0.0.1",
+					"binding" : {
+						"path" : "DbHost"
+					}
+				},
+				"DbPort": {
+					"title" : "Port",
+					"type": "integer",
+					"minimum": 0,
+					"default": 5432
+				},
+				"DbName": {
+					"title" : "Database name",
+					"type": "string"
+				},
+				"DbUser": {
+					"title" : "User",
+					"type": "string"
+				},
+				"DbPass": {
+					"title" : "Password",
+					"type": "string"
+				},
+				"PostName": {
+					"title" : "Post name",
+					"type": "string"
+				},
+				"Post": {
+					"title" : "Post",
+					"type": "string"
+				}
+			},
+
+			"required" : [ "DbHost", "DbPort", "DbName", "DbUser", "DbPass", "PostName", "Post" ],
+			"additionalProperties": false,
+		},
+
+		"SocketApiImpl.ParamSet" : 
+		{
+			"type" : "object",
+
+			"properties" : {
+
+				"Host": {
+					"title" : "Host",
+					"type": "string",
+					"format": "ipv4",
+					"default": "127.0.0.1",
+					"binding" : {
+						"path" : "Host"
+					}
+				},
+				"Port": {
+					"title" : "Port",
+					"type": "integer",
+					"minimum": 0,
+					"default": 14
+				},
+			},
+			
+			"required" : [ "Host", "Port" ],
+			"additionalProperties": false,
+		},
+
+		"FileApiItem.ParamSet":
+		{
+			"type" : "object",
+
+			"properties" : 
+			{
+				"Channel": {
+					"type": "integer"
+				},
+				"Prefix": {
+					"type": "string"
+				},
+				"Suffix": {
+					"type": "string"
+				},
+				"Dir": {
+					"type": "string"
+				},
+			},
+
+			"required" : [ "Channel", "Prefix", "Suffix", "Dir" ],
+			"additionalProperties": false,
+		}
+	},
+	
+	"properties" : {
+
+		"Store": {
+
+			"id" : "#Store",
+			"title" : "Store",
+			"type" : "object",
+
+			"properties" : { 
+
+				"ParamSet" :  {
+
+					"type": "object",
+					"oneOf": [
+						{ "$ref": "#/definitions/DbStore.ParamSet" }
+					]
+
+				},
+			},
+
+			"required" : [ "ParamSet" ],
+			"additionalProperties": false,
+		},
+
+		"SocketApi": {
+				
+			"title" : "SocketApi",
+			"type" : "object",
+
+			"properties" : {
+
+				"ParamSet": {
+			
+					"type": "object",
+					"oneOf": [
+						{ "$ref": "#/definitions/SocketApiImpl.ParamSet" }
+					]
+				}
+			},
+
+			"required" : [ "ParamSet" ],
+			"additionalProperties": false,
+		},
+
+		"FileApi":
+		{
+			"title" : "SocketApi",
+			"type" : "object",
+
+			"properties" : {
+
+				"AddFactReact":
+				{
+					"type" : "array",
+					"items" : {
+						
+						"title" : "item",
+						"type" : "object",
+
+						"properties" : 
+						{
+							"ParamSet":
+							{
+								"type": "object",
+								"oneOf": [
+									{ "$ref": "#/definitions/FileApiItem.ParamSet" }
+								]
+							}
+						},
+						"required" : [ "ParamSet" ],
+						"additionalProperties": false,
+					},
+					"default" : {
+						"ParamSet":
+						{
+							"Channel": 0,
+							"Prefix": "",
+							"Suffix": "",
+							"Dir": "/tmp/edge/event_store/store/0"
+						}
+					}
+				},
+			},
+
+			"required" : [ "AddFactReact" ],
+			"additionalProperties": false,
+		}
+	},
+
+	"required" : [ "Store", "SocketApi", "FileApi" ],
+	"additionalProperties": false,
+}
