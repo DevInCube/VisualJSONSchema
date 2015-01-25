@@ -14,7 +14,7 @@ using System.Windows.Media;
 
 namespace MyVisualJSONEditor.ViewModels
 {
-    public class MainWindowVM : ObservableObject
+    public class MainWindowVM : JsonDataVM
     {
 
         private string _Schema, _Data, _SchemaError, _DataError;
@@ -88,37 +88,7 @@ namespace MyVisualJSONEditor.ViewModels
             get { return _IsValid ? Brushes.Beige : Brushes.Bisque; }
         }
 
-        public JObject JObject { get; set; }
-
-        public object this[string key]
-        {
-            get
-            {
-                if (JObject != null)
-                {
-                    object val = JObject.SelectToken(key).ToObject<object>();
-                    return val;
-                }
-                return null;
-            }
-            set
-            {
-                if (JObject != null)
-                {
-                    JToken token = JObject.SelectToken(key);
-                    if (token != null)
-                    {
-                        JProperty property = token.Parent as JProperty;
-                        if (property != null)
-                        {
-                            property.Value = new JValue(value);
-                            OnPropertyChanged(key);
-                        }
-                    }
-                }
-            }
-        }
-
+        
 
         public class Post
         {
@@ -133,6 +103,8 @@ namespace MyVisualJSONEditor.ViewModels
             set
             {
                 _SelectedPost = value;
+                if (_SelectedPost != null)
+                    this["Store.ParamSet.PostName"] = _SelectedPost.PostName;
                 OnPropertyChanged("SelectedPost");
             }
         }
@@ -147,6 +119,8 @@ namespace MyVisualJSONEditor.ViewModels
             Control = new ItemsControl();
             Schema = MyVisualJSONEditor.Properties.Resources.Schema;
             Data = MyVisualJSONEditor.Properties.Resources.Data;
+            this["Store.ParamSet.PostName"] = "test";
+            OnPropertyChanged("[Store.ParamSet.PostName]");
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -173,7 +147,7 @@ namespace MyVisualJSONEditor.ViewModels
                     try
                     {
                         jdata = JObject.Parse(Data);
-                        JObject = jdata;
+                        JsonData = jdata;
                         dData = JsonConvert.DeserializeObject(Data);
                     }
                     catch (Exception ex)
@@ -181,7 +155,7 @@ namespace MyVisualJSONEditor.ViewModels
                         DataError = ex.Message;
                         return;
                     }
-                    JSBuilder.Build(Control, jschema, dData, this);
+                    JSBuilder.Build(Control, "", jschema , this);
                     bool isValid = jdata.IsValid(jschema);
                     _IsValid = isValid;
                     OnPropertyChanged("DataStatusColor");

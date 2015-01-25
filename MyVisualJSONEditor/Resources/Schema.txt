@@ -58,6 +58,14 @@
 					"title" : "Posts",
 					"type" : "array",
 					"widget" :"combobox",
+					"bindings" : {
+						"SelectedItem" : {
+							"path" : "SelectedPost"
+						},
+						"ItemsSource" : {
+							"path" : "Posts"
+						}
+					},
 					"items" : {
 						
 						"title" : "item",

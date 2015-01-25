@@ -79,6 +79,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="JsonSchemaNS\JSBuilder.cs" />
+    <Compile Include="ViewModels\JsonDataVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="Views\Converters\NullToVis.cs" />

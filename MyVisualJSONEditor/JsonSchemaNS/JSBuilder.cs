@@ -17,7 +17,7 @@ namespace MyVisualJSONEditor.JsonSchemaNS
     public static class JSBuilder
     {
 
-        public static void Build(ItemsControl control, JSchema sh, JToken data, object DataContext)
+        public static void Build(ItemsControl control, string key, JSchema sh, object DataContext)
         {
             ItemsControl innerControl = null;
             switch (sh.Type)
@@ -49,10 +49,27 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                         {
                             case("combobox"):
                                 ComboBox combo = new ComboBox();
-                                //@todo
-                                CreateBinding(combo, ComboBox.ItemsSourceProperty, "Posts", DataContext);
-                                CreateBinding(combo, ComboBox.SelectedItemProperty, "SelectedPost", DataContext);
-                                combo.DisplayMemberPath = "PostName";
+                                string path = key;
+                                string itemsSourcePath = String.Format("{0}.ItemsSource", path);
+                                string selectedItemPath = String.Format("{0}.SelectedItem", path);
+                                string displayMemberPath = "PostName";
+                                 JToken bindingExt = sh.ExtensionData.FirstOrDefault(x => x.Key == "bindings").Value;
+                                 if (bindingExt != null)
+                                 {
+                                     JToken selItemToken = bindingExt.SelectToken("SelectedItem");
+                                     if (selItemToken != null)
+                                     {
+                                         selectedItemPath = selItemToken.SelectToken("path").Value<string>();
+                                     }
+                                     JToken itemsSourceToken = bindingExt.SelectToken("ItemsSource");
+                                     if (itemsSourceToken != null)
+                                     {
+                                         itemsSourcePath = itemsSourceToken.SelectToken("path").Value<string>();
+                                     } 
+                                 }
+                                CreateBinding(combo, ComboBox.ItemsSourceProperty, itemsSourcePath, DataContext);
+                                CreateBinding(combo, ComboBox.SelectedItemProperty, selectedItemPath, DataContext);
+                                combo.DisplayMemberPath = displayMemberPath;
                                 control.Items.Add( WrapWithLabel(combo, sh.Title));
                                 return;
                         }
@@ -70,7 +87,7 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                     addButton.Click += (sen, args) => {
 
                         JToken newItem = sh.Default;
-                        data.ToList().Add(newItem);
+                       // data.ToList().Add(newItem);
                         //@todo create new instance
                         //@todo get default
                     };
@@ -80,7 +97,7 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                     dock.Children.Add(itemsControl);
                     control.Items.Add(dock);
                     JSchema oneSchema =  sh.Items.First();
-                    if (data != null)
+                    /*if (data != null)
                     {
                         foreach (JToken item in data.ToList())
                         {
@@ -89,13 +106,13 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                             itemsControl.Items.Add(wrap);
                             Build(inner, oneSchema, item, DataContext); //@todo  here i use of one First() Schema
                         }
-                    }
+                    }*/
                     return;
                 case(JSchemaType.Integer):
                     IntegerUpDown intUpDown = new IntegerUpDown();
-                    if (data != null)
-                        intUpDown.Value = int.Parse(data.ToString()); 
-                    else
+                   // if (data != null)
+                     //   intUpDown.Value = int.Parse(data.ToString()); 
+                    //else
                     {
                         if (sh.Default != null)
                             intUpDown.Value = int.Parse(sh.Default.ToString());
@@ -103,14 +120,14 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                     intUpDown.Maximum = (int?)sh.Maximum ?? int.MaxValue;
                     intUpDown.Minimum = (int?)sh.Minimum ?? int.MinValue;
                     intUpDown.IsReadOnly = sh.IsReadonly();
-                    intUpDown.SetBinding(IntegerUpDown.ValueProperty, CreateBinding(data, DataContext));
+                    //intUpDown.SetBinding(IntegerUpDown.ValueProperty, CreateBinding(data, DataContext));
                     control.Items.Add(WrapWithLabel(intUpDown, sh.Title));
                     break;
                 case(JSchemaType.Float):
                     DoubleUpDown dbUpDown = new DoubleUpDown();
-                    if (data != null)
-                        dbUpDown.Value = double.Parse(data.ToString()); 
-                    else
+                  //  if (data != null)
+                   //     dbUpDown.Value = double.Parse(data.ToString()); 
+                   // else
                     {
                         if (sh.Default != null)
                             dbUpDown.Value = double.Parse(sh.Default.ToString());
@@ -118,53 +135,17 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                     dbUpDown.Maximum = (double?)sh.Maximum ?? double.MaxValue;
                     dbUpDown.Minimum = (double?)sh.Minimum ?? double.MinValue;
                     dbUpDown.IsReadOnly = sh.IsReadonly();
-                    dbUpDown.SetBinding(DoubleUpDown.ValueProperty, CreateBinding(data, DataContext));
+                  //  dbUpDown.SetBinding(DoubleUpDown.ValueProperty, CreateBinding(data, DataContext));
                     control.Items.Add(WrapWithLabel(dbUpDown, sh.Title));
                     break;
                 case (JSchemaType.String):
                     TextBox tb = new TextBox();
                     tb.MaxLength = (int?)sh.MaximumLength ?? int.MaxValue;
                     tb.IsReadOnly = sh.IsReadonly();
-                    MultiBinding mBinding = new MultiBinding();
-                    mBinding.Converter = new MultiConverter();
-                    Binding oBinding = CreateBinding(data, DataContext);
-                    mBinding.Bindings.Add(oBinding);
-                    Binding tBinding = GetBinding(sh, DataContext);
-                    if (tBinding != null)
-                    {
-                        mBinding.Bindings.Add(tBinding);
-                    }
-                    mBinding.Mode = BindingMode.TwoWay;
-                    mBinding.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
-                    mBinding.NotifyOnTargetUpdated = true;
-                    mBinding.NotifyOnSourceUpdated = true;
-                    tb.SetBinding(TextBox.TextProperty, mBinding);
-                    tb.TargetUpdated += (se, ar) => {
-                        MultiBindingExpression b = BindingOperations.GetMultiBindingExpression(se as TextBox, TextBox.TextProperty);
-                        if (b != null)
-                        {
-                            b.BindingExpressions.First().UpdateSource();
-                            b.UpdateSource();
-                        }
-                    };
-                    tb.SourceUpdated += (se2, ar2) => {
-                        return;
-                    };
-                    //
-                    tb.KeyUp += (s, args) => {
-                        TextBox textBox = s as TextBox;
-                        JToken newData = JToken.FromObject(textBox.Text);
-                        bool isValid = newData.IsValid(sh);
-                        if (!isValid) textBox.Background = Brushes.Bisque;
-                        else textBox.Background = Brushes.White;
-                    };
-                    if (data != null)
-                        tb.Text = data.ToString();
-                    else
-                    {
-                        if (sh.Default != null)
-                            tb.Text = sh.Default.ToString();
-                    }                    
+                    string bPath = String.Format("_[{0}]", key);
+                    CreateBinding(tb, TextBox.TextProperty, bPath, DataContext);
+                    if (sh.Default != null)
+                        tb.Text = sh.Default.ToString();                
                     control.Items.Add(WrapWithLabel(tb, sh.Title));
                     break;
             }
@@ -175,11 +156,12 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                 {
                     foreach (var property in sh.Properties)
                     {
-                        string key = property.Key;
+                        string pk = property.Key;
                         JToken innerData = null;
-                        if (data != null)
-                            innerData = data.SelectToken(key);
-                        Build(innerControl, property.Value, innerData, DataContext); 
+                    //    if (data != null)
+                     //       innerData = data.SelectToken(key);
+                        string innerKey = key + (string.IsNullOrEmpty(key) ? "" : ".") + pk;
+                        Build(innerControl, innerKey, property.Value, DataContext);
                     }
                 }
                 else
@@ -189,7 +171,7 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                         if (sh.OneOf.Count == 1)
                         {
                             JSchema sh2 = sh.OneOf.First();
-                            Build(innerControl, sh2, data, DataContext); //@todo
+                            Build(innerControl, key, sh2, DataContext); //@todo
                         }
                         else
                         {
@@ -269,6 +251,23 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                 el.SetBinding(dp, binding);
         }
 
+        private static Binding GetBindingExtension(this JSchema sh)
+        {
+            Binding binding = null;
+            JToken bindingExt = sh.ExtensionData.FirstOrDefault(x => x.Key == "binding").Value;
+            if (bindingExt != null)
+            {
+                string path = bindingExt.SelectToken("path").ToString();
+                binding = new Binding(path);
+                JToken mode = bindingExt.SelectToken("mode");
+                if (mode != null)
+                {
+                    binding.Mode = (BindingMode)Enum.Parse(typeof(BindingMode), mode.ToString(), true);
+                }
+            }
+            return binding;
+        }
+
         private static Binding GetBinding(this JSchema sh, object DataContext)
         {
             Binding binding = null;
@@ -289,9 +288,12 @@ namespace MyVisualJSONEditor.JsonSchemaNS
 
         private static void CreateBinding(FrameworkElement el, DependencyProperty dp, string path, object DataContext)
         {
-            Binding binding = new Binding(path);
-            binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            Binding binding = new Binding();
+            binding.Path = new PropertyPath(path);
             binding.Source = DataContext;
+            binding.BindsDirectlyToSource = true;
+            binding.Mode = BindingMode.TwoWay;
+            binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             el.SetBinding(dp, binding);
         }
 
