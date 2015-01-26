@@ -1,0 +1,23 @@
+{
+    'title':'test',
+    'type':'object', 
+    'properties':{
+        'stringTest' : {
+            'type':'string'
+        },
+        'boolTest' : {
+            'type':'boolean'
+        },
+        'listTest' : {
+            'type' : 'array',
+            'items' : {
+                'type':'object',
+                'properties':{
+                    'ok':{
+                        'type':'integer'
+                    }
+                }
+            }
+        }
+    }
+}

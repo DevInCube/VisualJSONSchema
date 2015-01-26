@@ -59,7 +59,7 @@
         <Grid Height="Auto" Margin="10,5,5,5" Grid.Column="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <!--<ContentControl Content="{Binding Control}"/>-->
-                <views:JsonSchemaBuilder x:Name="builder"/>
+                <views:JsonSchemaBuilder x:Name="builder" Data="{Binding Data}"/>
             </ScrollViewer>
         </Grid>
     </Grid>

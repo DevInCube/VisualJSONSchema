@@ -1,4 +1,5 @@
 ﻿using MyVisualJSONEditor.JsonSchemaNS;
+using MyVisualJSONEditor.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -17,7 +18,8 @@ namespace MyVisualJSONEditor.ViewModels
     public class MainWindowVM : JsonDataVM
     {
 
-        private string _Schema, _Data, _SchemaError, _DataError;
+        private JObjectVM _Data;
+        private string _Schema, _SchemaError, _DataError;
         private string _DbHost;
         private bool _IsValid;
         private ItemsControl _Control;
@@ -33,6 +35,11 @@ namespace MyVisualJSONEditor.ViewModels
 
         }
 
+        public JObjectVM Data
+        {
+            get { return _Data;  }
+            set { _Data = value; OnPropertyChanged("Data"); }
+        }
 
         public string Schema {
             get { return _Schema; }
@@ -52,16 +59,7 @@ namespace MyVisualJSONEditor.ViewModels
             }
 
         }
-        public string Data
-        {
-            get { return _Data; }
-            set
-            {
-                _Data = value;
-                OnPropertyChanged("Data");
-            }
-
-        }
+     
         public string DataError
         {
             get { return _DataError; }
@@ -118,13 +116,15 @@ namespace MyVisualJSONEditor.ViewModels
             this.PropertyChanged += MainWindowVM_PropertyChanged;
             Control = new ItemsControl();
             Schema = MyVisualJSONEditor.Properties.Resources.Schema;
-            Data = MyVisualJSONEditor.Properties.Resources.Data;
+            //Data = MyVisualJSONEditor.Properties.Resources.Data;
+            var sh = JSchema.Parse(Resources.TestSchema);
+            Data = JObjectVM.FromSchema(sh);
             this["Store.ParamSet.PostName"] = "test";
             OnPropertyChanged("[Store.ParamSet.PostName]");
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
+        {/*
             switch (e.PropertyName)
             {
                 case("Schema"):
@@ -146,9 +146,9 @@ namespace MyVisualJSONEditor.ViewModels
                     dynamic dData = null;
                     try
                     {
-                        jdata = JObject.Parse(Data);
-                        JsonData = jdata;
-                        dData = JsonConvert.DeserializeObject(Data);
+                        //jdata = JObject.Parse(Data);
+                        //JsonData = jdata;
+                        //dData = JsonConvert.DeserializeObject(Data);
                     }
                     catch (Exception ex)
                     {
@@ -160,7 +160,7 @@ namespace MyVisualJSONEditor.ViewModels
                     _IsValid = isValid;
                     OnPropertyChanged("DataStatusColor");
                     break;
-            }
+            }*/
         }
 
     }

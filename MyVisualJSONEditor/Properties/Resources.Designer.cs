@@ -67,15 +67,34 @@ namespace MyVisualJSONEditor.Properties {
         ///		&quot;ParamSet&quot;:
         ///		{
         ///			&quot;DbHost&quot;:&quot;127.0.0.1&quot;,
-        ///			&quot;DbPort&quot;:5432,
+        ///			&quot;DbPort&quot;: 5432,
         ///			&quot;DbName&quot;:&quot;autocode&quot;,
         ///			&quot;DbUser&quot;:&quot;autocode&quot;,
-        ///			&quot;DbPass&quot;:&quot;autocode&quot;,
+        ///			&quot;DbPass&quot;: &quot;autocode&quot;,
         ///			&quot;PostName&quot;:&quot;EdgeServer&quot;,
         ///			&quot;Post&quot;:&quot;69e86fa7-e1ad-4e68-96b7-b910f40bdb49&quot;
         ///		}
-        ///	}
-        /// }.
+        ///	},
+        ///
+        ///	&quot;SocketApi&quot;: 
+        ///	{
+        ///		&quot;ParamSet&quot;: 
+        ///		{
+        ///			&quot;Host&quot;: &quot;127.0.0.1&quot;,
+        ///			&quot;Port&quot;: 14
+        ///		}
+        ///	},
+        ///	 &quot;FileApi&quot;:
+        ///	 {
+        ///	   &quot;AddFactReact&quot;:
+        ///	   [
+        ///		 {
+        ///		   &quot;ParamSet&quot;:
+        ///		   {
+        ///			 &quot;Channel&quot;:0,
+        ///			 &quot;Prefix&quot;:&quot;&quot;,
+        ///			 &quot;Suffix&quot;:&quot;&quot;,
+        ///			 &quot;Dir&quot;:&quot;/tmp/edge/event_store/stor [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Data {
             get {
@@ -84,34 +103,69 @@ namespace MyVisualJSONEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {
+        ///   Looks up a localized string similar to 
+        /// {
         ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/eventstore#&quot;,
         ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
-        ///	
+        ///
+        ///	&quot;title&quot; : &quot;EventStore main.xconf&quot;,
+        ///	&quot;type&quot; : &quot;object&quot;,
+        ///
         ///	&quot;definitions&quot; : {
-        ///		&quot;Store&quot;: {
-        ///			&quot;properties&quot; : { }
-        ///		},
-        ///		&quot;DbStore&quot;: {
-        ///			&quot;extends&quot; : {	
-        ///				&quot;$ref&quot; : &quot;#/definitions/Store&quot;
-        ///			},
-        ///			&quot;properties&quot; : { 
-        ///				&quot;ParamSet&quot; : {
-        ///					&quot;properties&quot;: {
+        ///
+        ///		&quot;DbStore.ParamSet&quot; : {
+        ///
+        ///			&quot;type&quot; : &quot;object&quot;,
+        ///
+        ///			&quot;properties&quot;: {
         ///					
-        ///						&quot;DbHost&quot;: {
-        ///							&quot;type&quot;: &quot;string&quot;,
-        ///							&quot;oneOf&quot;: [
-        ///								{ &quot;format&quot;: &quot;host-name&quot; },
-        ///								{ &quot;format&quot;: &quot;ipv4&quot; },
-        ///								{ &quot;format&quot;: &quot;ipv6&quot; }
-        ///							],
-        ///							&quot;defau [rest of string was truncated]&quot;;.
+        ///				&quot;DbHost&quot;: {
+        ///					&quot;title&quot; : &quot;Host&quot;,
+        ///					&quot;type&quot;: &quot;string&quot;,
+        ///					&quot;format&quot;: &quot;ipv4&quot;,
+        ///					&quot;default&quot;: &quot;127.0.0.1&quot;,
+        ///					&quot;binding&quot; : {
+        ///						&quot;path&quot; : &quot;DbHost&quot;
+        ///					}
+        ///				},
+        ///				&quot;DbPort&quot;: {
+        ///					&quot;title&quot; : &quot;Port&quot;,
+        ///					&quot;type&quot;: [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Schema {
             get {
                 return ResourceManager.GetString("Schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &apos;title&apos;:&apos;test&apos;,
+        ///    &apos;type&apos;:&apos;object&apos;, 
+        ///    &apos;properties&apos;:{
+        ///        &apos;stringTest&apos; : {
+        ///            &apos;type&apos;:&apos;string&apos;
+        ///        },
+        ///        &apos;boolTest&apos; : {
+        ///            &apos;type&apos;:&apos;boolean&apos;
+        ///        },
+        ///        &apos;listTest&apos; : {
+        ///            &apos;type&apos; : &apos;array&apos;,
+        ///            &apos;items&apos; : {
+        ///                &apos;type&apos;:&apos;object&apos;,
+        ///                &apos;properties&apos;:{
+        ///                    &apos;ok&apos;:{
+        ///                        &apos;type&apos;:&apos;integer&apos;
+        ///                    }
+        ///                }
+        ///            }
+        ///        }
+        ///    }
+        ///}.
+        /// </summary>
+        internal static string TestSchema {
+            get {
+                return ResourceManager.GetString("TestSchema", resourceCulture);
             }
         }
     }

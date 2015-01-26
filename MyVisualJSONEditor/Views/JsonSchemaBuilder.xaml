@@ -65,6 +65,17 @@
                     </StackPanel>
                 </GroupBox>
             </DataTemplate>
+            <DataTemplate x:Key="SelectTemplate">
+                <GroupBox Header="{Binding Key}">
+                    <ComboBox ItemsSource="{Binding Value}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Key}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </GroupBox>
+            </DataTemplate>
         </ContentPresenter.Resources>
         <ContentPresenter.ContentTemplateSelector>         
             <controls:JsonObjectTypeTemplateSelector />

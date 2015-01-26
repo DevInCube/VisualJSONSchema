@@ -25,7 +25,6 @@ namespace MyVisualJSONEditor
         public MainWindow()
         {
             InitializeComponent();
-        
         }
     }
 }

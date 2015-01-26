@@ -49,7 +49,11 @@ namespace MyVisualJSONEditor.Views.Controls
             if (type == JSchemaType.Object)
                 return (DataTemplate)presenter.Resources["ObjectTemplate"];
             if (type == JSchemaType.Array)
+            {
+                if (schema.Format == "select")
+                    return (DataTemplate)presenter.Resources["SelectTemplate"];
                 return (DataTemplate)presenter.Resources["ArrayTemplate"];
+            }
 
             return base.SelectTemplate(item, container);
         }
