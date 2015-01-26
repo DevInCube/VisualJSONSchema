@@ -2,8 +2,10 @@
 using Newtonsoft.Json.Schema;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -84,12 +86,18 @@ namespace MyVisualJSONEditor.JsonSchemaNS
                         Height = 23
                         //@todo Command
                     };
+                    ObservableCollection<JToken> items = new ObservableCollection<JToken>();
+                    itemsControl.ItemsSource = items;
+                    addButton.Tag = items;
                     addButton.Click += (sen, args) => {
 
-                        JToken newItem = sh.Default;
-                       // data.ToList().Add(newItem);
-                        //@todo create new instance
-                        //@todo get default
+                        var tag = (sen as Button).Tag;
+                        ObservableCollection<JToken> itemsSource = tag as ObservableCollection<JToken>;
+
+                        var schema = sh.Items;
+
+                        var obj = sh.Generate();
+                        itemsSource.Add(obj);
                     };
                     grid.Children.Add(addButton);
                     DockPanel.SetDock(grid, Dock.Bottom);
@@ -296,6 +304,64 @@ namespace MyVisualJSONEditor.JsonSchemaNS
             binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             el.SetBinding(dp, binding);
         }
+
+        private static bool Require(this JSchema sh, string key){
+            return sh.Required.FirstOrDefault(pp=>pp.Equals(key))!=null;
+        }
+
+        private static JObject Generate(this JSchema sh)
+        {
+            var obj = new JObject();
+            foreach (var p in sh.Properties)
+            {
+                bool isRequired = sh.Require(p.Key);
+                switch (p.Value.Type)
+                {
+                    case (JSchemaType.Object):
+                        if (isRequired)
+                            obj[p.Key] = p.Value.Generate();
+                        else
+                            obj[p.Key] = null;
+                        break;
+                    case (JSchemaType.Array):
+                        if (sh.Require(p.Key))
+                            obj[p.Key] = new JValue(new ObservableCollection<JToken>());
+                        else
+                            obj[p.Key] = null;
+                        break;
+                    default:
+                        obj[p.Key] = sh.GetDefaultValue();
+                        break;
+                }
+            }
+            return obj;
+        }
+
+        private static JToken GetDefaultValue(this JSchema sh)
+        {
+            if(sh.Default!=null)
+                return sh.Default;
+            switch (sh.Type)
+            {
+                case(JSchemaType.Boolean):
+                    return false;
+                case(JSchemaType.Float):
+                    return 0F;
+                case (JSchemaType.Integer):
+                    return 0;
+                case(JSchemaType.String):
+                    if (sh.Format == "date-time") return new DateTime();
+                    if (sh.Format == "date") return new DateTime();
+                    if (sh.Format == "time") return new TimeSpan();
+                    if (sh.Format == "ipv4") return new JValue(IPAddress.None); //@todo @test
+                    return String.Empty;
+                case (JSchemaType.Null):
+                    return null;
+                default: 
+                    return null;
+            }
+        }
+           
 
     }
 }

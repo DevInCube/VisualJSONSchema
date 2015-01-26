@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:MyVisualJSONEditor.ViewModels"
         xmlns:conv="clr-namespace:MyVisualJSONEditor.Views.Converters"
+        xmlns:views="clr-namespace:MyVisualJSONEditor.Views"
         Title="{Binding DbHost}" Height="600" Width="1000">
     <Window.DataContext>
         <vm:MainWindowVM/>
@@ -57,7 +58,8 @@
 
         <Grid Height="Auto" Margin="10,5,5,5" Grid.Column="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ContentControl Content="{Binding Control}"/>
+                <!--<ContentControl Content="{Binding Control}"/>-->
+                <views:JsonSchemaBuilder x:Name="builder"/>
             </ScrollViewer>
         </Grid>
     </Grid>

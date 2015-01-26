@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MyVisualJSONEditor.ViewModels;
+using Newtonsoft.Json.Schema;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,7 @@ namespace MyVisualJSONEditor
         public MainWindow()
         {
             InitializeComponent();
+        
         }
     }
 }

@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="MyVisualJSONEditor.Views.JsonSchemaBuilder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:MyVisualJSONEditor.Views.Controls" 
+             xmlns:views="clr-namespace:MyVisualJSONEditor.Views" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:models="clr-namespace:MyVisualJSONEditor.ViewModels" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <ContentPresenter x:Name="Presenter">
+        <ContentPresenter.Resources>
+            <DataTemplate x:Key="StringTemplate">
+                <StackPanel d:DataContext="{d:DesignInstance Type=models:JObjectVM}">
+                    <TextBlock Text="{Binding Key}" FontWeight="Bold" Margin="0,0,0,4" />
+                    <TextBox Margin="0,0,0,8" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="BooleanTemplate">
+                <CheckBox IsChecked="{Binding Value}" Content="{Binding Key}"/>
+            </DataTemplate>
+            <DataTemplate x:Key="IntegerTemplate">
+                <StackPanel d:DataContext="{d:DesignInstance Type=models:JObjectVM}">
+                    <TextBlock Text="{Binding Key}" FontWeight="Bold" Margin="0,0,0,4" />
+                    <xctk:IntegerUpDown Margin="0,0,0,8" TextAlignment="Left"
+                                        Minimum="{Binding Schema.Minimum}"
+                                        Maximum="{Binding Schema.Maximum}"
+                                        Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="ObjectTemplate">
+                <GroupBox Header="{Binding Title}">
+                    <ItemsControl d:DataContext="{d:DesignInstance Type=models:JObjectVM}" 
+                                  ItemsSource="{Binding Properties}" Focusable="False">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <views:JsonSchemaBuilder Data="{Binding}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </GroupBox>
+            </DataTemplate>
+            <DataTemplate x:Key="ArrayTemplate">
+                <GroupBox Header="{Binding Key}">
+                    <StackPanel Margin="0,8,0,0">
+                        <StackPanel >
+                            <ItemsControl ItemsSource="{Binding Value}" Focusable="False">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="4,0,4,0">
+                                            <GroupBox Header="item">
+                                                <views:JsonSchemaBuilder Data="{Binding}" Margin="4,8,4,0" />
+                                            </GroupBox>   
+                                            <Button Content="Remove" HorizontalAlignment="Right" 
+                                                    Padding="8,4,8,4" VerticalAlignment="Top"
+                                                    Click="OnRemoveArrayObject" Tag="{Binding}" Margin="4,0,12,4" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Button Content="+ Add" HorizontalAlignment="Left" Padding="8,4,8,4" 
+                                    Click="OnAddArrayObject" Tag="{Binding}" Margin="4,8,4,4" />
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+            </DataTemplate>
+        </ContentPresenter.Resources>
+        <ContentPresenter.ContentTemplateSelector>         
+            <controls:JsonObjectTypeTemplateSelector />
+        </ContentPresenter.ContentTemplateSelector>
+    </ContentPresenter>
+</UserControl>
