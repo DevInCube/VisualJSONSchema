@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="MyVisualJSONEditor.Views.Templates.EnumTemplate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:myConv="clr-namespace:MyVisualJSONEditor.Views.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignWidth="300">
+    <UserControl.Resources>
+        <myConv:EnumConverter x:Key="EnumConverter"/>
+        <myConv:IndexConverter x:Key="IndexConverter"/>
+    </UserControl.Resources>
+    <StackPanel Background="WhiteSmoke">
+        <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" />
+        <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
+                               Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}" />
+        <ComboBox Margin="0,0,0,8" ItemsSource="{Binding Schema.Enum}"
+                  SelectedItem="{Binding Value}">
+        </ComboBox>
+    </StackPanel>
+</UserControl>

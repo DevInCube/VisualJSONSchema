@@ -50,26 +50,8 @@ namespace MyVisualJSONEditor.Views
             Presenter.Content = Data;
         }
 
-        private void OnAddArrayObject(object sender, RoutedEventArgs e)
-        {
-            var property = (JPropertyVM)((Button)sender).Tag;
+      
 
-            if (property.Value == null)
-                property.Value = new ObservableCollection<JTokenVM>();
-
-            var list = (ObservableCollection<JTokenVM>)property.Value;
-            var schema = property.Schema.Items;
-
-            var obj =  JObjectVM.FromSchema(schema.First());
-            obj.ParentList = list;
-
-            list.Add(obj);
-        }
-
-        private void OnRemoveArrayObject(object sender, RoutedEventArgs e)
-        {
-            var obj = (JTokenVM)((Button)sender).Tag;
-            obj.ParentList.Remove(obj);
-        }
+     
     }
 }

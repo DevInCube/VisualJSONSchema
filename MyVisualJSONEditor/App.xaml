@@ -1,8 +1,13 @@
 ﻿<Application x:Class="MyVisualJSONEditor.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+             xmlns:mtkConv="clr-namespace:MyToolkit.Converters;assembly=MyToolkit.Extended"
+             xmlns:myConv="clr-namespace:MyVisualJSONEditor.Views.Converters"
              Startup="Application_Startup">
     <Application.Resources>
-         
+        <mtkConv:VisibilityConverter x:Key="VisibilityConverter"/>
+        <myConv:TimeConverter x:Key="TimeConverter"/>
+        <myConv:DateConverter x:Key="DateConverter"/>
     </Application.Resources>
 </Application>

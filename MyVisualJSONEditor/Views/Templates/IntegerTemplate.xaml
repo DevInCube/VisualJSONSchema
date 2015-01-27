@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="MyVisualJSONEditor.Views.Templates.IntegerTemplate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:myConv="clr-namespace:MyVisualJSONEditor.Views.Converters"
+              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+             mc:Ignorable="d" 
+              d:DesignWidth="300">
+    <UserControl.Resources>
+        <myConv:IntegerRangeConverter x:Key="IntegerRangeConverter"/>
+        <myConv:IntegerConverter x:Key="IntegerConverter"/>
+    </UserControl.Resources>
+    <StackPanel Background="WhiteSmoke">
+        <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" />
+        <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4" 
+                    Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
+        <xctk:IntegerUpDown Margin="0,0,0,8" TextAlignment="Left"
+                            Minimum="{Binding Schema.Minimum, Converter={StaticResource IntegerRangeConverter}, ConverterParameter=min}"
+                            Maximum="{Binding Schema.Maximum, Converter={StaticResource IntegerRangeConverter}, ConverterParameter=max}"
+                            Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntegerConverter}}" />
+    </StackPanel>
+</UserControl>

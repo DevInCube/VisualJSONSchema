@@ -2,11 +2,43 @@
     'title':'test',
     'type':'object', 
     'properties':{
-        'stringTest' : {
+
+		'boolean' : {
+            'type':'boolean'
+        },
+        'string' : {
             'type':'string'
         },
-        'boolTest' : {
-            'type':'boolean'
+		'object' : {
+
+			type : 'object',
+			title : 'This is the object',
+			description : 'This is the object description',
+
+			'properties' : {
+				'booleansd' : {
+					'type':'boolean'
+				},
+				'stringsd' : {
+					'type':'string'
+				},
+			}
+		},
+       
+		'number' : {
+            'type':'number'
+        },
+		'integer' : {
+            'type':'integer',
+			minimum : 0
+        },
+		'enumInteger' : {
+            'type':'integer',
+			'enum' : [1,2,4]
+        },
+		'enumString' : {
+            'type':'string',
+			'enum' : ["s1","s2","s3"]
         },
         'listTest' : {
             'type' : 'array',
@@ -14,7 +46,9 @@
                 'type':'object',
                 'properties':{
                     'ok':{
-                        'type':'integer'
+                        'type':'integer',
+						minimum : 0,
+						maximum : 5
                     }
                 }
             }

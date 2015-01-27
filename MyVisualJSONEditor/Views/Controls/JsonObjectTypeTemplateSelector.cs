@@ -1,4 +1,5 @@
 ﻿using MyVisualJSONEditor.ViewModels;
+using MyVisualJSONEditor.Views.Templates;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using System;
@@ -15,7 +16,12 @@ namespace MyVisualJSONEditor.Views.Controls
     {
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
+            if (item == null) return null;
+
             var presenter = (FrameworkElement)container;
+
+            if (item is JObjectVM)
+                return (DataTemplate)presenter.Resources["RootTemplate"];
 
             JSchema schema = null;
             if (item is JTokenVM)
@@ -25,34 +31,55 @@ namespace MyVisualJSONEditor.Views.Controls
                 schema = ((JPropertyVM)item).Schema;
 
             var type = schema.Type;
+            Type templateType = null;
 
-            if (type == JSchemaType.String && schema.Format == "date-time")
-                return (DataTemplate)presenter.Resources["DateTimeTemplate"];
-            if (type == JSchemaType.String && schema.Format == "date")
-                return (DataTemplate)presenter.Resources["DateTemplate"];
-            if (type == JSchemaType.String && schema.Format == "time")
-                return (DataTemplate)presenter.Resources["TimeTemplate"];
-            if (type == JSchemaType.String && schema.Enum.Count > 0)
-                return (DataTemplate)presenter.Resources["EnumTemplate"];
             if (type == JSchemaType.String)
-                return (DataTemplate)presenter.Resources["StringTemplate"];
-
-            if (type == JSchemaType.Integer && schema.Enum.Count > 0)
-                return (DataTemplate)presenter.Resources["EnumTemplate"];
+            {
+                if (schema.Enum.Count > 0)
+                    templateType = typeof(EnumTemplate);
+                else
+                    switch (schema.Format)
+                    {
+                        case ("time"):
+                            templateType = typeof(TimeTemplate);
+                            break;
+                        case ("date"):
+                            templateType = typeof(DateTemplate);
+                            break;
+                        case ("date-time"):
+                            templateType = typeof(DateTimeTemplate);
+                            break;
+                        default:
+                            templateType = typeof(StringTemplate);
+                            break;
+                    }
+            }
             if (type == JSchemaType.Integer)
-                return (DataTemplate)presenter.Resources["IntegerTemplate"];
-
+            {
+                if (schema.Enum.Count > 0)
+                    templateType = typeof(EnumTemplate);
+                else
+                    templateType = typeof(IntegerTemplate);
+            }
             if (type == JSchemaType.Float)
-                return (DataTemplate)presenter.Resources["NumberTemplate"];
+                templateType = typeof(NumberTemplate);
             if (type == JSchemaType.Boolean)
-                return (DataTemplate)presenter.Resources["BooleanTemplate"];
+                templateType = typeof(BooleanTemplate);
             if (type == JSchemaType.Object)
-                return (DataTemplate)presenter.Resources["ObjectTemplate"];
+                templateType = typeof(ObjectTemplate);
             if (type == JSchemaType.Array)
             {
                 if (schema.Format == "select")
-                    return (DataTemplate)presenter.Resources["SelectTemplate"];
-                return (DataTemplate)presenter.Resources["ArrayTemplate"];
+                    templateType = typeof(SelectListTemplate);
+                else
+                    templateType = typeof(ArrayTemplate);
+            }
+
+            if (templateType != null)
+            {
+                var template = new DataTemplate();
+                template.VisualTree = new FrameworkElementFactory(templateType);
+                return template;
             }
 
             return base.SelectTemplate(item, container);
