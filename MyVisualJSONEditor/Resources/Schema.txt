@@ -39,7 +39,8 @@
 				},
 				"DbPass": {
 					"title" : "Password",
-					"type": "string"
+					"type": "string",
+					'format' : 'password'
 				},
 				"PostName": {
 					"title" : "Post name",

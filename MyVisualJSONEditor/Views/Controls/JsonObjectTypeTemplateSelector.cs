@@ -50,6 +50,9 @@ namespace MyVisualJSONEditor.Views.Controls
                         case ("date-time"):
                             templateType = typeof(DateTimeTemplate);
                             break;
+                        case ("password"):
+                            templateType = typeof(PasswordTemplate);
+                            break;
                         default:
                             templateType = typeof(StringTemplate);
                             break;

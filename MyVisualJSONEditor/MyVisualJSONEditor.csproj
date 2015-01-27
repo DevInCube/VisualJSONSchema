@@ -91,6 +91,9 @@
     <Compile Include="ViewModels\JSchema\JValueVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
+    <Compile Include="Views\Controls\BindablePasswordBox.xaml.cs">
+      <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\JsonObjectTypeTemplateSelector.cs" />
     <Compile Include="Views\Converters\DateConverter.cs" />
     <Compile Include="Views\Converters\EnumConverter.cs" />
@@ -135,6 +138,9 @@
     <Compile Include="Views\Templates\SelectListTemplate.xaml.cs">
       <DependentUpon>SelectListTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Templates\PasswordTemplate.xaml.cs">
+      <DependentUpon>PasswordTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Templates\StringTemplate.xaml.cs">
       <DependentUpon>StringTemplate.xaml</DependentUpon>
     </Compile>
@@ -153,6 +159,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\Controls\BindablePasswordBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\JsonSchemaBuilder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -196,6 +206,10 @@
     <Page Include="Views\Templates\SelectListTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Templates\PasswordTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Templates\StringTemplate.xaml">
       <SubType>Designer</SubType>

@@ -21,13 +21,22 @@ namespace MyVisualJSONEditor.ViewModels
         {
             this.CollectionChanged += (se, ar) =>
             {
-                if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+                if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add 
+                    || ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
                 {
                     if (ar.NewItems[0] is KeyValuePair<string, object>)
                     {
                         var pair = (KeyValuePair<string, object>)ar.NewItems[0];
                         var val = pair.Value;
-                        if (val is ObservableCollection<JTokenVM>)
+                        if (val is JObjectVM)
+                        {
+                            var jobj = val as JObjectVM;
+                            jobj.PropertyChanged += (se2, ar2) =>
+                            {
+                                this.OnPropertyChanged(pair.Key);
+                            };
+                        }
+                        else if (val is ObservableCollection<JTokenVM>)
                         {
                             var list = val as ObservableCollection<JTokenVM>;
                             list.CollectionChanged += (se1, ar1) =>
@@ -42,23 +51,6 @@ namespace MyVisualJSONEditor.ViewModels
                                         };
                                     }
                                 }
-                            };
-                        }
-                    }
-                }
-                if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add 
-                    || ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
-                {
-                    if (ar.NewItems[0] is KeyValuePair<string, object>)
-                    {
-                        var pair = (KeyValuePair<string, object>)ar.NewItems[0];
-                        var val = pair.Value;
-                        if (val is JObjectVM)
-                        {
-                            var jobj = val as JObjectVM;
-                            jobj.PropertyChanged += (se2, ar2) =>
-                            {
-                                this.OnPropertyChanged(pair.Key);
                             };
                         }
                     }
