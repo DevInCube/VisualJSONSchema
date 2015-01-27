@@ -45,14 +45,14 @@
                 <TextBlock DockPanel.Dock="Bottom" Text="{Binding SchemaError}"
                       Visibility="{Binding SchemaError,Converter={StaticResource NullToVis}}"
                        Style="{StaticResource errorBox}"/>
-                <TextBox  Text="{Binding Schema, UpdateSourceTrigger=PropertyChanged}"     
+                <TextBox  Text="{Binding Schema, UpdateSourceTrigger=LostFocus}"     
                       Style="{StaticResource textEditor}" />
             </DockPanel>
             <DockPanel Margin="5,10,5,5" Grid.Row="1">
                 <TextBlock DockPanel.Dock="Bottom" Text="{Binding DataError}"
                        Visibility="{Binding DataError,Converter={StaticResource NullToVis}}"
                         Style="{StaticResource errorBox}"/>
-                <TextBox  Text="{Binding JsonData, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBox  Text="{Binding JsonData, UpdateSourceTrigger=LostFocus}" 
                       Background="{Binding DataStatusColor}" 
                       Style="{StaticResource textEditor}"  />
             </DockPanel>

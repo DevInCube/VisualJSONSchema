@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,7 +63,11 @@ namespace MyVisualJSONEditor.ViewModels
         public JObjectVM Data
         {
             get { return _Data;  }
-            set { _Data = value; OnPropertyChanged("Data"); }
+            set 
+            { 
+                _Data = value; 
+                OnPropertyChanged("Data"); 
+            }
         }
 
         public JSchema JSchema
@@ -185,6 +190,7 @@ namespace MyVisualJSONEditor.ViewModels
                     if (isValid)
                     {
                         Data = JObjectVM.FromJson(jdata, JSchema);
+                        
                         Data.PropertyChanged += (se, ar) => {
                             ShowResult();
                         };

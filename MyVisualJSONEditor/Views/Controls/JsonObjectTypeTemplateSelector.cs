@@ -15,6 +15,32 @@ namespace MyVisualJSONEditor.Views.Controls
 {
     public class JsonObjectTypeTemplateSelector : DataTemplateSelector
     {
+
+        private Dictionary<string, DataTemplate> Templates = new Dictionary<string, DataTemplate>();
+
+        public JsonObjectTypeTemplateSelector()
+        {
+            Templates.Add("Object", CreateTemplate(typeof(ObjectTemplate)));
+            Templates.Add("String", CreateTemplate(typeof(StringTemplate)));
+            Templates.Add("Password", CreateTemplate(typeof(PasswordTemplate)));
+            Templates.Add("Boolean", CreateTemplate(typeof(BooleanTemplate)));
+            Templates.Add("Date", CreateTemplate(typeof(DateTemplate)));
+            Templates.Add("Time", CreateTemplate(typeof(TimeTemplate)));
+            Templates.Add("DateTime", CreateTemplate(typeof(DateTimeTemplate)));
+            Templates.Add("Array", CreateTemplate(typeof(ArrayTemplate)));
+            Templates.Add("SelectList", CreateTemplate(typeof(SelectListTemplate)));
+            Templates.Add("Integer", CreateTemplate(typeof(IntegerTemplate)));
+            Templates.Add("Number", CreateTemplate(typeof(NumberTemplate)));
+            Templates.Add("Enum", CreateTemplate(typeof(EnumTemplate)));
+        }
+
+        protected DataTemplate CreateTemplate(Type templateType)
+        {
+            var template = new DataTemplate();
+            template.VisualTree = new FrameworkElementFactory(templateType);
+            return template;
+        }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item == null) return null;
@@ -32,58 +58,45 @@ namespace MyVisualJSONEditor.Views.Controls
                 schema = ((JPropertyVM)item).Schema;
 
             var type = schema.Type;
-            Type templateType = null;
 
             if (type == JSchemaType.String)
             {
                 if (schema.Enum.Count > 0)
-                    templateType = typeof(EnumTemplate);
+                    return Templates["Enum"];
                 else
                     switch (schema.Format)
                     {
                         case ("time"):
-                            templateType = typeof(TimeTemplate);
-                            break;
+                            return Templates["Time"];
                         case ("date"):
-                            templateType = typeof(DateTemplate);
-                            break;
+                            return Templates["Date"];
                         case ("date-time"):
-                            templateType = typeof(DateTimeTemplate);
-                            break;
+                            return Templates["DateTime"];
                         case ("password"):
-                            templateType = typeof(PasswordTemplate);
-                            break;
+                            return Templates["Password"];
                         default:
-                            templateType = typeof(StringTemplate);
-                            break;
+                            return Templates["String"];
                     }
             }
             if (type == JSchemaType.Integer)
             {
                 if (schema.Enum.Count > 0)
-                    templateType = typeof(EnumTemplate);
+                    return Templates["Enum"];
                 else
-                    templateType = typeof(IntegerTemplate);
+                    return Templates["Integer"];
             }
             if (type == JSchemaType.Float)
-                templateType = typeof(NumberTemplate);
+                return Templates["Number"];
             if (type == JSchemaType.Boolean)
-                templateType = typeof(BooleanTemplate);
-            if (type.HasFlag(JSchemaType.Object)) 
-                templateType = typeof(ObjectTemplate);
+                return Templates["Boolean"];
+            if (type.HasFlag(JSchemaType.Object))
+                return Templates["Object"];
             if (type == JSchemaType.Array)
             {
                 if (schema.Format == "select")
-                    templateType = typeof(SelectListTemplate);
+                    return Templates["SelectList"];
                 else
-                    templateType = typeof(ArrayTemplate);
-            }
-
-            if (templateType != null)
-            {
-                var template = new DataTemplate();
-                template.VisualTree = new FrameworkElementFactory(templateType);
-                return template;
+                    return Templates["Array"];
             }
 
             return base.SelectTemplate(item, container);

@@ -56,9 +56,14 @@
 					"readonly" : true
 				},
 				"PostList" : {
+
 					"title" : "Posts",
+				
 					"type" : "array",
 					"format" :"select",
+
+					'ignore' : 'true',
+				
 					"bindings" : {
 						"SelectedItem" : {
 							"path" : "SelectedPost"

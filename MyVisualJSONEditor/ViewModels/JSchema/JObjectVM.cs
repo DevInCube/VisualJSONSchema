@@ -208,6 +208,8 @@ namespace MyVisualJSONEditor.ViewModels
             var obj = new JObject();
             foreach (var pair in this)
             {
+                bool ignore = Properties.FirstOrDefault(x => x.Key == pair.Key).Ignore;
+                if (ignore) continue;
                 if (pair.Value is ObservableCollection<JTokenVM>)
                 {
                     var array = (ObservableCollection<JTokenVM>)pair.Value;

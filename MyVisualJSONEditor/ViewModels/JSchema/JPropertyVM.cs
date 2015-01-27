@@ -78,5 +78,16 @@ namespace MyVisualJSONEditor.ViewModels
                 return true;
             }
         }
+
+        public bool Ignore
+        {
+            get
+            {
+                var pair = Schema.ExtensionData.FirstOrDefault(x => x.Key == "ignore");
+                if (!pair.Equals(default(KeyValuePair<string, JToken>)))
+                    return bool.Parse(pair.Value.ToString());
+                return false;
+            }
+        }
     }
 }
