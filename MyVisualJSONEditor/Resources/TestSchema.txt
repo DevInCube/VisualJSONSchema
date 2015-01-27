@@ -16,12 +16,16 @@
 			description : 'This is the object description',
 
 			'properties' : {
-				'booleansd' : {
+				'bool1' : {
 					'type':'boolean'
 				},
-				'stringsd' : {
+				'string2' : {
 					'type':'string'
 				},
+			},
+			'default':{
+				'bool1' : true, 
+				string2 : 'default'
 			}
 		},
        

@@ -67,6 +67,8 @@ namespace MyVisualJSONEditor.ViewModels
         public static JObjectVM FromSchema(JSchema schema)
         {
             var obj = new JObjectVM();
+            if (schema.Default != null)
+                return FromJson(schema.Default as JObject, schema);
             foreach (var property in schema.Properties)
             {
                 if (property.Value.Type == JSchemaType.Object)
