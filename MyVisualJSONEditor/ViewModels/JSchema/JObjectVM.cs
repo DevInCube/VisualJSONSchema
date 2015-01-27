@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using MyVisualJSONEditor.Tools;
 
 namespace MyVisualJSONEditor.ViewModels
 {
@@ -71,11 +72,11 @@ namespace MyVisualJSONEditor.ViewModels
                 return FromJson(schema.Default as JObject, schema);
             foreach (var property in schema.Properties)
             {
-                if (property.Value.Type == JSchemaType.Object)
+                if (property.Value.Type.HasFlag(JSchemaType.Object))
                 {
                     obj[property.Key] = FromSchema(property.Value);
                 }
-                else if (property.Value.Type == JSchemaType.Array)
+                else if (property.Value.Type.HasFlag(JSchemaType.Array))
                 {
                     obj[property.Key] = new ObservableCollection<JTokenVM>();
                 }
@@ -91,7 +92,7 @@ namespace MyVisualJSONEditor.ViewModels
             var result = new JObjectVM();
             foreach (var property in schema.Properties)
             {
-                if (property.Value.Type == JSchemaType.Array)
+                if (property.Value.Type.HasFlag(JSchemaType.Array))
                 {
                     var propertySchema = property.Value.Items.First();
                     var value = obj[property.Key];
@@ -112,7 +113,7 @@ namespace MyVisualJSONEditor.ViewModels
 
                     result[property.Key] = list;
                 }
-                else if (property.Value.Type == JSchemaType.Object)
+                else if (property.Value.Type.HasFlag(JSchemaType.Object))
                 {
                     var token = obj[property.Key];
                     if (token is JObject)
@@ -137,7 +138,12 @@ namespace MyVisualJSONEditor.ViewModels
         {
             JSchema sh = property.Value;
             if (sh.Default != null)
-                return ((JValue)sh.Default).Value;
+            {
+                if (sh.Default is JValue)
+                    return ((JValue)sh.Default).Value;
+                else
+                    return sh.Default;
+            }
             switch (sh.Type)
             {
                 case (JSchemaType.Boolean):

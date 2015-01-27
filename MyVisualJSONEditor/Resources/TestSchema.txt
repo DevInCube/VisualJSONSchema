@@ -1,17 +1,22 @@
 {
-    'title':'test',
-    'type':'object', 
+	'type':'object', 
+
+    'title':'Root Object Title',
+	'description' : 'This is Root Object description',
+
     'properties':{
 
 		'boolean' : {
-            'type':'boolean'
+            'type':'boolean',
+			default : true
         },
         'string' : {
             'type':'string'
         },
 		'object' : {
 
-			type : 'object',
+			type : [ 'object', 'null'],
+
 			title : 'This is the object',
 			description : 'This is the object description',
 
@@ -57,5 +62,7 @@
                 }
             }
         }
-    }
+    },
+
+	required : ['boolean', 'string']
 }

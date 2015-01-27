@@ -84,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Tools\JSchemaExtension.cs" />
     <Compile Include="ViewModels\JSchema\JObjectVM.cs" />
     <Compile Include="ViewModels\JSchema\JPropertyVM.cs" />
     <Compile Include="ViewModels\JSchema\JTokenVM.cs" />
