@@ -211,5 +211,6 @@ namespace MyVisualJSONEditor.ViewModels
             }
             return obj;
         }
+
     }
 }

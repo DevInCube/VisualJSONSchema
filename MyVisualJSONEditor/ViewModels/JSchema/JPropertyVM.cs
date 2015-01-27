@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Schema;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,17 @@ namespace MyVisualJSONEditor.ViewModels
         public bool HasValue
         {
             get { return Value != null; }
+        }
+
+        public bool IsReadonly
+        {
+            get
+            {
+                var pair = Schema.ExtensionData.FirstOrDefault(x => x.Key == "readonly");
+                if (!pair.Equals(default(KeyValuePair<string, JToken>)))
+                    return bool.Parse(pair.Value.ToString());
+                return false;
+            }
         }
     }
 }
