@@ -14,6 +14,28 @@ namespace MyVisualJSONEditor.ViewModels
     /// <summary>Represents a JSON object. </summary>
     public class JObjectVM : JTokenVM
     {
+
+        public JObjectVM()
+        {
+            this.CollectionChanged += (se, ar) => {
+                if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
+                {
+                    if (ar.NewItems[0] is KeyValuePair<string, object>)
+                    {
+                        var pair = (KeyValuePair<string, object>)ar.NewItems[0];
+                        var val = pair.Value;
+                        if (val is JObjectVM)
+                        {
+                            var jobj = val as JObjectVM;
+                            jobj.PropertyChanged += (se2, ar2) => {
+                                this.OnPropertyChanged(pair.Key);
+                            };
+                        }
+                    }
+                }
+            };
+        }
+
         public static JObjectVM FromSchema(JSchema schema)
         {
             var obj = new JObjectVM();

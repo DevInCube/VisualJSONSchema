@@ -11,6 +11,9 @@
             <StackPanel>
                 <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4" 
 			                Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
+                <CheckBox IsChecked="{Binding HasValue, Mode=OneWay}" 
+                                  Margin="4,8,4,4" Content="Specify values" 
+                                  Checked="OnCreateObject" Unchecked="OnRemoveObject" Tag="{Binding}" />
                 <views:JsonSchemaBuilder Data="{Binding Value}" />
             </StackPanel>
         </GroupBox>

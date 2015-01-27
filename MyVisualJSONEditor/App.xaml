@@ -7,6 +7,7 @@
              Startup="Application_Startup">
     <Application.Resources>
         <mtkConv:VisibilityConverter x:Key="VisibilityConverter"/>
+        <mtkConv:NotConverter x:Key="NotConverter"/>
         <myConv:TimeConverter x:Key="TimeConverter"/>
         <myConv:DateConverter x:Key="DateConverter"/>
     </Application.Resources>

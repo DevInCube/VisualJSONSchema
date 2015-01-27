@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyVisualJSONEditor.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,34 @@ namespace MyVisualJSONEditor.Views.Templates
         public ObjectTemplate()
         {
             InitializeComponent();
+        }
+
+        private void OnCreateObject(object sender, RoutedEventArgs e)
+        {
+            var property = (JPropertyVM)((CheckBox)sender).Tag;
+            if (property != null)
+            {
+                if (property.Parent[property.Key] == null)
+                {
+                    JObjectVM jobj = JObjectVM.FromSchema(property.Schema);
+                    property.Parent[property.Key] = jobj;
+                    
+                    //property.RaisePropertyChanged<JPropertyVM>(i => i.HasValue); //@todo
+                }
+            }
+        }
+
+        private void OnRemoveObject(object sender, RoutedEventArgs e)
+        {
+            var property = (JPropertyVM)((CheckBox)sender).Tag;
+            if (property != null)
+            {
+                if (property.Parent.ContainsKey(property.Key) && property.Parent[property.Key] != null)
+                {
+                    property.Parent[property.Key] = null;
+                    //property.RaisePropertyChanged<JPropertyVM>(i => i.HasValue); //@todo
+                }
+            }
         }
     }
 }
