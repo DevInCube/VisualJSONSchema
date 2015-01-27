@@ -8,7 +8,6 @@
              d:DesignWidth="300">
     <UserControl.Resources>
         <myConv:EnumConverter x:Key="EnumConverter"/>
-        <myConv:IndexConverter x:Key="IndexConverter"/>
     </UserControl.Resources>
     <StackPanel Background="WhiteSmoke"
                 IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"

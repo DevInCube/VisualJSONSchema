@@ -58,7 +58,7 @@
 				"PostList" : {
 					"title" : "Posts",
 					"type" : "array",
-					"widget" :"combobox",
+					"format" :"select",
 					"bindings" : {
 						"SelectedItem" : {
 							"path" : "SelectedPost"

@@ -14,6 +14,7 @@
           IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
           Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}"> 
         <GroupBox Header="{Binding Key, FallbackValue=ListName}" >
+            
             <StackPanel Margin="0,8,0,0">
                 <StackPanel >
                     <ItemsControl ItemsSource="{Binding Value}" Focusable="False">
@@ -23,8 +24,8 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <Button Content="+ Add" HorizontalAlignment="Left" Padding="8,4,8,4" 
-                                        Click="OnAddArrayObject" Tag="{Binding}" Margin="4,8,4,4" MinWidth="75"/>
+                    <Button Content="+ Add" HorizontalAlignment="Stretch" Padding="8,4,8,4" Margin="4,8,4,4" 
+                            Click="OnAddArrayObject" Tag="{Binding}"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>

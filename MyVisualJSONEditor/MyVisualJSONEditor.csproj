@@ -97,7 +97,6 @@
     <Compile Include="Views\Controls\JsonObjectTypeTemplateSelector.cs" />
     <Compile Include="Views\Converters\DateConverter.cs" />
     <Compile Include="Views\Converters\EnumConverter.cs" />
-    <Compile Include="Views\Converters\IndexConverter.cs" />
     <Compile Include="Views\Converters\IntegerConverter.cs" />
     <Compile Include="Views\Converters\IntegerRangeConverter.cs" />
     <Compile Include="Views\Converters\NullToVis.cs" />

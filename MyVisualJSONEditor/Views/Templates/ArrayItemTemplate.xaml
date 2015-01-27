@@ -10,11 +10,12 @@
              mc:Ignorable="d" 
              d:DesignWidth="300">
     <Grid Margin="4,0,4,0" Background="WhiteSmoke">
-        <GroupBox Header="item">
+        <GroupBox Header="Item">
             <views:JsonSchemaBuilder Data="{Binding}" Margin="4,8,4,0" />
         </GroupBox>
         <Button Content="Remove" HorizontalAlignment="Right" 
-                Padding="8,4,8,4" VerticalAlignment="Top"
-                Click="OnRemoveArrayObject" Tag="{Binding}" Margin="4,0,12,4" />
+                MinWidth="75" Height="23" VerticalAlignment="Top"
+                Click="OnRemoveArrayObject" 
+                Tag="{Binding}" Margin="4,0,12,4" />
     </Grid>
 </UserControl>
