@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using MyToolkit.Utilities;
 
 namespace MyVisualJSONEditor.Views
 {
@@ -53,8 +54,8 @@ namespace MyVisualJSONEditor.Views
 
             Loaded += delegate
             {
-                //var button = this.FindVisualChild<Button>();//@todo
-                //button.Click += OnToggleExpanded;
+                var button = this.FindVisualChild<Button>();
+                button.Click += OnToggleExpanded;
             };
         }
 

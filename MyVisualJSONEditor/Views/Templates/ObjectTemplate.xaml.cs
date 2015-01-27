@@ -33,9 +33,7 @@ namespace MyVisualJSONEditor.Views.Templates
             {
                 if (property.Parent[property.Key] == null)
                 {
-                    JObjectVM jobj = JObjectVM.FromSchema(property.Schema);
-                    property.Parent[property.Key] = jobj;
-                    
+                    property.Parent[property.Key] = JObjectVM.FromSchema(property.Schema);
                     //property.RaisePropertyChanged<JPropertyVM>(i => i.HasValue); //@todo
                 }
             }

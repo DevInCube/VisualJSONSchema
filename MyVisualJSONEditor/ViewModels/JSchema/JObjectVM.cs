@@ -4,6 +4,7 @@ using Newtonsoft.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -17,7 +18,33 @@ namespace MyVisualJSONEditor.ViewModels
 
         public JObjectVM()
         {
-            this.CollectionChanged += (se, ar) => {
+            this.CollectionChanged += (se, ar) =>
+            {
+                if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+                {
+                    if (ar.NewItems[0] is KeyValuePair<string, object>)
+                    {
+                        var pair = (KeyValuePair<string, object>)ar.NewItems[0];
+                        var val = pair.Value;
+                        if (val is ObservableCollection<JTokenVM>)
+                        {
+                            var list = val as ObservableCollection<JTokenVM>;
+                            list.CollectionChanged += (se1, ar1) =>
+                            {
+                                this.OnPropertyChanged(pair.Key);
+                                if (ar1.Action == NotifyCollectionChangedAction.Add)
+                                {
+                                    foreach (JTokenVM item in ar1.NewItems)
+                                    {
+                                        item.PropertyChanged += (se2, ar2) => {
+                                            this.OnPropertyChanged(pair.Key);
+                                        };
+                                    }
+                                }
+                            };
+                        }
+                    }
+                }
                 if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
                 {
                     if (ar.NewItems[0] is KeyValuePair<string, object>)
@@ -27,7 +54,8 @@ namespace MyVisualJSONEditor.ViewModels
                         if (val is JObjectVM)
                         {
                             var jobj = val as JObjectVM;
-                            jobj.PropertyChanged += (se2, ar2) => {
+                            jobj.PropertyChanged += (se2, ar2) =>
+                            {
                                 this.OnPropertyChanged(pair.Key);
                             };
                         }
