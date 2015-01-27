@@ -84,10 +84,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="JsonSchemaNS\JSBuilder.cs" />
     <Compile Include="ViewModels\JSchema\JObjectVM.cs" />
     <Compile Include="ViewModels\JSchema\JPropertyVM.cs" />
-    <Compile Include="ViewModels\JsonDataVM.cs" />
     <Compile Include="ViewModels\JSchema\JTokenVM.cs" />
     <Compile Include="ViewModels\JSchema\JValueVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
@@ -141,9 +139,6 @@
     </Compile>
     <Compile Include="Views\Templates\TimeTemplate.xaml.cs">
       <DependentUpon>TimeTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TestControl.xaml.cs">
-      <DependentUpon>TestControl.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -209,10 +204,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TestControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -253,6 +244,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TestSchema.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TestData.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

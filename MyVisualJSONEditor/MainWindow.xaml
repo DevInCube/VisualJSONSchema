@@ -30,8 +30,10 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <GridSplitter Width="5" Grid.Column="1" Height="Auto" Background="LightGray" HorizontalAlignment="Left"/>
+        <GridSplitter Width="5" Grid.Column="2" Height="Auto" Background="LightGray" HorizontalAlignment="Left"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
@@ -50,7 +52,7 @@
                 <TextBlock DockPanel.Dock="Bottom" Text="{Binding DataError}"
                        Visibility="{Binding DataError,Converter={StaticResource NullToVis}}"
                         Style="{StaticResource errorBox}"/>
-                <TextBox  Text="{Binding Data, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBox  Text="{Binding JsonData, UpdateSourceTrigger=PropertyChanged}" 
                       Background="{Binding DataStatusColor}" 
                       Style="{StaticResource textEditor}"  />
             </DockPanel>
@@ -58,9 +60,12 @@
 
         <Grid Height="Auto" Margin="10,5,5,5" Grid.Column="1">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <!--<ContentControl Content="{Binding Control}"/>-->
                 <views:JsonSchemaBuilder x:Name="builder" Data="{Binding Data}"/>
             </ScrollViewer>
+        </Grid>
+        <Grid Height="Auto" Margin="10,5,5,5" Grid.Column="2">
+            <TextBox  Text="{Binding ResultData, UpdateSourceTrigger=PropertyChanged}" 
+                      Style="{StaticResource textEditor}"  />
         </Grid>
     </Grid>
 </Window>

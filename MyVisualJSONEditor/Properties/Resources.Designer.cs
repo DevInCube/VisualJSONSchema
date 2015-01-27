@@ -140,28 +140,46 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///
+        ///}.
+        /// </summary>
+        internal static string TestData {
+            get {
+                return ResourceManager.GetString("TestData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
         ///    &apos;title&apos;:&apos;test&apos;,
         ///    &apos;type&apos;:&apos;object&apos;, 
         ///    &apos;properties&apos;:{
-        ///        &apos;stringTest&apos; : {
-        ///            &apos;type&apos;:&apos;string&apos;
-        ///        },
-        ///        &apos;boolTest&apos; : {
+        ///
+        ///		&apos;boolean&apos; : {
         ///            &apos;type&apos;:&apos;boolean&apos;
         ///        },
-        ///        &apos;listTest&apos; : {
-        ///            &apos;type&apos; : &apos;array&apos;,
-        ///            &apos;items&apos; : {
-        ///                &apos;type&apos;:&apos;object&apos;,
-        ///                &apos;properties&apos;:{
-        ///                    &apos;ok&apos;:{
-        ///                        &apos;type&apos;:&apos;integer&apos;
-        ///                    }
-        ///                }
-        ///            }
-        ///        }
-        ///    }
-        ///}.
+        ///        &apos;string&apos; : {
+        ///            &apos;type&apos;:&apos;string&apos;
+        ///        },
+        ///		&apos;object&apos; : {
+        ///
+        ///			type : &apos;object&apos;,
+        ///			title : &apos;This is the object&apos;,
+        ///			description : &apos;This is the object description&apos;,
+        ///
+        ///			&apos;properties&apos; : {
+        ///				&apos;booleansd&apos; : {
+        ///					&apos;type&apos;:&apos;boolean&apos;
+        ///				},
+        ///				&apos;stringsd&apos; : {
+        ///					&apos;type&apos;:&apos;string&apos;
+        ///				},
+        ///			}
+        ///		},
+        ///       
+        ///		&apos;number&apos; : {
+        ///            &apos;type&apos;:&apos;number&apos;
+        ///      [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TestSchema {
             get {

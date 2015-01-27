@@ -1,4 +1,4 @@
-﻿using MyVisualJSONEditor.JsonSchemaNS;
+﻿using MyToolkit.Command;
 using MyVisualJSONEditor.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -11,15 +11,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MyVisualJSONEditor.ViewModels
 {
-    public class MainWindowVM : JsonDataVM
+    public class MainWindowVM : ObservableObject
     {
 
         private JObjectVM _Data;
-        private string _Schema, _SchemaError, _DataError;
+        private string _Schema, _SchemaError, _DataError, _ResultData, _JsonData;
         private string _DbHost;
         private bool _IsValid;
         private ItemsControl _Control;
@@ -31,6 +32,28 @@ namespace MyVisualJSONEditor.ViewModels
             {
                 _DbHost = value;
                 OnPropertyChanged("DbHost");
+            }
+
+        }
+
+        public string JsonData
+        {
+            get { return _JsonData; }
+            set
+            {
+                _JsonData = value;
+                OnPropertyChanged("JsonData");
+            }
+
+        }
+
+        public string ResultData
+        {
+            get { return _ResultData; }
+            set
+            {
+                _ResultData = value;
+                OnPropertyChanged("ResultData");
             }
 
         }
@@ -101,8 +124,9 @@ namespace MyVisualJSONEditor.ViewModels
             set
             {
                 _SelectedPost = value;
-                if (_SelectedPost != null)
-                    this["Store.ParamSet.PostName"] = _SelectedPost.PostName;
+                //@todo
+                //if (_SelectedPost != null)
+                    //this["Store.ParamSet.PostName"] = _SelectedPost.PostName;
                 OnPropertyChanged("SelectedPost");
             }
         }
@@ -115,20 +139,16 @@ namespace MyVisualJSONEditor.ViewModels
             Posts.Add(new Post() { PostName = "Post123", PostId = "123" });
             this.PropertyChanged += MainWindowVM_PropertyChanged;
             Control = new ItemsControl();
-            Schema = MyVisualJSONEditor.Properties.Resources.Schema;
-            //Data = MyVisualJSONEditor.Properties.Resources.Data;
-            var sh = JSchema.Parse(Resources.TestSchema);
-            Data = JObjectVM.FromSchema(sh);
-            this["Store.ParamSet.PostName"] = "test";
-            OnPropertyChanged("[Store.ParamSet.PostName]");
+            Schema = MyVisualJSONEditor.Properties.Resources.TestSchema;
+            JsonData = MyVisualJSONEditor.Properties.Resources.TestData;
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {/*
+        {
             switch (e.PropertyName)
             {
                 case("Schema"):
-                case("Data"):
+                case("JsonData"):
                     SchemaError = null;
                     Control.Items.Clear();
                     JSchema jschema = null;
@@ -143,24 +163,29 @@ namespace MyVisualJSONEditor.ViewModels
                     }
                     DataError = null;
                     JObject jdata = null;
-                    dynamic dData = null;
                     try
                     {
-                        //jdata = JObject.Parse(Data);
-                        //JsonData = jdata;
-                        //dData = JsonConvert.DeserializeObject(Data);
+                        jdata = JObject.Parse(JsonData);
                     }
                     catch (Exception ex)
                     {
                         DataError = ex.Message;
                         return;
                     }
-                    JSBuilder.Build(Control, "", jschema , this);
                     bool isValid = jdata.IsValid(jschema);
+                    if (isValid)
+                    {
+                        Data = JObjectVM.FromJson(jdata, jschema);
+                        Data.PropertyChanged += (se, ar) => { ResultData = Data.ToJson(); };
+                    }
+                    else
+                    {
+                        Data = null;
+                    }
                     _IsValid = isValid;
                     OnPropertyChanged("DataStatusColor");
                     break;
-            }*/
+            }
         }
 
     }

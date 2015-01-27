@@ -34,6 +34,53 @@ namespace MyVisualJSONEditor.ViewModels
             return obj;
         }
 
+        public static JObjectVM FromJson(JObject obj, JSchema schema)
+        {
+            var result = new JObjectVM();
+            foreach (var property in schema.Properties)
+            {
+                if (property.Value.Type == JSchemaType.Array)
+                {
+                    var propertySchema = property.Value.Items.First();
+                    var value = obj[property.Key];
+                    ObservableCollection<JTokenVM> list = null;
+                    if (value != null)
+                    {
+                        var objects = value.Select(o => o is JObject ?
+                            (JTokenVM)FromJson((JObject)o, propertySchema) : JValueVM.FromJson((JValue)o, propertySchema));
+
+                        list = new ObservableCollection<JTokenVM>(objects);
+                        foreach (var item in list)
+                            item.ParentList = list;
+                    }
+                    else
+                    {
+                        list = new ObservableCollection<JTokenVM>();
+                    }
+
+                    result[property.Key] = list;
+                }
+                else if (property.Value.Type == JSchemaType.Object)
+                {
+                    var token = obj[property.Key];
+                    if (token is JObject)
+                        result[property.Key] = FromJson((JObject)token, property.Value);
+                    else
+                        result[property.Key] = null;
+                }
+                else
+                {
+                    JToken value;
+                    if (obj.TryGetValue(property.Key, out value))
+                        result[property.Key] = ((JValue)value).Value;
+                    else
+                        result[property.Key] = GetDefaultValue(property);
+                }
+            }
+            result.Schema = schema;
+            return result;
+        }
+
         private static object GetDefaultValue(KeyValuePair<string, JSchema> property)
         {
             JSchema sh = property.Value;
