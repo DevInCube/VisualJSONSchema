@@ -9,10 +9,10 @@
     <Grid Background="WhiteSmoke">
         <GroupBox Header="{Binding Key, FallbackValue=Key}">
             <Expander Header="{Binding Schema.Description, FallbackValue=Description}">
-                <StackPanel>
-                    <CheckBox IsChecked="{Binding HasValue, Mode=OneWay}" 
-                                      Margin="4,8,4,4" Content="Specify values" 
-                                      Checked="OnCreateObject" Unchecked="OnRemoveObject" Tag="{Binding}" />
+                <StackPanel IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}">
+                    <CheckBox IsChecked="{Binding HasValue, Mode=OneWay}"
+                            Margin="4,8,4,4" Content="Specify values" 
+                            Checked="OnCreateObject" Unchecked="OnRemoveObject" Tag="{Binding}" />
                     <views:JsonSchemaBuilder Data="{Binding Value}" />
                 </StackPanel>
             </Expander>

@@ -1,4 +1,5 @@
 ﻿using MyVisualJSONEditor.ViewModels;
+using MyVisualJSONEditor.Tools;
 using MyVisualJSONEditor.Views.Templates;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -65,7 +66,7 @@ namespace MyVisualJSONEditor.Views.Controls
                 templateType = typeof(NumberTemplate);
             if (type == JSchemaType.Boolean)
                 templateType = typeof(BooleanTemplate);
-            if (type == JSchemaType.Object)
+            if (type.HasFlag(JSchemaType.Object)) 
                 templateType = typeof(ObjectTemplate);
             if (type == JSchemaType.Array)
             {

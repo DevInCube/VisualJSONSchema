@@ -8,7 +8,8 @@
              xmlns:myConv="clr-namespace:MyVisualJSONEditor.Views.Converters"
              mc:Ignorable="d" 
              d:DesignWidth="300">
-    <Grid Background="WhiteSmoke">
+    <Grid Background="WhiteSmoke" 
+          IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}">
         <GroupBox Header="{Binding Key, FallbackValue=Key}" >
             <StackPanel>
                 <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"

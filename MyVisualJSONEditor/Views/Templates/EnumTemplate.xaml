@@ -10,7 +10,8 @@
         <myConv:EnumConverter x:Key="EnumConverter"/>
         <myConv:IndexConverter x:Key="IndexConverter"/>
     </UserControl.Resources>
-    <StackPanel Background="WhiteSmoke">
+    <StackPanel Background="WhiteSmoke"
+                IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}">
         <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" />
         <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
                                Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}" />
