@@ -20,9 +20,10 @@ namespace MyVisualJSONEditor.ViewModels
     {
 
         private JObjectVM _Data;
+        private JSchema _JSchema;
         private string _Schema, _SchemaError, _DataError, _ResultData, _JsonData;
         private string _DbHost;
-        private bool _IsValid;
+        private bool _IsValid, _IsResultValid;
         private ItemsControl _Control;
 
         public string DbHost
@@ -62,6 +63,12 @@ namespace MyVisualJSONEditor.ViewModels
         {
             get { return _Data;  }
             set { _Data = value; OnPropertyChanged("Data"); }
+        }
+
+        public JSchema JSchema
+        {
+            get { return _JSchema; }
+            set { _JSchema = value; OnPropertyChanged("JSchema"); }
         }
 
         public string Schema {
@@ -106,10 +113,13 @@ namespace MyVisualJSONEditor.ViewModels
 
         public Brush DataStatusColor
         {
-            get { return _IsValid ? Brushes.Beige : Brushes.Bisque; }
+            get { return _IsValid ? Brushes.Azure : Brushes.Bisque; }
         }
 
-        
+        public Brush ResultDataStatusColor
+        {
+            get { return _IsResultValid ? Brushes.Azure : Brushes.Bisque; }
+        }
 
         public class Post
         {
@@ -139,8 +149,8 @@ namespace MyVisualJSONEditor.ViewModels
             Posts.Add(new Post() { PostName = "Post123", PostId = "123" });
             this.PropertyChanged += MainWindowVM_PropertyChanged;
             Control = new ItemsControl();
-            Schema = MyVisualJSONEditor.Properties.Resources.TestSchema;
-            JsonData = MyVisualJSONEditor.Properties.Resources.TestData;
+            Schema = MyVisualJSONEditor.Properties.Resources.Schema;
+            JsonData = MyVisualJSONEditor.Properties.Resources.Data;
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -151,10 +161,9 @@ namespace MyVisualJSONEditor.ViewModels
                 case("JsonData"):
                     SchemaError = null;
                     Control.Items.Clear();
-                    JSchema jschema = null;
                     try
                     {
-                        jschema = JSchema.Parse(Schema);
+                        JSchema = JSchema.Parse(Schema);
                     }
                     catch (Exception ex)
                     {
@@ -172,11 +181,14 @@ namespace MyVisualJSONEditor.ViewModels
                         DataError = ex.Message;
                         return;
                     }
-                    bool isValid = jdata.IsValid(jschema);
+                    bool isValid = jdata.IsValid(JSchema);
                     if (isValid)
                     {
-                        Data = JObjectVM.FromJson(jdata, jschema);
-                        Data.PropertyChanged += (se, ar) => { ResultData = Data.ToJson(); };
+                        Data = JObjectVM.FromJson(jdata, JSchema);
+                        Data.PropertyChanged += (se, ar) => {
+                            ShowResult();
+                        };
+                        ShowResult();
                     }
                     else
                     {
@@ -186,6 +198,13 @@ namespace MyVisualJSONEditor.ViewModels
                     OnPropertyChanged("DataStatusColor");
                     break;
             }
+        }
+
+        void ShowResult()
+        {
+            ResultData = Data.ToJson();
+            _IsResultValid = JObject.Parse(ResultData).IsValid(JSchema);
+            OnPropertyChanged("ResultDataStatusColor");
         }
 
     }

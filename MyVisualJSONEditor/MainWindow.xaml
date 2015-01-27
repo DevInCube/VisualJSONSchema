@@ -63,9 +63,13 @@
                 <views:JsonSchemaBuilder x:Name="builder" Data="{Binding Data}"/>
             </ScrollViewer>
         </Grid>
-        <Grid Height="Auto" Margin="10,5,5,5" Grid.Column="2">
-            <TextBox  Text="{Binding ResultData, UpdateSourceTrigger=PropertyChanged}" 
+        
+        <Grid Height="Auto" Grid.Column="2">
+            <DockPanel Margin="5,10,5,5" Grid.Row="1">
+                <TextBox  Text="{Binding ResultData}" 
+                      Background="{Binding ResultDataStatusColor}" 
                       Style="{StaticResource textEditor}"  />
+            </DockPanel>
         </Grid>
     </Grid>
 </Window>

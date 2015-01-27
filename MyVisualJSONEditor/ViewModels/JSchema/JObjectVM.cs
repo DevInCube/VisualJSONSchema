@@ -46,7 +46,8 @@ namespace MyVisualJSONEditor.ViewModels
                         }
                     }
                 }
-                if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
+                if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add 
+                    || ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
                 {
                     if (ar.NewItems[0] is KeyValuePair<string, object>)
                     {
@@ -67,6 +68,15 @@ namespace MyVisualJSONEditor.ViewModels
 
         public static JObjectVM FromSchema(JSchema schema)
         {
+            if (schema.OneOf.Count > 0)
+            {
+                JSchema refSchema = null;
+                if (schema.OneOf.Count == 1)
+                    refSchema = schema.OneOf.First();
+                else
+                    throw new NotImplementedException("OneOf.Count > 1");
+                return FromSchema(refSchema);
+            }
             var obj = new JObjectVM();
             if (schema.Default != null)
                 return FromJson(schema.Default as JObject, schema);
@@ -89,6 +99,15 @@ namespace MyVisualJSONEditor.ViewModels
 
         public static JObjectVM FromJson(JObject obj, JSchema schema)
         {
+            if (schema.OneOf.Count > 0)
+            {
+                JSchema refSchema = null;
+                if (schema.OneOf.Count == 1)
+                    refSchema = schema.OneOf.First();
+                else
+                    throw new NotImplementedException("OneOf.Count > 1");
+                return FromJson(obj, refSchema);
+            }
             var result = new JObjectVM();
             foreach (var property in schema.Properties)
             {
@@ -115,6 +134,7 @@ namespace MyVisualJSONEditor.ViewModels
                 }
                 else if (property.Value.Type.HasFlag(JSchemaType.Object))
                 {
+
                     var token = obj[property.Key];
                     if (token is JObject)
                         result[property.Key] = FromJson((JObject)token, property.Value);

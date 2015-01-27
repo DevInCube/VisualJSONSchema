@@ -9,7 +9,8 @@
     <Grid Background="WhiteSmoke"
           Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
         <GroupBox Header="{Binding Key, FallbackValue=Key}">
-            <Expander Header="{Binding Schema.Description, FallbackValue=Description}">
+            <Expander Header="{Binding Schema.Description, FallbackValue=Description}"
+                      IsExpanded="True">
                 <StackPanel IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}">
                     <CheckBox IsChecked="{Binding HasValue, Mode=OneWay}"
                             Margin="4,8,4,4" Content="Specify values" 
