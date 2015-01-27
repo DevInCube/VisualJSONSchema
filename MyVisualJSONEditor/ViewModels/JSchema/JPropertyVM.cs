@@ -67,5 +67,16 @@ namespace MyVisualJSONEditor.ViewModels
                 return false;
             }
         }
+
+        public bool IsVisible
+        {
+            get
+            {
+                var pair = Schema.ExtensionData.FirstOrDefault(x => x.Key == "visible");
+                if (!pair.Equals(default(KeyValuePair<string, JToken>)))
+                    return bool.Parse(pair.Value.ToString());
+                return true;
+            }
+        }
     }
 }

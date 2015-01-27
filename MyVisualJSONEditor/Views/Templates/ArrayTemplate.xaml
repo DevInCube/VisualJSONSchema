@@ -10,7 +10,9 @@
              xmlns:templates="clr-namespace:MyVisualJSONEditor.Views.Templates" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Background="WhiteSmoke"> 
+    <Grid Background="WhiteSmoke"
+          IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
+          Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}"> 
         <GroupBox Header="{Binding Key, FallbackValue=ListName}" >
             <StackPanel Margin="0,8,0,0">
                 <StackPanel >

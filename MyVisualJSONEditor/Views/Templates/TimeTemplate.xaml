@@ -9,7 +9,8 @@
              mc:Ignorable="d" 
              d:DesignWidth="300">
     <StackPanel Background="WhiteSmoke"
-                IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}">
+                IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
+                Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
         <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" />
         <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
                                    Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}" />

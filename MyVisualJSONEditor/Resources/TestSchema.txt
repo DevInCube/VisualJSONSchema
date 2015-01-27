@@ -12,7 +12,8 @@
 			readonly : true
         },
         'string' : {
-            'type':'string'
+            'type':'string',
+			visible : false
         },
 		'object' : {
 
