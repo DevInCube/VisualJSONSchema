@@ -85,10 +85,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Tools\JSchemaExtension.cs" />
-    <Compile Include="ViewModels\JSchema\JObjectVM.cs" />
-    <Compile Include="ViewModels\JSchema\JPropertyVM.cs" />
-    <Compile Include="ViewModels\JSchema\JTokenVM.cs" />
-    <Compile Include="ViewModels\JSchema\JValueVM.cs" />
+    <Compile Include="ViewModels\JSchemaViewModels\JArrayVM.cs" />
+    <Compile Include="ViewModels\JSchemaViewModels\JObjectVM.cs" />
+    <Compile Include="ViewModels\JSchemaViewModels\JPropertyVM.cs" />
+    <Compile Include="ViewModels\JSchemaViewModels\JTokenVM.cs" />
+    <Compile Include="ViewModels\JSchemaViewModels\JValueVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="Views\Controls\BindablePasswordBox.xaml.cs">

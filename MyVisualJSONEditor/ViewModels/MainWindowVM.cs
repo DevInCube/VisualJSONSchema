@@ -190,7 +190,16 @@ namespace MyVisualJSONEditor.ViewModels
                     if (isValid)
                     {
                         Data = JObjectVM.FromJson(jdata, JSchema);
-                        
+                        var dbStore = Data.Properties.First(x => x.Key == "Store").Value as JObjectVM;
+                        var paramSet = dbStore.Properties.First(x => x.Key == "ParamSet").Value as JObjectVM;
+                        JArrayVM posts = paramSet.Properties.First(x => x.Key == "Posts").Value as JArrayVM;
+                        posts.Items = new ObservableCollection<JTokenVM>()
+                        {
+                            new JValueVM(){ Value = "1" },
+                            new JValueVM(){ Value = "kuku" },
+                            new JValueVM(){ Value = "3ssd" }
+                        };
+
                         Data.PropertyChanged += (se, ar) => {
                             ShowResult();
                         };

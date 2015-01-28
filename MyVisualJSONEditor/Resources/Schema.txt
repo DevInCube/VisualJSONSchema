@@ -53,7 +53,7 @@
 					"type": "string",
 					'visible' : false
 				},
-				"PostList" : {
+				"Posts" : {
 
 					"title" : "Posts",
 				

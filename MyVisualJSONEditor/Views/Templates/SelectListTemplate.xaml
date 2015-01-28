@@ -14,10 +14,14 @@
         <TextBlock Text="{Binding Key, FallbackValue=Key}" Margin="0,0,0,4"/>
         <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
                             Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
-        <ComboBox ItemsSource="{Binding Value}" VerticalAlignment="Top" Margin="0,0,0,8">
+        <ComboBox ItemsSource="{Binding Value.Items}" 
+                  SelectedIndex="{Binding Value.SelectedIndex}"
+                  VerticalAlignment="Top" Margin="0,0,0,8">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Key}"/>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Value}" />
+                    </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>

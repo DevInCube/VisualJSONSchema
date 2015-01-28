@@ -17,7 +17,7 @@
             
             <StackPanel Margin="0,8,0,0">
                 <StackPanel >
-                    <ItemsControl ItemsSource="{Binding Value}" Focusable="False">
+                    <ItemsControl ItemsSource="{Binding Value.Items}" Focusable="False">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <templates:ArrayItemTemplate/>

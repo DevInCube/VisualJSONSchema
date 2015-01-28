@@ -8,7 +8,7 @@
              d:DesignWidth="300">
     <Grid Background="WhiteSmoke"
           Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
-        <TabControl ItemsSource="{Binding Properties}" Focusable="False">
+        <TabControl ItemsSource="{Binding Properties}" SelectedIndex="0" Focusable="False">
             <TabControl.ItemTemplate>                
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=Key}" />

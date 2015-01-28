@@ -36,22 +36,26 @@ namespace MyVisualJSONEditor.ViewModels
                                 this.OnPropertyChanged(pair.Key);
                             };
                         }
-                        else if (val is ObservableCollection<JTokenVM>)
+                        else if (val is JArrayVM)
                         {
-                            var list = val as ObservableCollection<JTokenVM>;
-                            list.CollectionChanged += (se1, ar1) =>
+                            var list = (val as JArrayVM).Items;
+                            if (list != null)
                             {
-                                this.OnPropertyChanged(pair.Key);
-                                if (ar1.Action == NotifyCollectionChangedAction.Add)
+                                list.CollectionChanged += (se1, ar1) =>
                                 {
-                                    foreach (JTokenVM item in ar1.NewItems)
+                                    this.OnPropertyChanged(pair.Key);
+                                    if (ar1.Action == NotifyCollectionChangedAction.Add)
                                     {
-                                        item.PropertyChanged += (se2, ar2) => {
-                                            this.OnPropertyChanged(pair.Key);
-                                        };
+                                        foreach (JTokenVM item in ar1.NewItems)
+                                        {
+                                            item.PropertyChanged += (se2, ar2) =>
+                                            {
+                                                this.OnPropertyChanged(pair.Key);
+                                            };
+                                        }
                                     }
-                                }
-                            };
+                                };
+                            }
                         }
                     }
                 }
@@ -80,7 +84,7 @@ namespace MyVisualJSONEditor.ViewModels
                 }
                 else if (property.Value.Type.HasFlag(JSchemaType.Array))
                 {
-                    obj[property.Key] = new ObservableCollection<JTokenVM>();
+                    obj[property.Key] = new JArrayVM();
                 }
                 else
                     obj[property.Key] = GetDefaultValue(property);
@@ -121,8 +125,9 @@ namespace MyVisualJSONEditor.ViewModels
                     {
                         list = new ObservableCollection<JTokenVM>();
                     }
-
-                    result[property.Key] = list;
+                    JArrayVM array = new JArrayVM();
+                    array.Items = list;
+                    result[property.Key] = array;
                 }
                 else if (property.Value.Type.HasFlag(JSchemaType.Object))
                 {
@@ -187,9 +192,9 @@ namespace MyVisualJSONEditor.ViewModels
                     foreach (var propertyInfo in Schema.Properties)
                     {
                         var property = new JPropertyVM(propertyInfo.Key, this, propertyInfo.Value);
-                        if (property.Value is ObservableCollection<JTokenVM>)
+                        if (property.Value is JArrayVM)
                         {
-                            foreach (var obj in (ObservableCollection<JTokenVM>)property.Value)
+                            foreach (var obj in ((JArrayVM)property.Value).Items)
                                 obj.Schema = propertyInfo.Value.Items.First(); //here i use only first schema
                         }
                         properties.Add(property);
@@ -209,15 +214,7 @@ namespace MyVisualJSONEditor.ViewModels
             {
                 bool ignore = Properties.FirstOrDefault(x => x.Key == pair.Key).Ignore;
                 if (ignore) continue;
-                if (pair.Value is ObservableCollection<JTokenVM>)
-                {
-                    var array = (ObservableCollection<JTokenVM>)pair.Value;
-                    var jArray = new JArray();
-                    foreach (var item in array)
-                        jArray.Add(item.ToJToken());
-                    obj[pair.Key] = jArray;
-                }
-                else if (pair.Value is JTokenVM)
+                if (pair.Value is JTokenVM)
                     obj[pair.Key] = ((JTokenVM)pair.Value).ToJToken();
                 else
                     obj[pair.Key] = new JValue(pair.Value);

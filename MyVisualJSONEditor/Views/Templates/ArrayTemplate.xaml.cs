@@ -34,7 +34,7 @@ namespace MyVisualJSONEditor.Views.Templates
             if (property.Value == null)
                 property.Value = new ObservableCollection<JTokenVM>();
 
-            var list = (ObservableCollection<JTokenVM>)property.Value;
+            var list = (property.Value as JArrayVM).Items;
             var schema = property.Schema.Items;
 
             var obj = JObjectVM.FromSchema(schema.First());
