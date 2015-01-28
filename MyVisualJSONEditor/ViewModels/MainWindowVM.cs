@@ -199,6 +199,17 @@ namespace MyVisualJSONEditor.ViewModels
                             new JValueVM(){ Value = "kuku" },
                             new JValueVM(){ Value = "3ssd" }
                         };
+                        posts.CollectionChanged += (se,ar)=>{
+                            if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
+                            {
+                                var p = (KeyValuePair<string, object>)ar.NewItems[0];
+                                if ((p.Key=="SelectedIndex"))
+                                {
+                                    int index = int.Parse(p.Value.ToString());
+                                    paramSet.Properties.First(x => x.Key == "PostName").Value = (posts.Items[index] as JValueVM).Value;
+                                }
+                            }
+                        };
 
                         Data.PropertyChanged += (se, ar) => {
                             ShowResult();

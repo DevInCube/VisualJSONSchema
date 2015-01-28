@@ -14,6 +14,7 @@ namespace MyVisualJSONEditor.ViewModels
         public JArrayVM()
         {
             this.Items = new ObservableCollection<JTokenVM>();
+            this.SelectedIndex = 0;
         }
 
         public override JToken ToJToken()
@@ -30,6 +31,7 @@ namespace MyVisualJSONEditor.ViewModels
             set
             {
                 this["Value"] = value;
+                OnPropertyChanged("Items");
             }
         }
 
