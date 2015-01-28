@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MyVisualJSONEditor.Tools;
 
 namespace MyVisualJSONEditor.ViewModels
 {
@@ -35,7 +36,7 @@ namespace MyVisualJSONEditor.ViewModels
         /// <summary>Gets a value indicating whether the property is required. </summary>
         public bool IsRequired
         {
-            get { return Schema.Required.FirstOrDefault(pp=>pp.Equals(Key))!=null; }
+            get { return Parent.Schema.IsRequired(Key); }
         }
 
         /// <summary>Gets or sets the value of the property. </summary>

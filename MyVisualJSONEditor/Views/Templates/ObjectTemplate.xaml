@@ -11,7 +11,7 @@
         <GroupBox Header="{Binding Key, FallbackValue=Key}">
             <Expander Header="{Binding Schema.Description, FallbackValue=Description}"
                       IsExpanded="True">
-                <StackPanel IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}">
+                <StackPanel IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}" Margin="5">
                     <CheckBox IsChecked="{Binding HasValue, Mode=OneWay}"
                             Margin="4,8,4,4" Content="Specify values" 
                             Checked="OnCreateObject" Unchecked="OnRemoveObject" Tag="{Binding}" />

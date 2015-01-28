@@ -131,6 +131,12 @@
     <Compile Include="Views\Templates\NumberTemplate.xaml.cs">
       <DependentUpon>NumberTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Templates\ObjectRequiredTemplate.xaml.cs">
+      <DependentUpon>ObjectRequiredTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Templates\TabRootTemplate.xaml.cs">
+      <DependentUpon>TabRootTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Templates\ObjectTemplate.xaml.cs">
       <DependentUpon>ObjectTemplate.xaml</DependentUpon>
     </Compile>
@@ -197,6 +203,14 @@
     <Page Include="Views\Templates\NumberTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Templates\ObjectRequiredTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Templates\TabRootTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Templates\ObjectTemplate.xaml">
       <SubType>Designer</SubType>

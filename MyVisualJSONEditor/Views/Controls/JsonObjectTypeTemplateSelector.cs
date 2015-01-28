@@ -21,6 +21,7 @@ namespace MyVisualJSONEditor.Views.Controls
         public JsonObjectTypeTemplateSelector()
         {
             Templates.Add("Object", CreateTemplate(typeof(ObjectTemplate)));
+            Templates.Add("ObjectRequired", CreateTemplate(typeof(ObjectRequiredTemplate)));
             Templates.Add("String", CreateTemplate(typeof(StringTemplate)));
             Templates.Add("Password", CreateTemplate(typeof(PasswordTemplate)));
             Templates.Add("Boolean", CreateTemplate(typeof(BooleanTemplate)));
@@ -32,6 +33,7 @@ namespace MyVisualJSONEditor.Views.Controls
             Templates.Add("Integer", CreateTemplate(typeof(IntegerTemplate)));
             Templates.Add("Number", CreateTemplate(typeof(NumberTemplate)));
             Templates.Add("Enum", CreateTemplate(typeof(EnumTemplate)));
+            Templates.Add("TabRoot", CreateTemplate(typeof(TabRootTemplate)));
         }
 
         protected DataTemplate CreateTemplate(Type templateType)
@@ -48,14 +50,25 @@ namespace MyVisualJSONEditor.Views.Controls
             var presenter = (FrameworkElement)container;
 
             if (item is JObjectVM)
-                return (DataTemplate)presenter.Resources["RootTemplate"];
+            {
+                if ((item as JObjectVM).Schema.Format == "tab")
+                    return Templates["TabRoot"];
+                else
+                    return (DataTemplate)presenter.Resources["RootTemplate"];
+            }
 
             JSchema schema = null;
+            bool required = false;
             if (item is JTokenVM)
+            {
                 schema = ((JTokenVM)item).Schema;
+            }
 
             if (item is JPropertyVM)
+            {
                 schema = ((JPropertyVM)item).Schema;
+                required = ((JPropertyVM)item).IsRequired;
+            }
 
             var type = schema.Type;
 
@@ -90,7 +103,12 @@ namespace MyVisualJSONEditor.Views.Controls
             if (type == JSchemaType.Boolean)
                 return Templates["Boolean"];
             if (type.HasFlag(JSchemaType.Object))
-                return Templates["Object"];
+            {
+                if (required)
+                    return Templates["ObjectRequired"];
+                else
+                    return Templates["Object"];
+            }
             if (type == JSchemaType.Array)
             {
                 if (schema.Format == "select")

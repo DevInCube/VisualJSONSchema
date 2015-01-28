@@ -1,5 +1,6 @@
 {
 	'type':'object', 
+	
 
     'title':'Root Object Title',
 	'description' : 'This is Root Object description',

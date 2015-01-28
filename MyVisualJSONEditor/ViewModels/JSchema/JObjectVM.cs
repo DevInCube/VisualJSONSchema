@@ -126,7 +126,6 @@ namespace MyVisualJSONEditor.ViewModels
                 }
                 else if (property.Value.Type.HasFlag(JSchemaType.Object))
                 {
-
                     var token = obj[property.Key];
                     if (token is JObject)
                         result[property.Key] = FromJson((JObject)token, property.Value);

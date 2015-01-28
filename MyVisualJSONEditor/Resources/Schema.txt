@@ -5,6 +5,7 @@
 
 	"title" : "EventStore main.xconf",
 	"type" : "object",
+	'format' : 'tab',
 
 	"definitions" : {
 
@@ -45,15 +46,12 @@
 				"PostName": {
 					"title" : "Post name",
 					"type": "string",
-					"binding" : {
-						"path" : "SelectedPost.PostName",
-						"mode" : "TwoWay"
-					}
+					'visible' : false
 				},
 				"Post": {
 					"title" : "Post",
 					"type": "string",
-					"readonly" : true
+					'visible' : false
 				},
 				"PostList" : {
 

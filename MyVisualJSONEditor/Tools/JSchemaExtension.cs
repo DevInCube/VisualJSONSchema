@@ -16,5 +16,10 @@ namespace MyVisualJSONEditor.Tools
             JSchemaType type = (JSchemaType)nType;
             return type.HasFlag(flag);
         }
+
+        public static bool IsRequired(this JSchema sh, string key)
+        {
+            return sh.Required.FirstOrDefault(x => x.Equals(key)) != null;
+        }
     }
 }
