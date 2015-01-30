@@ -16,9 +16,9 @@ namespace MyVisualJSONEditor.Views.Controls
     public class JsonObjectTypeTemplateSelector : DataTemplateSelector
     {
 
-        private Dictionary<string, DataTemplate> Templates = new Dictionary<string, DataTemplate>();
+        private static Dictionary<string, DataTemplate> Templates = new Dictionary<string, DataTemplate>();
 
-        public JsonObjectTypeTemplateSelector()
+        static JsonObjectTypeTemplateSelector()
         {
             Templates.Add("Object", CreateTemplate(typeof(ObjectTemplate)));
             Templates.Add("ObjectRequired", CreateTemplate(typeof(ObjectRequiredTemplate)));
@@ -36,7 +36,7 @@ namespace MyVisualJSONEditor.Views.Controls
             Templates.Add("TabRoot", CreateTemplate(typeof(TabRootTemplate)));
         }
 
-        protected DataTemplate CreateTemplate(Type templateType)
+        private static DataTemplate CreateTemplate(Type templateType)
         {
             var template = new DataTemplate();
             template.VisualTree = new FrameworkElementFactory(templateType);
