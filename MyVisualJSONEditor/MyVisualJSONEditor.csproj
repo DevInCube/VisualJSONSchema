@@ -95,7 +95,7 @@
     <Compile Include="Views\Controls\BindablePasswordBox.xaml.cs">
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\JsonObjectTypeTemplateSelector.cs" />
+    <Compile Include="Views\Controls\JObjectTypeTemplateSelector.cs" />
     <Compile Include="Views\Controls\TabControlEx.cs" />
     <Compile Include="Views\Converters\DateConverter.cs" />
     <Compile Include="Views\Converters\EnumConverter.cs" />
@@ -135,6 +135,9 @@
     </Compile>
     <Compile Include="Views\Templates\ObjectRequiredTemplate.xaml.cs">
       <DependentUpon>ObjectRequiredTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Templates\RootTemplate.xaml.cs">
+      <DependentUpon>RootTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Templates\TabRootTemplate.xaml.cs">
       <DependentUpon>TabRootTemplate.xaml</DependentUpon>
@@ -209,6 +212,10 @@
     <Page Include="Views\Templates\ObjectRequiredTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Templates\RootTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Templates\TabRootTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>

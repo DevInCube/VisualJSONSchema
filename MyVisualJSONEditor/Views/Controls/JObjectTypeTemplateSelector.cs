@@ -13,13 +13,14 @@ using System.Windows.Controls;
 
 namespace MyVisualJSONEditor.Views.Controls
 {
-    public class JsonObjectTypeTemplateSelector : DataTemplateSelector
+    public class JObjectTypeTemplateSelector : DataTemplateSelector
     {
 
         private static Dictionary<string, DataTemplate> Templates = new Dictionary<string, DataTemplate>();
 
-        static JsonObjectTypeTemplateSelector()
+        static JObjectTypeTemplateSelector()
         {
+            Templates.Add("Root", CreateTemplate(typeof(RootTemplate)));
             Templates.Add("Object", CreateTemplate(typeof(ObjectTemplate)));
             Templates.Add("ObjectRequired", CreateTemplate(typeof(ObjectRequiredTemplate)));
             Templates.Add("String", CreateTemplate(typeof(StringTemplate)));
@@ -54,7 +55,7 @@ namespace MyVisualJSONEditor.Views.Controls
                 if ((item as JObjectVM).Schema.Format == "tab")
                     return Templates["TabRoot"];
                 else
-                    return (DataTemplate)presenter.Resources["RootTemplate"];
+                    return Templates["Root"];
             }
 
             JSchema schema = null;

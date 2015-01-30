@@ -22,7 +22,7 @@
                                 <RowDefinition x:Name="RowDefinition1" Height="*" />
                             </Grid.RowDefinitions>
                             <DockPanel Margin="2,2,0,0" LastChildFill="False">
-                                <TabPanel x:Name="HeaderPanel" Margin="0,0,0,-1" VerticalAlignment="Bottom" Panel.ZIndex="1" DockPanel.Dock="Right"
+                                <TabPanel x:Name="HeaderPanel" Margin="0,0,0,-1" VerticalAlignment="Bottom" Panel.ZIndex="1" DockPanel.Dock="Left"
                                   IsItemsHost="True" KeyboardNavigation.TabIndex="1" />
                             </DockPanel>
                             <Border x:Name="ContentPanel" Grid.Row="1" Grid.Column="0"
@@ -40,7 +40,9 @@
     </UserControl.Resources>
     <Grid Background="WhiteSmoke"
           Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
-        <controls:TabControlEx x:Name="TabControl" ItemsSource="{Binding Properties}" SelectedIndex="0" Focusable="False">
+        <controls:TabControlEx x:Name="TabControl" 
+                               ItemsSource="{Binding Properties}" SelectedIndex="0" Focusable="False"
+                               IsSynchronizedWithCurrentItem="True">
             <controls:TabControlEx.ItemTemplate>                
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=Key}" />

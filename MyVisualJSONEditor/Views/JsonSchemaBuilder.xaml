@@ -4,25 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:MyVisualJSONEditor.Views.Controls" 
-             xmlns:views="clr-namespace:MyVisualJSONEditor.Views" 
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <ContentPresenter x:Name="Presenter">
-        <ContentPresenter.Resources>
-            <DataTemplate x:Key="RootTemplate">
-                <ItemsControl Background="WhiteSmoke" 
-                  ItemsSource="{Binding Properties}" Focusable="False">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <views:JsonSchemaBuilder Data="{Binding}" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </DataTemplate>
-        </ContentPresenter.Resources>
         <ContentPresenter.ContentTemplateSelector>         
-            <controls:JsonObjectTypeTemplateSelector />
+            <controls:JObjectTypeTemplateSelector />
         </ContentPresenter.ContentTemplateSelector>
     </ContentPresenter>
 </UserControl>
