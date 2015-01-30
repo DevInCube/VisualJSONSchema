@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MyVisualJSONEditor.Views.Templates" 
+                    >
+    <DataTemplate x:Key="Root">
+        <local:RootTemplate />
+    </DataTemplate>
+    <DataTemplate x:Key="TabRoot">
+        <local:TabRootTemplate />
+    </DataTemplate>
+    <DataTemplate x:Key="Array">
+        <local:ArrayTemplate />
+    </DataTemplate>
+    <DataTemplate x:Key="Object">
+        <local:ObjectTemplate />
+    </DataTemplate>
+    <DataTemplate x:Key="ObjectRequired">
+        <local:ObjectRequiredTemplate />
+    </DataTemplate>
+    <DataTemplate x:Key="String">
+        <local:StringTemplate />
+    </DataTemplate>
+    <DataTemplate x:Key="Integer">
+        <local:IntegerTemplate />
+    </DataTemplate>
+    <DataTemplate x:Key="Number">
+        <local:NumberTemplate />
+    </DataTemplate>
+    <DataTemplate x:Key="Boolean">
+        <local:BooleanTemplate />
+    </DataTemplate>
+    <DataTemplate x:Key="SelectList">
+        <local:SelectListTemplate />
+    </DataTemplate>
+</ResourceDictionary>

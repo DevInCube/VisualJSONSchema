@@ -189,6 +189,7 @@ namespace MyVisualJSONEditor.ViewModels
                     bool isValid = jdata.IsValid(JSchema);
                     if (isValid)
                     {
+                        //Data = JObjectVM.FromSchema(JSchema);
                         Data = JObjectVM.FromJson(jdata, JSchema);
                         var dbStore = Data.Properties.First(x => x.Key == "Store").Value as JObjectVM;
                         var paramSet = dbStore.Properties.First(x => x.Key == "ParamSet").Value as JObjectVM;

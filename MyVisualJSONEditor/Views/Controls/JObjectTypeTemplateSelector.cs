@@ -17,6 +17,7 @@ namespace MyVisualJSONEditor.Views.Controls
     {
 
         private static Dictionary<string, DataTemplate> Templates = new Dictionary<string, DataTemplate>();
+        private static ResourceDictionary dict = new ResourceDictionary();
 
         static JObjectTypeTemplateSelector()
         {
@@ -35,6 +36,10 @@ namespace MyVisualJSONEditor.Views.Controls
             Templates.Add("Number", CreateTemplate(typeof(NumberTemplate)));
             Templates.Add("Enum", CreateTemplate(typeof(EnumTemplate)));
             Templates.Add("TabRoot", CreateTemplate(typeof(TabRootTemplate)));
+
+            dict.Source = new Uri("../Views/Templates/TemplatePack.xaml",
+                UriKind.RelativeOrAbsolute);
+            var root = dict["Root"];
         }
 
         private static DataTemplate CreateTemplate(Type templateType)
@@ -42,6 +47,11 @@ namespace MyVisualJSONEditor.Views.Controls
             var template = new DataTemplate();
             template.VisualTree = new FrameworkElementFactory(templateType);
             return template;
+        }
+
+        public DataTemplate GetTemplate(string id)
+        {
+            return (DataTemplate)dict[id];
         }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
@@ -53,9 +63,9 @@ namespace MyVisualJSONEditor.Views.Controls
             if (item is JObjectVM)
             {
                 if ((item as JObjectVM).Schema.Format == "tab")
-                    return Templates["TabRoot"];
+                    return GetTemplate("TabRoot");
                 else
-                    return Templates["Root"];
+                    return GetTemplate("Root");
             }
 
             JSchema schema = null;
@@ -89,7 +99,7 @@ namespace MyVisualJSONEditor.Views.Controls
                         case ("password"):
                             return Templates["Password"];
                         default:
-                            return Templates["String"];
+                            return GetTemplate("String");
                     }
             }
             if (type == JSchemaType.Integer)
@@ -97,25 +107,25 @@ namespace MyVisualJSONEditor.Views.Controls
                 if (schema.Enum.Count > 0)
                     return Templates["Enum"];
                 else
-                    return Templates["Integer"];
+                    return GetTemplate("Integer");
             }
             if (type == JSchemaType.Float)
-                return Templates["Number"];
+                return GetTemplate("Number");
             if (type == JSchemaType.Boolean)
-                return Templates["Boolean"];
+                return GetTemplate("Boolean");
             if (type.HasFlag(JSchemaType.Object))
             {
                 if (required)
-                    return Templates["ObjectRequired"];
+                    return GetTemplate("ObjectRequired");
                 else
-                    return Templates["Object"];
+                    return GetTemplate("Object");
             }
             if (type == JSchemaType.Array)
             {
                 if (schema.Format == "select")
-                    return Templates["SelectList"];
+                    return GetTemplate("SelectList");
                 else
-                    return Templates["Array"];
+                    return GetTemplate("Array");
             }
 
             return base.SelectTemplate(item, container);

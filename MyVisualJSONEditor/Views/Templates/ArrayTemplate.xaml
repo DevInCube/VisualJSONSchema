@@ -14,7 +14,6 @@
           IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
           Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}"> 
         <GroupBox Header="{Binding Key, FallbackValue=ListName}" >
-            
             <StackPanel Margin="0,8,0,0">
                 <StackPanel >
                     <ItemsControl ItemsSource="{Binding Value.Items}" Focusable="False">
