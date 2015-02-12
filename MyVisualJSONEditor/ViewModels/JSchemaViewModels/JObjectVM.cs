@@ -241,10 +241,10 @@ namespace MyVisualJSONEditor.ViewModels
             return token;
         }
 
-        public JType GetValue<JType>(string path) where JType : JTokenVM
+        public JType GetValue<JType>(string path)
         {
             JPropertyVM prop = GetProperty(path);
-            if (prop == null) return null;
+            if (prop == null) return default(JType);
             return (JType)prop.Value;
         }
 

@@ -195,6 +195,7 @@ namespace MyVisualJSONEditor.ViewModels
                         var paramSet = dbStore.Properties.First(x => x.Key == "ParamSet").Value as JObjectVM;
                         paramSet.Properties.First(x => x.Key == "Posts").Value as JArrayVM;*/
                         Data = JObjectVM.FromJson(jdata, JSchema);
+                        string ss = Data.GetValue<string>("Store.ParamSet.PostName");
                         JPropertyVM tt = Data.GetProperty("Store.ParamSet.PostName");
                         JObjectVM paramSet = Data.GetValue<JObjectVM>("Store.ParamSet");
                         JArrayVM posts = Data.GetValue<JArrayVM>("Store.ParamSet.Posts");
