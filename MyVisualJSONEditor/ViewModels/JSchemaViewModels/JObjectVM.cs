@@ -28,6 +28,7 @@ namespace MyVisualJSONEditor.ViewModels
         public JObjectVM()
         {
             Data = new JsonDataImpl(this);
+            List<string> depPar = new List<string> { "Item[]", "Count", "Keys", "Values" };
             this.CollectionChanged += (se, ar) =>
             {
                 if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add 
@@ -42,7 +43,8 @@ namespace MyVisualJSONEditor.ViewModels
                             var jobj = val as JObjectVM;
                             jobj.PropertyChanged += (se2, ar2) =>
                             {
-                                this.OnPropertyChanged(pair.Key);
+                                if (!depPar.Contains(ar2.PropertyName))
+                                    this.OnPropertyChanged(pair.Key+"."+ar2.PropertyName);
                             };
                         }
                         else if (val is JArrayVM)
@@ -59,14 +61,18 @@ namespace MyVisualJSONEditor.ViewModels
                                         {
                                             item.PropertyChanged += (se2, ar2) =>
                                             {
-                                                this.OnPropertyChanged(pair.Key);
+                                                if (!depPar.Contains(ar2.PropertyName))
+                                                    this.OnPropertyChanged(pair.Key+"."+ar2.PropertyName);
                                             };
                                         }
                                     }
                                 };
                             }
                         }
+                        if (!depPar.Contains(pair.Key))
+                            this.OnPropertyChanged(pair.Key);
                     }
+                    
                 }
             };
         }
@@ -324,15 +330,6 @@ namespace MyVisualJSONEditor.ViewModels
                 buffer.Append(ch);
             }
             throw new Exception("unclosed indexer");
-        }
-
-        public JPropertyVM GetProperty(string path)
-        {
-            object obj = GetValue(path);
-            if (obj is JPropertyVM)
-                return obj as JPropertyVM;
-            else
-                throw new Exception("not a JPropertyVM");
         }
 
         public JType GetValue<JType>(string path)

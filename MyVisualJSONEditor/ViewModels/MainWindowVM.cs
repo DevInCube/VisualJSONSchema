@@ -189,14 +189,14 @@ namespace MyVisualJSONEditor.ViewModels
                     bool isValid = jdata.IsValid(JSchema);
                     if (isValid)
                     {
-                        //Data = JObjectVM.FromSchema(JSchema);
-                        /*Data = JObjectVM.FromJson(jdata, JSchema);
-                        var dbStore = Data.Properties.First(x => x.Key == "Store").Value as JObjectVM;
-                        var paramSet = dbStore.Properties.First(x => x.Key == "ParamSet").Value as JObjectVM;
-                        paramSet.Properties.First(x => x.Key == "Posts").Value as JArrayVM;*/
                         Data = JObjectVM.FromJson(jdata, JSchema);
+                        JObjectVM ps = Data.Data["Store"] as JObjectVM;
+                        ps.PropertyChanged += (AccessKeyEvent, o) =>
+                        {
+                            if(o.PropertyName=="DbPort")
+                                return;
+                        };
                         string ss = Data.Data["Store.ParamSet.PostName"] as string;
-                        JPropertyVM tt = Data.GetProperty("Store.ParamSet.PostName");
                         JObjectVM paramSet = Data.GetValue<JObjectVM>("Store.ParamSet");
                         JArrayVM posts = Data.Data["Store.ParamSet.Posts"] as JArrayVM;
                         posts.Items = new ObservableCollection<JTokenVM>()
@@ -218,7 +218,6 @@ namespace MyVisualJSONEditor.ViewModels
                                 }
                             }
                         };
-
                         Data.PropertyChanged += (se, ar) => {
                             ShowResult();
                         };
