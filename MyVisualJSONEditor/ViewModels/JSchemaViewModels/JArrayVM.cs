@@ -8,11 +8,20 @@ using System.Threading.Tasks;
 
 namespace MyVisualJSONEditor.ViewModels
 {
+
+    public interface IJsonArray : IList<object>
+    {
+        //
+    }
+
     public class JArrayVM : JTokenVM
     {
 
+        public IJsonArray Data { get; private set; }
+
         public JArrayVM()
         {
+            this.Data = new JsonArrayImpl(this);
             this.Items = new ObservableCollection<JTokenVM>();
             this.SelectedIndex = 0;
             this.DisplayMemberPath = "";
@@ -56,5 +65,114 @@ namespace MyVisualJSONEditor.ViewModels
             }
         }
 
+    }
+
+    class JsonArrayImpl : IJsonArray
+    {
+
+        private JArrayVM vm;
+
+        public JsonArrayImpl(JArrayVM vm)
+        {
+            this.vm = vm;
+        }
+
+        private JTokenVM CreateItem(object item)
+        {
+            JTokenVM val = null;
+            if (item is JTokenVM)
+                val = item as JTokenVM;
+            else
+                val = new JValueVM() { Value = item };
+            return val;
+        }
+
+        private JTokenVM GetItem(object item)
+        {
+            return vm.Items.FirstOrDefault(x => x["Value"] == item);
+        }
+
+        public int IndexOf(object item)
+        {
+            var it = GetItem(item);
+            if (it == null) return -1;
+            return vm.Items.IndexOf(it);
+        }
+
+        public void Insert(int index, object item)
+        {
+
+            vm.Items.Insert(index, CreateItem(item));
+        }
+
+        public void RemoveAt(int index)
+        {
+            vm.Items.RemoveAt(index);
+        }
+
+        public object this[int index]
+        {
+            get
+            {
+                var item = vm.Items[index];
+                if (item is JValueVM)
+                    return vm.Items[index]["Value"];
+                else
+                    return item;
+            }
+            set
+            {
+                vm.Items[index]["Value"] = value;
+            }
+        }
+
+        public void Add(object item)
+        {
+            vm.Items.Add(CreateItem(item));
+        }
+
+        public void Clear()
+        {
+            vm.Items.Clear();
+        }
+
+        public bool Contains(object item)
+        {
+            return GetItem(item) != null;
+        }
+
+        public void CopyTo(object[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Count
+        {
+            get { return vm.Items.Count; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
+
+        public bool Remove(object item)
+        {
+            JTokenVM it = GetItem(item);
+            return vm.Items.Remove(it);
+        }
+
+        public IEnumerator<object> GetEnumerator()
+        {
+            foreach (var item in vm.Items)
+            {
+                yield return item["Value"];
+            }
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

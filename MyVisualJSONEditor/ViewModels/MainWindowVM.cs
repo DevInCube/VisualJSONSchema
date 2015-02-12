@@ -195,15 +195,16 @@ namespace MyVisualJSONEditor.ViewModels
                         var paramSet = dbStore.Properties.First(x => x.Key == "ParamSet").Value as JObjectVM;
                         paramSet.Properties.First(x => x.Key == "Posts").Value as JArrayVM;*/
                         Data = JObjectVM.FromJson(jdata, JSchema);
-                        string ss = Data.GetValue<string>("Store.ParamSet.PostName");
+                        string ss = Data.Data["Store.ParamSet.PostName"] as string;
                         JPropertyVM tt = Data.GetProperty("Store.ParamSet.PostName");
                         JObjectVM paramSet = Data.GetValue<JObjectVM>("Store.ParamSet");
-                        JArrayVM posts = Data.GetValue<JArrayVM>("Store.ParamSet.Posts");
+                        JArrayVM posts = Data.Data["Store.ParamSet.Posts"] as JArrayVM;
                         posts.Items = new ObservableCollection<JTokenVM>()
                         {
                             new JValueVM(){ Value = new Post() { PostName = "1", PostId = "idddd" } },
                             new JValueVM(){ Value = new Post() { PostName = "2asdasds", PostId ="22222" } },
                         };
+                        var objjj = Data.Data["FileApi.AddFactReact[0].ParamSet"];
                         posts.CollectionChanged += (se,ar)=>{
                             if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
                             {
@@ -212,8 +213,8 @@ namespace MyVisualJSONEditor.ViewModels
                                 {
                                     int index = int.Parse(p.Value.ToString());
                                     Post post = (posts.Items[index] as JValueVM).Value as Post;
-                                    Data.SetValue("Store.ParamSet.PostName", post.PostName);
-                                    Data.SetValue("Store.ParamSet.Post", post.PostId);
+                                    Data.Data["Store.ParamSet.PostName"] = post.PostName;
+                                    Data.Data["Store.ParamSet.Post"] = post.PostId;
                                 }
                             }
                         };

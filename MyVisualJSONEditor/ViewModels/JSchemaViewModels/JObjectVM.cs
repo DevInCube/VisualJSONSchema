@@ -13,12 +13,21 @@ using MyVisualJSONEditor.Tools;
 
 namespace MyVisualJSONEditor.ViewModels
 {
+
+    public interface IJsonData
+    {
+        object this[string key] { get; set; }
+    }
+
     /// <summary>Represents a JSON object. </summary>
     public class JObjectVM : JTokenVM
     {
 
+        public IJsonData Data { get; private set; }
+
         public JObjectVM()
         {
+            Data = new JsonDataImpl(this);
             this.CollectionChanged += (se, ar) =>
             {
                 if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add 
@@ -222,38 +231,149 @@ namespace MyVisualJSONEditor.ViewModels
             return obj;
         }
 
+        public object GetValue(string path)
+        {
+            StringBuilder nameBuffer = new StringBuilder();
+            string propName = null;
+            int index = 0;
+            bool hasIndexer = false;
+            object result = null;
+            JTokenVM obj = this;
+            for (int pos = 0; pos <= path.Length; pos++)
+            {
+                bool isEOF = pos == path.Length;
+                char ch =(char)0;
+                if(!isEOF)
+                    ch = path[pos];
+                if (isEOF || ch == '.')
+                {
+                    propName = nameBuffer.ToString();
+                    nameBuffer.Clear();
+                    if (obj is JArrayVM)
+                    {
+                        throw new Exception("illegal array call");
+                    }
+                    else if (obj is JObjectVM)
+                    {
+                        JPropertyVM prop = (obj as JObjectVM).Properties.FirstOrDefault(x => x.Key == propName);
+                        if (!hasIndexer)
+                        {
+                            if (isEOF)
+                                result = prop;
+                            else
+                                obj = prop.Value as JTokenVM;
+                        }
+                        else
+                        {
+                            hasIndexer = false;
+                            obj = prop.Value as JTokenVM;
+                            if (obj is JArrayVM)
+                            {
+                                object value = (obj as JArrayVM).Data[index];
+                                if (isEOF)
+                                    result = value;
+                                else
+                                {
+                                    if (value is JTokenVM)
+                                        obj = value as JTokenVM;
+                                    else
+                                        throw new Exception("is not a JTokenVM item but a " + value.GetType());
+                                }
+                            }
+                            else
+                            {
+                                throw new Exception("cant call indexer on JObjectVM");
+                            }
+                        }
+                    }
+                    continue;
+                }
+                else if (ch == '[')
+                {
+                    index = ReadIntIndexer(path, pos + 1, ref pos);
+                    hasIndexer = true;
+                    continue;
+                }
+                nameBuffer.Append(ch);
+            }
+            return result;
+        }
+
+        private int ReadIntIndexer(string path, int startPos, ref int endPos)
+        {
+            StringBuilder buffer = new StringBuilder();
+            for (int pos = startPos; pos < path.Length; pos++)
+            {
+                char ch = path[pos];
+                bool isLastChar = pos == path.Length - 1;
+                if (ch == ']' || isLastChar)
+                {
+                    string index = buffer.ToString();
+                    buffer.Clear();
+                    int indexInt = 0;
+                    if (int.TryParse(index, out indexInt))
+                    {
+                        endPos = pos;
+                        return indexInt;
+                    }
+                    else
+                    {
+                        throw new NotImplementedException("Path dict not supperted");
+                    }
+                }
+                buffer.Append(ch);
+            }
+            throw new Exception("unclosed indexer");
+        }
 
         public JPropertyVM GetProperty(string path)
         {
-            string[] parts = path.Split('.');
-            JObjectVM obj = this;
-            JPropertyVM token = null;
-            for (int i = 0; i < parts.Length; i++)
-            {
-                string propName = parts[i];
-                if (obj == null) break;
-                JPropertyVM prop = obj.Properties.FirstOrDefault(x => x.Key == propName);
-                if (i == parts.Length - 1)
-                    token = prop;
-                else
-                    obj = prop.Value as JObjectVM;
-            }
-            return token;
+            object obj = GetValue(path);
+            if (obj is JPropertyVM)
+                return obj as JPropertyVM;
+            else
+                throw new Exception("not a JPropertyVM");
         }
 
         public JType GetValue<JType>(string path)
         {
-            JPropertyVM prop = GetProperty(path);
-            if (prop == null) return default(JType);
-            return (JType)prop.Value;
+            object value = GetValue(path);
+            if (value == null) return default(JType);
+            if(value is JPropertyVM)
+                value = (value as JPropertyVM).Value;
+            if (value is JType)
+                return (JType)value;
+            else
+                throw new Exception("type missmatch");
         }
 
         public void SetValue(string path, object value)
         {
-            JPropertyVM prop = GetProperty(path);
-            if (prop == null) return;
-            prop.Value = value;
+            object obj = GetValue(path);
+             if (obj == null) return;
+             if (obj is JPropertyVM)
+                 (obj as JPropertyVM).Value = value;
+             else if (obj is JTokenVM)
+                 (obj as JTokenVM)["Value"] = value;
+             else
+                 throw new NotImplementedException("cant set to " + obj.GetType());
         }
 
+    }
+
+    class JsonDataImpl : IJsonData
+    {
+        private JObjectVM vm;
+
+        public JsonDataImpl(JObjectVM vm)
+        {
+            this.vm = vm;
+        }
+
+        public object this[string key]
+        {
+            get { return vm.GetValue<object>(key); }
+            set { vm.SetValue(key, value); }
+        }
     }
 }
