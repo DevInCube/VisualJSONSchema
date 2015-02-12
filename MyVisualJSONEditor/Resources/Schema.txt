@@ -61,6 +61,8 @@
 					"format" :"select",
 
 					'ignore' : 'true',
+
+					'DisplayMemberPath' : 'PostName',
 				
 					"bindings" : {
 						"SelectedItem" : {

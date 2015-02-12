@@ -190,24 +190,29 @@ namespace MyVisualJSONEditor.ViewModels
                     if (isValid)
                     {
                         //Data = JObjectVM.FromSchema(JSchema);
-                        Data = JObjectVM.FromJson(jdata, JSchema);
+                        /*Data = JObjectVM.FromJson(jdata, JSchema);
                         var dbStore = Data.Properties.First(x => x.Key == "Store").Value as JObjectVM;
                         var paramSet = dbStore.Properties.First(x => x.Key == "ParamSet").Value as JObjectVM;
-                        JArrayVM posts = paramSet.Properties.First(x => x.Key == "Posts").Value as JArrayVM;
+                        paramSet.Properties.First(x => x.Key == "Posts").Value as JArrayVM;*/
+                        Data = JObjectVM.FromJson(jdata, JSchema);
+                        JPropertyVM tt = Data.GetProperty("Store.ParamSet.PostName");
+                        JObjectVM paramSet = Data.GetValue<JObjectVM>("Store.ParamSet");
+                        JArrayVM posts = Data.GetValue<JArrayVM>("Store.ParamSet.Posts");
                         posts.Items = new ObservableCollection<JTokenVM>()
                         {
-                            new JValueVM(){ Value = "1" },
-                            new JValueVM(){ Value = "kuku" },
-                            new JValueVM(){ Value = "3ssd" }
+                            new JValueVM(){ Value = new Post() { PostName = "1", PostId = "idddd" } },
+                            new JValueVM(){ Value = new Post() { PostName = "2asdasds", PostId ="22222" } },
                         };
                         posts.CollectionChanged += (se,ar)=>{
                             if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
                             {
                                 var p = (KeyValuePair<string, object>)ar.NewItems[0];
-                                if ((p.Key=="SelectedIndex"))
+                                if ((p.Key == "SelectedIndex"))
                                 {
                                     int index = int.Parse(p.Value.ToString());
-                                    paramSet.Properties.First(x => x.Key == "PostName").Value = (posts.Items[index] as JValueVM).Value;
+                                    Post post = (posts.Items[index] as JValueVM).Value as Post;
+                                    Data.SetValue("Store.ParamSet.PostName", post.PostName);
+                                    Data.SetValue("Store.ParamSet.Post", post.PostId);
                                 }
                             }
                         };

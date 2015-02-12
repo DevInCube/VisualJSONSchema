@@ -90,5 +90,17 @@ namespace MyVisualJSONEditor.ViewModels
                 return false;
             }
         }
+
+        public string DisplayMemberPath
+        {
+            get
+            {
+                var pair = Schema.ExtensionData.FirstOrDefault(x => x.Key == "DisplayMemberPath");
+                string path = "Value";
+                if (!pair.Equals(default(KeyValuePair<string, JToken>)))
+                    path += "." + pair.Value.ToString();
+                return path;
+            }
+        }
     }
 }

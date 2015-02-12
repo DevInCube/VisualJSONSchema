@@ -16,14 +16,8 @@
                             Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
         <ComboBox ItemsSource="{Binding Value.Items}" 
                   SelectedIndex="{Binding Value.SelectedIndex}"
+                  DisplayMemberPath="{Binding DisplayMemberPath}"
                   VerticalAlignment="Top" Margin="0,0,0,8">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Value}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
         </ComboBox>
     </StackPanel>
 </UserControl>

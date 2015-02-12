@@ -15,6 +15,7 @@ namespace MyVisualJSONEditor.ViewModels
         {
             this.Items = new ObservableCollection<JTokenVM>();
             this.SelectedIndex = 0;
+            this.DisplayMemberPath = "";
         }
 
         public override JToken ToJToken()
@@ -42,6 +43,16 @@ namespace MyVisualJSONEditor.ViewModels
             {
                 this["SelectedIndex"] = value;
                 OnPropertyChanged("SelectedIndex");
+            }
+        }
+
+        public string DisplayMemberPath
+        {
+            get { return "Value" + (ContainsKey("DisplayMemberPath") ? "." + this["DisplayMemberPath"] : ""); }
+            set
+            {
+                this["DisplayMemberPath"] = value;
+                OnPropertyChanged("DisplayMemberPath");
             }
         }
 

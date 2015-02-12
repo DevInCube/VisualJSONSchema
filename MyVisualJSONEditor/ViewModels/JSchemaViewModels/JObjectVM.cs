@@ -222,5 +222,38 @@ namespace MyVisualJSONEditor.ViewModels
             return obj;
         }
 
+
+        public JPropertyVM GetProperty(string path)
+        {
+            string[] parts = path.Split('.');
+            JObjectVM obj = this;
+            JPropertyVM token = null;
+            for (int i = 0; i < parts.Length; i++)
+            {
+                string propName = parts[i];
+                if (obj == null) break;
+                JPropertyVM prop = obj.Properties.FirstOrDefault(x => x.Key == propName);
+                if (i == parts.Length - 1)
+                    token = prop;
+                else
+                    obj = prop.Value as JObjectVM;
+            }
+            return token;
+        }
+
+        public JType GetValue<JType>(string path) where JType : JTokenVM
+        {
+            JPropertyVM prop = GetProperty(path);
+            if (prop == null) return null;
+            return (JType)prop.Value;
+        }
+
+        public void SetValue(string path, object value)
+        {
+            JPropertyVM prop = GetProperty(path);
+            if (prop == null) return;
+            prop.Value = value;
+        }
+
     }
 }
