@@ -161,12 +161,15 @@
 			"id" : "#Store",
 			"title" : "Store",
 			"type" : "object",
+			
 
 			"properties" : { 
 
 				"ParamSet" :  {
 
 					"type": "object",
+					'format' : 'simple',
+
 					"oneOf": [
 						{ "$ref": "#/definitions/DbStore.ParamSet" }
 					]
@@ -188,6 +191,8 @@
 				"ParamSet": {
 			
 					"type": "object",
+					'format' : 'simple',
+
 					"oneOf": [
 						{ "$ref": "#/definitions/SocketApiImpl.ParamSet" }
 					]
@@ -218,6 +223,8 @@
 							"ParamSet":
 							{
 								"type": "object",
+								'format' : 'simple',
+
 								"oneOf": [
 									{ "$ref": "#/definitions/FileApiItem.ParamSet" }
 								]

@@ -24,7 +24,11 @@ namespace MyVisualJSONEditor.ViewModels
             Parent = parent;
             Schema = schema;
 
-            Parent.PropertyChanged += (sender, args) => OnPropertyChanged("Value");
+            Parent.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName.Equals(Key))
+                    OnPropertyChanged("Value");
+            };
         }
 
         /// <summary>Gets the property key. </summary>
@@ -61,6 +65,14 @@ namespace MyVisualJSONEditor.ViewModels
             get { return Value != null; }
         }
 
+        private object GetExtension(string key)
+        {
+            var pair = Schema.ExtensionData.FirstOrDefault(x => x.Key.Equals(key));
+            if (!pair.Equals(default(KeyValuePair<string, JToken>)))
+                return pair.Value;
+            return null;
+        }
+
         public bool IsReadonly
         {
             get
@@ -91,6 +103,15 @@ namespace MyVisualJSONEditor.ViewModels
                 if (!pair.Equals(default(KeyValuePair<string, JToken>)))
                     return bool.Parse(pair.Value.ToString());
                 return false;
+            }
+        }
+
+        public bool IsExpanded
+        {
+            get
+            {
+                object ext = GetExtension("IsExpanded");
+                return (ext == null) ? true : bool.Parse(ext.ToString());
             }
         }
 

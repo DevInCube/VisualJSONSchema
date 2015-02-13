@@ -25,6 +25,7 @@ namespace MyVisualJSONEditor.Views.Controls
             Templates.Add("Button", CreateTemplate(typeof(ButtonTemplate)));
             Templates.Add("Object", CreateTemplate(typeof(ObjectTemplate)));
             Templates.Add("ObjectRequired", CreateTemplate(typeof(ObjectRequiredTemplate)));
+            Templates.Add("ObjectSimple", CreateTemplate(typeof(ObjectSimpleTemplate)));
             Templates.Add("String", CreateTemplate(typeof(StringTemplate)));
             Templates.Add("Password", CreateTemplate(typeof(PasswordTemplate)));
             Templates.Add("Boolean", CreateTemplate(typeof(BooleanTemplate)));
@@ -71,6 +72,7 @@ namespace MyVisualJSONEditor.Views.Controls
 
             JSchema schema = null;
             bool required = false;
+            bool expanded = true;
             if (item is JTokenVM)
             {
                 schema = ((JTokenVM)item).Schema;
@@ -80,6 +82,7 @@ namespace MyVisualJSONEditor.Views.Controls
             {
                 schema = ((JPropertyVM)item).Schema;
                 required = ((JPropertyVM)item).IsRequired;
+                expanded = ((JPropertyVM)item).IsExpanded;
             }
 
             var type = schema.Type;
@@ -120,6 +123,8 @@ namespace MyVisualJSONEditor.Views.Controls
                 {
                     case ("button"):
                         return Templates["Button"];
+                    case ("simple"):
+                        return Templates["ObjectSimple"];
                 }
                 if (required)
                     return GetTemplate("ObjectRequired");

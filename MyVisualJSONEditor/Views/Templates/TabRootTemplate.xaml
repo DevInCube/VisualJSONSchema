@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              d:DesignWidth="300">
     <UserControl.Resources>
-        <Style TargetType="{x:Type controls:TabControlEx}">
+       <Style TargetType="{x:Type controls:TabControlEx}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TabControl}">
@@ -41,8 +41,7 @@
     <Grid Background="WhiteSmoke"
           Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
         <controls:TabControlEx x:Name="TabControl" 
-                               ItemsSource="{Binding Properties}" SelectedIndex="0" Focusable="False"
-                               IsSynchronizedWithCurrentItem="True">
+                               ItemsSource="{Binding Properties}" SelectedIndex="0" >
             <controls:TabControlEx.ItemTemplate>                
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=Key}" />

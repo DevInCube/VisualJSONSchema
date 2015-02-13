@@ -10,6 +10,7 @@ using System.Windows.Controls.Primitives;
 
 namespace MyVisualJSONEditor.Views.Controls
 {
+
     [TemplatePart(Name = "PART_ItemsHolder", Type = typeof(Panel))]
     public class TabControlEx : TabControl
     {

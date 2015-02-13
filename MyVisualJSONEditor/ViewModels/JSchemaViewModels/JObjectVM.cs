@@ -30,7 +30,6 @@ namespace MyVisualJSONEditor.ViewModels
         public JObjectVM()
         {
             Data = new JsonDataImpl(this);
-            List<string> depPar = new List<string> { "Item[]", "Count", "Keys", "Values" };
             this.CollectionChanged += (se, ar) =>
             {
                 if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add 
@@ -39,38 +38,37 @@ namespace MyVisualJSONEditor.ViewModels
                     if (ar.NewItems[0] is KeyValuePair<string, object>)
                     {
                         var pair = (KeyValuePair<string, object>)ar.NewItems[0];
-                        var val = pair.Value;
-                        if (val is JObjectVM)
+                        string key = pair.Key;
+                        var value = pair.Value;
+                        if (value is JObjectVM)
                         {
-                            var jobj = val as JObjectVM;
+                            var jobj = value as JObjectVM;
                             jobj.PropertyChanged += (se2, ar2) =>
                             {
-                                if (!depPar.Contains(ar2.PropertyName))
-                                    this.OnPropertyChanged(pair.Key+"."+ar2.PropertyName);
+                                this.OnPropertyChanged(pair.Key + "." + ar2.PropertyName);
                             };
                         }
-                        else if (val is JArrayVM)
+                        else if (value is JArrayVM)
                         {
-                            var list = (val as JArrayVM).Items;
+                            var list = (value as JArrayVM).Items;
                             list.CollectionChanged += (se1, ar1) =>
                             {
-                                this.OnPropertyChanged(pair.Key);
+                                this.OnPropertyChanged(key);
                                 if (ar1.Action == NotifyCollectionChangedAction.Add
                                     || ar1.Action == NotifyCollectionChangedAction.Replace)
                                 {
                                     foreach (JTokenVM item in ar1.NewItems)
                                     {
-                                        item.PropertyChanged += (se2, ar2) =>
+                                        item.PropertyChanged += (senderItem, e2) =>
                                         {
-                                            if (!depPar.Contains(ar2.PropertyName))
-                                                this.OnPropertyChanged(pair.Key + "." + ar2.PropertyName);
+                                            int index = list.IndexOf(senderItem as JTokenVM);
+                                            string msg = String.Format("{0}[{1}].{2}", key, index, e2.PropertyName);
+                                            this.OnPropertyChanged(msg);
                                         };
                                     }
                                 }
                             };
                         }
-                        if (!depPar.Contains(pair.Key))
-                            this.OnPropertyChanged(pair.Key);
                     }
                     
                 }

@@ -71,6 +71,7 @@ namespace MyVisualJSONEditor.ViewModels
                     KeyValuePair<string, object> oldItem = new KeyValuePair<string, object>(key, dict[key]);
                     dict[key] = value;
                     OnCollectionChanged(NotifyCollectionChangedAction.Replace, new KeyValuePair<string, object>(key, value), oldItem);
+                    OnPropertyChanged(key);
                 }
             }
         }

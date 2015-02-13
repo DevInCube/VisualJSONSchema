@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +32,8 @@ namespace MyVisualJSONEditor.ViewModels
 
         void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            if (e.Action == NotifyCollectionChangedAction.Add
+                || e.Action == NotifyCollectionChangedAction.Replace)
             {
                 JTokenVM token = e.NewItems[0] as JTokenVM;
                 token.ParentList = this.Items;
@@ -40,7 +42,7 @@ namespace MyVisualJSONEditor.ViewModels
 
         void JArrayVM_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
+            if (e.Action == NotifyCollectionChangedAction.Replace)
             {
                 var p = (KeyValuePair<string, object>)e.NewItems[0];
                 OnPropertyChanged(p.Key);
