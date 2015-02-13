@@ -5,7 +5,6 @@
 
 	"title" : "EventStore main.xconf",
 	"type" : "object",
-	'format' : 'tab',
 
 	"definitions" : {
 
@@ -42,6 +41,13 @@
 					"title" : "Password",
 					"type": "string",
 					'format' : 'password'
+				},
+				"ConnectBtn" : {
+					"title" : "Connect",
+					"type" : "object",
+					"format" :  "button",
+
+					'ignore' : 'true',
 				},
 				"PostName": {
 					"title" : "Post name",

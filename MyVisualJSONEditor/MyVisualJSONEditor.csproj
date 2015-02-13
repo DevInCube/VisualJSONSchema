@@ -139,6 +139,9 @@
     <Compile Include="Views\Templates\RootTemplate.xaml.cs">
       <DependentUpon>RootTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Templates\ButtonTemplate.xaml.cs">
+      <DependentUpon>ButtonTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Templates\TabRootTemplate.xaml.cs">
       <DependentUpon>TabRootTemplate.xaml</DependentUpon>
     </Compile>
@@ -216,6 +219,10 @@
     <Page Include="Views\Templates\RootTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Templates\ButtonTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Templates\TabRootTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>

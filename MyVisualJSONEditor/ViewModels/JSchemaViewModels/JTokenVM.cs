@@ -14,11 +14,19 @@ namespace MyVisualJSONEditor.ViewModels
 
     public abstract class JTokenVM : ObservableDictionary<string, object>
     {
+
+        private JSchema _Schema;
         /// <summary>Gets or sets the schema of the token. </summary>
-        public JSchema Schema { get; set; }
+        public JSchema Schema
+        {
+            get { return _Schema; }
+            set { _Schema = value; OnSetSchema(); }
+        }
 
         /// <summary>Gets or sets the parent list if applicable (may be null). </summary>
         public ObservableCollection<JTokenVM> ParentList { get; set; }
+        protected virtual void OnSetSchema() { }
+
 
         /// <summary>Converts the token to a JSON string. </summary>
         /// <returns>The JSON string. </returns>

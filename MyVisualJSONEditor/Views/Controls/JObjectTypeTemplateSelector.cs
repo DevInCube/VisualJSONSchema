@@ -22,6 +22,7 @@ namespace MyVisualJSONEditor.Views.Controls
         static JObjectTypeTemplateSelector()
         {
             Templates.Add("Root", CreateTemplate(typeof(RootTemplate)));
+            Templates.Add("Button", CreateTemplate(typeof(ButtonTemplate)));
             Templates.Add("Object", CreateTemplate(typeof(ObjectTemplate)));
             Templates.Add("ObjectRequired", CreateTemplate(typeof(ObjectRequiredTemplate)));
             Templates.Add("String", CreateTemplate(typeof(StringTemplate)));
@@ -115,6 +116,11 @@ namespace MyVisualJSONEditor.Views.Controls
                 return GetTemplate("Boolean");
             if (type.HasFlag(JSchemaType.Object))
             {
+                switch (schema.Format)
+                {
+                    case ("button"):
+                        return Templates["Button"];
+                }
                 if (required)
                     return GetTemplate("ObjectRequired");
                 else

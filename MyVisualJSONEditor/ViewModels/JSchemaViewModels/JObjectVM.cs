@@ -23,6 +23,8 @@ namespace MyVisualJSONEditor.ViewModels
     public class JObjectVM : JTokenVM
     {
 
+        private List<JPropertyVM> _Properties;
+
         public IJsonData Data { get; private set; }
 
         public JObjectVM()
@@ -196,26 +198,30 @@ namespace MyVisualJSONEditor.ViewModels
             }
         }
 
+        protected override void OnSetSchema()
+        {
+            _Properties = new List<JPropertyVM>();
+            if (Schema.Properties != null)
+            {
+                foreach (var propertyInfo in Schema.Properties)
+                {
+                    var property = new JPropertyVM(propertyInfo.Key, this, propertyInfo.Value);
+                    if (property.Value is JArrayVM)
+                    {
+                        foreach (var obj in ((JArrayVM)property.Value).Items)
+                            obj.Schema = propertyInfo.Value.Items.First(); //here i use only first schema
+                    }
+                    _Properties.Add(property);
+                }
+            }
+        }
+
         /// <summary>Gets the object's properties. </summary>
         public IEnumerable<JPropertyVM> Properties
         {
             get
             {
-                var properties = new List<JPropertyVM>();
-                if (Schema.Properties != null)
-                {
-                    foreach (var propertyInfo in Schema.Properties)
-                    {
-                        var property = new JPropertyVM(propertyInfo.Key, this, propertyInfo.Value);
-                        if (property.Value is JArrayVM)
-                        {
-                            foreach (var obj in ((JArrayVM)property.Value).Items)
-                                obj.Schema = propertyInfo.Value.Items.First(); //here i use only first schema
-                        }
-                        properties.Add(property);
-                    }
-                }
-                return properties;
+                return _Properties;
             }
         }
 
@@ -354,6 +360,11 @@ namespace MyVisualJSONEditor.ViewModels
                  (obj as JTokenVM)["Value"] = value;
              else
                  throw new NotImplementedException("cant set to " + obj.GetType());
+        }
+
+        public JPropertyVM GetProperty(string name)
+        {
+            return this.Properties.FirstOrDefault(x => x.Key == name);
         }
 
     }

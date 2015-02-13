@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyVisualJSONEditor.Tools;
+using System.Windows.Input;
+using MyToolkit.Command;
+using Xceed.Wpf.Toolkit;
 
 namespace MyVisualJSONEditor.ViewModels
 {
@@ -101,6 +104,13 @@ namespace MyVisualJSONEditor.ViewModels
                     path += "." + pair.Value.ToString();
                 return path;
             }
+        }
+
+        private ICommand _Command;
+
+        public ICommand Command {
+            get { return _Command; }
+            set { _Command = value; OnPropertyChanged("Command"); }
         }
     }
 }

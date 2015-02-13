@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -190,6 +191,7 @@ namespace MyVisualJSONEditor.ViewModels
                     if (isValid)
                     {
                         Data = JObjectVM.FromJson(jdata, JSchema);
+                        Data2 = Data;
                         JObjectVM ps = Data.Data["Store"] as JObjectVM;
                         ps.PropertyChanged += (AccessKeyEvent, o) =>
                         {
@@ -198,6 +200,7 @@ namespace MyVisualJSONEditor.ViewModels
                         };
                         string ss = Data.Data["Store.ParamSet.PostName"] as string;
                         JObjectVM paramSet = Data.GetValue<JObjectVM>("Store.ParamSet");
+                        
                         JArrayVM posts = Data.Data["Store.ParamSet.Posts"] as JArrayVM;
                         posts.Items = new ObservableCollection<JTokenVM>()
                         {
@@ -218,6 +221,10 @@ namespace MyVisualJSONEditor.ViewModels
                                 }
                             }
                         };
+                        paramSet.GetProperty("ConnectBtn").Command = new RelayCommand(() =>
+                        {
+                            MessageBox.Show("Connected!");
+                        });
                         Data.PropertyChanged += (se, ar) => {
                             ShowResult();
                         };
@@ -232,6 +239,8 @@ namespace MyVisualJSONEditor.ViewModels
                     break;
             }
         }
+
+        public static JObjectVM Data2;
 
         void ShowResult()
         {
