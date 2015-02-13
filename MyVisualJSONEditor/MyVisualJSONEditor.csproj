@@ -91,6 +91,7 @@
     <Compile Include="ViewModels\JSchemaViewModels\JTokenVM.cs" />
     <Compile Include="ViewModels\JSchemaViewModels\JValueVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
+    <Compile Include="ViewModels\ObservableDictionary2.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
     <Compile Include="Views\Controls\BindablePasswordBox.xaml.cs">
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>

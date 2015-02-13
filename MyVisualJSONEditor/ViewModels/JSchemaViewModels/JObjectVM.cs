@@ -55,7 +55,8 @@ namespace MyVisualJSONEditor.ViewModels
                             list.CollectionChanged += (se1, ar1) =>
                             {
                                 this.OnPropertyChanged(pair.Key);
-                                if (ar1.Action == NotifyCollectionChangedAction.Add)
+                                if (ar1.Action == NotifyCollectionChangedAction.Add
+                                    || ar1.Action == NotifyCollectionChangedAction.Replace)
                                 {
                                     foreach (JTokenVM item in ar1.NewItems)
                                     {
@@ -125,19 +126,17 @@ namespace MyVisualJSONEditor.ViewModels
                 {
                     var propertySchema = property.Value.Items.First();
                     var value = obj[property.Key];
-                    ObservableCollection<JTokenVM> list = null;
+                    List<JTokenVM> list = null;
                     if (value != null)
                     {
                         var objects = value.Select(o => o is JObject ?
                             (JTokenVM)FromJson((JObject)o, propertySchema) : JValueVM.FromJson((JValue)o, propertySchema));
 
-                        list = new ObservableCollection<JTokenVM>(objects);
-                        foreach (var item in list)
-                            item.ParentList = list;
+                        list = new List<JTokenVM>(objects);
                     }
                     else
                     {
-                        list = new ObservableCollection<JTokenVM>();
+                        list = new List<JTokenVM>();
                     }
                     JArrayVM array = new JArrayVM();
                     result[property.Key] = array;

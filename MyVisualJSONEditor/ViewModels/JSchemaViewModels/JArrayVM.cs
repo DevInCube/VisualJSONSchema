@@ -23,9 +23,19 @@ namespace MyVisualJSONEditor.ViewModels
         {
             this.Data = new JsonArrayImpl(this);
             this.Items = new ObservableCollection<JTokenVM>();
+            this.Items.CollectionChanged += Items_CollectionChanged;
             this.SelectedIndex = 0;
             this.DisplayMemberPath = "";
             this.CollectionChanged += JArrayVM_CollectionChanged;
+        }
+
+        void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                JTokenVM token = e.NewItems[0] as JTokenVM;
+                token.ParentList = this.Items;
+            }
         }
 
         void JArrayVM_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -65,6 +75,16 @@ namespace MyVisualJSONEditor.ViewModels
             }
         }
 
+        public object SelectedItem
+        {
+            get { 
+                int index = this.SelectedIndex;
+                if (index > -1 && index < Items.Count)
+                    return Data[index];
+                return null;
+            }
+        }
+
         public string DisplayMemberPath
         {
             get { return "Value" + (ContainsKey("DisplayMemberPath") ? "." + this["DisplayMemberPath"] : ""); }
@@ -94,6 +114,7 @@ namespace MyVisualJSONEditor.ViewModels
                 val = item as JTokenVM;
             else
                 val = new JValueVM() { Value = item };
+            val.ParentList = vm.Items;
             return val;
         }
 

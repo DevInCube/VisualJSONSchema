@@ -131,6 +131,14 @@ namespace MyVisualJSONEditor.ViewModels
         {
             public string PostId { get; set; }
             public string PostName { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                if (this == obj) return true;
+                Post o = obj as Post;
+                if (o == null) return false;
+                return PostId.Equals(o.PostId) && PostName.Equals(o.PostName);
+            }
         }
         private Post _SelectedPost;
         public ObservableCollection<Post> Posts { get; private set; }
@@ -204,6 +212,12 @@ namespace MyVisualJSONEditor.ViewModels
                         JArrayVM posts = Data.Data["Store.ParamSet.Posts"] as JArrayVM;
                        
                         var objjj = Data.Data["FileApi.AddFactReact[0].ParamSet"];
+                        posts.Data.Add(new Post()
+                        {
+                            PostName = Data.Data["Store.ParamSet.PostName"] as string,
+                            PostId = Data.Data["Store.ParamSet.Post"] as string,
+                        });
+                        posts.SelectedIndex = 0;
                         posts.PropertyChanged += (sss, ee) =>
                         {
                             if (ee.PropertyName == "SelectedIndex")
@@ -219,9 +233,24 @@ namespace MyVisualJSONEditor.ViewModels
                         };
                         paramSet.GetProperty("ConnectBtn").Command = new RelayCommand(() =>
                         {
-                            posts.Data.Add(new Post() { PostName = "1", PostId = "idddd" });
-                            posts.Data.Add(new Post() { PostName = "2asdasds", PostId = "22222" });
-                            posts.SelectedIndex = 0;
+                            var postList = new List<Post>()
+                            {
+                                new Post() { PostName = "1", PostId = "idddd" },
+                                new Post() { PostName = "2asdasds", PostId = "22222" },
+                                new Post() { PostName = "EdgeServer", PostId = "69e86fa7-e1ad-4e68-96b7-b910f40bdb49" }
+                            };
+                            var selItem = posts.SelectedItem;
+                            var selIndex = 0;
+                            if (selItem != null)
+                            {
+                                var item = postList.FirstOrDefault(x => x.Equals(selItem));
+                                if (item != null)
+                                    selIndex = postList.IndexOf(item);
+                            }
+                            posts.Data.Clear();
+                            foreach (var post in postList)
+                                posts.Data.Add(post);
+                            posts.SelectedIndex = selIndex;
                         });
                         Data.PropertyChanged += (se, ar) => {
                             ShowResult();

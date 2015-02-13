@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace MyVisualJSONEditor.ViewModels
 {
 
-    public abstract class JTokenVM : ObservableDictionary<string, object>
+    public abstract class JTokenVM : ObservableDictionary
     {
 
         private JSchema _Schema;
@@ -25,6 +25,12 @@ namespace MyVisualJSONEditor.ViewModels
 
         /// <summary>Gets or sets the parent list if applicable (may be null). </summary>
         public ObservableCollection<JTokenVM> ParentList { get; set; }
+
+        public JTokenVM()
+        {
+            //ParentList = new ObservableCollection<JTokenVM>();
+        }
+
         protected virtual void OnSetSchema() { }
 
 
