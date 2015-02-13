@@ -202,20 +202,16 @@ namespace MyVisualJSONEditor.ViewModels
                         JObjectVM paramSet = Data.GetValue<JObjectVM>("Store.ParamSet");
                         
                         JArrayVM posts = Data.Data["Store.ParamSet.Posts"] as JArrayVM;
-                        posts.Items = new ObservableCollection<JTokenVM>()
-                        {
-                            new JValueVM(){ Value = new Post() { PostName = "1", PostId = "idddd" } },
-                            new JValueVM(){ Value = new Post() { PostName = "2asdasds", PostId ="22222" } },
-                        };
+                       
                         var objjj = Data.Data["FileApi.AddFactReact[0].ParamSet"];
-                        posts.CollectionChanged += (se,ar)=>{
-                            if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
+                        posts.PropertyChanged += (sss, ee) =>
+                        {
+                            if (ee.PropertyName == "SelectedIndex")
                             {
-                                var p = (KeyValuePair<string, object>)ar.NewItems[0];
-                                if ((p.Key == "SelectedIndex"))
+                                int index = posts.SelectedIndex;
+                                if (index > -1 && index < posts.Data.Count)
                                 {
-                                    int index = int.Parse(p.Value.ToString());
-                                    Post post = (posts.Items[index] as JValueVM).Value as Post;
+                                    Post post = posts.Data[index] as Post;
                                     Data.Data["Store.ParamSet.PostName"] = post.PostName;
                                     Data.Data["Store.ParamSet.Post"] = post.PostId;
                                 }
@@ -223,7 +219,9 @@ namespace MyVisualJSONEditor.ViewModels
                         };
                         paramSet.GetProperty("ConnectBtn").Command = new RelayCommand(() =>
                         {
-                            MessageBox.Show("Connected!");
+                            posts.Data.Add(new Post() { PostName = "1", PostId = "idddd" });
+                            posts.Data.Add(new Post() { PostName = "2asdasds", PostId = "22222" });
+                            posts.SelectedIndex = 0;
                         });
                         Data.PropertyChanged += (se, ar) => {
                             ShowResult();

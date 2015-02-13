@@ -52,24 +52,21 @@ namespace MyVisualJSONEditor.ViewModels
                         else if (val is JArrayVM)
                         {
                             var list = (val as JArrayVM).Items;
-                            if (list != null)
+                            list.CollectionChanged += (se1, ar1) =>
                             {
-                                list.CollectionChanged += (se1, ar1) =>
+                                this.OnPropertyChanged(pair.Key);
+                                if (ar1.Action == NotifyCollectionChangedAction.Add)
                                 {
-                                    this.OnPropertyChanged(pair.Key);
-                                    if (ar1.Action == NotifyCollectionChangedAction.Add)
+                                    foreach (JTokenVM item in ar1.NewItems)
                                     {
-                                        foreach (JTokenVM item in ar1.NewItems)
+                                        item.PropertyChanged += (se2, ar2) =>
                                         {
-                                            item.PropertyChanged += (se2, ar2) =>
-                                            {
-                                                if (!depPar.Contains(ar2.PropertyName))
-                                                    this.OnPropertyChanged(pair.Key+"."+ar2.PropertyName);
-                                            };
-                                        }
+                                            if (!depPar.Contains(ar2.PropertyName))
+                                                this.OnPropertyChanged(pair.Key + "." + ar2.PropertyName);
+                                        };
                                     }
-                                };
-                            }
+                                }
+                            };
                         }
                         if (!depPar.Contains(pair.Key))
                             this.OnPropertyChanged(pair.Key);
@@ -143,8 +140,9 @@ namespace MyVisualJSONEditor.ViewModels
                         list = new ObservableCollection<JTokenVM>();
                     }
                     JArrayVM array = new JArrayVM();
-                    array.Items = list;
                     result[property.Key] = array;
+                    foreach (var item in list)
+                        array.Items.Add(item);
                 }
                 else if (property.Value.Type.HasFlag(JSchemaType.Object))
                 {

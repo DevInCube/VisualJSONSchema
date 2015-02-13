@@ -108,7 +108,8 @@ namespace MyVisualJSONEditor.ViewModels
 
         private ICommand _Command;
 
-        public ICommand Command {
+        public ICommand Command
+        {
             get { return _Command; }
             set { _Command = value; OnPropertyChanged("Command"); }
         }

@@ -25,6 +25,16 @@ namespace MyVisualJSONEditor.ViewModels
             this.Items = new ObservableCollection<JTokenVM>();
             this.SelectedIndex = 0;
             this.DisplayMemberPath = "";
+            this.CollectionChanged += JArrayVM_CollectionChanged;
+        }
+
+        void JArrayVM_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
+            {
+                var p = (KeyValuePair<string, object>)e.NewItems[0];
+                OnPropertyChanged(p.Key);
+            }
         }
 
         public override JToken ToJToken()
@@ -38,7 +48,7 @@ namespace MyVisualJSONEditor.ViewModels
         public ObservableCollection<JTokenVM> Items
         {
             get { return ContainsKey("Value") ? this["Value"] as ObservableCollection<JTokenVM> : null; }
-            set
+            private set
             {
                 this["Value"] = value;
                 OnPropertyChanged("Items");

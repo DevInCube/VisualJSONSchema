@@ -15,7 +15,7 @@
         <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
                             Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
         <ComboBox ItemsSource="{Binding Value.Items}" 
-                  SelectedIndex="{Binding Value.SelectedIndex}"
+                  SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
                   DisplayMemberPath="{Binding DisplayMemberPath}"
                   VerticalAlignment="Top" Margin="0,0,0,8">
         </ComboBox>
