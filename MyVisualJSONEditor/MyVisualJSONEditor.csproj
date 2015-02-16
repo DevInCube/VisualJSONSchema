@@ -84,20 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Tools\JSchemaExtension.cs" />
-    <Compile Include="ViewModels\JSchemaViewModels\JArrayVM.cs" />
-    <Compile Include="ViewModels\JSchemaViewModels\JObjectVM.cs" />
-    <Compile Include="ViewModels\JSchemaViewModels\JPropertyVM.cs" />
-    <Compile Include="ViewModels\JSchemaViewModels\JTokenVM.cs" />
-    <Compile Include="ViewModels\JSchemaViewModels\JValueVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
-    <Compile Include="ViewModels\ObservableDictionary.cs" />
-    <Compile Include="ViewModels\ObservableObject.cs" />
-    <Compile Include="Views\Controls\BindablePasswordBox.xaml.cs">
-      <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\JObjectTypeTemplateSelector.cs" />
-    <Compile Include="Views\Controls\TabControlEx.cs" />
     <Compile Include="Views\Converters\DateConverter.cs" />
     <Compile Include="Views\Converters\EnumConverter.cs" />
     <Compile Include="Views\Converters\IntegerConverter.cs" />
@@ -106,64 +93,6 @@
     <Compile Include="Views\Converters\NumberConverter.cs" />
     <Compile Include="Views\Converters\NumberRangeConverter.cs" />
     <Compile Include="Views\Converters\TimeConverter.cs" />
-    <Compile Include="Views\ExpandingGroupBox.cs" />
-    <Compile Include="Views\JsonSchemaBuilder.xaml.cs">
-      <DependentUpon>JsonSchemaBuilder.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\ArrayItemTemplate.xaml.cs">
-      <DependentUpon>ArrayItemTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\ArrayTemplate.xaml.cs">
-      <DependentUpon>ArrayTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\BooleanTemplate.xaml.cs">
-      <DependentUpon>BooleanTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\DateTemplate.xaml.cs">
-      <DependentUpon>DateTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\DateTimeTemplate.xaml.cs">
-      <DependentUpon>DateTimeTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\EnumTemplate.xaml.cs">
-      <DependentUpon>EnumTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\IntegerTemplate.xaml.cs">
-      <DependentUpon>IntegerTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\NumberTemplate.xaml.cs">
-      <DependentUpon>NumberTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\ObjectSimpleTemplate.xaml.cs">
-      <DependentUpon>ObjectSimpleTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\ObjectRequiredTemplate.xaml.cs">
-      <DependentUpon>ObjectRequiredTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\RootTemplate.xaml.cs">
-      <DependentUpon>RootTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\ButtonTemplate.xaml.cs">
-      <DependentUpon>ButtonTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\TabRootTemplate.xaml.cs">
-      <DependentUpon>TabRootTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\ObjectTemplate.xaml.cs">
-      <DependentUpon>ObjectTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\SelectListTemplate.xaml.cs">
-      <DependentUpon>SelectListTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\PasswordTemplate.xaml.cs">
-      <DependentUpon>PasswordTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\StringTemplate.xaml.cs">
-      <DependentUpon>StringTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Templates\TimeTemplate.xaml.cs">
-      <DependentUpon>TimeTemplate.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -176,90 +105,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\Controls\BindablePasswordBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\JsonSchemaBuilder.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\ArrayItemTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\ArrayTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\BooleanTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\DateTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\DateTimeTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\EnumTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\IntegerTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\NumberTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\ObjectSimpleTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Templates\ObjectRequiredTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Templates\RootTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\ButtonTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Templates\TabRootTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Templates\ObjectTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\SelectListTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\PasswordTemplate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Templates\StringTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\TemplatePack.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Templates\TimeTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -295,7 +140,12 @@
   <ItemGroup>
     <None Include="Resources\Data.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\VitML.JsonSchemaControlBuilder\VitML.JsonSchemaControlBuilder.csproj">
+      <Project>{8c5279b5-2c1c-4bd2-b3d7-2e4168760fe5}</Project>
+      <Name>VitML.JsonSchemaControlBuilder</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TestSchema.txt" />
   </ItemGroup>

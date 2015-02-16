@@ -17,7 +17,7 @@ namespace MyVisualJSONEditor.Views.Controls
     {
 
         private static Dictionary<string, DataTemplate> Templates = new Dictionary<string, DataTemplate>();
-        private static ResourceDictionary dict = new ResourceDictionary();
+       // private static ResourceDictionary dict = new ResourceDictionary();
 
         static JObjectTypeTemplateSelector()
         {
@@ -39,9 +39,9 @@ namespace MyVisualJSONEditor.Views.Controls
             Templates.Add("Enum", CreateTemplate(typeof(EnumTemplate)));
             Templates.Add("TabRoot", CreateTemplate(typeof(TabRootTemplate)));
 
-            dict.Source = new Uri("../Views/Templates/TemplatePack.xaml",
-                UriKind.RelativeOrAbsolute);
-            var root = dict["Root"];
+           // dict.Source = new Uri("Views/Templates/TemplatePack.xaml",
+              //  UriKind.RelativeOrAbsolute);
+         //   var root = dict["Root"];
         }
 
         private static DataTemplate CreateTemplate(Type templateType)
@@ -53,7 +53,7 @@ namespace MyVisualJSONEditor.Views.Controls
 
         public DataTemplate GetTemplate(string id)
         {
-            return (DataTemplate)dict[id];
+            return Templates[id];// (DataTemplate)dict[id];
         }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
