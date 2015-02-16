@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:MyVisualJSONEditor.Views.Controls" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <ContentPresenter x:Name="Presenter">
+    <ContentPresenter x:Name="Presenter" >
         <ContentPresenter.ContentTemplateSelector>         
             <controls:JObjectTypeTemplateSelector />
         </ContentPresenter.ContentTemplateSelector>

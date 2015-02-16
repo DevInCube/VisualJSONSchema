@@ -10,11 +10,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using VitML.JsonSchemaControlBuilder;
 
 namespace MyVisualJSONEditor.Views.Controls
 {
     public class JObjectTypeTemplateSelector : DataTemplateSelector
     {
+
+        public static JTemplateSelector TemplateSelector { get; set; }
 
         private static Dictionary<string, DataTemplate> Templates = new Dictionary<string, DataTemplate>();
        // private static ResourceDictionary dict = new ResourceDictionary();
@@ -61,6 +64,9 @@ namespace MyVisualJSONEditor.Views.Controls
             if (item == null) return null;
 
             var presenter = (FrameworkElement)container;
+
+           // if (TemplateSelector != null)
+                //return TemplateSelector.SelectTemplate(item, container);
 
             if (item is JObjectVM)
             {

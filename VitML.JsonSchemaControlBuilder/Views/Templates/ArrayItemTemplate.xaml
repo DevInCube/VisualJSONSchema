@@ -9,7 +9,7 @@
              xmlns:views="clr-namespace:MyVisualJSONEditor.Views" 
              mc:Ignorable="d" 
              d:DesignWidth="300">
-    <Grid Margin="4,0,4,0" Background="WhiteSmoke">
+    <Grid Margin="4,0,4,0" Background="WhiteSmoke" >
         <GroupBox Header="Item">
             <views:JsonSchemaBuilder Data="{Binding}" Margin="4,8,4,0" />
         </GroupBox>
