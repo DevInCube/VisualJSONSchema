@@ -49,9 +49,7 @@ namespace MyVisualJSONEditor.Views
         private void Update()
         {
             Presenter.Content = Data;
-        }
-
-      
+        }    
 
      
     }

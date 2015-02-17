@@ -8,12 +8,17 @@ using MyVisualJSONEditor.Tools;
 using System.Windows.Input;
 using MyToolkit.Command;
 using Xceed.Wpf.Toolkit;
+using VitML.JsonSchemaControlBuilder.ViewModels;
+using System.Windows;
 
 namespace MyVisualJSONEditor.ViewModels
 {
     /// <summary>Describes a JSON property. </summary>
     public class JPropertyVM : ObservableObject
     {
+
+        private PropertyStyle style;
+
         /// <summary>Initializes a new instance of the <see cref="JsonPropertyModel"/> class. </summary>
         /// <param name="key">The key of the property. </param>
         /// <param name="parent">The parent object. </param>
@@ -23,6 +28,10 @@ namespace MyVisualJSONEditor.ViewModels
             Key = key;
             Parent = parent;
             Schema = schema;
+
+            object ext = GetExtension("Style");
+            if (ext != null && (ext is JToken))
+                style = PropertyStyle.Parse(ext as JToken);
 
             Parent.PropertyChanged += (sender, args) =>
             {
@@ -126,6 +135,14 @@ namespace MyVisualJSONEditor.ViewModels
                 return path;
             }
         }
+
+        public PropertyStyle Style
+        {
+            get
+            {
+                return style;
+            }
+        } 
 
         private ICommand _Command;
 

@@ -213,6 +213,12 @@
 				"AddFactReact":
 				{
 					"type" : "array",
+					
+					'Style' : {
+						'MinHeight' : 50,
+						'MaxHeight' : 200,
+					},
+
 					"items" : {
 						
 						"title" : "item",

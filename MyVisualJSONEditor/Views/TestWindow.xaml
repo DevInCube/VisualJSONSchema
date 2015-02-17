@@ -1,0 +1,21 @@
+﻿<Window x:Class="MyVisualJSONEditor.Views.TestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:bld="clr-namespace:MyVisualJSONEditor.Views;assembly=VitML.JsonSchemaControlBuilder"
+        Title="TestWindow" Height="300" Width="300">
+    <Grid>
+        <TabControl>
+            <TabControl.Items>
+                <TabItem Header="Tab 1">
+                    <bld:JsonSchemaBuilder x:Name="tab1" />
+                </TabItem>
+                <TabItem Header="Tab 2">
+                    <bld:JsonSchemaBuilder x:Name="tab2" />
+                </TabItem>
+                <TabItem Header="Tab 3">
+                    <bld:JsonSchemaBuilder x:Name="tab3" />
+                </TabItem>
+            </TabControl.Items>
+        </TabControl>
+    </Grid>
+</Window>
