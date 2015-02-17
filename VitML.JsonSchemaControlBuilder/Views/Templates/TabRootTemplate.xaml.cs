@@ -24,6 +24,13 @@ namespace MyVisualJSONEditor.Views.Templates
         public TabRootTemplate()
         {
             InitializeComponent();
+            this.Loaded += TabRootTemplate_Loaded;
+        }
+
+        void TabRootTemplate_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.TabControl.TabIndex = 0;
+            this.TabControl.Update();
         }
 
         private void OnCreateObject(object sender, RoutedEventArgs e)

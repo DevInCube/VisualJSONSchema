@@ -6,6 +6,8 @@
 	"title" : "EventStore main.xconf",
 	"type" : "object",
 
+	'format' : 'tab',
+
 	"definitions" : {
 
 		"DbStore.ParamSet" : {

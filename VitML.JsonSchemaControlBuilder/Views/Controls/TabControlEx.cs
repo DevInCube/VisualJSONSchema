@@ -14,6 +14,21 @@ namespace MyVisualJSONEditor.Views.Controls
     [TemplatePart(Name = "PART_ItemsHolder", Type = typeof(Panel))]
     public class TabControlEx : TabControl
     {
+
+        public static readonly DependencyProperty IsLoadingProperty = DependencyProperty.Register(
+          "IsLoading", typeof(bool), typeof(TabControlEx), new PropertyMetadata(default(object)));
+
+        /// <summary>Gets or sets the <see cref="JsonObjectModel"/> to edit with the editor. </summary>
+        public bool IsLoading
+        {
+            get {
+                object val = GetValue(IsLoadingProperty); 
+                if(val == null) return false;
+                return bool.Parse(val.ToString());
+            }
+            set { SetValue(IsLoadingProperty, value); }
+        }
+
         private Panel ItemsHolderPanel = null;
 
         public TabControlEx()
@@ -93,6 +108,11 @@ namespace MyVisualJSONEditor.Views.Controls
             UpdateSelectedItem();
         }
 
+        public void Update()
+        {
+            UpdateSelectedItem();
+        }
+
         private void UpdateSelectedItem()
         {
             if (ItemsHolderPanel == null)
@@ -112,7 +132,7 @@ namespace MyVisualJSONEditor.Views.Controls
         {
             if (item == null)
                 return null;
-
+            IsLoading = true;
             ContentPresenter cp = FindChildContentPresenter(item);
 
             if (cp != null)
@@ -127,6 +147,7 @@ namespace MyVisualJSONEditor.Views.Controls
             cp.Visibility = Visibility.Collapsed;
             cp.Tag = (item is TabItem) ? item : (this.ItemContainerGenerator.ContainerFromItem(item));
             ItemsHolderPanel.Children.Add(cp);
+            IsLoading = false;
             return cp;
         }
 
