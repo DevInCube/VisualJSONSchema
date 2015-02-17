@@ -52,11 +52,13 @@
 				"PostName": {
 					"title" : "Post name",
 					"type": "string",
+
 					'visible' : false
 				},
 				"Post": {
 					"title" : "Post",
 					"type": "string",
+
 					'visible' : false
 				},
 				"Posts" : {
@@ -215,8 +217,8 @@
 					"type" : "array",
 					
 					'Style' : {
-						'MinHeight' : 50,
-						'MaxHeight' : 200,
+						'ShowCount' : false,
+						'MaxHeight' : 300,
 					},
 
 					"items" : {

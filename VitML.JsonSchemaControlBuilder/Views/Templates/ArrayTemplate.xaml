@@ -16,14 +16,16 @@
         
         <GroupBox Header="{Binding Key, FallbackValue=ListName}">
             <StackPanel Margin="0,8,0,0">
-                <Border Margin="5,0,0,10" BorderThickness="0,0,0,2" BorderBrush="LightBlue">
-                    <TextBlock  Margin="0,0,0,3" Text="{Binding Value.Items.Count, StringFormat=Count: {0}, FallbackValue=Count: -1}" />
+                <Border Margin="0,0,0,5" Background="LightGray" Padding="5"
+                        Visibility="{Binding Style.ShowCount, Converter={StaticResource VisibilityConverter}, FallbackValue=False}">
+                    <TextBlock  Margin="0,0,0,3" Text="{Binding Value.Items.Count, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
+                                HorizontalAlignment="Center"/>
                 </Border>
-                <ScrollViewer   Height="{Binding Height, Mode=OneWay, FallbackValue=Auto}"
+                <ScrollViewer   Height="{Binding Style.Height, Mode=OneWay, FallbackValue=Auto}"
                                 MinHeight="{Binding Style.MinHeight, Mode=OneWay, FallbackValue=Auto}"
                                 MaxHeight="{Binding Style.MaxHeight, Mode=OneWay, FallbackValue=Auto}"
                                 VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Value.Items}" Focusable="False">
+                    <ItemsControl ItemsSource="{Binding Value.Items}" Background="White" Focusable="False">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <templates:ArrayItemTemplate/>
@@ -31,7 +33,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
-                <Button Content="+ Add" HorizontalAlignment="Stretch" Padding="8,4,8,4" Margin="4,8,4,4" 
+                <Button Content="+ Add" HorizontalAlignment="Stretch" Padding="8,4,8,4" Margin="0,5,0,4" 
                                 Click="OnAddArrayObject" Tag="{Binding}"/>
             </StackPanel>
         </GroupBox>

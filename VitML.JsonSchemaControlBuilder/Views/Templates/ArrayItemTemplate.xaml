@@ -8,14 +8,16 @@
              xmlns:myConv="clr-namespace:MyVisualJSONEditor.Views.Converters"
              xmlns:views="clr-namespace:MyVisualJSONEditor.Views" 
              mc:Ignorable="d" 
-             d:DesignWidth="300">
-    <Grid Margin="4,0,4,0" Background="WhiteSmoke" >
-        <GroupBox Header="Item">
-            <views:JsonSchemaBuilder Data="{Binding}" Margin="4,8,4,0" />
-        </GroupBox>
-        <Button Content="Remove" HorizontalAlignment="Right" 
-                MinWidth="75" Height="23" VerticalAlignment="Top"
-                Click="OnRemoveArrayObject" 
-                Tag="{Binding}" Margin="4,0,12,4" />
-    </Grid>
+             d:DesignWidth="300" d:DesignHeight="200">
+    <Border Margin="4" BorderBrush="DimGray" BorderThickness="0,0,0,2">
+        <Grid>
+            <GroupBox Header="Item" Background="WhiteSmoke">
+                <views:JsonSchemaBuilder Data="{Binding}" Margin="4,8,4,0" />
+            </GroupBox>
+            <Button Content="Remove" HorizontalAlignment="Right" 
+                    MinWidth="75" Height="23" VerticalAlignment="Top"
+                    Click="OnRemoveArrayObject" 
+                    Tag="{Binding}" Margin="4,0,12,4" />
+        </Grid>
+    </Border>
 </UserControl>

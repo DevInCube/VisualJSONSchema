@@ -16,12 +16,15 @@ namespace VitML.JsonSchemaControlBuilder.ViewModels
         public Double MinHeight { get; set; }
         public Double MaxHeight { get; set; }
 
+        public bool? ShowCount { get; set; }
+
         public static PropertyStyle Parse(JToken data)
         {
             PropertyStyle st = new PropertyStyle();
             st.Height = GetDouble("Height", data);
             st.MinHeight = GetDouble("MinHeight", data);
             st.MaxHeight = GetDouble("MaxHeight", data);
+            st.ShowCount = GetBool("ShowCount", data);
             return st;
         }
 
@@ -44,6 +47,13 @@ namespace VitML.JsonSchemaControlBuilder.ViewModels
             string val = GetValue(key, data);
             if (val == null) return Double.NaN;
             return Double.Parse((new LengthConverter()).ConvertFromString(val).ToString());
+        }
+
+        private static bool? GetBool(string key, JToken data)
+        {
+            string val = GetValue(key, data);
+            if (val == null) return null;
+            return bool.Parse(val);
         }
     }
 }
