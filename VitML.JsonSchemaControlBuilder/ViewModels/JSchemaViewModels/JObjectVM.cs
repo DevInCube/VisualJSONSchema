@@ -106,7 +106,7 @@ namespace MyVisualJSONEditor.ViewModels
             return obj;
         }
 
-        public static JObjectVM FromJson(JObject obj, JSchema schema)
+        private static JSchema CheckSchema(JSchema schema)
         {
             if (schema.OneOf.Count > 0)
             {
@@ -115,8 +115,17 @@ namespace MyVisualJSONEditor.ViewModels
                     refSchema = schema.OneOf.First();
                 else
                     throw new NotImplementedException("OneOf.Count > 1");
-                return FromJson(obj, refSchema);
+                return refSchema;
             }
+            else
+            {
+                return schema;
+            }
+        }
+
+        public static JObjectVM FromJson(JObject obj, JSchema schema)
+        {
+            schema = CheckSchema(schema);
             var result = new JObjectVM();
             foreach (var property in schema.Properties)
             {
@@ -128,7 +137,10 @@ namespace MyVisualJSONEditor.ViewModels
                     if (value != null)
                     {
                         var objects = value.Select(o => o is JObject ?
-                            (JTokenVM)FromJson((JObject)o, propertySchema) : JValueVM.FromJson((JValue)o, propertySchema));
+                            (JTokenVM)FromJson((JObject)o, propertySchema) 
+                            : (
+                                JValueVM.FromJson((JValue)o, CheckSchema(propertySchema))
+                            ));
 
                         list = new List<JTokenVM>(objects);
                     }
@@ -198,16 +210,24 @@ namespace MyVisualJSONEditor.ViewModels
             _Properties = new List<JPropertyVM>();
             if (Schema.Properties != null)
             {
+                if (Schema.Properties.Count ==0 )
+                {
+                    return;
+                }
                 foreach (var propertyInfo in Schema.Properties)
                 {
                     var property = new JPropertyVM(propertyInfo.Key, this, propertyInfo.Value);
                     if (property.Value is JArrayVM)
                     {
                         foreach (var obj in ((JArrayVM)property.Value).Items)
-                            obj.Schema = propertyInfo.Value.Items.First(); //here i use only first schema
+                            obj.Schema = CheckSchema(propertyInfo.Value.Items.First()); //here i use only first schema
                     }
                     _Properties.Add(property);
                 }
+            }
+            else
+            {
+                return;
             }
         }
 
