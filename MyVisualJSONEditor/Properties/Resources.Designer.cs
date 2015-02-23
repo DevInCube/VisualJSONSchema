@@ -104,6 +104,41 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/definitions#&quot;,
+        ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///
+        ///	&apos;definitions&apos; : {
+        ///		
+        ///		&apos;FrameReact&apos; : {
+        ///			
+        ///			&apos;type&apos; : &apos;object&apos;,
+        ///
+        ///			&apos;properties&apos; : {
+        ///
+        ///				&quot;Channel&quot;: {
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},                             
+        ///				&quot;Prefix&quot;:{
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},                            
+        ///				&quot;Suffix&quot;:{
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},                              
+        ///				&quot;Dir&quot;:{
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				}
+        ///			},
+        ///
+        ///			&quot;requir [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string definitions {
+            get {
+                return ResourceManager.GetString("definitions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
         ///  
         ///	&quot;Import&quot;:
         ///	{
@@ -225,22 +260,30 @@ namespace MyVisualJSONEditor.Properties {
         ///
         ///	&apos;definitions&apos; : {
         ///
-        ///		&apos;FrameReact&apos; : {
+        ///		
+        ///
+        ///		&apos;Store.ParamSet&apos; : {
         ///			
         ///			&apos;type&apos; : &apos;object&apos;,
         ///
         ///			&apos;properties&apos; : {
+        ///				
+        ///				&quot;RootDir&quot;: {
+        ///					&apos;type&apos; : &apos;string&apos;
+        ///				},
+        ///				&quot;Channels&quot;: { 
         ///
-        ///				&quot;Channel&quot;: {
-        ///					&apos;type&apos; : &apos;string&apos;,
-        ///				},                             
-        ///				&quot;Prefix&quot;:{
-        ///					&apos;type&apos; : &apos;string&apos;,
-        ///				},                            
-        ///				&quot;Suffix&quot;:{
-        ///					&apos;type&apos; : &apos;string&apos;,
-        ///				},                              
-        ///				&quot;D [rest of string was truncated]&quot;;.
+        ///					&apos;type&apos; : &apos;array&apos;,
+        ///
+        ///					&quot;items&quot; : {
+        ///						
+        ///						&quot;title&quot; : &quot;item&quot;,
+        ///						&quot;type&quot; : &quot;object&quot;,
+        ///
+        ///						&quot;properties&quot; : 
+        ///						{
+        ///							&quot;Name&quot;: { 
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MediaStore_schema {
             get {

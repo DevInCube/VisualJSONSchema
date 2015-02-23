@@ -8,29 +8,7 @@
 
 	'definitions' : {
 
-		'FrameReact' : {
-			
-			'type' : 'object',
-
-			'properties' : {
-
-				"Channel": {
-					'type' : 'string',
-				},                             
-				"Prefix":{
-					'type' : 'string',
-				},                            
-				"Suffix":{
-					'type' : 'string',
-				},                              
-				"Dir":{
-					'type' : 'string',
-				}
-			},
-
-			"required" : [ 'Channel', 'Prefix', 'Suffix', 'Dir' ],
-			"additionalProperties": false,
-		},
+		
 
 		'Store.ParamSet' : {
 			
@@ -158,7 +136,7 @@
 								'format' : 'simple',
 
 								"oneOf": [
-									{ "$ref": "#/definitions/FrameReact" }
+									{ "$ref": "definitions#/definitions/FrameReact" }
 								]
 							}
 						},
@@ -194,7 +172,7 @@
 								'format' : 'simple',
 
 								"oneOf": [
-									{ "$ref": "#/definitions/FrameReact" }
+									{ "$ref": "definitions#/definitions/FrameReact" }
 								]
 							}
 						},

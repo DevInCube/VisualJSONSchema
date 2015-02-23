@@ -121,6 +121,9 @@
   <data name="Data" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Data.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
   </data>
+  <data name="definitions" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\definitions.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="MediaCodec" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\mediacodec.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>

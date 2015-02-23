@@ -25,6 +25,7 @@ namespace MyVisualJSONEditor.ViewModels
 
         private JObjectVM _Data;
         private JSchema _JSchema;
+        private JSchemaPreloadedResolver resolver;
         private string _Schema, _SchemaError, _DataError, _ResultData, _JsonData;
         private string _DbHost;
         private bool _IsValid, _IsResultValid;
@@ -163,7 +164,13 @@ namespace MyVisualJSONEditor.ViewModels
             Posts.Add(new Post() { PostName = "Post1", PostId = "1"});
             Posts.Add(new Post() { PostName = "Post12", PostId = "12" });
             Posts.Add(new Post() { PostName = "Post123", PostId = "123" });
+
+            resolver = new JSchemaPreloadedResolver();
+            JSchema defSchema = JSchema.Parse(Resources.definitions);
+            resolver.Add(defSchema, new Uri("http://vit.com.ua/edgeserver/definitions"));
+
             this.PropertyChanged += MainWindowVM_PropertyChanged;
+
             Control = new ItemsControl();
             Schema = Resources.MediaStore_schema;
             JsonData = Resources.MediaStore;
@@ -179,7 +186,7 @@ namespace MyVisualJSONEditor.ViewModels
                     Control.Items.Clear();
                     try
                     {
-                        JSchema = JSchema.Parse(Schema);
+                        JSchema = JSchema.Parse(Schema, resolver);
                     }
                     catch (Exception ex)
                     {
