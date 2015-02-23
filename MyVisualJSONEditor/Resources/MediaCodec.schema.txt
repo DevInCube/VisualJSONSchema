@@ -1,0 +1,128 @@
+﻿{
+	"id" : "http://vit.com.ua/edgeserver/mediacodec#",
+	"$schema": "http://json-schema.org/draft-04/schema#",
+
+	'title' : 'MediaCodec main.conf',
+	'type' : 'object',
+
+	'definitions' : {
+
+		'Frame' : {
+
+			'type' : 'object',
+
+			'properties' : {
+
+				"Prefix" : {
+					'type' : 'string',
+				},
+				"Suffix" : {
+					'type' : 'string',
+				},
+				"Dir" : {
+					'type' : 'string',
+				},
+			},
+
+			"required" : [ 'Prefix', "Suffix", 'Dir' ],
+			"additionalProperties": false,
+		}, 
+		
+		'FrameParamSet' : {
+			
+			'type' : 'object',
+
+			'properties' : {
+
+				"FrameMeta": {
+
+					'type' : 'object',
+
+					'oneOf' : [{'$ref' : '#/definitions/Frame'}],
+				},
+				"FrameData": {
+
+					'type' : 'object',
+
+					'oneOf' : [{'$ref' : '#/definitions/Frame'}],
+				},
+			},
+
+			"required" : [ 'FrameMeta', "FrameData" ],
+			"additionalProperties": false,
+		},
+	},
+
+	'properties' : {
+		
+		'Import' : {
+
+			'type' : 'object',
+
+			'properties' : {
+				'File' : {
+					'type' : 'string'
+				},
+				'ParamSet' : {
+					'type' : 'object',
+					'format' : 'simple',
+
+					'oneOf' : [
+						{ '$ref' : '#/definitions/FrameParamSet' }
+					]
+				}
+			},
+
+			"required" : [ 'File', "ParamSet" ],
+			"additionalProperties": false,
+		},
+
+		'Codec' : {
+
+			'type' : 'object',
+
+			'properties' : {
+				'File' : {
+					'type' : 'string',
+				},
+				'Source' : {
+					'type' : 'string',
+				},
+				'Target' : {
+					'type' : 'string',
+				},
+				'ParamSet' : {
+					'type' : 'object',
+				},
+			},
+
+			"required" : [ 'File', "Source", 'Target', 'ParamSet' ],
+			"additionalProperties": false,
+		},
+
+		'Export' : {
+
+			'type' : 'object',
+
+			'properties' : {
+				'File' : {
+					'type' : 'string'
+				},
+				'ParamSet' : {
+					'type' : 'object',
+					'format' : 'simple',
+
+					'oneOf' : [
+						{ '$ref' : '#/definitions/FrameParamSet' }
+					]
+				}
+			},
+
+			"required" : [ 'File', "ParamSet" ],
+			"additionalProperties": false,
+		},
+	},
+
+	"required" : [ 'Import', "Codec", 'Export' ],
+    "additionalProperties": false,
+}

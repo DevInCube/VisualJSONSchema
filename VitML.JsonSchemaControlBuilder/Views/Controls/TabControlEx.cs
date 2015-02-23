@@ -16,7 +16,7 @@ namespace MyVisualJSONEditor.Views.Controls
     {
 
         public static readonly DependencyProperty IsLoadingProperty = DependencyProperty.Register(
-          "IsLoading", typeof(bool), typeof(TabControlEx), new PropertyMetadata(default(object)));
+          "IsLoading", typeof(bool), typeof(TabControlEx), new PropertyMetadata(default(bool)));
 
         /// <summary>Gets or sets the <see cref="JsonObjectModel"/> to edit with the editor. </summary>
         public bool IsLoading

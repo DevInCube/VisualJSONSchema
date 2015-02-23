@@ -103,6 +103,82 @@ namespace MyVisualJSONEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;Import&quot;:
+        ///  {
+        ///    &quot;File&quot;:&quot;/opt/edge/libexec/mediacodec/libimport-file.so&quot;,
+        ///    &quot;ParamSet&quot;:
+        ///    {
+        ///      &quot;FrameMeta&quot;:
+        ///      {
+        ///         &quot;Prefix&quot;:&quot;&quot;,
+        ///         &quot;Suffix&quot;:&quot;.gscene&quot;,
+        ///         &quot;Dir&quot;:&quot;&quot;
+        ///      },
+        ///      &quot;FrameData&quot;:
+        ///      {
+        ///         &quot;Prefix&quot;:&quot;&quot;,
+        ///         &quot;Suffix”:&quot;.gframe&quot;,
+        ///         &quot;Dir&quot;:&quot;&quot;
+        ///      }
+        ///    }
+        ///  },
+        ///  &quot;Codec&quot;:
+        ///  {
+        ///    &quot;File&quot;:&quot;/opt/edge/libexec/mediacodec/libcodec-jpegturbo.so&quot;,
+        ///    &quot;Source&quot;:&quot;MONO8T&quot;,
+        ///    &quot;Target&quot;:&quot;JPEG&quot;,
+        ///    &quot;ParamSet&quot;:
+        ///    {     
+        ///    }
+        ///  },
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MediaCodec {
+            get {
+                return ResourceManager.GetString("MediaCodec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/mediacodec#&quot;,
+        ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///
+        ///	&apos;title&apos; : &apos;MediaCodec main.conf&apos;,
+        ///	&apos;type&apos; : &apos;object&apos;,
+        ///
+        ///	&apos;format&apos; : &apos;tab&apos;,
+        ///
+        ///	&apos;definitions&apos; : {
+        ///
+        ///		&apos;Frame&apos; : {
+        ///
+        ///			&apos;type&apos; : &apos;object&apos;,
+        ///
+        ///			&apos;properties&apos; : {
+        ///
+        ///				&quot;Prefix&quot; : {
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},
+        ///				&quot;Suffix&quot; : {
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},
+        ///				&quot;Dir&quot; : {
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},
+        ///			},
+        ///
+        ///			&quot;required&quot; : [ &apos;Prefix&apos;, &quot;Suffix&quot;, &apos;Dir&apos; ],
+        ///			&quot;additionalPropertie [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MediaCodec_schema {
+            get {
+                return ResourceManager.GetString("MediaCodec_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 
         /// {
         ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/eventstore#&quot;,
@@ -110,6 +186,8 @@ namespace MyVisualJSONEditor.Properties {
         ///
         ///	&quot;title&quot; : &quot;EventStore main.xconf&quot;,
         ///	&quot;type&quot; : &quot;object&quot;,
+        ///
+        ///	&apos;format&apos; : &apos;tab&apos;,
         ///
         ///	&quot;definitions&quot; : {
         ///
@@ -129,8 +207,7 @@ namespace MyVisualJSONEditor.Properties {
         ///					}
         ///				},
         ///				&quot;DbPort&quot;: {
-        ///					&quot;title&quot; : &quot;Port&quot;,
-        ///					&quot;type&quot;: [rest of string was truncated]&quot;;.
+        ///					&quot;title&quot; : [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Schema {
             get {
@@ -140,7 +217,8 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///
+        ///	&apos;boolean&apos; : true,
+        ///	&apos;string&apos; : &apos;string&apos;
         ///}.
         /// </summary>
         internal static string TestData {
@@ -151,35 +229,33 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///    &apos;title&apos;:&apos;test&apos;,
-        ///    &apos;type&apos;:&apos;object&apos;, 
+        ///	&apos;type&apos;:&apos;object&apos;, 
+        ///	
+        ///
+        ///    &apos;title&apos;:&apos;Root Object Title&apos;,
+        ///	&apos;description&apos; : &apos;This is Root Object description&apos;,
+        ///
         ///    &apos;properties&apos;:{
         ///
         ///		&apos;boolean&apos; : {
-        ///            &apos;type&apos;:&apos;boolean&apos;
+        ///            &apos;type&apos;:&apos;boolean&apos;,
+        ///			default : true,
+        ///			readonly : true
         ///        },
         ///        &apos;string&apos; : {
-        ///            &apos;type&apos;:&apos;string&apos;
+        ///            &apos;type&apos;:&apos;string&apos;,
+        ///			visible : false
         ///        },
         ///		&apos;object&apos; : {
         ///
-        ///			type : &apos;object&apos;,
+        ///			type : [ &apos;object&apos;, &apos;null&apos;],
+        ///
         ///			title : &apos;This is the object&apos;,
         ///			description : &apos;This is the object description&apos;,
         ///
         ///			&apos;properties&apos; : {
-        ///				&apos;booleansd&apos; : {
-        ///					&apos;type&apos;:&apos;boolean&apos;
-        ///				},
-        ///				&apos;stringsd&apos; : {
-        ///					&apos;type&apos;:&apos;string&apos;
-        ///				},
-        ///			}
-        ///		},
-        ///       
-        ///		&apos;number&apos; : {
-        ///            &apos;type&apos;:&apos;number&apos;
-        ///      [rest of string was truncated]&quot;;.
+        ///				&apos;bool1&apos; : {
+        ///					&apos;type&apos; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TestSchema {
             get {

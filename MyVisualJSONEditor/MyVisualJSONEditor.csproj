@@ -84,6 +84,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="Views\Converters\DateConverter.cs" />
     <Compile Include="Views\Converters\EnumConverter.cs" />
@@ -117,11 +122,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -142,6 +142,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\MediaCodec.txt" />
     <None Include="Resources\Schema.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +159,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TestData.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\MediaCodec.schema.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

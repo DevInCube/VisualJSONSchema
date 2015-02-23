@@ -1,0 +1,48 @@
+﻿{
+  
+	"Import":
+	{
+		"File":"/opt/edge/libexec/mediacodec/libimport-file.so",
+		"ParamSet":
+		{
+			"FrameMeta":
+			{
+				"Prefix":"",
+				"Suffix":".gscene",
+				"Dir":""
+			},
+			"FrameData":
+			{
+				"Prefix":"",
+				"Suffix":".gframe",
+				"Dir":""
+			}
+		}
+	},
+	"Codec":
+	{
+		"File":"/opt/edge/libexec/mediacodec/libcodec-jpegturbo.so",
+		"Source":"MONO8T",
+		"Target":"JPEG",
+		"ParamSet": {}
+	},
+	"Export":
+	{
+		"File":"/opt/edge/libexec/mediacodec/libexport-file.so",
+		"ParamSet":
+		{
+			"FrameMeta":
+			{
+				"Prefix":"",
+				"Suffix":".codec",
+				"Dir":""
+			},
+			"FrameData":
+			{
+				"Prefix":"",
+				"Suffix":".jpeg",
+				"Dir":""
+			}
+		}
+	}
+}
