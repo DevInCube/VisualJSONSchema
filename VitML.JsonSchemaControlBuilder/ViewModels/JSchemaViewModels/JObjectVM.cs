@@ -117,6 +117,14 @@ namespace MyVisualJSONEditor.ViewModels
                     throw new NotImplementedException("OneOf.Count > 1");
                 return refSchema;
             }
+            else if(schema.AllOf.Count > 0) 
+            {
+                throw new NotImplementedException("AllOf");
+            }
+            else if (schema.AnyOf.Count > 0)
+            {
+                throw new NotImplementedException("AnyOf");
+            }
             else
             {
                 return schema;
@@ -137,10 +145,9 @@ namespace MyVisualJSONEditor.ViewModels
                     if (value != null)
                     {
                         var objects = value.Select(o => o is JObject ?
-                            (JTokenVM)FromJson((JObject)o, propertySchema) 
-                            : (
-                                JValueVM.FromJson((JValue)o, CheckSchema(propertySchema))
-                            ));
+                            (JTokenVM)JObjectVM.FromJson((JObject)o, propertySchema) 
+                            : JValueVM.FromJson((JValue)o, CheckSchema(propertySchema))
+                        );
 
                         list = new List<JTokenVM>(objects);
                     }
