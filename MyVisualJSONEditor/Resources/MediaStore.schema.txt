@@ -1,0 +1,224 @@
+﻿{
+
+	"id" : "http://vit.com.ua/edgeserver/mediastore#",
+	"$schema": "http://json-schema.org/draft-04/schema#",
+
+	'title' : 'MediaStore main.conf',
+	'type' : 'object',
+
+	'definitions' : {
+
+		'FrameReact' : {
+			
+			'type' : 'object',
+
+			'properties' : {
+
+				"Channel": {
+					'type' : 'string',
+				},                             
+				"Prefix":{
+					'type' : 'string',
+				},                            
+				"Suffix":{
+					'type' : 'string',
+				},                              
+				"Dir":{
+					'type' : 'string',
+				}
+			},
+
+			"required" : [ 'Channel', 'Prefix', 'Suffix', 'Dir' ],
+			"additionalProperties": false,
+		},
+
+		'Store.ParamSet' : {
+			
+			'type' : 'object',
+
+			'properties' : {
+				
+				"RootDir": {
+					'type' : 'string'
+				},
+				"Channels": { 
+
+					'type' : 'array',
+
+					"items" : {
+						
+						"title" : "item",
+						"type" : "object",
+
+						"properties" : 
+						{
+							"Name": { 
+								'type' : 'string'
+							},
+							"DepthAsMin":{
+								'type' : 'integer',
+								'minimum' : 0,
+								'default' : 1,
+							}
+						},
+						"required" : [ "Name", 'DepthAsMin' ],
+						"additionalProperties": false,
+					},
+
+					"default" : {
+						"Name" : "0",
+						"DepthAsMin" : 30
+					}
+				}
+
+			},
+
+			"required" : [ 'RootDir', 'Channels' ],
+			"additionalProperties": false,
+		},
+
+		'SocketApi.ParamSet' : {
+
+			'type' : 'object',
+			
+			'properties' : {
+
+				"EndPoint": {
+					'type' : 'string',
+				}, 
+				"MaxClients": {
+					'type' : 'integer',
+					'minimum' : 0,
+					'default' : 1,
+				}
+			},
+
+			"required" : [ 'EndPoint', 'MaxClients' ],
+			"additionalProperties": false,
+		}
+	},
+
+	'properties' : {
+		
+		'Store' : {
+
+			'type' : 'object',
+
+			'properties' : {
+				
+				'ParamSet' : {
+					'type' : 'object',
+					'format':'simple',
+					"oneOf": [{ "$ref": "#/definitions/Store.ParamSet" }],
+				}
+			},
+
+			"required" : [ 'ParamSet' ],
+			"additionalProperties": false,
+		},
+
+		'SocketApi' : {
+
+			'type' : 'object',
+
+			'properties' : {
+				
+				'ParamSet' : {
+					'type' : 'object',
+					'format':'simple',
+					"oneOf": [{ "$ref": "#/definitions/SocketApi.ParamSet" }],
+				}
+			},
+
+			"required" : [ 'ParamSet' ],
+			"additionalProperties": false,
+		},
+
+		'FileApi' : {
+
+			'type' : 'object',
+			'format' : 'simple',
+
+			'properties' : {
+
+				"SaveFrameReact": {
+
+					'type' : 'array',
+
+					"items" : {
+						
+						"title" : "item",
+						"type" : "object",
+
+						"properties" : 
+						{
+							"ParamSet":
+							{
+								"type": "object",
+								'format' : 'simple',
+
+								"oneOf": [
+									{ "$ref": "#/definitions/FrameReact" }
+								]
+							}
+						},
+						"required" : [ "ParamSet" ],
+						"additionalProperties": false,
+					},
+
+					"default" : {
+						"ParamSet":
+						{
+							"Channel": 0,
+							"Prefix": "",
+							"Suffix": "",
+							"Dir": ""
+						}
+					}
+				}
+				,
+				"SaveFrameEvent": {
+
+					'type' : 'array',
+
+					"items" : {
+						
+						"title" : "item",
+						"type" : "object",
+
+						"properties" : 
+						{
+							"ParamSet":
+							{
+								"type": "object",
+								'format' : 'simple',
+
+								"oneOf": [
+									{ "$ref": "#/definitions/FrameReact" }
+								]
+							}
+						},
+						"required" : [ "ParamSet" ],
+						"additionalProperties": false,
+					},
+
+					"default" : {
+						"ParamSet":
+						{
+							"Channel": 0,
+							"Prefix": "",
+							"Suffix": "",
+							"Dir": ""
+						}
+					}
+				}
+			},
+
+			"required" : [ 'SaveFrameReact', 'SaveFrameEvent' ],
+			"additionalProperties": false,
+		},
+	},
+
+	"required" : [ 'Store', "SocketApi", 'FileApi' ],
+    "additionalProperties": false,
+}

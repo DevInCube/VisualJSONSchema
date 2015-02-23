@@ -165,8 +165,8 @@ namespace MyVisualJSONEditor.ViewModels
             Posts.Add(new Post() { PostName = "Post123", PostId = "123" });
             this.PropertyChanged += MainWindowVM_PropertyChanged;
             Control = new ItemsControl();
-            Schema = Resources.MediaCodec_schema;
-            JsonData = Resources.MediaCodec;
+            Schema = Resources.MediaStore_schema;
+            JsonData = Resources.MediaStore;
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -257,12 +257,14 @@ namespace MyVisualJSONEditor.ViewModels
                                         posts.Data.Add(post);
                                     posts.SelectedIndex = selIndex;
                                 });
-                                Data.PropertyChanged += (se, ar) =>
-                                {
-                                    ShowResult();
-                                };
-                                ShowResult();
+                                
+                               
                             }
+                            Data.PropertyChanged += (se, ar) =>
+                            {
+                                ShowResult();
+                            };
+                            ShowResult();
                     }
                     else
                     {

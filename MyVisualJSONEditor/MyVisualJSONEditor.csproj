@@ -143,6 +143,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\MediaCodec.txt" />
+    <Resource Include="Resources\MediaStore.schema.txt" />
+    <Resource Include="Resources\MediaStore.txt" />
     <None Include="Resources\Schema.txt" />
   </ItemGroup>
   <ItemGroup>

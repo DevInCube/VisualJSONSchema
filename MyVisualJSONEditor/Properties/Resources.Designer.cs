@@ -104,35 +104,37 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///  &quot;Import&quot;:
-        ///  {
-        ///    &quot;File&quot;:&quot;/opt/edge/libexec/mediacodec/libimport-file.so&quot;,
-        ///    &quot;ParamSet&quot;:
-        ///    {
-        ///      &quot;FrameMeta&quot;:
-        ///      {
-        ///         &quot;Prefix&quot;:&quot;&quot;,
-        ///         &quot;Suffix&quot;:&quot;.gscene&quot;,
-        ///         &quot;Dir&quot;:&quot;&quot;
-        ///      },
-        ///      &quot;FrameData&quot;:
-        ///      {
-        ///         &quot;Prefix&quot;:&quot;&quot;,
-        ///         &quot;Suffix”:&quot;.gframe&quot;,
-        ///         &quot;Dir&quot;:&quot;&quot;
-        ///      }
-        ///    }
-        ///  },
-        ///  &quot;Codec&quot;:
-        ///  {
-        ///    &quot;File&quot;:&quot;/opt/edge/libexec/mediacodec/libcodec-jpegturbo.so&quot;,
-        ///    &quot;Source&quot;:&quot;MONO8T&quot;,
-        ///    &quot;Target&quot;:&quot;JPEG&quot;,
-        ///    &quot;ParamSet&quot;:
-        ///    {     
-        ///    }
-        ///  },
-        /// [rest of string was truncated]&quot;;.
+        ///  
+        ///	&quot;Import&quot;:
+        ///	{
+        ///		&quot;File&quot;:&quot;/opt/edge/libexec/mediacodec/libimport-file.so&quot;,
+        ///		&quot;ParamSet&quot;:
+        ///		{
+        ///			&quot;FrameMeta&quot;:
+        ///			{
+        ///				&quot;Prefix&quot;:&quot;&quot;,
+        ///				&quot;Suffix&quot;:&quot;.gscene&quot;,
+        ///				&quot;Dir&quot;:&quot;&quot;
+        ///			},
+        ///			&quot;FrameData&quot;:
+        ///			{
+        ///				&quot;Prefix&quot;:&quot;&quot;,
+        ///				&quot;Suffix&quot;:&quot;.gframe&quot;,
+        ///				&quot;Dir&quot;:&quot;&quot;
+        ///			}
+        ///		}
+        ///	},
+        ///	&quot;Codec&quot;:
+        ///	{
+        ///		&quot;File&quot;:&quot;/opt/edge/libexec/mediacodec/libcodec-jpegturbo.so&quot;,
+        ///		&quot;Source&quot;:&quot;MONO8T&quot;,
+        ///		&quot;Target&quot;:&quot;JPEG&quot;,
+        ///		&quot;ParamSet&quot;: {}
+        ///	},
+        ///	&quot;Export&quot;:
+        ///	{
+        ///		&quot;File&quot;:&quot;/opt/edge/libexec/mediacodec/libexport-file.so&quot;,
+        ///		&quot;Par [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MediaCodec {
             get {
@@ -147,8 +149,6 @@ namespace MyVisualJSONEditor.Properties {
         ///
         ///	&apos;title&apos; : &apos;MediaCodec main.conf&apos;,
         ///	&apos;type&apos; : &apos;object&apos;,
-        ///
-        ///	&apos;format&apos; : &apos;tab&apos;,
         ///
         ///	&apos;definitions&apos; : {
         ///
@@ -170,11 +170,81 @@ namespace MyVisualJSONEditor.Properties {
         ///			},
         ///
         ///			&quot;required&quot; : [ &apos;Prefix&apos;, &quot;Suffix&quot;, &apos;Dir&apos; ],
-        ///			&quot;additionalPropertie [rest of string was truncated]&quot;;.
+        ///			&quot;additionalProperties&quot;: false,
+        ///		}, 
+        ///		        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MediaCodec_schema {
             get {
                 return ResourceManager.GetString("MediaCodec_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;Store&quot;:
+        ///  {
+        ///    &quot;ParamSet&quot;:
+        ///    {
+        ///      &quot;RootDir&quot;:&quot;var/opt/edge/mediastore.0/&quot;,        // string
+        ///      &quot;Channels&quot;:
+        ///      [
+        ///        {
+        ///          &quot;Name&quot;:&quot;0&quot;,                                // string
+        ///          &quot;DepthAsMin&quot;:30                            // uint
+        ///        }
+        ///      ]
+        ///    }
+        ///  },
+        ///  &quot;SocketApi&quot;:
+        ///  {
+        ///    &quot;ParamSet&quot;:
+        ///    {
+        ///      &quot;EndPoint&quot;:&quot;/tmp/edge/mediastore.0.endpoint&quot;,  // string
+        ///      &quot;MaxClients&quot;:1                                 // uint
+        ///    }
+        ///  },
+        ///  &quot;FileApi&quot;:
+        ///  {
+        ///    [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MediaStore {
+            get {
+                return ResourceManager.GetString("MediaStore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///
+        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/mediastore#&quot;,
+        ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///
+        ///	&apos;title&apos; : &apos;MediaStore main.conf&apos;,
+        ///	&apos;type&apos; : &apos;object&apos;,
+        ///
+        ///	&apos;definitions&apos; : {
+        ///
+        ///		&apos;FrameReact&apos; : {
+        ///			
+        ///			&apos;type&apos; : &apos;object&apos;,
+        ///
+        ///			&apos;properties&apos; : {
+        ///
+        ///				&quot;Channel&quot;: {
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},                             
+        ///				&quot;Prefix&quot;:{
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},                            
+        ///				&quot;Suffix&quot;:{
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},                              
+        ///				&quot;D [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MediaStore_schema {
+            get {
+                return ResourceManager.GetString("MediaStore_schema", resourceCulture);
             }
         }
         

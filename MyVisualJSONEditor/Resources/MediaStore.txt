@@ -1,0 +1,51 @@
+﻿{
+  "Store":
+  {
+    "ParamSet":
+    {
+      "RootDir":"var/opt/edge/mediastore.0/",        // string
+      "Channels":
+      [
+        {
+          "Name":"0",                                // string
+          "DepthAsMin":30                            // uint
+        }
+      ]
+    }
+  },
+  "SocketApi":
+  {
+    "ParamSet":
+    {
+      "EndPoint":"/tmp/edge/mediastore.0.endpoint",  // string
+      "MaxClients":1                                 // uint
+    }
+  },
+  "FileApi":
+  {
+    "SaveFrameReact":
+    [
+      {
+        "ParamSet":
+        {
+          "Channel":"0",                             // string
+          "Prefix":"",                               // string
+          "Suffix":"",                               // string
+          "Dir":""                                   // string
+        }
+      }
+    ],
+    "SaveFrameEvent":
+    [
+      {
+        "ParamSet":
+        {
+          "Channel":"0",                             // string
+          "Prefix":"",                               // string
+          "Suffix":"",                               // string
+          "Dir":""                                   // string
+        }
+      }
+    ]
+  }
+}
