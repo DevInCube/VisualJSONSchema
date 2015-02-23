@@ -1,0 +1,52 @@
+﻿{
+  "RxPipe":"pathto/fifo",                                   // string
+  "MappingConf":"/etc/edge/radar.0/mapping.conf",           // string
+  "Driver":
+  {
+    "File":"/opt/edge/libexec/radar/libdriver-protocol.so", // string
+    "ParamSet":
+    {
+    }
+  },
+  "Tracker":
+  {
+    "SceneTout":50,
+    "CloseTout":300,
+    "MaxFragSize":10,
+    "MaxTrackCount":64,
+    "MaxSceneCount":50
+  },
+  "SceneExport":
+  {
+    "QueueSet":
+    [
+      {
+        "File":"pathto/libscene_exporter.so",
+        "ParamSet":
+        {
+          "Prefix":"",
+          "Suffix":".rscene",
+          "Dir":"pathto/scene/export/folder" 
+        }
+      }
+    ]
+  },
+  "TrackExport":
+  {
+    "QueueSet":
+    [
+      {
+        "File":"pathto/libtrack_exporter.so",
+        "ParamSet":
+        {
+          "Prefix":"",                       
+          "Suffix":".rtrack",                
+          "Dir":"pathto/scene/export/folder" 
+        }
+      },
+      {
+        "File":"pathto/libsyslog_exporter.so"
+      }
+    ]
+  }
+}

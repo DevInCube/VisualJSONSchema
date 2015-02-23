@@ -25,7 +25,7 @@ namespace MyVisualJSONEditor.ViewModels
 
         private JObjectVM _Data;
         private JSchema _JSchema;
-        private JSchemaPreloadedResolver resolver;
+        private JSchemaPreloadedResolver refResolver;
         private string _Schema, _SchemaError, _DataError, _ResultData, _JsonData;
         private string _DbHost;
         private bool _IsValid, _IsResultValid;
@@ -165,15 +165,15 @@ namespace MyVisualJSONEditor.ViewModels
             Posts.Add(new Post() { PostName = "Post12", PostId = "12" });
             Posts.Add(new Post() { PostName = "Post123", PostId = "123" });
 
-            resolver = new JSchemaPreloadedResolver();
-            JSchema defSchema = JSchema.Parse(Resources.definitions);
-            resolver.Add(defSchema, new Uri("http://vit.com.ua/edgeserver/definitions"));
+            refResolver = new JSchemaPreloadedResolver();
+            JSchema shDefinitions = JSchema.Parse(Resources.definitions);
+            refResolver.Add(shDefinitions, new Uri("http://vit.com.ua/edgeserver/definitions"));
 
             this.PropertyChanged += MainWindowVM_PropertyChanged;
 
             Control = new ItemsControl();
-            Schema = Resources.MediaStore_schema;
-            JsonData = Resources.MediaStore;
+            Schema = Resources.Radar_schema;
+            JsonData = Resources.Radar;
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -186,7 +186,7 @@ namespace MyVisualJSONEditor.ViewModels
                     Control.Items.Clear();
                     try
                     {
-                        JSchema = JSchema.Parse(Schema, resolver);
+                        JSchema = JSchema.Parse(Schema, refResolver);
                     }
                     catch (Exception ex)
                     {

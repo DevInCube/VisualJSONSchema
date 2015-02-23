@@ -62,6 +62,41 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/definitions#&quot;,
+        ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///
+        ///	&apos;definitions&apos; : {
+        ///		
+        ///		&apos;FrameReact&apos; : {
+        ///			
+        ///			&apos;type&apos; : &apos;object&apos;,
+        ///
+        ///			&apos;properties&apos; : {
+        ///
+        ///				&quot;Channel&quot;: {
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},                             
+        ///				&quot;Prefix&quot;:{
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},                            
+        ///				&quot;Suffix&quot;:{
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				},                              
+        ///				&quot;Dir&quot;:{
+        ///					&apos;type&apos; : &apos;string&apos;,
+        ///				}
+        ///			},
+        ///
+        ///			&quot;requir [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string definitions {
+            get {
+                return ResourceManager.GetString("definitions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
         ///	&quot;Store&quot;:
         ///	{
         ///		&quot;ParamSet&quot;:
@@ -96,44 +131,46 @@ namespace MyVisualJSONEditor.Properties {
         ///			 &quot;Suffix&quot;:&quot;&quot;,
         ///			 &quot;Dir&quot;:&quot;/tmp/edge/event_store/stor [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Data {
+        internal static string EventStore {
             get {
-                return ResourceManager.GetString("Data", resourceCulture);
+                return ResourceManager.GetString("EventStore", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {
-        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/definitions#&quot;,
+        ///   Looks up a localized string similar to 
+        /// {
+        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/eventstore#&quot;,
         ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
         ///
-        ///	&apos;definitions&apos; : {
-        ///		
-        ///		&apos;FrameReact&apos; : {
-        ///			
-        ///			&apos;type&apos; : &apos;object&apos;,
+        ///	&quot;title&quot; : &quot;EventStore main.xconf&quot;,
+        ///	&quot;type&quot; : &quot;object&quot;,
         ///
-        ///			&apos;properties&apos; : {
+        ///	&apos;format&apos; : &apos;tab&apos;,
         ///
-        ///				&quot;Channel&quot;: {
-        ///					&apos;type&apos; : &apos;string&apos;,
-        ///				},                             
-        ///				&quot;Prefix&quot;:{
-        ///					&apos;type&apos; : &apos;string&apos;,
-        ///				},                            
-        ///				&quot;Suffix&quot;:{
-        ///					&apos;type&apos; : &apos;string&apos;,
-        ///				},                              
-        ///				&quot;Dir&quot;:{
-        ///					&apos;type&apos; : &apos;string&apos;,
-        ///				}
-        ///			},
+        ///	&quot;definitions&quot; : {
         ///
-        ///			&quot;requir [rest of string was truncated]&quot;;.
+        ///		&quot;DbStore.ParamSet&quot; : {
+        ///
+        ///			&quot;type&quot; : &quot;object&quot;,
+        ///
+        ///			&quot;properties&quot;: {
+        ///					
+        ///				&quot;DbHost&quot;: {
+        ///					&quot;title&quot; : &quot;Host&quot;,
+        ///					&quot;type&quot;: &quot;string&quot;,
+        ///					&quot;format&quot;: &quot;ipv4&quot;,
+        ///					&quot;default&quot;: &quot;127.0.0.1&quot;,
+        ///					&quot;binding&quot; : {
+        ///						&quot;path&quot; : &quot;DbHost&quot;
+        ///					}
+        ///				},
+        ///				&quot;DbPort&quot;: {
+        ///					&quot;title&quot; : [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string definitions {
+        internal static string EventStore_schema {
             get {
-                return ResourceManager.GetString("definitions", resourceCulture);
+                return ResourceManager.GetString("EventStore_schema", resourceCulture);
             }
         }
         
@@ -292,39 +329,68 @@ namespace MyVisualJSONEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 
-        /// {
-        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/eventstore#&quot;,
-        ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
-        ///
-        ///	&quot;title&quot; : &quot;EventStore main.xconf&quot;,
-        ///	&quot;type&quot; : &quot;object&quot;,
-        ///
-        ///	&apos;format&apos; : &apos;tab&apos;,
-        ///
-        ///	&quot;definitions&quot; : {
-        ///
-        ///		&quot;DbStore.ParamSet&quot; : {
-        ///
-        ///			&quot;type&quot; : &quot;object&quot;,
-        ///
-        ///			&quot;properties&quot;: {
-        ///					
-        ///				&quot;DbHost&quot;: {
-        ///					&quot;title&quot; : &quot;Host&quot;,
-        ///					&quot;type&quot;: &quot;string&quot;,
-        ///					&quot;format&quot;: &quot;ipv4&quot;,
-        ///					&quot;default&quot;: &quot;127.0.0.1&quot;,
-        ///					&quot;binding&quot; : {
-        ///						&quot;path&quot; : &quot;DbHost&quot;
-        ///					}
-        ///				},
-        ///				&quot;DbPort&quot;: {
-        ///					&quot;title&quot; : [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to {
+        ///  &quot;RxPipe&quot;:&quot;pathto/fifo&quot;,                                   // string
+        ///  &quot;MappingConf&quot;:&quot;/etc/edge/radar.0/mapping.conf&quot;,           // string
+        ///  &quot;Driver&quot;:
+        ///  {
+        ///    &quot;File&quot;:&quot;/opt/edge/libexec/radar/libdriver-protocol.so&quot;, // string
+        ///    &quot;ParamSet&quot;:
+        ///    {
+        ///      ...
+        ///    }
+        ///  },
+        ///  &quot;Tracker&quot;:
+        ///  {
+        ///    &quot;SceneTout&quot;:50,
+        ///    &quot;CloseTout&quot;:300,
+        ///    &quot;MaxFragSize&quot;:10,
+        ///    &quot;MaxTrackCount&quot;:64,
+        ///    &quot;MaxSceneCount&quot;:50
+        ///  },
+        ///  &quot;SceneExport&quot;:
+        ///  {
+        ///    &quot;QueueSet&quot;:
+        ///    [
+        ///      {
+        ///        &quot;File&quot;:&quot;pathto/libscene_ex [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Schema {
+        internal static string Radar {
             get {
-                return ResourceManager.GetString("Schema", resourceCulture);
+                return ResourceManager.GetString("Radar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;RxPipe&quot;:&quot;pathto/fifo&quot;,                                   // string
+        ///  &quot;MappingConf&quot;:&quot;/etc/edge/radar.0/mapping.conf&quot;,           // string
+        ///  &quot;Driver&quot;:
+        ///  {
+        ///    &quot;File&quot;:&quot;/opt/edge/libexec/radar/libdriver-protocol.so&quot;, // string
+        ///    &quot;ParamSet&quot;:
+        ///    {
+        ///      ...
+        ///    }
+        ///  },
+        ///  &quot;Tracker&quot;:
+        ///  {
+        ///    &quot;SceneTout&quot;:50,
+        ///    &quot;CloseTout&quot;:300,
+        ///    &quot;MaxFragSize&quot;:10,
+        ///    &quot;MaxTrackCount&quot;:64,
+        ///    &quot;MaxSceneCount&quot;:50
+        ///  },
+        ///  &quot;SceneExport&quot;:
+        ///  {
+        ///    &quot;QueueSet&quot;:
+        ///    [
+        ///      {
+        ///        &quot;File&quot;:&quot;pathto/libscene_ex [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Radar_schema {
+            get {
+                return ResourceManager.GetString("Radar_schema", resourceCulture);
             }
         }
         

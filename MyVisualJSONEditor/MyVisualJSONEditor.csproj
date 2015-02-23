@@ -142,14 +142,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Radar.txt" />
+    <Resource Include="Resources\Radar.schema.txt" />
     <Resource Include="Resources\definitions.txt" />
     <Content Include="Resources\MediaCodec.txt" />
     <Resource Include="Resources\MediaStore.schema.txt" />
     <Resource Include="Resources\MediaStore.txt" />
-    <None Include="Resources\Schema.txt" />
+    <None Include="Resources\EventStore.schema.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Data.txt" />
+    <None Include="Resources\EventStore.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VitML.JsonSchemaControlBuilder\VitML.JsonSchemaControlBuilder.csproj">

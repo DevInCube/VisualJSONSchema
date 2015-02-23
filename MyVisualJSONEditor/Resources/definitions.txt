@@ -1,4 +1,5 @@
 ﻿{
+
 	"id" : "http://vit.com.ua/edgeserver/definitions#",
 	"$schema": "http://json-schema.org/draft-04/schema#",
 
@@ -28,5 +29,26 @@
 			"additionalProperties": false,
 		},
 
+
+		'EventDir' : {
+			
+			'type' : 'object',
+
+			'properties' : {
+                      
+				"Prefix":{
+					'type' : 'string',
+				},                            
+				"Suffix":{
+					'type' : 'string',
+				},                              
+				"Dir":{
+					'type' : 'string',
+				}
+			},
+
+			"required" : [ 'Prefix', 'Suffix', 'Dir' ],
+			"additionalProperties": false,
+		},
 	}
 }
