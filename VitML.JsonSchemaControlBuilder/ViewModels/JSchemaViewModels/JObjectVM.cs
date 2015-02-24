@@ -113,20 +113,17 @@ namespace MyVisualJSONEditor.ViewModels
             }
         }
 
-        private static JSchema CheckSchema(JSchema schema)
+        private static JSchema CheckSchema(JSchema schema, JToken data)
         {
             if (schema.OneOf.Count > 0)
             {
-                JSchema refSchema = null;
-                if (schema.OneOf.Count == 1)
-                    refSchema = schema.OneOf.First();
-                else
-                    throw new NotImplementedException("OneOf.Count > 1");
-                return refSchema;
+                schema.ChooseOneOf(data);
+                return schema;
             }
             else if(schema.AllOf.Count > 0) 
             {
-                return JSchemaExtension.MergeSchemas(schema.AllOf);
+                schema.MergeAllOf();
+                return schema;
             }
             else if (schema.AnyOf.Count > 0)
             {
@@ -140,7 +137,7 @@ namespace MyVisualJSONEditor.ViewModels
 
         public static JObjectVM FromJson(JObject obj, JSchema schema)
         {
-            schema = CheckSchema(schema);
+            schema = CheckSchema(schema, obj);
             var result = new JObjectVM();
             foreach (var property in schema.Properties)
             {
@@ -153,7 +150,7 @@ namespace MyVisualJSONEditor.ViewModels
                     {
                         var objects = value.Select(o => o is JObject ?
                             (JTokenVM)JObjectVM.FromJson((JObject)o, propertySchema) 
-                            : JValueVM.FromJson((JValue)o, CheckSchema(propertySchema))
+                            : JValueVM.FromJson((JValue)o, CheckSchema(propertySchema, o))
                         );
 
                         list = new List<JTokenVM>(objects);
@@ -231,7 +228,9 @@ namespace MyVisualJSONEditor.ViewModels
                     if (property.Value is JArrayVM)
                     {
                         foreach (var obj in ((JArrayVM)property.Value).Items)
-                            obj.Schema = CheckSchema(propertyInfo.Value.Items.First()); //here i use only first schema
+                        {
+                            obj.Schema = CheckSchema(propertyInfo.Value.Items.First(), null); //here i use only first schema
+                        }
                     }
                     _Properties.Add(property);
                 }

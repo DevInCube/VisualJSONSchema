@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Schema;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,18 +23,38 @@ namespace MyVisualJSONEditor.Tools
             return sh.Required.FirstOrDefault(x => x.Equals(key)) != null;
         }
 
-        public static JSchema MergeSchemas(IEnumerable<JSchema> schemas)
+        private static void Merge(JSchema parent, JSchema child)
         {
-            JSchema res = new JSchema();
-            res.Type = schemas.First().Type; //@todo
-            foreach (var sh in schemas)
+            foreach (var p in child.Properties)
+                parent.Properties.Add(p);
+            foreach (var r in child.Required)
+                parent.Required.Add(r);
+        }
+
+        public static void MergeAllOf(this JSchema schema)
+        {
+            foreach (var sh in schema.AllOf)
+                Merge(schema, sh);
+            schema.AllOf.Clear();
+        }
+
+        public static void ChooseOneOf(this JSchema schema, JToken data)
+        {
+            if (schema.OneOf.Count == 1)
+                Merge(schema, schema.OneOf.First());
+            else
             {
-                foreach (var p in sh.Properties)
-                    res.Properties.Add(p);
-                foreach (var r in sh.Required)
-                    res.Required.Add(r);
+                if (data == null) 
+                    return;
+                foreach (var sh in schema.OneOf)
+                {
+                    if(data.IsValid(sh))
+                    {
+                        Merge(schema, sh);
+                        return;
+                    }
+                }
             }
-            return res;
         }
     }
 }
