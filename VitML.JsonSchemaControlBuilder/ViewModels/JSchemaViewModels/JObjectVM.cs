@@ -146,7 +146,7 @@ namespace MyVisualJSONEditor.ViewModels
             {
                 if (property.Value.Type.HasFlag(JSchemaType.Array))
                 {
-                    var propertySchema = property.Value.Items.First();
+                    var propertySchema = property.Value.Items.First();//@todo
                     var value = obj[property.Key];
                     List<JTokenVM> list = null;
                     if (value != null)

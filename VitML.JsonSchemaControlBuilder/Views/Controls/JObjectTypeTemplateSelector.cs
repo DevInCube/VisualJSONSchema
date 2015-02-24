@@ -36,6 +36,7 @@ namespace MyVisualJSONEditor.Views.Controls
             Templates.Add("Time", CreateTemplate(typeof(TimeTemplate)));
             Templates.Add("DateTime", CreateTemplate(typeof(DateTimeTemplate)));
             Templates.Add("Array", CreateTemplate(typeof(ArrayTemplate)));
+            Templates.Add("ArrayStatic", CreateTemplate(typeof(ArrayStaticTemplate)));
             Templates.Add("SelectList", CreateTemplate(typeof(SelectListTemplate)));
             Templates.Add("Integer", CreateTemplate(typeof(IntegerTemplate)));
             Templates.Add("Number", CreateTemplate(typeof(NumberTemplate)));
@@ -139,10 +140,15 @@ namespace MyVisualJSONEditor.Views.Controls
             }
             if (type == JSchemaType.Array)
             {
-                if (schema.Format == "select")
-                    return GetTemplate("SelectList");
-                else
-                    return GetTemplate("Array");
+                switch (schema.Format)
+                {
+                    case ("select"):
+                        return GetTemplate("SelectList");
+                    case ("static"):
+                        return GetTemplate("ArrayStatic");
+                    default:
+                        return GetTemplate("Array");
+                }
             }
 
             return base.SelectTemplate(item, container);

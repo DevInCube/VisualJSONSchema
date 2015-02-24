@@ -13,24 +13,14 @@ namespace MyVisualJSONEditor.ViewModels
     /// <summary>Represents a single JSON value. </summary>
     public class JValueVM : JTokenVM, IStyleDecorator
     {
+
         /// <summary>Initializes a new instance of the <see cref="JsonValueModel"/> class. </summary>
         public JValueVM()
         {
             this["Value"] = null;
         }
 
-        /// <summary>Creates a <see cref="JsonValueModel"/> from a <see cref="JValue"/> and a given schema. </summary>
-        /// <param name="value">The value. </param>
-        /// <param name="schema">The schema. </param>
-        /// <returns>The <see cref="JsonValueModel"/>. </returns>
-        public static JValueVM FromJson(JValue value, JSchema schema)
-        {
-            return new JValueVM
-            {
-                Schema = schema,
-                Value = value.Value
-            };
-        }
+        public string Key { get { return null; } }
 
         /// <summary>Gets or sets the value. </summary>
         public object Value
@@ -66,5 +56,18 @@ namespace MyVisualJSONEditor.ViewModels
         public PropertyStyle Style { get { return null; } }
 
         #endregion
+
+        /// <summary>Creates a <see cref="JsonValueModel"/> from a <see cref="JValue"/> and a given schema. </summary>
+        /// <param name="value">The value. </param>
+        /// <param name="schema">The schema. </param>
+        /// <returns>The <see cref="JsonValueModel"/>. </returns>
+        public static JValueVM FromJson(JValue value, JSchema schema)
+        {
+            return new JValueVM
+            {
+                Schema = schema,
+                Value = value.Value
+            };
+        }
     }
 }

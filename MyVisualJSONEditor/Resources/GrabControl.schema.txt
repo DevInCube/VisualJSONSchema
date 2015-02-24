@@ -28,6 +28,7 @@
                                 "Median":{
                                     "id":"Median",
                                     "type":"array",
+									'format' : 'static',
 
                                     "items":[
                                         {
@@ -80,6 +81,7 @@
                                 "Gain":{
                                     "id":"Gain",
                                     "type":"array",
+									'format' : 'static',
 
                                     "items":[
                                         {
@@ -102,6 +104,7 @@
                                 "ExpTime":{
                                     "id":"ExpTime",
                                     "type":"array",
+									'format' : 'static',
 
                                     "items":[
                                         {
