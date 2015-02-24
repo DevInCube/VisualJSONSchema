@@ -165,7 +165,7 @@ namespace MyVisualJSONEditor.ViewModels
         {
             if (this.CollectionChanged != null)
             {
-                var args = new NotifyCollectionChangedEventArgs(action, newItem, oldItem);
+                var args = new NotifyCollectionChangedEventArgs( action, newItem, oldItem, 0);
                 CollectionChanged.Invoke(this, args);
             }
         }
