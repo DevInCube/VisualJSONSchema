@@ -1,0 +1,61 @@
+﻿{
+  "Analyzer":
+  {
+    "ParamSet":
+    {
+      "Target":
+      {
+        "Median":[70, 150],
+        "SteadyState":
+        {
+          "Unstable":5,
+          "PreStable":10,
+          "Stable":15
+        }
+      },
+      "Sweep":
+      {
+        "Gain":[0.0, 24.0, 0.5],        
+        "ExpTime":[1000, 2000, 5],        
+        "Lut12":
+        {
+          "Day":"/etc/edge/grabcontrol.0/day.lut",
+          "Night":"/etc/edge/grabcontrol.0/night.lut",
+          "Default":"/etc/edge/grabcontrol.0/default.lut"
+        }
+      }
+    }
+  },
+  "FileApi":
+  {
+    "CheckFrameReact":
+    {
+      "Meta":
+      {
+        "ParamSet":
+        {
+          "Prefix":"",
+          "Suffix":".gframe",
+          "Dir":"/mnt/tmpramfs/mediagrabber.0/gscene"
+        }
+      },
+      "Data":
+      {
+        "ParamSet":
+        {
+          "Prefix":"",
+          "Suffix":".gscene",
+          "Dir":"/mnt/tmpramfs/mediagrabber.0/gframe"
+        }
+      }
+    },
+    "CheckFrameEvent":
+    [
+      {
+        "Prefix":"",
+        "Suffix":".cfs",
+        "Dir":"/mnt/tmpramfs/grabcontrol.0/checkFrameStatus"
+      }
+    ]
+  }
+}

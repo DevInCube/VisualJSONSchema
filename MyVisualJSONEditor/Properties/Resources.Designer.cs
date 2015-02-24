@@ -244,6 +244,69 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///  &quot;Analyzer&quot;:
+        ///  {
+        ///    &quot;ParamSet&quot;:
+        ///    {
+        ///      &quot;Target&quot;:
+        ///      {
+        ///        &quot;Median&quot;:[70, 150],
+        ///        &quot;SteadyState&quot;:
+        ///        {
+        ///          &quot;Unstable&quot;:5,
+        ///          &quot;PreStable&quot;:10,
+        ///          &quot;Stable&quot;:15
+        ///        }
+        ///      },
+        ///      &quot;Sweep&quot;:
+        ///      {
+        ///        &quot;Gain&quot;:[0.0, 24.0, 0.5],        
+        ///        &quot;ExpTime&quot;:[1000, 2000, 5],        
+        ///        &quot;Lut12&quot;:
+        ///        {
+        ///          &quot;Day&quot;:&quot;/etc/edge/grabcontrol.0/day.lut&quot;,
+        ///          &quot;Night&quot;:&quot;/etc/edge/grabcontrol.0/night.lut&quot;,
+        ///          &quot;Default&quot;:&quot;/etc/edge/ [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GrabControl {
+            get {
+                return ResourceManager.GetString("GrabControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/grabcontrol#&quot;,
+        ///
+        ///    &quot;type&quot;:&quot;object&quot;,
+        ///	&apos;format&apos; : &apos;tab&apos;,
+        ///
+        ///    &quot;properties&quot;:{
+        ///
+        ///        &quot;Analyzer&quot;:{
+        ///            &quot;id&quot;:&quot;Analyzer&quot;,
+        ///            &quot;type&quot;:&quot;object&quot;,
+        ///
+        ///            &quot;properties&quot;:{
+        ///
+        ///                &quot;ParamSet&quot;:{
+        ///                    &quot;id&quot;:&quot;ParamSet&quot;,
+        ///                    &quot;type&quot;:&quot;object&quot;,
+        ///
+        ///                    &quot;properties&quot;:{
+        ///
+        ///                        &quot;Target&quot;:{
+        ///                            &quot;id&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GrabControl_schema {
+            get {
+                return ResourceManager.GetString("GrabControl_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
         ///  
         ///	&quot;Import&quot;:
         ///	{
@@ -337,7 +400,7 @@ namespace MyVisualJSONEditor.Properties {
         ///    &quot;File&quot;:&quot;/opt/edge/libexec/mediagrabber/libdriver-basler.so&quot;,
         ///    &quot;ParamSet&quot;:
         ///    {
-        ///      ...
+        ///      
         ///    }
         ///  },
         ///  &quot;FrameExport&quot;:
@@ -352,7 +415,7 @@ namespace MyVisualJSONEditor.Properties {
         ///    [
         ///      {
         ///        &quot;Prefix&quot;:&quot;&quot;,
-        ///        &quot;Su [rest of string was truncated]&quot;;.
+        ///        &quot;Suffi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MediaGrabber {
             get {

@@ -21,5 +21,6 @@ namespace MyVisualJSONEditor.Tools
         {
             return sh.Required.FirstOrDefault(x => x.Equals(key)) != null;
         }
+
     }
 }

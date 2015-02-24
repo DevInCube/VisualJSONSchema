@@ -130,6 +130,8 @@ namespace MyVisualJSONEditor.ViewModels
             get { return _IsResultValid ? Brushes.Azure : Brushes.Bisque; }
         }
 
+        public ObservableCollection<string> ValidationErrors { get; private set; }
+
         public MainWindowVM()
         {
             refResolver = new JSchemaPreloadedResolver();
@@ -137,10 +139,11 @@ namespace MyVisualJSONEditor.ViewModels
             refResolver.Add(shDefinitions, new Uri("http://vit.com.ua/edgeserver/definitions"));
 
             this.PropertyChanged += MainWindowVM_PropertyChanged;
+            ValidationErrors = new ObservableCollection<string>();
 
             Control = new ItemsControl();
-            Schema = Resources.MediaGrabber_schema;
-            JsonData = Resources.MediaGrabber;
+            Schema = Resources.GrabControl_schema;
+            JsonData = Resources.GrabControl;
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -171,7 +174,9 @@ namespace MyVisualJSONEditor.ViewModels
                         DataError = ex.Message;
                         return;
                     }
-                    bool isValid = jdata.IsValid(JSchema);
+                    IList<string> validErrors = null;
+                    ValidationErrors.Clear();
+                    bool isValid = jdata.IsValid(JSchema, out validErrors);
                     if (isValid)
                     {
                         Data = JObjectVM.FromJson(jdata, JSchema);
@@ -184,6 +189,8 @@ namespace MyVisualJSONEditor.ViewModels
                     else
                     {
                         Data = null;
+                        foreach (var error in validErrors)
+                            ValidationErrors.Add(error);
                     }
                     
                     _IsValid = isValid;

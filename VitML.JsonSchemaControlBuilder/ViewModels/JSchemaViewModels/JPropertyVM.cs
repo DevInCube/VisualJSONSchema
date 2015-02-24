@@ -10,11 +10,12 @@ using MyToolkit.Command;
 using Xceed.Wpf.Toolkit;
 using VitML.JsonSchemaControlBuilder.ViewModels;
 using System.Windows;
+using VitML.JsonSchemaControlBuilder.ViewModels.JSchemaViewModels;
 
 namespace MyVisualJSONEditor.ViewModels
 {
     /// <summary>Describes a JSON property. </summary>
-    public class JPropertyVM : ObservableObject
+    public class JPropertyVM : ObservableObject, IStyleDecorator
     {
 
         private PropertyStyle style;

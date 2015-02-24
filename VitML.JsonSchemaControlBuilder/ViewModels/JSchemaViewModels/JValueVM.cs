@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VitML.JsonSchemaControlBuilder.ViewModels.JSchemaViewModels;
 
 namespace MyVisualJSONEditor.ViewModels
 {
     /// <summary>Represents a single JSON value. </summary>
-    public class JValueVM : JTokenVM
+    public class JValueVM : JTokenVM, IStyleDecorator
     {
         /// <summary>Initializes a new instance of the <see cref="JsonValueModel"/> class. </summary>
         public JValueVM()
@@ -42,6 +43,11 @@ namespace MyVisualJSONEditor.ViewModels
         public override JToken ToJToken()
         {
             return new JValue(Value);
+        }
+
+        public bool IsReadonly
+        {
+            get { return false; }
         }
     }
 }

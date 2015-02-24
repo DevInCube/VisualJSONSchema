@@ -150,6 +150,8 @@
     <Resource Include="Resources\definitions.txt" />
     <Resource Include="Resources\Compositor.schema.txt" />
     <Resource Include="Resources\Compositor.txt" />
+    <Resource Include="Resources\GrabControl.txt" />
+    <Resource Include="Resources\GrabControl.schema.txt" />
     <Content Include="Resources\MediaCodec.txt" />
     <Resource Include="Resources\MediaStore.schema.txt" />
     <Resource Include="Resources\MediaStore.txt" />
