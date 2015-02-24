@@ -136,7 +136,9 @@ namespace MyVisualJSONEditor.ViewModels
         {
             refResolver = new JSchemaPreloadedResolver();
             JSchema shDefinitions = JSchema.Parse(Resources.definitions);
+            JSchema radarsDefinitions = JSchema.Parse(Resources.Radars_schema);
             refResolver.Add(shDefinitions, new Uri("http://vit.com.ua/edgeserver/definitions"));
+            refResolver.Add(radarsDefinitions, new Uri("http://vit.com.ua/edgeserver/radars"));
 
             this.PropertyChanged += MainWindowVM_PropertyChanged;
             ValidationErrors = new ObservableCollection<string>();

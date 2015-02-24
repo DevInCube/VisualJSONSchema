@@ -135,15 +135,12 @@ namespace MyVisualJSONEditor.Properties {
         ///
         ///	&apos;definitions&apos; : {
         ///		
-        ///		&apos;FrameReact&apos; : {
+        ///		&apos;EventDir&apos; : {
         ///			
         ///			&apos;type&apos; : &apos;object&apos;,
         ///
         ///			&apos;properties&apos; : {
-        ///
-        ///				&quot;Channel&quot;: {
-        ///					&apos;type&apos; : &apos;string&apos;,
-        ///				},                             
+        ///                      
         ///				&quot;Prefix&quot;:{
         ///					&apos;type&apos; : &apos;string&apos;,
         ///				},                            
@@ -155,7 +152,10 @@ namespace MyVisualJSONEditor.Properties {
         ///				}
         ///			},
         ///
-        ///			&quot;requ [rest of string was truncated]&quot;;.
+        ///			&quot;required&quot; : [ &apos;Prefix&apos;, &apos;Suffix&apos;, &apos;Dir&apos; ],
+        ///		},
+        ///
+        ///		&apos;FrameReac [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string definitions {
             get {
@@ -410,28 +410,23 @@ namespace MyVisualJSONEditor.Properties {
         ///	&apos;type&apos; : &apos;object&apos;,
         ///
         ///	&apos;definitions&apos; : {
-        ///
-        ///		&apos;Frame&apos; : {
-        ///
+        ///		
+        ///		&apos;FrameParamSet&apos; : {
+        ///			
         ///			&apos;type&apos; : &apos;object&apos;,
         ///
         ///			&apos;properties&apos; : {
         ///
-        ///				&quot;Prefix&quot; : {
-        ///					&apos;type&apos; : &apos;string&apos;,
-        ///				},
-        ///				&quot;Suffix&quot; : {
-        ///					&apos;type&apos; : &apos;string&apos;,
-        ///				},
-        ///				&quot;Dir&quot; : {
-        ///					&apos;type&apos; : &apos;string&apos;,
-        ///				},
+        ///				&quot;FrameMeta&quot;: {&apos;$ref&apos; : &apos;definitions#/definitions/EventDir&apos;},
+        ///				&quot;FrameData&quot;: {&apos;$ref&apos; : &apos;definitions#/definitions/EventDir&apos;},
         ///			},
         ///
-        ///			&quot;required&quot; : [ &apos;Prefix&apos;, &quot;Suffix&quot;, &apos;Dir&apos; ],
+        ///			&quot;required&quot; : [ &apos;FrameMeta&apos;, &quot;FrameData&quot; ],
         ///			&quot;additionalProperties&quot;: false,
-        ///		}, 
-        ///		        /// [rest of string was truncated]&quot;;.
+        ///		},
+        ///	},
+        ///
+        ///	&apos;p [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MediaCodec_schema {
             get {
@@ -652,6 +647,45 @@ namespace MyVisualJSONEditor.Properties {
         internal static string Radar_schema {
             get {
                 return ResourceManager.GetString("Radar_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/radars&quot;,
+        ///
+        ///	&apos;definitions&apos; : {
+        ///		
+        ///		&apos;smartmicro39&apos; : {
+        ///
+        ///			&quot;type&quot;:&quot;object&quot;,
+        ///
+        ///			&quot;properties&quot;:{
+        ///
+        ///				&quot;PosX&quot;:{
+        ///					&quot;id&quot;:&quot;PosX&quot;,
+        ///					&quot;type&quot;:&quot;integer&quot;
+        ///				},
+        ///				&quot;PosY&quot;:{
+        ///					&quot;id&quot;:&quot;PosY&quot;,
+        ///					&quot;type&quot;:&quot;integer&quot;
+        ///				},
+        ///				&quot;PosZ&quot;:{
+        ///					&quot;id&quot;:&quot;PosZ&quot;,
+        ///					&quot;type&quot;:&quot;integer&quot;
+        ///				},
+        ///				&quot;PosH&quot;:{
+        ///					&quot;id&quot;:&quot;PosH&quot;,
+        ///					&quot;type&quot;:&quot;integer&quot;
+        ///				},
+        ///				&quot;AngleXY&quot;:{
+        ///					&quot;id&quot;:&quot;AngleXY&quot;,
+        ///					&quot;type&quot;:&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Radars_schema {
+            get {
+                return ResourceManager.GetString("Radars_schema", resourceCulture);
             }
         }
         

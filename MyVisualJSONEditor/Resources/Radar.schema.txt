@@ -74,6 +74,9 @@
 				},
 				"ParamSet" : {
 					'type' : 'object'
+					'oneOf' : [
+						{'$ref' : 'radars#definitions/smartmicro39'},
+					],
 				},
 			},
 			"required" : [ 'File', "ParamSet" ],

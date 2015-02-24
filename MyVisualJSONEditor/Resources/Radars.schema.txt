@@ -1,0 +1,60 @@
+﻿{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "id":"http://vit.com.ua/edgeserver/radars",
+
+	'definitions' : {
+		
+		'smartmicro39' : {
+
+			"type":"object",
+
+			"properties":{
+
+				"PosX":{
+					"id":"PosX",
+					"type":"integer"
+				},
+				"PosY":{
+					"id":"PosY",
+					"type":"integer"
+				},
+				"PosZ":{
+					"id":"PosZ",
+					"type":"integer"
+				},
+				"PosH":{
+					"id":"PosH",
+					"type":"integer"
+				},
+				"AngleXY":{
+					"id":"AngleXY",
+					"type":"integer",
+					'minimum' : 0,
+				},
+				"AngleXZ":{
+					"id":"AngleXZ",
+					"type":"integer",
+					'minimum' : 0,
+				},
+				"AngleYZ":{
+					"id":"AngleYZ",
+					"type":"integer",
+					'minimum' : 0,
+				}
+
+			},
+
+			"required":[
+				"PosX",
+				"PosY",
+				"PosZ",
+				"PosH",
+				"AngleXY",
+				"AngleXZ",
+				"AngleYZ"
+			]
+		}
+	}
+
+    
+}
