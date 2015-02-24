@@ -5,6 +5,26 @@
 
 	'definitions' : {
 		
+		'EventDir' : {
+			
+			'type' : 'object',
+
+			'properties' : {
+                      
+				"Prefix":{
+					'type' : 'string',
+				},                            
+				"Suffix":{
+					'type' : 'string',
+				},                              
+				"Dir":{
+					'type' : 'string',
+				}
+			},
+
+			"required" : [ 'Prefix', 'Suffix', 'Dir' ],
+		},
+
 		'FrameReact' : {
 			
 			'type' : 'object',
@@ -29,25 +49,5 @@
 			"additionalProperties": false,
 		},
 
-
-		'EventDir' : {
-			
-			'type' : 'object',
-
-			'properties' : {
-                      
-				"Prefix":{
-					'type' : 'string',
-				},                            
-				"Suffix":{
-					'type' : 'string',
-				},                              
-				"Dir":{
-					'type' : 'string',
-				}
-			},
-
-			"required" : [ 'Prefix', 'Suffix', 'Dir' ],
-		},
 	}
 }

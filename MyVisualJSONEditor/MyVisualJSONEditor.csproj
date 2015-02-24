@@ -95,6 +95,7 @@
     <Compile Include="Views\Converters\EnumConverter.cs" />
     <Compile Include="Views\Converters\IntegerConverter.cs" />
     <Compile Include="Views\Converters\IntegerRangeConverter.cs" />
+    <Compile Include="Views\Converters\CountToVis.cs" />
     <Compile Include="Views\Converters\NullToVis.cs" />
     <Compile Include="Views\Converters\NumberConverter.cs" />
     <Compile Include="Views\Converters\NumberRangeConverter.cs" />

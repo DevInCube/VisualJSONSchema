@@ -3,14 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:MyVisualJSONEditor.ViewModels"
         xmlns:conv="clr-namespace:MyVisualJSONEditor.Views.Converters"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:bld="clr-namespace:MyVisualJSONEditor.Views;assembly=VitML.JsonSchemaControlBuilder"
         xmlns:views="clr-namespace:MyVisualJSONEditor.Views"
-        Title="{Binding DbHost}" Height="600" Width="1000">
+        Title="{Binding DbHost}" Height="600" Width="800">
     <Window.DataContext>
         <vm:MainWindowVM/>
     </Window.DataContext>
     <Window.Resources>
+        <xcad:MetroTheme x:Key="metro"/>
         <conv:NullToVis x:Key="NullToVis"/>
+        <conv:CountToVis x:Key="CountToVis"/>
         <Style x:Key="textEditor" TargetType="TextBox">
             <Setter Property="AcceptsReturn" Value="True"></Setter>
             <Setter Property="AcceptsTab" Value="True"></Setter>
@@ -27,55 +32,65 @@
             <Setter Property="Padding" Value="5"/>
         </Style>
     </Window.Resources>
-    <Grid Background="WhiteSmoke">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <GridSplitter Width="5" Grid.Column="1" Height="Auto" Background="LightGray" HorizontalAlignment="Left"/>
-        <GridSplitter Width="5" Grid.Column="2" Height="Auto" Background="LightGray" HorizontalAlignment="Left"/>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <GridSplitter Height="5" HorizontalAlignment="Stretch" Grid.Row="1" Width="Auto" Background="LightGray" VerticalAlignment="Top"/>
-
-            <DockPanel Margin="5,5,5,5" >
-                <TextBlock DockPanel.Dock="Bottom" Text="{Binding SchemaError}"
+    <xcad:DockingManager   AllowMixedOrientation="True"
+                           BorderBrush="Black"
+                           BorderThickness="1"
+                           Theme="{StaticResource metro}">
+        <xcad:LayoutRoot x:Name="_layoutRoot">
+            <xcad:LayoutPanel Orientation="Horizontal" DockHeight="*">
+                <xcad:LayoutAnchorablePane DockWidth="300">
+                    <xcad:LayoutAnchorable ContentId="schema" Title="Schema" CanHide="False" CanClose="False"
+                                            AutoHideWidth="240">
+                        <DockPanel Margin="5,5,5,5" >
+                            <TextBlock DockPanel.Dock="Bottom" Text="{Binding SchemaError}"
                       Visibility="{Binding SchemaError,Converter={StaticResource NullToVis}}"
                        Style="{StaticResource errorBox}"/>
-                <TextBox  Text="{Binding Schema, UpdateSourceTrigger=LostFocus}"     
+                            <TextBox  Text="{Binding Schema, UpdateSourceTrigger=LostFocus}"     
                       Style="{StaticResource textEditor}" />
-            </DockPanel>
-            <DockPanel Margin="5,10,5,5" Grid.Row="1">
-                <TextBlock DockPanel.Dock="Bottom" Text="{Binding DataError}"
-                       Visibility="{Binding DataError,Converter={StaticResource NullToVis}}"
-                        Style="{StaticResource errorBox}"/>
-                <DockPanel DockPanel.Dock="Bottom" Background="RosyBrown">
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" >
-                            <ItemsControl ItemsSource="{Binding ValidationErrors}" Margin="5"/>
-                    </ScrollViewer>
-                </DockPanel>
-                <TextBox  Text="{Binding JsonData, UpdateSourceTrigger=LostFocus}" 
-                      Background="{Binding DataStatusColor}" 
-                      Style="{StaticResource textEditor}"  />
-            </DockPanel>
-        </Grid>
+                        </DockPanel>
+                    </xcad:LayoutAnchorable>
+                    <xcad:LayoutAnchorable ContentId="data" Title="Data" CanHide="False" CanClose="False"
+                                            AutoHideWidth="240">
+                        <DockPanel Margin="5,10,5,5" Grid.Row="1">
+                            <TextBlock DockPanel.Dock="Bottom" Text="{Binding DataError}"
+                               Visibility="{Binding DataError,Converter={StaticResource NullToVis}}"
+                                Style="{StaticResource errorBox}"/>
+                            <TextBox  Text="{Binding JsonData, UpdateSourceTrigger=LostFocus}" 
+                              Background="{Binding DataStatusColor}" 
+                              Style="{StaticResource textEditor}"  />
+                        </DockPanel>
+                    </xcad:LayoutAnchorable>
+                </xcad:LayoutAnchorablePane>
+            <xcad:LayoutAnchorablePane DockWidth="300" >
+                    <xcad:LayoutAnchorable ContentId="gui" Title="GUI" CanHide="False" CanClose="False"
+                                            AutoHideWidth="240">
+                        <DockPanel>
+                            <DockPanel Background="Bisque" DockPanel.Dock="Bottom">
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto" >
+                                    <ItemsControl ItemsSource="{Binding ValidationErrors}" Margin="5"/>
+                                </ScrollViewer>
+                            </DockPanel>
+                            <DockPanel Height="Auto" Margin="10,5,5,5" Grid.Column="1">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <bld:JsonSchemaBuilder x:Name="builder" Data="{Binding Data}"/>
+                                </ScrollViewer>
+                            </DockPanel>
+                        </DockPanel>
+                    </xcad:LayoutAnchorable>
+                    <xcad:LayoutAnchorable ContentId="result" Title="Result" CanHide="False" CanClose="False"
+                                            AutoHideWidth="240">
+                        <Grid Height="Auto" Grid.Column="2">
+                            <DockPanel Margin="5,10,5,5" Grid.Row="1">
+                                <TextBox  Text="{Binding ResultData}" 
+                                          Background="{Binding ResultDataStatusColor}" 
+                                          Style="{StaticResource textEditor}"  />
+                            </DockPanel>
+                        </Grid>
+                    </xcad:LayoutAnchorable>
 
-        <Grid Height="Auto" Margin="10,5,5,5" Grid.Column="1">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <bld:JsonSchemaBuilder x:Name="builder" Data="{Binding Data}"/>
-            </ScrollViewer>
-        </Grid>
-        
-        <Grid Height="Auto" Grid.Column="2">
-            <DockPanel Margin="5,10,5,5" Grid.Row="1">
-                <TextBox  Text="{Binding ResultData}" 
-                      Background="{Binding ResultDataStatusColor}" 
-                      Style="{StaticResource textEditor}"  />
-            </DockPanel>
-        </Grid>
-    </Grid>
+                </xcad:LayoutAnchorablePane>
+            </xcad:LayoutPanel>
+        </xcad:LayoutRoot>
+    </xcad:DockingManager>
+    
 </Window>

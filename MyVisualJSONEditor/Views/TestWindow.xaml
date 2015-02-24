@@ -1,21 +1,67 @@
 ﻿<Window x:Class="MyVisualJSONEditor.Views.TestWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:bld="clr-namespace:MyVisualJSONEditor.Views;assembly=VitML.JsonSchemaControlBuilder"
-        Title="TestWindow" Height="300" Width="300">
-    <Grid>
-        <TabControl>
-            <TabControl.Items>
-                <TabItem Header="Tab 1">
-                    <bld:JsonSchemaBuilder x:Name="tab1" />
-                </TabItem>
-                <TabItem Header="Tab 2">
-                    <bld:JsonSchemaBuilder x:Name="tab2" />
-                </TabItem>
-                <TabItem Header="Tab 3">
-                    <bld:JsonSchemaBuilder x:Name="tab3" />
-                </TabItem>
-            </TabControl.Items>
-        </TabControl>
-    </Grid>
+        Title="TestWindow" Height="500" Width="600">
+    <xcad:DockingManager Grid.Row="1" MaxHeight="425"
+                           AllowMixedOrientation="True"
+                           BorderBrush="Black"
+                           BorderThickness="1"
+                           Theme="{Binding ElementName=_themeCombo, Path=SelectedItem.Tag}">
+        <xcad:DockingManager.DocumentHeaderTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding IconSource}" Margin="0,0,4,0"/>
+                    <TextBlock Text="{Binding Title}" />
+                </StackPanel>
+            </DataTemplate>
+        </xcad:DockingManager.DocumentHeaderTemplate>
+        <xcad:LayoutRoot x:Name="_layoutRoot">
+            <xcad:LayoutPanel Orientation="Horizontal">
+                <xcad:LayoutAnchorablePane DockWidth="200">
+                    <xcad:LayoutAnchorable ContentId="properties" Title="Properties" CanHide="False" CanClose="False"
+                                            AutoHideWidth="240"
+                                         >
+                        <xctk:PropertyGrid NameColumnWidth="110"
+                        SelectedObject="{Binding ElementName=_layoutRoot, Path=LastFocusedDocument.Content}"/>
+                    </xcad:LayoutAnchorable>
+                    <xcad:LayoutAnchorable ContentId="properties" Title="Properties" CanHide="False" CanClose="False"
+                                            AutoHideWidth="240"
+                                         >
+                        <xctk:PropertyGrid NameColumnWidth="110"
+                        SelectedObject="{Binding ElementName=_layoutRoot, Path=LastFocusedDocument.Content}"/>
+                    </xcad:LayoutAnchorable>
+                </xcad:LayoutAnchorablePane>
+                <xcad:LayoutDocumentPaneGroup >
+                    <xcad:LayoutDocumentPane>
+                        <xcad:LayoutDocument ContentId="document1" Title="Document 1"  >
+                            <Button Content="Document 1 Content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </xcad:LayoutDocument>
+                        <xcad:LayoutDocument ContentId="document2" Title="Document 2" >
+                            <TextBox Text="Document 2 Content" AcceptsReturn="True"/>
+                        </xcad:LayoutDocument>
+                    </xcad:LayoutDocumentPane>
+                </xcad:LayoutDocumentPaneGroup >
+                <xcad:LayoutAnchorablePaneGroup DockWidth="125">
+                    
+                </xcad:LayoutAnchorablePaneGroup>
+            </xcad:LayoutPanel>
+
+            <xcad:LayoutRoot.LeftSide>
+                <xcad:LayoutAnchorSide>
+                    <xcad:LayoutAnchorGroup>
+                        <xcad:LayoutAnchorable Title="Agenda" ContentId="agenda" >
+                            <TextBlock Text="Agenda Content" Margin="10" FontSize="18" FontWeight="Black" TextWrapping="Wrap"/>
+                        </xcad:LayoutAnchorable>
+                        <xcad:LayoutAnchorable Title="Contacts" ContentId="contacts"  >
+                            <TextBlock Text="Contacts Content" Margin="10" FontSize="18" FontWeight="Black" TextWrapping="Wrap"/>
+                        </xcad:LayoutAnchorable>
+                    </xcad:LayoutAnchorGroup>
+                </xcad:LayoutAnchorSide>
+            </xcad:LayoutRoot.LeftSide>
+        </xcad:LayoutRoot>
+    </xcad:DockingManager>
 </Window>
