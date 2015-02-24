@@ -244,8 +244,7 @@
 						"additionalProperties": false,
 					},
 					"default" : {
-						"ParamSet":
-						{
+						"ParamSet": {
 							"Channel": 0,
 							"Prefix": "",
 							"Suffix": "",

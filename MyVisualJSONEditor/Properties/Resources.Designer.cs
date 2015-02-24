@@ -62,6 +62,75 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///  &quot;Source&quot;:
+        ///  {
+        ///    &quot;MasterName&quot;:&quot;gscene&quot;,
+        ///    &quot;QueueSet&quot;:
+        ///    [
+        ///      {
+        ///        &quot;Name&quot;:&quot;rscene&quot;,
+        ///        &quot;Prefix&quot;:&quot;&quot;,
+        ///        &quot;Suffix&quot;:&quot;.rscene&quot;,
+        ///        &quot;Dir&quot;:&quot;pathto/scene/export/folder&quot;,
+        ///        &quot;Remove&quot;:true,
+        ///        &quot;Sink&quot;:true,
+        ///        &quot;Tout&quot;:1000
+        ///      },
+        ///      {
+        ///        &quot;Name&quot;:&quot;gscene&quot;,
+        ///        &quot;Prefix&quot;:&quot;&quot;,
+        ///        &quot;Suffix&quot;:&quot;.gscene&quot;,
+        ///        &quot;Dir&quot;:&quot;pathto/scene/export/folder&quot;,
+        ///        &quot;Remove&quot;:true,
+        ///        &quot;Sink&quot;:true,
+        ///        &quot;Tout&quot;:1000
+        ///      }
+        ///    ]
+        ///  },
+        ///  &quot;Sink&quot;:
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Compositor {
+            get {
+                return ResourceManager.GetString("Compositor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/compositor#&quot;,
+        ///
+        ///    &quot;type&quot;:&quot;object&quot;,
+        ///
+        ///    &quot;properties&quot;:{
+        ///
+        ///        &quot;Source&quot;:{
+        ///
+        ///            &quot;id&quot;:&quot;Source&quot;,
+        ///            &quot;type&quot;:&quot;object&quot;,
+        ///
+        ///            &quot;properties&quot;:{
+        ///
+        ///                &quot;MasterName&quot;:{
+        ///                    &quot;id&quot;:&quot;MasterName&quot;,
+        ///                    &quot;type&quot;:&quot;string&quot;
+        ///                },
+        ///
+        ///                &quot;QueueSet&quot;:{
+        ///                    &quot;id&quot;:&quot;QueueSet&quot;,
+        ///                    &quot;type&quot;:&quot;array&quot;,
+        ///        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Compositor_schema {
+            get {
+                return ResourceManager.GetString("Compositor_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///
         ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/definitions#&quot;,
         ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
         ///
@@ -87,7 +156,7 @@ namespace MyVisualJSONEditor.Properties {
         ///				}
         ///			},
         ///
-        ///			&quot;requir [rest of string was truncated]&quot;;.
+        ///			&quot;requ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string definitions {
             get {
@@ -330,30 +399,27 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///  &quot;RxPipe&quot;:&quot;pathto/fifo&quot;,                                   // string
-        ///  &quot;MappingConf&quot;:&quot;/etc/edge/radar.0/mapping.conf&quot;,           // string
-        ///  &quot;Driver&quot;:
-        ///  {
-        ///    &quot;File&quot;:&quot;/opt/edge/libexec/radar/libdriver-protocol.so&quot;, // string
-        ///    &quot;ParamSet&quot;:
-        ///    {
-        ///      ...
-        ///    }
-        ///  },
-        ///  &quot;Tracker&quot;:
-        ///  {
-        ///    &quot;SceneTout&quot;:50,
-        ///    &quot;CloseTout&quot;:300,
-        ///    &quot;MaxFragSize&quot;:10,
-        ///    &quot;MaxTrackCount&quot;:64,
-        ///    &quot;MaxSceneCount&quot;:50
-        ///  },
-        ///  &quot;SceneExport&quot;:
-        ///  {
-        ///    &quot;QueueSet&quot;:
-        ///    [
-        ///      {
-        ///        &quot;File&quot;:&quot;pathto/libscene_ex [rest of string was truncated]&quot;;.
+        ///    &quot;RxPipe&quot;:&quot;pathto/fifo&quot;,
+        ///    &quot;MappingConf&quot;:&quot;/etc/edge/radar.0/mapping.conf&quot;,
+        ///    &quot;Driver&quot;:{
+        ///        &quot;File&quot;:&quot;/opt/edge/libexec/radar/libdriver-protocol.so&quot;,
+        ///        &quot;ParamSet&quot;:{
+        ///
+        ///        }
+        ///    },
+        ///    &quot;Tracker&quot;:{
+        ///        &quot;SceneTout&quot;:50,
+        ///        &quot;CloseTout&quot;:300,
+        ///        &quot;MaxFragSize&quot;:10,
+        ///        &quot;MaxTrackCount&quot;:64,
+        ///        &quot;MaxSceneCount&quot;:50
+        ///    },
+        ///    &quot;SceneExport&quot;:{
+        ///        &quot;QueueSet&quot;:[
+        ///            {
+        ///                &quot;File&quot;:&quot;pathto/libscene_exporter.so&quot;,
+        ///                &quot;ParamSet&quot;:{
+        ///  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Radar {
             get {
@@ -363,30 +429,33 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///  &quot;RxPipe&quot;:&quot;pathto/fifo&quot;,                                   // string
-        ///  &quot;MappingConf&quot;:&quot;/etc/edge/radar.0/mapping.conf&quot;,           // string
-        ///  &quot;Driver&quot;:
-        ///  {
-        ///    &quot;File&quot;:&quot;/opt/edge/libexec/radar/libdriver-protocol.so&quot;, // string
-        ///    &quot;ParamSet&quot;:
-        ///    {
-        ///      ...
-        ///    }
-        ///  },
-        ///  &quot;Tracker&quot;:
-        ///  {
-        ///    &quot;SceneTout&quot;:50,
-        ///    &quot;CloseTout&quot;:300,
-        ///    &quot;MaxFragSize&quot;:10,
-        ///    &quot;MaxTrackCount&quot;:64,
-        ///    &quot;MaxSceneCount&quot;:50
-        ///  },
-        ///  &quot;SceneExport&quot;:
-        ///  {
-        ///    &quot;QueueSet&quot;:
-        ///    [
-        ///      {
-        ///        &quot;File&quot;:&quot;pathto/libscene_ex [rest of string was truncated]&quot;;.
+        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/radar&quot;,
+        ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///
+        ///	&quot;title&quot; : &quot;Radar main.conf&quot;,
+        ///
+        ///	&apos;definitions&apos; : {
+        ///
+        ///		&apos;ExportArrayItem&apos; : {
+        ///			&apos;type&apos; : &apos;object&apos;,
+        ///
+        ///			&apos;properties&apos; : {
+        ///				&quot;File&quot;: {
+        ///					&apos;type&apos; : &apos;string&apos;
+        ///				},
+        ///				&quot;ParamSet&quot; : {
+        ///					&apos;type&apos; : &apos;object&apos;,
+        ///					&apos;oneOf&apos; : [{&apos;$ref&apos;:&apos;definitions#/definitions/EventDir&apos;}],
+        ///				},
+        ///			},
+        ///
+        ///			&quot;required&quot; : [ &apos;File&apos; ],
+        ///			&quot;additionalProperties&quot;: false,
+        ///		},
+        ///
+        ///		&apos;QueueSetObject&apos; : {
+        ///
+        ///			&apos;typ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Radar_schema {
             get {

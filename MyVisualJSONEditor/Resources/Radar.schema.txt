@@ -19,8 +19,38 @@
 				},
 			},
 
-			"required" : [ 'File' , 'ParamSet' ],
+			"required" : [ 'File' ],
 			"additionalProperties": false,
+		},
+
+		'QueueSetObject' : {
+
+			'type' : 'object',
+
+			'properties' : {
+
+				"QueueSet":	{ 
+					'type' : 'array',
+
+					'items' : { '$ref':'#/definitions/ExportArrayItem' },
+
+					'default' :  {
+						"File":"pathto/libscene_exporter.so",
+						"ParamSet":
+						{
+							"Prefix":"",
+							"Suffix":".rscene",
+							"Dir":"pathto/scene/export/folder" 
+						}
+					}
+				},
+			},
+			"required" : [ 'QueueSet'],
+			"additionalProperties": false,
+		},
+
+		"QueueSet":	{
+			
 		},
 
 	},
@@ -30,9 +60,11 @@
 		"RxPipe": {
 			'type' : 'string'
 		},
+
 		"MappingConf" : {
 			'type' : 'string'
 		},
+
 		"Driver" : {
 			'type' : 'object',
 
@@ -47,6 +79,7 @@
 			"required" : [ 'File', "ParamSet" ],
 			"additionalProperties": false,
 		},
+
 		"Tracker" : {
 			
 			'type' : 'object',
@@ -61,62 +94,11 @@
 			"required" : [ 'SceneTout', "CloseTout", 'MaxFragSize', 'MaxTrackCount', 'MaxSceneCount' ],
 			"additionalProperties": false,
 		},
-		"SceneExport": {
 
-			'type' : 'object',
+		"SceneExport": { '$ref':'#/definitions/QueueSetObject' },
 
-			'properties' : {
+		"TrackExport": { '$ref':'#/definitions/QueueSetObject' },
 
-				"QueueSet":	{
-					'type' : 'array',
-
-					'items' : {
-						'type' : 'object',
-						'oneOf' : [{'$ref':'#/definitions/ExportArrayItem'}],
-					},
-
-					'default' :  {
-						"File":"pathto/libscene_exporter.so",
-						"ParamSet":
-						{
-							"Prefix":"",
-							"Suffix":".rscene",
-							"Dir":"pathto/scene/export/folder" 
-						}
-					}
-				}
-			},
-			"required" : [ 'QueueSet'],
-			"additionalProperties": false,
-		},
-		"TrackExport": {
-
-			'type' : 'object',
-
-			'properties' : {
-
-				"QueueSet":	{
-					'type' : 'array',
-
-					'items' : {
-						'type' : 'object',
-						'oneOf' : [{'$ref':'#/definitions/ExportArrayItem'}],
-					},
-
-					'default' :  {
-						"File":"pathto/libscene_exporter.so",
-						"ParamSet":
-						{
-							"Prefix":"",
-							"Suffix":".rscene",
-							"Dir":"pathto/scene/export/folder" 
-						}
-					}
-				}
-			},
-			"required" : [ 'QueueSet'],
-			"additionalProperties": false,
-		},
 	},
 
 	"required" : [ 'RxPipe', "MappingConf", 'Driver', 'Tracker', 'SceneExport', 'TrackExport' ],
