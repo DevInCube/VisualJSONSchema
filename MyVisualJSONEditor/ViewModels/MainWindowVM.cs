@@ -142,8 +142,8 @@ namespace MyVisualJSONEditor.ViewModels
             ValidationErrors = new ObservableCollection<string>();
 
             Control = new ItemsControl();
-            Schema = Resources.GrabControl_schema;
-            JsonData = Resources.GrabControl;
+            Schema = Resources.LPR_schema;
+            JsonData = Resources.LPR;
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)

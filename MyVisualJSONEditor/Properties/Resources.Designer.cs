@@ -307,6 +307,62 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///    &quot;media-source&quot;:{
+        ///        &quot;data_input_dir&quot;:&quot;/home/maxl/test/in_data&quot;,
+        ///        &quot;meta_input_dir&quot;:&quot;/home/maxl/test/in_meta&quot;,
+        ///        &quot;media_extension&quot;:&quot;.gframe&quot;
+        ///    },
+        ///    &quot;output&quot;:{
+        ///        &quot;meta_queue_set&quot;:[
+        ///            {
+        ///                &quot;prefix&quot;:&quot;&quot;,
+        ///                &quot;suffix&quot;:&quot;.lscene&quot;,
+        ///                &quot;dir&quot;:&quot;/var/spool/edge/lpr.x/scene.0/&quot;,
+        ///                &quot;type&quot;:&quot;scene&quot;
+        ///            },
+        ///            {
+        ///                &quot;prefix&quot;:&quot;&quot;,
+        ///                &quot;suffix&quot;:&quot;.ltrack&quot;,
+        ///                &quot;dir&quot;:&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LPR {
+            get {
+                return ResourceManager.GetString("LPR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/lpr#&quot;,
+        ///
+        ///    &quot;type&quot;:&quot;object&quot;,
+        ///	&apos;format&apos; : &apos;tab&apos;,
+        ///
+        ///    &quot;properties&quot;:{
+        ///
+        ///        &quot;media-source&quot;:{
+        ///
+        ///            &quot;id&quot;:&quot;media-source&quot;,
+        ///            &quot;type&quot;:&quot;object&quot;,
+        ///
+        ///            &quot;properties&quot;:{
+        ///
+        ///                &quot;data_input_dir&quot;:{
+        ///                    &quot;id&quot;:&quot;data_input_dir&quot;,
+        ///                    &quot;type&quot;:&quot;string&quot;
+        ///                },
+        ///                &quot;meta_input_dir&quot;:{
+        ///                    &quot;id&quot;:&quot;meta_input_di [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LPR_schema {
+            get {
+                return ResourceManager.GetString("LPR_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
         ///  
         ///	&quot;Import&quot;:
         ///	{

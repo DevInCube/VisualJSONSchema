@@ -179,7 +179,7 @@ namespace MyVisualJSONEditor.ViewModels
                 {
                     JToken value;
                     if (obj.TryGetValue(property.Key, out value))
-                        result[property.Key] = ((JValue)value).Value;
+                        result[property.Key] = (JValue)value;
                     else
                         result[property.Key] = GetDefaultValue(property.Value);
                 }
@@ -197,20 +197,22 @@ namespace MyVisualJSONEditor.ViewModels
                 else
                     return sh.Default;
             }
+            if (sh.Enum.Count > 0)
+                return sh.Enum.First();
             switch (sh.Type)
             {
                 case (JSchemaType.Boolean):
-                    return false;
+                    return new JValue(false);
                 case (JSchemaType.Float):
-                    return 0F;
+                    return new JValue(0F);
                 case (JSchemaType.Integer):
-                    return 0;
+                    return new JValue(0);
                 case (JSchemaType.String):
                     if (sh.Format == "date-time") return new DateTime();
                     if (sh.Format == "date") return new DateTime();
                     if (sh.Format == "time") return new TimeSpan();
                     if (sh.Format == "ipv4") return new JValue(IPAddress.None); //@todo @test
-                    return String.Empty;
+                    return new JValue(String.Empty);
                 case (JSchemaType.Null):
                     return null;
                 default:
@@ -266,7 +268,12 @@ namespace MyVisualJSONEditor.ViewModels
                 if (pair.Value is JTokenVM)
                     obj[pair.Key] = ((JTokenVM)pair.Value).ToJToken();
                 else
-                    obj[pair.Key] = new JValue(pair.Value);
+                {
+                    if (pair.Value is JValue)
+                        obj[pair.Key] = pair.Value as JValue;
+                    else
+                        obj[pair.Key] = new JValue(pair.Value);
+                }
             }
             return obj;
         }

@@ -60,7 +60,11 @@ namespace MyVisualJSONEditor.ViewModels
         /// <summary>Gets or sets the value of the property. </summary>
         public object Value
         {
-            get { return Parent.ContainsKey(Key) ? Parent[Key] : null; }
+            get
+            {
+                object val = Parent.ContainsKey(Key) ? Parent[Key] : null;
+                return val;
+            }
             set
             {
                 Parent[Key] = value;

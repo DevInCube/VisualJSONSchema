@@ -91,7 +91,6 @@
     <Compile Include="Views\Controls\JObjectTypeTemplateSelector.cs" />
     <Compile Include="Views\Controls\TabControlEx.cs" />
     <Compile Include="Views\Converters\DateConverter.cs" />
-    <Compile Include="Views\Converters\EnumConverter.cs" />
     <Compile Include="Views\Converters\IntegerConverter.cs" />
     <Compile Include="Views\Converters\IntegerRangeConverter.cs" />
     <Compile Include="Views\Converters\NullToVis.cs" />

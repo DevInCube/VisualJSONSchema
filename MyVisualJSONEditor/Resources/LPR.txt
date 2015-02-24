@@ -1,0 +1,26 @@
+﻿{
+    "media-source":{
+        "data_input_dir":"/home/maxl/test/in_data",
+        "meta_input_dir":"/home/maxl/test/in_meta",
+        "media_extension":".gframe"
+    },
+    "output":{
+        "meta_queue_set":[
+            {
+                "prefix":"",
+                "suffix":".lscene",
+                "dir":"/var/spool/edge/lpr.x/scene.0/",
+                "type":"scene"
+            },
+            {
+                "prefix":"",
+                "suffix":".ltrack",
+                "dir":"/var/spool/edge/lpr.x/track.0/",
+                "type":"track"
+            }
+        ]
+    },
+    "recognizer":{
+
+    }
+}

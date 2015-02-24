@@ -6,17 +6,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignWidth="300">
-    <UserControl.Resources>
-        <myConv:EnumConverter x:Key="EnumConverter"/>
-    </UserControl.Resources>
     <StackPanel Background="WhiteSmoke"
                 IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
                 Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
         <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" />
         <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
                                Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}" />
-        <ComboBox Margin="0,0,0,8" ItemsSource="{Binding Schema.Enum}"
-                  SelectedItem="{Binding Value}">
-        </ComboBox>
+        <ComboBox ItemsSource="{Binding Schema.Enum}" 
+                  SelectedItem="{Binding Value}" Margin="0,0,0,8" />
     </StackPanel>
 </UserControl>

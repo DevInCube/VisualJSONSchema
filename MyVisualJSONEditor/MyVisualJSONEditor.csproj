@@ -152,6 +152,8 @@
     <Resource Include="Resources\Compositor.txt" />
     <Resource Include="Resources\GrabControl.txt" />
     <Resource Include="Resources\GrabControl.schema.txt" />
+    <Resource Include="Resources\LPR.schema.txt" />
+    <Resource Include="Resources\LPR.txt" />
     <Content Include="Resources\MediaCodec.txt" />
     <Resource Include="Resources\MediaStore.schema.txt" />
     <Resource Include="Resources\MediaStore.txt" />

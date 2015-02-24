@@ -49,7 +49,7 @@
             </controls:TabControlEx.ItemTemplate>
             <controls:TabControlEx.ContentTemplate>
                 <DataTemplate>
-                    <views:JsonSchemaBuilder Data="{Binding Path=Value}" />
+                    <views:JsonSchemaBuilder Data="{Binding Path=Value}" Margin="5"/>
                 </DataTemplate>
             </controls:TabControlEx.ContentTemplate>
         </controls:TabControlEx>
