@@ -114,13 +114,12 @@ namespace MyVisualJSONEditor.Properties {
         ///
         ///                &quot;MasterName&quot;:{
         ///                    &quot;id&quot;:&quot;MasterName&quot;,
-        ///                    &quot;type&quot;:&quot;string&quot;
+        ///                    &quot;type&quot;: [&quot;string&quot;, &quot;null&quot;]
         ///                },
         ///
         ///                &quot;QueueSet&quot;:{
         ///                    &quot;id&quot;:&quot;QueueSet&quot;,
-        ///                    &quot;type&quot;:&quot;array&quot;,
-        ///        /// [rest of string was truncated]&quot;;.
+        ///                    &quot;type&quot;: [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Compositor_schema {
             get {
@@ -318,6 +317,80 @@ namespace MyVisualJSONEditor.Properties {
         internal static string MediaCodec_schema {
             get {
                 return ResourceManager.GetString("MediaCodec_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;TxPipes&quot;:
+        ///  [
+        ///    &quot;/tmp/Fifofile1&quot;,
+        ///    &quot;/tmp/Fifofile2&quot;,
+        ///    &quot;/tmp/Fifofile3&quot;
+        ///  ],
+        ///  &quot;Driver&quot;:
+        ///  {
+        ///    &quot;Vendor&quot;:&quot;Basler&quot;,
+        ///    &quot;Model&quot;:&quot;acA1300-30um&quot;,
+        ///    &quot;Firmware&quot;:&quot;3.0.6.RC1&quot;,
+        ///    &quot;Id&quot;:&quot;uniqueId1234&quot;,
+        ///    &quot;File&quot;:&quot;/opt/edge/libexec/mediagrabber/libdriver-basler.so&quot;,
+        ///    &quot;ParamSet&quot;:
+        ///    {
+        ///      ...
+        ///    }
+        ///  },
+        ///  &quot;FrameExport&quot;:
+        ///  {
+        ///    &quot;Prefix&quot;:&quot;&quot;,
+        ///    &quot;Suffix&quot;:&quot;.mgframe&quot;,
+        ///    &quot;Dir&quot;:&quot;&quot;
+        ///  },
+        ///  &quot;SceneExport&quot;:
+        ///  {
+        ///    &quot;EntrySet&quot;:
+        ///    [
+        ///      {
+        ///        &quot;Prefix&quot;:&quot;&quot;,
+        ///        &quot;Su [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MediaGrabber {
+            get {
+                return ResourceManager.GetString("MediaGrabber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/mediagrabber#&quot;,
+        ///
+        ///    &quot;type&quot;:&quot;object&quot;,
+        ///
+        ///    &quot;properties&quot;:{
+        ///
+        ///        &quot;TxPipes&quot;:{
+        ///            &quot;id&quot;:&quot;TxPipes&quot;,
+        ///            &quot;type&quot;:&quot;array&quot;,
+        ///
+        ///            &quot;items&quot;: {
+        ///                    &quot;type&quot;:&quot;string&quot;
+        ///            },
+        ///
+        ///			&quot;default&quot; : &quot;&quot;,
+        ///        },
+        ///
+        ///        &quot;Driver&quot;:{
+        ///            &quot;id&quot;:&quot;Driver&quot;,
+        ///            &quot;type&quot;:&quot;object&quot;,
+        ///
+        ///            &quot;properties&quot;:{
+        ///                &quot;Vendor&quot;:{
+        ///                  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MediaGrabber_schema {
+            get {
+                return ResourceManager.GetString("MediaGrabber_schema", resourceCulture);
             }
         }
         

@@ -139,8 +139,8 @@ namespace MyVisualJSONEditor.ViewModels
             this.PropertyChanged += MainWindowVM_PropertyChanged;
 
             Control = new ItemsControl();
-            Schema = Resources.Compositor_schema;
-            JsonData = Resources.Compositor;
+            Schema = Resources.MediaGrabber_schema;
+            JsonData = Resources.MediaGrabber;
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)

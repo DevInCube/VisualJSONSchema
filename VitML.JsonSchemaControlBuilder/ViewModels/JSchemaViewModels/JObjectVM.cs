@@ -75,7 +75,7 @@ namespace MyVisualJSONEditor.ViewModels
             };
         }
 
-        public static JObjectVM FromSchema(JSchema schema)
+        public static JTokenVM FromSchema(JSchema schema)
         {
             if (schema.OneOf.Count > 0)
             {
@@ -86,24 +86,31 @@ namespace MyVisualJSONEditor.ViewModels
                     throw new NotImplementedException("OneOf.Count > 1");
                 return FromSchema(refSchema);
             }
-            var obj = new JObjectVM();
-            if (schema.Default != null)
-                return FromJson(schema.Default as JObject, schema);
-            foreach (var property in schema.Properties)
+            if (schema.Type.HasFlag(JSchemaType.Object))
             {
-                if (property.Value.Type.HasFlag(JSchemaType.Object))
+                var obj = new JObjectVM();
+                if (schema.Default != null)
+                    return FromJson(schema.Default as JObject, schema);
+                foreach (var property in schema.Properties)
                 {
-                    obj[property.Key] = FromSchema(property.Value);
+                    if (property.Value.Type.HasFlag(JSchemaType.Object))
+                    {
+                        obj[property.Key] = FromSchema(property.Value);
+                    }
+                    else if (property.Value.Type.HasFlag(JSchemaType.Array))
+                    {
+                        obj[property.Key] = new JArrayVM();
+                    }
+                    else
+                        obj[property.Key] = GetDefaultValue(property.Value);
                 }
-                else if (property.Value.Type.HasFlag(JSchemaType.Array))
-                {
-                    obj[property.Key] = new JArrayVM();
-                }
-                else
-                    obj[property.Key] = GetDefaultValue(property);
+                obj.Schema = schema;
+                return obj;
             }
-            obj.Schema = schema;
-            return obj;
+            else
+            {
+                return new JValueVM() { Value = GetDefaultValue(schema), Schema = schema };
+            }
         }
 
         private static JSchema CheckSchema(JSchema schema)
@@ -174,16 +181,15 @@ namespace MyVisualJSONEditor.ViewModels
                     if (obj.TryGetValue(property.Key, out value))
                         result[property.Key] = ((JValue)value).Value;
                     else
-                        result[property.Key] = GetDefaultValue(property);
+                        result[property.Key] = GetDefaultValue(property.Value);
                 }
             }
             result.Schema = schema;
             return result;
         }
 
-        private static object GetDefaultValue(KeyValuePair<string, JSchema> property)
+        private static object GetDefaultValue(JSchema sh)
         {
-            JSchema sh = property.Value;
             if (sh.Default != null)
             {
                 if (sh.Default is JValue)

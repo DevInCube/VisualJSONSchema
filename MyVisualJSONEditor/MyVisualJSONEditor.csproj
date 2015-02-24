@@ -143,6 +143,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\MediaGrabber.schema.txt" />
+    <Resource Include="Resources\MediaGrabber.txt" />
     <Resource Include="Resources\Radar.txt" />
     <Resource Include="Resources\Radar.schema.txt" />
     <Resource Include="Resources\definitions.txt" />
