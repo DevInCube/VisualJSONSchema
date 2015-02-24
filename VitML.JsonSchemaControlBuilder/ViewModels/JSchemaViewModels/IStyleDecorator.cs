@@ -7,6 +7,10 @@ namespace VitML.JsonSchemaControlBuilder.ViewModels.JSchemaViewModels
 {
     public interface IStyleDecorator
     {
+
         bool IsReadonly { get; }
+        bool IsVisible { get; }
+        bool Ignore { get; }
+        PropertyStyle Style { get; }
     }
 }

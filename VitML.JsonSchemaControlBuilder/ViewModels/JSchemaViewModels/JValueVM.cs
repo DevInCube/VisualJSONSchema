@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VitML.JsonSchemaControlBuilder.ViewModels;
 using VitML.JsonSchemaControlBuilder.ViewModels.JSchemaViewModels;
 
 namespace MyVisualJSONEditor.ViewModels
@@ -45,9 +46,25 @@ namespace MyVisualJSONEditor.ViewModels
             return new JValue(Value);
         }
 
+        #region IStyleDecorator
+
         public bool IsReadonly
         {
             get { return false; }
         }
+
+        public bool IsVisible
+        {
+            get { return true; }
+        }
+
+        public bool Ignore
+        {
+            get { return false; }
+        }
+
+        public PropertyStyle Style { get { return null; } }
+
+        #endregion
     }
 }

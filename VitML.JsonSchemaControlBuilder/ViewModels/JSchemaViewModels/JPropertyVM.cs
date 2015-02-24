@@ -19,6 +19,7 @@ namespace MyVisualJSONEditor.ViewModels
     {
 
         private PropertyStyle style;
+        private ICommand _Command;
 
         /// <summary>Initializes a new instance of the <see cref="JsonPropertyModel"/> class. </summary>
         /// <param name="key">The key of the property. </param>
@@ -137,15 +138,7 @@ namespace MyVisualJSONEditor.ViewModels
             }
         }
 
-        public PropertyStyle Style
-        {
-            get
-            {
-                return style;
-            }
-        } 
-
-        private ICommand _Command;
+        public PropertyStyle Style { get { return style; } }
 
         public ICommand Command
         {
