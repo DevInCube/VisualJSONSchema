@@ -6,27 +6,6 @@
 	'type' : 'object',
 
 	'definitions' : {
-
-		'Frame' : {
-
-			'type' : 'object',
-
-			'properties' : {
-
-				"Prefix" : {
-					'type' : 'string',
-				},
-				"Suffix" : {
-					'type' : 'string',
-				},
-				"Dir" : {
-					'type' : 'string',
-				},
-			},
-
-			"required" : [ 'Prefix', "Suffix", 'Dir' ],
-			"additionalProperties": false,
-		}, 
 		
 		'FrameParamSet' : {
 			
@@ -34,18 +13,8 @@
 
 			'properties' : {
 
-				"FrameMeta": {
-
-					'type' : 'object',
-
-					'oneOf' : [{'$ref' : '#/definitions/Frame'}],
-				},
-				"FrameData": {
-
-					'type' : 'object',
-
-					'oneOf' : [{'$ref' : '#/definitions/Frame'}],
-				},
+				"FrameMeta": {'$ref' : 'definitions#/definitions/EventDir'},
+				"FrameData": {'$ref' : 'definitions#/definitions/EventDir'},
 			},
 
 			"required" : [ 'FrameMeta', "FrameData" ],

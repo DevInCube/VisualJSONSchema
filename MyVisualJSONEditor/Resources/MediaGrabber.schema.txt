@@ -81,31 +81,24 @@
                     "id":"HaltEvent",
                     "type":"object",
 
-                    "properties":{
-                        "Prefix":{
-                            "id":"Prefix",
-                            "type":"string"
-                        },
-                        "Suffix":{
-                            "id":"Suffix",
-                            "type":"string"
-                        },
-                        "Dir":{
-                            "id":"Dir",
-                            "type":"string"
-                        },
-                        "SignalAbsentTout":{
-                            "id":"SignalAbsentTout",
-                            "type":"integer"
-                        },
-                        "DeviceAbsentTout":{
-                            "id":"DeviceAbsentTout",
-                            "type":"integer"
-                        }
-                    },
+					'allOf' : [
+						{'$ref' : 'definitions#/definitions/EventDir'},
+						{
+							'properties' : {
 
-					"required":[ "Prefix", "Suffix", "Dir", "SignalAbsentTout", "DeviceAbsentTout" ],
-					"additionalProperties": false,
+								"SignalAbsentTout":{
+									"id":"SignalAbsentTout",
+									"type":"integer"
+								},
+								"DeviceAbsentTout":{
+									"id":"DeviceAbsentTout",
+									"type":"integer"
+								}
+							},
+
+							"required":[ "SignalAbsentTout", "DeviceAbsentTout" ],
+						}
+					],
                 }
 
             },

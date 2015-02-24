@@ -22,5 +22,18 @@ namespace MyVisualJSONEditor.Tools
             return sh.Required.FirstOrDefault(x => x.Equals(key)) != null;
         }
 
+        public static JSchema MergeSchemas(IEnumerable<JSchema> schemas)
+        {
+            JSchema res = new JSchema();
+            res.Type = schemas.First().Type; //@todo
+            foreach (var sh in schemas)
+            {
+                foreach (var p in sh.Properties)
+                    res.Properties.Add(p);
+                foreach (var r in sh.Required)
+                    res.Required.Add(r);
+            }
+            return res;
+        }
     }
 }

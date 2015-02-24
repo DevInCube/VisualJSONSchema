@@ -48,7 +48,6 @@
 			},
 
 			"required" : [ 'Prefix', 'Suffix', 'Dir' ],
-			"additionalProperties": false,
 		},
 	}
 }

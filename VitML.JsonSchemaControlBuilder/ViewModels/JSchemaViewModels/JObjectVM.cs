@@ -126,7 +126,7 @@ namespace MyVisualJSONEditor.ViewModels
             }
             else if(schema.AllOf.Count > 0) 
             {
-                throw new NotImplementedException("AllOf");
+                return JSchemaExtension.MergeSchemas(schema.AllOf);
             }
             else if (schema.AnyOf.Count > 0)
             {
@@ -225,10 +225,6 @@ namespace MyVisualJSONEditor.ViewModels
             _Properties = new List<JPropertyVM>();
             if (Schema.Properties != null)
             {
-                if (Schema.Properties.Count ==0 )
-                {
-                    return;
-                }
                 foreach (var propertyInfo in Schema.Properties)
                 {
                     var property = new JPropertyVM(propertyInfo.Key, this, propertyInfo.Value);
@@ -240,21 +236,10 @@ namespace MyVisualJSONEditor.ViewModels
                     _Properties.Add(property);
                 }
             }
-            else
-            {
-                return;
-            }
         }
 
         /// <summary>Gets the object's properties. </summary>
-        public IEnumerable<JPropertyVM> Properties
-        {
-            get
-            {
-                return _Properties;
-            }
-        }
-
+        public IEnumerable<JPropertyVM> Properties { get { return _Properties; } }
 
         /// <summary>Converts the <see cref="JsonTokenModel"/> to a <see cref="JToken"/>. </summary>
         /// <returns>The <see cref="JToken"/>. </returns>
