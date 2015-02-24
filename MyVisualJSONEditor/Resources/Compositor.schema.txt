@@ -15,7 +15,7 @@
 
                 "MasterName":{
                     "id":"MasterName",
-                    "type":"string"
+                    "type": ["string", "null"]
                 },
 
                 "QueueSet":{

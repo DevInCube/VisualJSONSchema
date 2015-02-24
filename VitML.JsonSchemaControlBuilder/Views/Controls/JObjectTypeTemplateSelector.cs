@@ -93,7 +93,7 @@ namespace MyVisualJSONEditor.Views.Controls
 
             var type = schema.Type;
 
-            if (type == JSchemaType.String)
+            if (type.HasFlag(JSchemaType.String))
             {
                 if (schema.Enum.Count > 0)
                     return Templates["Enum"];
