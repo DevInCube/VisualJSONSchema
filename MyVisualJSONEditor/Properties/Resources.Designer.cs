@@ -165,6 +165,48 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/drivers&quot;,
+        ///
+        ///	&apos;definitions&apos; : {
+        ///
+        ///		&apos;smartmicro29&apos; : {
+        ///
+        ///			&quot;type&quot;:&quot;object&quot;,
+        ///
+        ///			&quot;properties&quot;:{
+        ///
+        ///				&quot;Name&quot;:{
+        ///					&quot;type&quot;:&quot;string&quot;,
+        ///					&apos;format&apos;:&apos;label&apos;,
+        ///					&apos;default&apos;:&apos;I am SmartMicro29&apos;,
+        ///				},
+        ///			},
+        ///
+        ///			&quot;required&quot;:[&apos;Name&apos;],
+        ///		},
+        ///		
+        ///		&apos;smartmicro39&apos; : {
+        ///
+        ///			&quot;type&quot;:&quot;object&quot;,
+        ///
+        ///			&quot;properties&quot;:{
+        ///
+        ///				&quot;PosX&quot;:{
+        ///					&quot;id&quot;:&quot;PosX&quot;,
+        ///					&quot;type&quot;:&quot;integer&quot;
+        ///				},
+        ///				&quot;PosY&quot;:{
+        ///					&quot;id&quot;:&quot;Po [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string drivers {
+            get {
+                return ResourceManager.GetString("drivers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
         ///	&quot;Store&quot;:
         ///	{
         ///		&quot;ParamSet&quot;:
@@ -647,45 +689,6 @@ namespace MyVisualJSONEditor.Properties {
         internal static string Radar_schema {
             get {
                 return ResourceManager.GetString("Radar_schema", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {
-        ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
-        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/radars&quot;,
-        ///
-        ///	&apos;definitions&apos; : {
-        ///		
-        ///		&apos;smartmicro39&apos; : {
-        ///
-        ///			&quot;type&quot;:&quot;object&quot;,
-        ///
-        ///			&quot;properties&quot;:{
-        ///
-        ///				&quot;PosX&quot;:{
-        ///					&quot;id&quot;:&quot;PosX&quot;,
-        ///					&quot;type&quot;:&quot;integer&quot;
-        ///				},
-        ///				&quot;PosY&quot;:{
-        ///					&quot;id&quot;:&quot;PosY&quot;,
-        ///					&quot;type&quot;:&quot;integer&quot;
-        ///				},
-        ///				&quot;PosZ&quot;:{
-        ///					&quot;id&quot;:&quot;PosZ&quot;,
-        ///					&quot;type&quot;:&quot;integer&quot;
-        ///				},
-        ///				&quot;PosH&quot;:{
-        ///					&quot;id&quot;:&quot;PosH&quot;,
-        ///					&quot;type&quot;:&quot;integer&quot;
-        ///				},
-        ///				&quot;AngleXY&quot;:{
-        ///					&quot;id&quot;:&quot;AngleXY&quot;,
-        ///					&quot;type&quot;:&quot; [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Radars_schema {
-            get {
-                return ResourceManager.GetString("Radars_schema", resourceCulture);
             }
         }
         

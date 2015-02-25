@@ -1,8 +1,10 @@
 ﻿{
     "$schema":"http://json-schema.org/draft-04/schema#",
-    "id":"http://vit.com.ua/edgeserver/radars",
+    "id":"http://vit.com.ua/edgeserver/drivers",
 
 	'definitions' : {
+
+	
 		
 		'smartmicro39' : {
 
@@ -53,7 +55,7 @@
 				"AngleXZ",
 				"AngleYZ"
 			]
-		}
+		},
 	}
 
     

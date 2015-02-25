@@ -73,9 +73,9 @@
 					'type' : 'string'
 				},
 				"ParamSet" : {
-					'type' : 'object'
+					'type' : 'object',
 					'oneOf' : [
-						{'$ref' : 'radars#definitions/smartmicro39'},
+						{'$ref' : 'drivers#definitions/smartmicro39'},
 					],
 				},
 			},

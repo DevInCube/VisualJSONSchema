@@ -8,6 +8,8 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:bld="clr-namespace:MyVisualJSONEditor.Views;assembly=VitML.JsonSchemaControlBuilder"
         xmlns:views="clr-namespace:MyVisualJSONEditor.Views"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         Title="{Binding DbHost}" Height="600" Width="800">
     <Window.DataContext>
         <vm:MainWindowVM/>
@@ -23,6 +25,12 @@
             <Setter Property="HorizontalScrollBarVisibility" Value="Auto"></Setter>
             <Setter Property="TextWrapping" Value="NoWrap"></Setter>
             <Setter Property="FontFamily" Value="Consolas"/>
+        </Style>
+        <Style x:Key="CodeEditor" TargetType="avalonEdit:TextEditor">
+            <Setter Property="ShowLineNumbers" Value="True"></Setter>
+            <Setter Property="FontFamily" Value="Consolas"></Setter>
+            <Setter Property="SyntaxHighlighting" Value="JSON"></Setter>
+            <Setter Property="FontSize" Value="10pt"></Setter>
         </Style>
         <Style x:Key="errorBox" TargetType="TextBlock">
             <Setter Property="FontSize" Value="14"/>
@@ -45,8 +53,15 @@
                             <TextBlock DockPanel.Dock="Bottom" Text="{Binding SchemaError}"
                       Visibility="{Binding SchemaError,Converter={StaticResource NullToVis}}"
                        Style="{StaticResource errorBox}"/>
-                            <TextBox  Text="{Binding Schema, UpdateSourceTrigger=LostFocus}"     
-                      Style="{StaticResource textEditor}" />
+                            <avalonEdit:TextEditor
+                                Style="{StaticResource CodeEditor}"
+                                Document="{Binding JsonSchemaDoc}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="LostFocus">
+                                        <i:InvokeCommandAction Command="{Binding JsonSchemaDocLostFocusCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </avalonEdit:TextEditor>
                         </DockPanel>
                     </xcad:LayoutAnchorable>
                     <xcad:LayoutAnchorable ContentId="data" Title="Data" CanHide="False" CanClose="False"
@@ -55,9 +70,16 @@
                             <TextBlock DockPanel.Dock="Bottom" Text="{Binding DataError}"
                                Visibility="{Binding DataError,Converter={StaticResource NullToVis}}"
                                 Style="{StaticResource errorBox}"/>
-                            <TextBox  Text="{Binding JsonData, UpdateSourceTrigger=LostFocus}" 
-                              Background="{Binding DataStatusColor}" 
-                              Style="{StaticResource textEditor}"  />
+                            <avalonEdit:TextEditor
+                                Style="{StaticResource CodeEditor}"
+                                 Background="{Binding DataStatusColor}"
+                                Document="{Binding JsonDataDoc}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="LostFocus">
+                                        <i:InvokeCommandAction Command="{Binding JsonDataDocLostFocusCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </avalonEdit:TextEditor>
                         </DockPanel>
                     </xcad:LayoutAnchorable>
                 </xcad:LayoutAnchorablePane>

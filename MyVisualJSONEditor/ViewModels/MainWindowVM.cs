@@ -1,4 +1,5 @@
-﻿using MyToolkit.Command;
+﻿using ICSharpCode.AvalonEdit.Document;
+using MyToolkit.Command;
 using MyToolkit.Model;
 using MyVisualJSONEditor.Properties;
 using Newtonsoft.Json;
@@ -23,31 +24,53 @@ namespace MyVisualJSONEditor.ViewModels
     public class MainWindowVM : ObservableObject
     {
 
+        private TextDocument _JsonSchemaDoc, _JsonDataDoc;
         private JObjectVM _Data;
         private JSchema _JSchema;
         private JSchemaPreloadedResolver refResolver;
-        private string _Schema, _SchemaError, _DataError, _ResultData, _JsonData;
-        private string _DbHost;
+        private string _SchemaError, _DataError, _ResultData;     
         private bool _IsValid, _IsResultValid;
         private ItemsControl _Control;
 
-        public string DbHost
+        public TextDocument JsonSchemaDoc
         {
-            get { return _DbHost; }
+            get { return _JsonSchemaDoc; }
             set
             {
-                _DbHost = value;
-                OnPropertyChanged("DbHost");
+                _JsonSchemaDoc = value;
+                OnPropertyChanged("JsonSchemaDoc");
+            }
+        }
+
+        public TextDocument JsonDataDoc
+        {
+            get { return _JsonDataDoc; }
+            set
+            {
+                _JsonDataDoc = value;
+                OnPropertyChanged("JsonDataDoc");
+            }
+        }
+
+        public string JsonSchema
+        {
+            get { return JsonSchemaDoc.Text; }
+            set
+            {
+                JsonSchemaDoc.Text = value;
+                OnPropertyChanged("JsonSchemaDoc");
+                OnPropertyChanged("JsonSchema");
             }
 
         }
 
         public string JsonData
         {
-            get { return _JsonData; }
+            get { return JsonDataDoc.Text; }
             set
             {
-                _JsonData = value;
+                JsonDataDoc.Text = value;
+                OnPropertyChanged("JsonDataDoc");
                 OnPropertyChanged("JsonData");
             }
 
@@ -77,17 +100,13 @@ namespace MyVisualJSONEditor.ViewModels
         public JSchema JSchema
         {
             get { return _JSchema; }
-            set { _JSchema = value; OnPropertyChanged("JSchema"); }
+            set
+            {
+                _JSchema = value;
+                OnPropertyChanged("JSchema");
+            }
         }
 
-        public string Schema {
-            get { return _Schema; }
-            set {
-                _Schema = value;
-                OnPropertyChanged("Schema");
-            }
-        
-        }
         public string SchemaError
         {
             get { return _SchemaError; }
@@ -132,33 +151,41 @@ namespace MyVisualJSONEditor.ViewModels
 
         public ObservableCollection<string> ValidationErrors { get; private set; }
 
+        public ICommand JsonSchemaDocLostFocusCommand { get; set; }
+        public ICommand JsonDataDocLostFocusCommand { get; set; }
+
         public MainWindowVM()
         {
+            _JsonSchemaDoc = new TextDocument();
+            _JsonDataDoc = new TextDocument();
+            JsonSchemaDocLostFocusCommand = new RelayCommand(() => { OnPropertyChanged("JsonSchemaDoc"); });
+            JsonDataDocLostFocusCommand = new RelayCommand(() => { OnPropertyChanged("JsonDataDoc"); });
+
             refResolver = new JSchemaPreloadedResolver();
             JSchema shDefinitions = JSchema.Parse(Resources.definitions);
-            JSchema radarsDefinitions = JSchema.Parse(Resources.Radars_schema);
+            JSchema driverDefinitions = JSchema.Parse(Resources.drivers);
             refResolver.Add(shDefinitions, new Uri("http://vit.com.ua/edgeserver/definitions"));
-            refResolver.Add(radarsDefinitions, new Uri("http://vit.com.ua/edgeserver/radars"));
+            refResolver.Add(driverDefinitions, new Uri("http://vit.com.ua/edgeserver/drivers"));
 
             this.PropertyChanged += MainWindowVM_PropertyChanged;
             ValidationErrors = new ObservableCollection<string>();
 
             Control = new ItemsControl();
-            Schema = Resources.TestSchema;
-            JsonData = Resources.TestData;
+            JsonSchema = Resources.Compositor_schema;
+            JsonData = Resources.Compositor;
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case("Schema"):
-                case("JsonData"):
+                case ("JsonSchemaDoc"):
+                case ("JsonDataDoc"):
                     SchemaError = null;
                     Control.Items.Clear();
                     try
                     {
-                        JSchema = JSchema.Parse(Schema, refResolver);
+                        JSchema = JSchema.Parse(JsonSchema, refResolver);
                     }
                     catch (Exception ex)
                     {

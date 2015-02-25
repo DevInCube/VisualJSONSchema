@@ -30,6 +30,7 @@ namespace MyVisualJSONEditor.Views.Controls
             Templates.Add("ObjectRequired", CreateTemplate(typeof(ObjectRequiredTemplate)));
             Templates.Add("ObjectSimple", CreateTemplate(typeof(ObjectSimpleTemplate)));
             Templates.Add("String", CreateTemplate(typeof(StringTemplate)));
+            Templates.Add("Label", CreateTemplate(typeof(LabelTemplate)));
             Templates.Add("Password", CreateTemplate(typeof(PasswordTemplate)));
             Templates.Add("Boolean", CreateTemplate(typeof(BooleanTemplate)));
             Templates.Add("Date", CreateTemplate(typeof(DateTemplate)));
@@ -101,6 +102,8 @@ namespace MyVisualJSONEditor.Views.Controls
                 else
                     switch (schema.Format)
                     {
+                        case ("label"):
+                            return GetTemplate("Label");
                         case ("time"):
                             return Templates["Time"];
                         case ("date"):

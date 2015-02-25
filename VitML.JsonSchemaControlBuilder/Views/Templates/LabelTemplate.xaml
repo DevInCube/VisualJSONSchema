@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="MyVisualJSONEditor.Views.Templates.LabelTemplate"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignWidth="300">
+    <StackPanel Background="WhiteSmoke" 
+                Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
+        <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" 
+                   Visibility="{Binding Key, Converter={StaticResource VisibilityConverter}}"/>
+        <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
+                    Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
+        <Label Margin="0,0,0,8" Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=Label Content}" />
+    </StackPanel>
+</UserControl>

@@ -149,6 +149,9 @@
     <Compile Include="Views\Templates\SelectListTemplate.xaml.cs">
       <DependentUpon>SelectListTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Templates\LabelTemplate.xaml.cs">
+      <DependentUpon>LabelTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Templates\StringTemplate.xaml.cs">
       <DependentUpon>StringTemplate.xaml</DependentUpon>
     </Compile>
@@ -229,6 +232,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Templates\SelectListTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Templates\LabelTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
