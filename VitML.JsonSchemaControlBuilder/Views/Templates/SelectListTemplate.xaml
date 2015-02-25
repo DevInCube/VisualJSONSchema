@@ -16,7 +16,7 @@
                             Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
         <ComboBox ItemsSource="{Binding Value.Items}" 
                   SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
-                  DisplayMemberPath="{Binding DisplayMemberPath}"
+                  DisplayMemberPath="{Binding Style.DisplayMemberPath, FallbackValue=Value}"
                   VerticalAlignment="Top" Margin="0,0,0,8">
         </ComboBox>
     </StackPanel>

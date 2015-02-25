@@ -3,6 +3,7 @@
     "id":"http://vit.com.ua/edgeserver/compositor#",
 
     "type":"object",
+	'format':'tab',
 
 	'definitions' : {
 		
@@ -19,7 +20,15 @@
 
                 "MasterName":{
                     "id":"MasterName",
-                    "type": ["string", "null"]
+                    "type": ["string", "null"],
+					'format':'label',
+                },
+
+				"SetMaster":{
+                    'type':'string',
+                    'format':'button',
+					'ignore':'true',
+					'default':'Set as Master',
                 },
 
                 "QueueSet":{
@@ -29,8 +38,8 @@
 					'format' : 'list',
 
 					'Style' : { 
-						'MaxHeight' : 400,
-						'MinHeight' : 400,
+						'MaxHeight' : 450,
+						'MinHeight' : 450,
 						'DisplayMemberPath' : '[Name]'
 					},
 
@@ -66,7 +75,7 @@
                             "Tout":{
                                 "id":"Tout",
                                 "type":"integer"
-                            }
+                            },
                         },
 
 						"required":[ "Name", "Prefix", "Suffix", "Dir", "Remove", "Sink", "Tout" ],

@@ -31,11 +31,10 @@
                     </Border>
                     <Button Content="+ Add" HorizontalAlignment="Stretch" Padding="8,4,8,4" Margin="0,5,0,4" 
                                 Click="OnAddArrayObject" Tag="{Binding}" DockPanel.Dock="Bottom"/>
-                    <Label Content="{Binding Style.DisplayMemberPath, FallbackValue=FB}" DockPanel.Dock="Top"/>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ListBox x:Name="list" 
-                                 ItemsSource="{Binding Value.Items}" 
-                                 DisplayMemberPath="{Binding Style.DisplayMemberPath}">
+                                 ItemsSource="{Binding Value.Items}"
+                                 DisplayMemberPath="{Binding Style.DisplayMemberPath, FallbackValue=Value}">
                         </ListBox>
                     </ScrollViewer>
                 </DockPanel>

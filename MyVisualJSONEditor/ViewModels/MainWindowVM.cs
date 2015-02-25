@@ -218,6 +218,9 @@ namespace MyVisualJSONEditor.ViewModels
                     ShowResult();
                 };
                 ShowResult();
+
+                var vm = new CompositorVM();
+                vm.Init(Data);
             }
             else
             {

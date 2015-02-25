@@ -103,6 +103,8 @@ namespace MyVisualJSONEditor.Views.Controls
                 else
                     switch (schema.Format)
                     {
+                        case ("button"):
+                            return Templates["Button"];
                         case ("label"):
                             return GetTemplate("Label");
                         case ("time"):
@@ -132,8 +134,6 @@ namespace MyVisualJSONEditor.Views.Controls
             {
                 switch (schema.Format)
                 {
-                    case ("button"):
-                        return Templates["Button"];
                     case ("simple"):
                         return Templates["ObjectSimple"];
                 }
