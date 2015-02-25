@@ -18,6 +18,8 @@ namespace VitML.JsonSchemaControlBuilder.ViewModels
 
         public bool? ShowCount { get; set; }
 
+        public string DisplayMemberPath { get; set; }
+
         public static PropertyStyle Parse(JToken data)
         {
             PropertyStyle st = new PropertyStyle();
@@ -25,6 +27,8 @@ namespace VitML.JsonSchemaControlBuilder.ViewModels
             st.MinHeight = GetDouble("MinHeight", data);
             st.MaxHeight = GetDouble("MaxHeight", data);
             st.ShowCount = GetBool("ShowCount", data);
+            string memPath = GetValue("DisplayMemberPath", data);
+            st.DisplayMemberPath = ((memPath == null) ? "Value" : memPath);
             return st;
         }
 

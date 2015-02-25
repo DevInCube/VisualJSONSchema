@@ -37,6 +37,7 @@ namespace MyVisualJSONEditor.Views.Controls
             Templates.Add("Time", CreateTemplate(typeof(TimeTemplate)));
             Templates.Add("DateTime", CreateTemplate(typeof(DateTimeTemplate)));
             Templates.Add("Array", CreateTemplate(typeof(ArrayTemplate)));
+            Templates.Add("List", CreateTemplate(typeof(ArrayCollapsedTemplate)));
             Templates.Add("ArrayStatic", CreateTemplate(typeof(ArrayStaticTemplate)));
             Templates.Add("SelectList", CreateTemplate(typeof(SelectListTemplate)));
             Templates.Add("Integer", CreateTemplate(typeof(IntegerTemplate)));
@@ -145,6 +146,8 @@ namespace MyVisualJSONEditor.Views.Controls
             {
                 switch (schema.Format)
                 {
+                    case ("list"):
+                        return GetTemplate("List");
                     case ("select"):
                         return GetTemplate("SelectList");
                     case ("static"):

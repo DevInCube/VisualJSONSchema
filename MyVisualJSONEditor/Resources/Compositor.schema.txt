@@ -4,6 +4,10 @@
 
     "type":"object",
 
+	'definitions' : {
+		
+	},
+
     "properties":{
 
         "Source":{
@@ -22,13 +26,22 @@
                     "id":"QueueSet",
                     "type":"array",
 
+					'format' : 'list',
+
+					'Style' : { 
+						'MaxHeight' : 400,
+						'MinHeight' : 400,
+						'DisplayMemberPath' : '[Name]'
+					},
+
                     "items": {
                         "type":"object",
 
                         "properties":{
                             "Name":{
                                 "id":"Name",
-                                "type":"string"
+                                "type":"string",
+								'default':'name',
                             },
                             "Prefix":{
                                 "id":"Prefix",
@@ -73,7 +86,15 @@
                 "QueueSet":{
                     "id":"QueueSet",
                     "type":"array",
-                    "items": { '$ref' : 'definitions#/definitions/EventDir' },
+
+					'format' : 'list',
+
+					'Style' : {
+						'MaxHeight' : 300,
+						'MinHeight' : 300,
+					},
+                    
+					"items": { '$ref' : 'definitions#/definitions/EventDir' },
                 }
             },
 
