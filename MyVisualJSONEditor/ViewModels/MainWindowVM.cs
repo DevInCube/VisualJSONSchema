@@ -2,6 +2,7 @@
 using MyToolkit.Command;
 using MyToolkit.Model;
 using MyVisualJSONEditor.Properties;
+using MyVisualJSONEditor.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -154,6 +155,7 @@ namespace MyVisualJSONEditor.ViewModels
 
         public ICommand JsonSchemaDocLostFocusCommand { get; set; }
         public ICommand JsonDataDocLostFocusCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
         public MainWindowVM()
         {
@@ -161,10 +163,13 @@ namespace MyVisualJSONEditor.ViewModels
             _JsonDataDoc = new TextDocument();
             JsonSchemaDocLostFocusCommand = new RelayCommand(() => { OnPropertyChanged("JsonSchemaDoc"); });
             JsonDataDocLostFocusCommand = new RelayCommand(() => { OnPropertyChanged("JsonDataDoc"); });
+            RefreshCommand = new RelayCommand(Refresh);
 
             refResolver = new JSchemaPreloadedResolver();
+            JSchema coreSchema = JSchema.Parse(Resources.core);
             JSchema shDefinitions = JSchema.Parse(Resources.definitions);
             JSchema driverDefinitions = JSchema.Parse(Resources.drivers);
+            refResolver.Add(coreSchema, new Uri("http://vit.com.ua/edgeserver/core"));
             refResolver.Add(shDefinitions, new Uri("http://vit.com.ua/edgeserver/definitions"));
             refResolver.Add(driverDefinitions, new Uri("http://vit.com.ua/edgeserver/drivers"));
 
@@ -175,58 +180,61 @@ namespace MyVisualJSONEditor.ViewModels
             Control = new ItemsControl();
             JsonSchema = Resources.Compositor_schema;            
             JsonData = Resources.Compositor;
+            Refresh();
+        }
+
+        void Refresh()
+        {
+            SchemaError = null;
+            Control.Items.Clear();
+            try
+            {
+                JSchema = JSchema.Parse(JsonSchema, refResolver);
+            }
+            catch (Exception ex)
+            {
+                SchemaError = ex.Message;
+                return;
+            }
+            DataError = null;
+            JObject jdata = null;
+            try
+            {
+                jdata = JObject.Parse(JsonData);
+            }
+            catch (Exception ex)
+            {
+                DataError = ex.Message;
+                return;
+            }
+            IList<string> validErrors = null;
+            ValidationErrors.Clear();
+            bool isValid = jdata.IsValid(JSchema, out validErrors);
+            if (isValid)
+            {
+                Data = JObjectVM.FromJson(jdata, JSchema);
+                Data.PropertyChanged += (se, ar) =>
+                {
+                    ShowResult();
+                };
+                ShowResult();
+            }
+            else
+            {
+                Data = null;
+                foreach (var error in validErrors)
+                    ValidationErrors.Add(error);
+            }
+
+            _IsValid = isValid;
+            OnPropertyChanged("DataStatusColor");
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case ("JsonSchemaDoc"):
-                case ("JsonDataDoc"):
-                    SchemaError = null;
-                    Control.Items.Clear();
-                    try
-                    {
-                        JSchema = JSchema.Parse(JsonSchema, refResolver);
-                    }
-                    catch (Exception ex)
-                    {
-                        SchemaError = ex.Message;
-                        return;
-                    }
-                    DataError = null;
-                    JObject jdata = null;
-                    try
-                    {
-                        jdata = JObject.Parse(JsonData);
-                    }
-                    catch (Exception ex)
-                    {
-                        DataError = ex.Message;
-                        return;
-                    }
-                    IList<string> validErrors = null;
-                    ValidationErrors.Clear();
-                    bool isValid = jdata.IsValid(JSchema, out validErrors);
-                    if (isValid)
-                    {
-                        Data = JObjectVM.FromJson(jdata, JSchema);
-                        Data.PropertyChanged += (se, ar) =>
-                        {
-                            ShowResult();
-                        };
-                        ShowResult();
-                    }
-                    else
-                    {
-                        Data = null;
-                        foreach (var error in validErrors)
-                            ValidationErrors.Add(error);
-                    }
-                    
-                    _IsValid = isValid;
-                    OnPropertyChanged("DataStatusColor");
-                    break;
+                //
             }
         }
 

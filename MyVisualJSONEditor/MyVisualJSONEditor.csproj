@@ -165,6 +165,7 @@
     <Resource Include="Resources\GrabControl.schema.txt" />
     <Resource Include="Resources\LPR.schema.txt" />
     <Resource Include="Resources\LPR.txt" />
+    <Resource Include="Resources\core.txt" />
     <Content Include="Resources\MediaCodec.txt" />
     <Resource Include="Resources\MediaStore.schema.txt" />
     <Resource Include="Resources\MediaStore.txt" />

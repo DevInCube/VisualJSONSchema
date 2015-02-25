@@ -4,8 +4,6 @@
 
 	'definitions' : {
 
-	
-		
 		'smartmicro39' : {
 
 			"type":"object",
@@ -58,5 +56,4 @@
 		},
 	}
 
-    
 }

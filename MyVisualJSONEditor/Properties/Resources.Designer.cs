@@ -130,6 +130,28 @@ namespace MyVisualJSONEditor.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///
+        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/core#&quot;,
+        ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///
+        ///	&apos;definitions&apos; : {
+        ///		
+        ///		&apos;uint&apos; : {
+        ///			
+        ///			&apos;type&apos; : &apos;integer&apos;,
+        ///			&apos;minimum&apos; : 0,
+        ///		},
+        ///	}
+        ///}.
+        /// </summary>
+        internal static string core {
+            get {
+                return ResourceManager.GetString("core", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///
         ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/definitions#&quot;,
         ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
         ///
@@ -170,21 +192,7 @@ namespace MyVisualJSONEditor.Properties {
         ///
         ///	&apos;definitions&apos; : {
         ///
-        ///		&apos;smartmicro29&apos; : {
-        ///
-        ///			&quot;type&quot;:&quot;object&quot;,
-        ///
-        ///			&quot;properties&quot;:{
-        ///
-        ///				&quot;Name&quot;:{
-        ///					&quot;type&quot;:&quot;string&quot;,
-        ///					&apos;format&apos;:&apos;label&apos;,
-        ///					&apos;default&apos;:&apos;I am SmartMicro29&apos;,
-        ///				},
-        ///			},
-        ///
-        ///			&quot;required&quot;:[&apos;Name&apos;],
-        ///		},
+        ///	
         ///		
         ///		&apos;smartmicro39&apos; : {
         ///
@@ -197,7 +205,20 @@ namespace MyVisualJSONEditor.Properties {
         ///					&quot;type&quot;:&quot;integer&quot;
         ///				},
         ///				&quot;PosY&quot;:{
-        ///					&quot;id&quot;:&quot;Po [rest of string was truncated]&quot;;.
+        ///					&quot;id&quot;:&quot;PosY&quot;,
+        ///					&quot;type&quot;:&quot;integer&quot;
+        ///				},
+        ///				&quot;PosZ&quot;:{
+        ///					&quot;id&quot;:&quot;PosZ&quot;,
+        ///					&quot;type&quot;:&quot;integer&quot;
+        ///				},
+        ///				&quot;PosH&quot;:{
+        ///					&quot;id&quot;:&quot;PosH&quot;,
+        ///					&quot;type&quot;:&quot;integer&quot;
+        ///				},
+        ///				&quot;AngleXY&quot;:{
+        ///					&quot;id&quot;:&quot;AngleXY&quot;,
+        ///					&quot;t [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string drivers {
             get {
@@ -665,26 +686,29 @@ namespace MyVisualJSONEditor.Properties {
         ///
         ///	&apos;definitions&apos; : {
         ///
-        ///		&apos;ExportArrayItem&apos; : {
+        ///		&apos;QueueSetObject&apos; : {
+        ///
         ///			&apos;type&apos; : &apos;object&apos;,
         ///
         ///			&apos;properties&apos; : {
-        ///				&quot;File&quot;: {
-        ///					&apos;type&apos; : &apos;string&apos;
-        ///				},
-        ///				&quot;ParamSet&quot; : {
-        ///					&apos;type&apos; : &apos;object&apos;,
-        ///					&apos;oneOf&apos; : [{&apos;$ref&apos;:&apos;definitions#/definitions/EventDir&apos;}],
-        ///				},
-        ///			},
         ///
-        ///			&quot;required&quot; : [ &apos;File&apos; ],
-        ///			&quot;additionalProperties&quot;: false,
-        ///		},
+        ///				&quot;QueueSet&quot;:	{ 
         ///
-        ///		&apos;QueueSetObject&apos; : {
+        ///					&apos;type&apos; : &apos;array&apos;,
         ///
-        ///			&apos;typ [rest of string was truncated]&quot;;.
+        ///					&apos;items&apos; : {
+        ///
+        ///						&apos;type&apos; : &apos;object&apos;,
+        ///
+        ///						&apos;properties&apos; : {
+        ///
+        ///							&quot;File&quot;: {
+        ///								&apos;type&apos; : &apos;string&apos;
+        ///							},
+        ///
+        ///							&quot;ParamSet&quot; : {
+        ///								&apos;type&apos; : &apos;object&apos;,
+        ///								&apos;oneOf&apos; : [{&apos;$ref&apos;:&apos;definitions#/def [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Radar_schema {
             get {

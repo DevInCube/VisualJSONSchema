@@ -23,12 +23,22 @@ namespace MyVisualJSONEditor.Tools
             return sh.Required.FirstOrDefault(x => x.Equals(key)) != null;
         }
 
+        public static object GetExtension(this JSchema sh, string key)
+        {
+            var pair = sh.ExtensionData.FirstOrDefault(x => x.Key.Equals(key));
+            if (!pair.Equals(default(KeyValuePair<string, JToken>)))
+                return pair.Value;
+            return null;
+        }
+
         private static void Merge(JSchema parent, JSchema child)
         {
             foreach (var p in child.Properties)
-                parent.Properties.Add(p);
+                if (!parent.Properties.ContainsKey(p.Key))
+                    parent.Properties.Add(p);
             foreach (var r in child.Required)
-                parent.Required.Add(r);
+                if (!parent.Required.Contains(r))
+                    parent.Required.Add(r);
         }
 
         public static void MergeAllOf(this JSchema schema)

@@ -31,7 +31,7 @@ namespace MyVisualJSONEditor.ViewModels
             Parent = parent;
             Schema = schema;
 
-            object ext = GetExtension("Style");
+            object ext = Schema.GetExtension("Style");
             if (ext != null && (ext is JToken))
                 style = PropertyStyle.Parse(ext as JToken);
 
@@ -80,14 +80,6 @@ namespace MyVisualJSONEditor.ViewModels
             get { return Value != null; }
         }
 
-        private object GetExtension(string key)
-        {
-            var pair = Schema.ExtensionData.FirstOrDefault(x => x.Key.Equals(key));
-            if (!pair.Equals(default(KeyValuePair<string, JToken>)))
-                return pair.Value;
-            return null;
-        }
-
         public bool IsReadonly
         {
             get
@@ -125,7 +117,7 @@ namespace MyVisualJSONEditor.ViewModels
         {
             get
             {
-                object ext = GetExtension("IsExpanded");
+                object ext = Schema.GetExtension("IsExpanded");
                 return (ext == null) ? true : bool.Parse(ext.ToString());
             }
         }

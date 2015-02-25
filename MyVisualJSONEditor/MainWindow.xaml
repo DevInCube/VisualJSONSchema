@@ -31,6 +31,8 @@
             <Setter Property="FontFamily" Value="Consolas"></Setter>
             <Setter Property="SyntaxHighlighting" Value="JSON"></Setter>
             <Setter Property="FontSize" Value="10pt"></Setter>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"></Setter>
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"></Setter>
         </Style>
         <Style x:Key="errorBox" TargetType="TextBlock">
             <Setter Property="FontSize" Value="14"/>
@@ -87,6 +89,9 @@
                     <xcad:LayoutAnchorable ContentId="gui" Title="GUI" CanHide="False" CanClose="False"
                                             AutoHideWidth="240">
                         <DockPanel>
+                            <Grid DockPanel.Dock="Top" Background="LightSkyBlue">
+                                <Button Content="Refresh" Command="{Binding RefreshCommand}" Margin="5" Height="23"/>
+                            </Grid>
                             <DockPanel Background="Bisque" DockPanel.Dock="Bottom">
                                 <ScrollViewer HorizontalScrollBarVisibility="Auto" >
                                     <ItemsControl ItemsSource="{Binding ValidationErrors}" Margin="5"/>
