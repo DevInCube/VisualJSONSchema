@@ -103,6 +103,11 @@
                                             AutoHideWidth="240">
                         <Grid Height="Auto" Grid.Column="2">
                             <DockPanel Margin="5,10,5,5" Grid.Row="1">
+                                <DockPanel Background="Bisque" DockPanel.Dock="Bottom">
+                                    <ScrollViewer HorizontalScrollBarVisibility="Auto" >
+                                        <ItemsControl ItemsSource="{Binding ResultValidationErrors}" Margin="5"/>
+                                    </ScrollViewer>
+                                </DockPanel>
                                 <TextBox  Text="{Binding ResultData}" 
                                           Background="{Binding ResultDataStatusColor}" 
                                           Style="{StaticResource textEditor}"  />

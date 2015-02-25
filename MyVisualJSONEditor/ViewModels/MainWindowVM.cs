@@ -150,6 +150,7 @@ namespace MyVisualJSONEditor.ViewModels
         }
 
         public ObservableCollection<string> ValidationErrors { get; private set; }
+        public ObservableCollection<string> ResultValidationErrors { get; private set; }
 
         public ICommand JsonSchemaDocLostFocusCommand { get; set; }
         public ICommand JsonDataDocLostFocusCommand { get; set; }
@@ -169,9 +170,10 @@ namespace MyVisualJSONEditor.ViewModels
 
             this.PropertyChanged += MainWindowVM_PropertyChanged;
             ValidationErrors = new ObservableCollection<string>();
+            ResultValidationErrors = new ObservableCollection<string>();
 
             Control = new ItemsControl();
-            JsonSchema = Resources.Compositor_schema;
+            JsonSchema = Resources.Compositor_schema;            
             JsonData = Resources.Compositor;
         }
 
@@ -231,7 +233,11 @@ namespace MyVisualJSONEditor.ViewModels
         void ShowResult()
         {
             ResultData = Data.ToJson();
-            _IsResultValid = JObject.Parse(ResultData).IsValid(JSchema);
+            ResultValidationErrors.Clear();
+            IList<string> validErrors = null;
+            _IsResultValid = JObject.Parse(ResultData).IsValid(JSchema, out validErrors);
+            foreach (var error in validErrors)
+                ResultValidationErrors.Add(error);
             OnPropertyChanged("ResultDataStatusColor");
         }
 
