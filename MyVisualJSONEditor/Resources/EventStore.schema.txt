@@ -222,7 +222,7 @@
 					'format':'list',
 					
 					'Style' : {
-						'DisplayMemberPath' : 'ParamSet.Channel',
+						'DisplayMemberPath' : '[ParamSet][Channel]',
 						'ShowCount' : false,
 						'MaxHeight' : 300,
 						'MinHeight' : 300,

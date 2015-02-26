@@ -40,7 +40,8 @@
                         <ListBox x:Name="list" 
                                  DisplayMemberPath="{Binding Style.DisplayMemberPath}"
                                  ItemsSource="{Binding Value.Items}"
-                                 SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}">                        </ListBox>
+                                 SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}">                                                    
+                        </ListBox>
                     </ScrollViewer>
                 </DockPanel>
 
