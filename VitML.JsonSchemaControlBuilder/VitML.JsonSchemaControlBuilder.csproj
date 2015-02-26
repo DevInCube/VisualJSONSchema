@@ -93,6 +93,7 @@
     <Compile Include="Views\Converters\DateConverter.cs" />
     <Compile Include="Views\Converters\IntegerConverter.cs" />
     <Compile Include="Views\Converters\IntegerRangeConverter.cs" />
+    <Compile Include="Views\Converters\MemberPathConverter.cs" />
     <Compile Include="Views\Converters\NullToVis.cs" />
     <Compile Include="Views\Converters\NumberConverter.cs" />
     <Compile Include="Views\Converters\NumberRangeConverter.cs" />

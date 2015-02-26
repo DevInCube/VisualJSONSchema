@@ -8,7 +8,7 @@ using Xceed.Wpf.Toolkit;
 
 namespace MyVisualJSONEditor.ViewModels
 {
-    public class CompositorVM : ObservableObject
+    public class CompositorVM : AModuleVM
     {
 
         private JObjectVM vm;
@@ -18,7 +18,7 @@ namespace MyVisualJSONEditor.ViewModels
             //
         }
 
-        public void Init(JObjectVM vm)
+        public override void Init(JObjectVM vm)
         {
             this.vm = vm;
             JArrayVM sources = vm.GetValue<JArrayVM>("Source.QueueSet");

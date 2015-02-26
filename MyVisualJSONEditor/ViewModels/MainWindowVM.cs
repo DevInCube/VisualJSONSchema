@@ -25,6 +25,7 @@ namespace MyVisualJSONEditor.ViewModels
     public class MainWindowVM : ObservableObject
     {
 
+        private AModuleVM VM;
         private TextDocument _JsonSchemaDoc, _JsonDataDoc;
         private JObjectVM _Data;
         private JSchema _JSchema;
@@ -180,6 +181,7 @@ namespace MyVisualJSONEditor.ViewModels
             Control = new ItemsControl();
             JsonSchema = Resources.Compositor_schema;            
             JsonData = Resources.Compositor;
+            //VM = new EventStoreVM();
             Refresh();
         }
 
@@ -219,8 +221,8 @@ namespace MyVisualJSONEditor.ViewModels
                 };
                 ShowResult();
 
-                var vm = new CompositorVM();
-                vm.Init(Data);
+                if (VM != null)
+                    VM.Init(Data);
             }
             else
             {

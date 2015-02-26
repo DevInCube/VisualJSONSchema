@@ -11,6 +11,6 @@
                    Visibility="{Binding Key, Converter={StaticResource VisibilityConverter}}"/>
         <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
                     Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
-        <Label Margin="0,0,0,8" Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=Label Content}" />
+        <Label Margin="0,0,0,8" Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=NULL}" />
     </StackPanel>
 </UserControl>

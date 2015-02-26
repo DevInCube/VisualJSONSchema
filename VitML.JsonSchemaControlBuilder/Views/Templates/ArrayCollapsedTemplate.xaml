@@ -6,10 +6,15 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
              xmlns:mtkConv="clr-namespace:MyToolkit.Converters;assembly=MyToolkit.Extended"
              xmlns:myConv="clr-namespace:MyVisualJSONEditor.Views.Converters"
+             xmlns:conv="clr-namespace:VitML.JsonSchemaControlBuilder.Views.Converters"
              xmlns:views="clr-namespace:MyVisualJSONEditor.Views" 
              xmlns:templates="clr-namespace:MyVisualJSONEditor.Views.Templates" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500">
+             d:DesignHeight="300" d:DesignWidth="500"
+             x:Name="this">
+    <UserControl.Resources>
+        <conv:MemberPathConverter x:Key="MemberPathConverter"/>
+    </UserControl.Resources>
     <Grid Background="WhiteSmoke"
               IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
               Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
@@ -33,10 +38,9 @@
                                 Click="OnAddArrayObject" Tag="{Binding}" DockPanel.Dock="Bottom"/>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ListBox x:Name="list" 
+                                 DisplayMemberPath="{Binding Style.DisplayMemberPath}"
                                  ItemsSource="{Binding Value.Items}"
-                                 SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
-                                 DisplayMemberPath="{Binding Style.DisplayMemberPath, FallbackValue=Value}">
-                        </ListBox>
+                                 SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}">                        </ListBox>
                     </ScrollViewer>
                 </DockPanel>
 

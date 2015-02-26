@@ -98,6 +98,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AModuleVM.cs" />
     <Compile Include="ViewModels\CompositorVM.cs" />
     <Compile Include="ViewModels\EventStoreVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />

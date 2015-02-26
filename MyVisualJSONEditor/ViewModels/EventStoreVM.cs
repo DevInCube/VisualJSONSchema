@@ -22,30 +22,46 @@ namespace MyVisualJSONEditor.ViewModels
         }
     }
 
-    public class EventStoreVM : ObservableObject
+    public class EventStoreVM : AModuleVM
     {
 
-        public JObjectVM Data { get; set; }
+        public JObjectVM VM { get; private set; }
 
         public EventStoreVM()
         {
+            //
+        }
 
-            JObjectVM ps = Data.Data["Store"] as JObjectVM;
+        public IEnumerable<Post> LoadPosts()
+        {
+            var postList = new List<Post>()
+            {
+                new Post() { PostName = "1", PostId = "idddd" },
+                new Post() { PostName = "2asdasds", PostId = "22222" },
+                new Post() { PostName = "EdgeServer", PostId = "69e86fa7-e1ad-4e68-96b7-b910f40bdb49" }
+            };
+            return postList;
+        }
+
+        public override void Init(JObjectVM vm)
+        {
+            this.VM = vm;
+            JObjectVM ps = VM.Data["Store"] as JObjectVM;
             ps.PropertyChanged += (AccessKeyEvent, o) =>
             {
                 if (o.PropertyName == "DbPort")
                     return;
             };
-            string ss = Data.Data["Store.ParamSet.PostName"] as string;
-            JObjectVM paramSet = Data.GetValue<JObjectVM>("Store.ParamSet");
+            string ss = VM.Data["Store.ParamSet.PostName"] as string;
+            JObjectVM paramSet = VM.GetValue<JObjectVM>("Store.ParamSet");
 
-            JArrayVM posts = Data.Data["Store.ParamSet.Posts"] as JArrayVM;
+            JArrayVM posts = VM.Data["Store.ParamSet.Posts"] as JArrayVM;
 
-            var objjj = Data.Data["FileApi.AddFactReact[0].ParamSet"];
+            var objjj = VM.Data["FileApi.AddFactReact[0].ParamSet"];
             posts.Data.Add(new Post()
             {
-                PostName = Data.Data["Store.ParamSet.PostName"] as string,
-                PostId = Data.Data["Store.ParamSet.Post"] as string,
+                PostName = VM.Data["Store.ParamSet.PostName"] as string,
+                PostId = VM.Data["Store.ParamSet.Post"] as string,
             });
             posts.SelectedIndex = 0;
             posts.PropertyChanged += (sss, ee) =>
@@ -56,12 +72,12 @@ namespace MyVisualJSONEditor.ViewModels
                     if (index > -1 && index < posts.Data.Count)
                     {
                         Post post = posts.Data[index] as Post;
-                        Data.Data["Store.ParamSet.PostName"] = post.PostName;
-                        Data.Data["Store.ParamSet.Post"] = post.PostId;
+                        VM.Data["Store.ParamSet.PostName"] = post.PostName;
+                        VM.Data["Store.ParamSet.Post"] = post.PostId;
                     }
                 }
             };
-            paramSet.GetProperty("ConnectBtn").Command = new RelayCommand(() =>
+            VM.GetProperty("Store.ParamSet.ConnectBtn").Command = new RelayCommand(() =>
             {
                 var postList = LoadPosts().ToList();
                 var selItem = posts.SelectedItem;
@@ -77,17 +93,6 @@ namespace MyVisualJSONEditor.ViewModels
                     posts.Data.Add(post);
                 posts.SelectedIndex = selIndex;
             });
-        }
-
-        public IEnumerable<Post> LoadPosts()
-        {
-            var postList = new List<Post>()
-            {
-                new Post() { PostName = "1", PostId = "idddd" },
-                new Post() { PostName = "2asdasds", PostId = "22222" },
-                new Post() { PostName = "EdgeServer", PostId = "69e86fa7-e1ad-4e68-96b7-b910f40bdb49" }
-            };
-            return postList;
         }
     }
 }
