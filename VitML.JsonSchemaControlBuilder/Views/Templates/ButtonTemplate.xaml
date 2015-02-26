@@ -17,6 +17,5 @@
                 Command="{Binding Command}"
                 VerticalAlignment="Top" Margin="0,0,0,8">
         </Button>
-        <Label Content="{Binding}"/>
     </StackPanel>
 </UserControl>

@@ -36,6 +36,15 @@ namespace MyVisualJSONEditor.ViewModels
                 });
             }
             sources.Items.CollectionChanged += Items_CollectionChanged;
+            sources.PropertyChanged += sources_PropertyChanged;
+        }
+
+        void sources_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("SelectedIndex"))
+            {
+                vm.GetProperty("Source.SetMaster").IsEnabled = (sender as JArrayVM).SelectedIndex >= 0;
+            }
         }
 
         void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

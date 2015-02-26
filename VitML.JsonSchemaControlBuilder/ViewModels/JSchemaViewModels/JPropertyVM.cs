@@ -92,12 +92,6 @@ namespace MyVisualJSONEditor.ViewModels
             }
         }
 
-        public bool IsEnabled
-        {
-            get { return _IsEnabled; }
-            set { _IsEnabled = value; OnPropertyChanged("IsEnabled"); }
-        }
-
         public bool IsVisible
         {
             get
@@ -143,11 +137,21 @@ namespace MyVisualJSONEditor.ViewModels
 
         public PropertyStyle Style { get { return style; } }
 
+        #region Properties
+
+        public bool IsEnabled
+        {
+            get { return _IsEnabled; }
+            set { _IsEnabled = value; OnPropertyChanged("IsEnabled"); }
+        }
+
         public ICommand Command
         {
             get { return _Command; }
             set { _Command = value; OnPropertyChanged("Command"); }
         }
+
+        #endregion Properties
 
     }
 }
