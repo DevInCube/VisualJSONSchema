@@ -18,6 +18,7 @@ namespace MyVisualJSONEditor.ViewModels
     public class JPropertyVM : ObservableObject, IStyleDecorator
     {
 
+        private bool _IsEnabled = true;
         private PropertyStyle style;
         private ICommand _Command;
 
@@ -91,6 +92,12 @@ namespace MyVisualJSONEditor.ViewModels
             }
         }
 
+        public bool IsEnabled
+        {
+            get { return _IsEnabled; }
+            set { _IsEnabled = value; OnPropertyChanged("IsEnabled"); }
+        }
+
         public bool IsVisible
         {
             get
@@ -141,5 +148,6 @@ namespace MyVisualJSONEditor.ViewModels
             get { return _Command; }
             set { _Command = value; OnPropertyChanged("Command"); }
         }
+
     }
 }

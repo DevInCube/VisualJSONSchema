@@ -34,6 +34,7 @@
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ListBox x:Name="list" 
                                  ItemsSource="{Binding Value.Items}"
+                                 SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
                                  DisplayMemberPath="{Binding Style.DisplayMemberPath, FallbackValue=Value}">
                         </ListBox>
                     </ScrollViewer>

@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignWidth="300">
     <StackPanel Background="WhiteSmoke" 
-          IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
+          IsEnabled="{Binding IsEnabled, FallbackValue=false}"
           Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
         <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
                             Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
@@ -17,5 +17,6 @@
                 Command="{Binding Command}"
                 VerticalAlignment="Top" Margin="0,0,0,8">
         </Button>
+        <Label Content="{Binding}"/>
     </StackPanel>
 </UserControl>

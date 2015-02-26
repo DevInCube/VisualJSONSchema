@@ -383,7 +383,7 @@ namespace MyVisualJSONEditor.ViewModels
 
         public JPropertyVM GetProperty(string name)
         {
-            return this.Properties.FirstOrDefault(x => x.Key == name);
+            return GetValue(name) as JPropertyVM;
         }
 
     }

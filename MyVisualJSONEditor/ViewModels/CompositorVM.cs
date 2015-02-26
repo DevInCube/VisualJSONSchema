@@ -11,6 +11,8 @@ namespace MyVisualJSONEditor.ViewModels
     public class CompositorVM : ObservableObject
     {
 
+        private JObjectVM vm;
+
         public CompositorVM()
         {
             //
@@ -18,13 +20,33 @@ namespace MyVisualJSONEditor.ViewModels
 
         public void Init(JObjectVM vm)
         {
+            this.vm = vm;
+            JArrayVM sources = vm.GetValue<JArrayVM>("Source.QueueSet");
             var prop = vm.GetValue("Source.SetMaster") as JPropertyVM;
             if (prop != null)
             {
                 prop.Command = new RelayCommand(() => {
-                    //(vm.GetValue<JArrayVM>("Source.QueueSet").SelectedItem as JObjectVM)["Name"]
-                    MessageBox.Show("Set MASTER!");
+                    JObjectVM selected = (sources.SelectedItem as JObjectVM);
+                    string name = null;
+                    if (selected != null)
+                    {
+                        name = selected["Name"].ToString();
+                    }
+                    vm.Data["Source.MasterName"] = name;
                 });
+            }
+            sources.Items.CollectionChanged += Items_CollectionChanged;
+        }
+
+        void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            {
+                JObjectVM removedItem = (e.OldItems[0] as JObjectVM);
+                if (removedItem["Name"].ToString().Equals(vm.Data["Source.MasterName"]))
+                {
+                    vm.Data["Source.MasterName"] = null;
+                }
             }
         }
     }
