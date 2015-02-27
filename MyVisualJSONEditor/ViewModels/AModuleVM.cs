@@ -12,6 +12,11 @@ namespace MyVisualJSONEditor.ViewModels
         public string Schema { get; set; }
         public string Data { get; set; }
 
-        public abstract void Init(JObjectVM vm);        
+        public abstract void Init(JObjectVM vm);
+
+        public override string ToString()
+        {
+            return this.GetType().Name.ToString();
+        }
     }
 }

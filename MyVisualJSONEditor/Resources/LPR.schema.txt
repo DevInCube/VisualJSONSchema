@@ -46,9 +46,19 @@
                 "meta_queue_set":{
                     "id":"meta_queue_set",
                     "type":"array",
+                    'format' : 'list',
+                    
+                    'Style' : {
+                    	'MaxHeight':400,
+                    	'MinHeight':400,
+                    },
 
                     "items":{
                         "type":"object",
+                        
+                        'Style':{
+                        	'DisplayMemberPath' : 'dir',
+                        },
 
                         "properties":{
                             "prefix":{

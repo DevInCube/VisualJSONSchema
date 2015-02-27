@@ -25,7 +25,7 @@ namespace MyVisualJSONEditor.ViewModels
     public class MainWindowVM : ObservableObject
     {
 
-        private AModuleVM VM;
+        private AModuleVM _SelectedModule;
         private TextDocument _JsonSchemaDoc, _JsonDataDoc;
         private JObjectVM _Data;
         private JSchema _JSchema;
@@ -141,6 +141,19 @@ namespace MyVisualJSONEditor.ViewModels
             }
         }
 
+        public AModuleVM SelectedModule
+        {
+            get { return _SelectedModule; }
+            set
+            {
+                _SelectedModule = value;
+                OnPropertyChanged("SelectedModule");
+                JsonSchema = _SelectedModule.Schema;
+                JsonData = _SelectedModule.Data;
+                Refresh();
+            }
+        }
+
         public Brush DataStatusColor
         {
             get { return _IsValid ? Brushes.Azure : Brushes.Bisque; }
@@ -153,6 +166,7 @@ namespace MyVisualJSONEditor.ViewModels
 
         public ObservableCollection<string> ValidationErrors { get; private set; }
         public ObservableCollection<string> ResultValidationErrors { get; private set; }
+        public ObservableCollection<AModuleVM> Modules { get; private set; }
 
         public ICommand JsonSchemaDocLostFocusCommand { get; set; }
         public ICommand JsonDataDocLostFocusCommand { get; set; }
@@ -179,10 +193,14 @@ namespace MyVisualJSONEditor.ViewModels
             ResultValidationErrors = new ObservableCollection<string>();
 
             Control = new ItemsControl();
-            VM = new EventStoreVM();
-            JsonSchema = VM.Schema;
-            JsonData = VM.Data;
-            Refresh();
+
+            Modules = new ObservableCollection<AModuleVM>();
+            Modules.Add(new MediaGrabberVM());
+            Modules.Add(new CompositorVM());
+            Modules.Add(new EventStoreVM());
+            Modules.Add(new LPRVM());
+
+            SelectedModule = Modules.FirstOrDefault();
         }
 
         void Refresh()
@@ -221,8 +239,8 @@ namespace MyVisualJSONEditor.ViewModels
                 };
                 ShowResult();
 
-                if (VM != null)
-                    VM.Init(Data);
+                if (SelectedModule != null)
+                    SelectedModule.Init(Data);
             }
             else
             {

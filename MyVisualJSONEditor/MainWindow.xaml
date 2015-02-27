@@ -89,6 +89,9 @@
                     <xcad:LayoutAnchorable ContentId="gui" Title="GUI" CanHide="False" CanClose="False"
                                             AutoHideWidth="240">
                         <DockPanel>
+                            <Grid DockPanel.Dock="Top" Background="LightSkyBlue" Margin="10">
+                                <ComboBox ItemsSource="{Binding Modules}" SelectedItem="{Binding SelectedModule}"></ComboBox>
+                            </Grid>
                             <Grid DockPanel.Dock="Top" Background="LightSkyBlue">
                                 <Button Content="Refresh" Command="{Binding RefreshCommand}" Margin="5" Height="23"/>
                             </Grid>

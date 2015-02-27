@@ -99,9 +99,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AModuleVM.cs" />
-    <Compile Include="ViewModels\CompositorVM.cs" />
-    <Compile Include="ViewModels\EventStoreVM.cs" />
+    <Compile Include="ViewModels\Modules\LPRVM.cs" />
+    <Compile Include="ViewModels\Modules\CompositorVM.cs" />
+    <Compile Include="ViewModels\Modules\EventStoreVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
+    <Compile Include="ViewModels\Modules\MediaGrabberVM.cs" />
     <Compile Include="Views\Converters\DateConverter.cs" />
     <Compile Include="Views\Converters\EnumConverter.cs" />
     <Compile Include="Views\Converters\IntegerConverter.cs" />
