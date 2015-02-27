@@ -13,8 +13,8 @@ namespace VitML.JsonSchemaControlBuilder.Views.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            string path = (values[1] as JPropertyVM).Style.DisplayMemberPath;
-            object title = (values[0] as JObjectVM).Data[path];
+            //string path = (values[0] as JObjectVM).d;
+            object title = (values[0] as JObjectVM).DisplayMemberPath;
             return (title == null) ? "<null>" : title.ToString();
         }
 

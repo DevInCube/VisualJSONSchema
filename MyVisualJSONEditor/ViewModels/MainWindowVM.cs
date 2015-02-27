@@ -179,9 +179,9 @@ namespace MyVisualJSONEditor.ViewModels
             ResultValidationErrors = new ObservableCollection<string>();
 
             Control = new ItemsControl();
-            JsonSchema = Resources.Compositor_schema;            
-            JsonData = Resources.Compositor;
-            VM = new CompositorVM();
+            VM = new EventStoreVM();
+            JsonSchema = VM.Schema;
+            JsonData = VM.Data;
             Refresh();
         }
 

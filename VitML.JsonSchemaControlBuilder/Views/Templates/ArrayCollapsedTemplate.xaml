@@ -38,7 +38,7 @@
                                 Click="OnAddArrayObject" Tag="{Binding}" DockPanel.Dock="Bottom"/>
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <ListBox x:Name="list" 
-                                 DisplayMemberPath="{Binding Style.DisplayMemberPath}"
+                                 DisplayMemberPath="DisplayMemberPath"
                                  ItemsSource="{Binding Value.Items}"
                                  SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}">
                         </ListBox>

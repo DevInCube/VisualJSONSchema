@@ -46,7 +46,7 @@
                         "type":"object",
 
 						'Style' : { 
-							'DisplayMemberPath' : 'Dir',
+							'DisplayMemberPath' : 'Name',
 						},
 
                         "properties":{

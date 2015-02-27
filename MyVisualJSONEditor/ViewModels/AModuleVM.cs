@@ -9,6 +9,9 @@ namespace MyVisualJSONEditor.ViewModels
     public abstract class AModuleVM : ObservableObject
     {
 
-        public abstract void Init(JObjectVM vm);
+        public string Schema { get; set; }
+        public string Data { get; set; }
+
+        public abstract void Init(JObjectVM vm);        
     }
 }

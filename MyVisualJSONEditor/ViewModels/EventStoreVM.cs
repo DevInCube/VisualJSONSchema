@@ -1,4 +1,5 @@
 ﻿using MyToolkit.Command;
+using MyVisualJSONEditor.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,8 @@ namespace MyVisualJSONEditor.ViewModels
 
         public EventStoreVM()
         {
-            //
+            this.Schema = Resources.EventStore_schema;
+            this.Data = Resources.EventStore;
         }
 
         public IEnumerable<Post> LoadPosts()

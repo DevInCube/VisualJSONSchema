@@ -387,11 +387,11 @@ namespace MyVisualJSONEditor.ViewModels
             return GetValue(name) as JPropertyVM;
         }
 
-        private string DisplayMemberPathPropertyName { get { return this.Schema.GetDisplayMemberPath(); } }
+        public string DisplayMemberPathPropertyName { get { return this.Schema.GetDisplayMemberPath(); } }
 
         public object DisplayMemberPath
         {
-            get { return ContainsKey(DisplayMemberPathPropertyName) ? this[DisplayMemberPathPropertyName] : null; }
+            get { return Data[DisplayMemberPathPropertyName]; }
         }
 
         void JObjectVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

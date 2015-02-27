@@ -222,7 +222,6 @@
 					'format':'list',
 					
 					'Style' : {
-						'DisplayMemberPath' : '[ParamSet][Channel]',
 						'ShowCount' : false,
 						'MaxHeight' : 300,
 						'MinHeight' : 300,
@@ -232,6 +231,10 @@
 						
 						"title" : "item",
 						"type" : "object",
+
+						'Style' : {
+							'DisplayMemberPath' : 'ParamSet.Channel',
+						},
 
 						"properties" : 
 						{

@@ -1,4 +1,5 @@
 ﻿using MyToolkit.Command;
+using MyVisualJSONEditor.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,8 @@ namespace MyVisualJSONEditor.ViewModels
 
         public CompositorVM()
         {
-            //
+            this.Schema = Resources.Compositor_schema;
+            this.Data = Resources.Compositor;
         }
 
         public override void Init(JObjectVM vm)
