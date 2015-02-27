@@ -40,11 +40,14 @@
 					'Style' : { 
 						'MaxHeight' : 450,
 						'MinHeight' : 450,
-						'DisplayMemberPath' : '[Name]'
 					},
 
                     "items": {
                         "type":"object",
+
+						'Style' : { 
+							'DisplayMemberPath' : 'Dir',
+						},
 
                         "properties":{
                             "Name":{

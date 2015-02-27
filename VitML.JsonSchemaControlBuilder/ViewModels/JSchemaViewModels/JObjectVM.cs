@@ -73,6 +73,7 @@ namespace MyVisualJSONEditor.ViewModels
                     
                 }
             };
+            this.PropertyChanged += JObjectVM_PropertyChanged;
         }
 
         public static JTokenVM FromSchema(JSchema schema)
@@ -386,6 +387,18 @@ namespace MyVisualJSONEditor.ViewModels
             return GetValue(name) as JPropertyVM;
         }
 
+        private string DisplayMemberPathPropertyName { get { return this.Schema.GetDisplayMemberPath(); } }
+
+        public object DisplayMemberPath
+        {
+            get { return ContainsKey(DisplayMemberPathPropertyName) ? this[DisplayMemberPathPropertyName] : null; }
+        }
+
+        void JObjectVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals(DisplayMemberPathPropertyName))
+                OnPropertyChanged("DisplayMemberPath");
+        }
     }
 
     class JsonDataImpl : IJsonData

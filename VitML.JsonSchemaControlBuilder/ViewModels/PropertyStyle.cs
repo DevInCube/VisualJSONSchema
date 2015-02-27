@@ -28,7 +28,7 @@ namespace VitML.JsonSchemaControlBuilder.ViewModels
             st.MaxHeight = GetDouble("MaxHeight", data);
             st.ShowCount = GetBool("ShowCount", data);
             string memPath = GetValue("DisplayMemberPath", data);
-            st.DisplayMemberPath = ((memPath == null) ? "Value" : memPath);
+            st.DisplayMemberPath = ((memPath == null) ? "DisplayMemberPath" : memPath);
             return st;
         }
 

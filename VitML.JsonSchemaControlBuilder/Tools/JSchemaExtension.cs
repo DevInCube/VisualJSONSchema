@@ -66,5 +66,22 @@ namespace MyVisualJSONEditor.Tools
                 }
             }
         }
+
+        public static string GetDisplayMemberPath(this JSchema sh)
+        {
+            if (sh != null)
+            {
+                object style = sh.GetExtension("Style");
+                if (style != null)
+                {
+                    object tok = (style as JToken).SelectToken("DisplayMemberPath");
+                    if (tok != null)
+                    {
+                        return (tok as JToken).Value<string>();
+                    }
+                }
+            }
+            return "Value";
+        }
     }
 }

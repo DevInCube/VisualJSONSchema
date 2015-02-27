@@ -21,6 +21,11 @@ namespace MyVisualJSONEditor.ViewModels
         public override void Init(JObjectVM vm)
         {
             this.vm = vm;
+            vm.PropertyChanged += vm_PropertyChanged;
+            JObjectVM first = vm.GetValue<JObjectVM>("Source.QueueSet[0]");
+            JObjectVM source = vm.GetValue<JObjectVM>("Source");
+            source.PropertyChanged += source_PropertyChanged;
+            first.PropertyChanged += first_PropertyChanged;
             JArrayVM sources = vm.GetValue<JArrayVM>("Source.QueueSet");
             var prop = vm.GetValue("Source.SetMaster") as JPropertyVM;
             if (prop != null)
@@ -37,6 +42,24 @@ namespace MyVisualJSONEditor.ViewModels
             }
             sources.Items.CollectionChanged += Items_CollectionChanged;
             sources.PropertyChanged += sources_PropertyChanged;
+        }
+
+        void source_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            var name = e.PropertyName;
+            return;
+        }
+
+        void first_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            var name = e.PropertyName;
+            return;
+        }
+
+        void vm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            var name = e.PropertyName;
+            return;
         }
 
         void sources_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

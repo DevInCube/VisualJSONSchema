@@ -72,6 +72,7 @@ namespace MyVisualJSONEditor.ViewModels
                     dict[key] = value;
                     OnCollectionChanged(NotifyCollectionChangedAction.Replace, new KeyValuePair<string, object>(key, value), oldItem);
                     OnPropertyChanged(key);
+                    OnPropertyChanged("[" + key + "]");
                 }
             }
         }
@@ -165,7 +166,8 @@ namespace MyVisualJSONEditor.ViewModels
         {
             if (this.CollectionChanged != null)
             {
-                var args = new NotifyCollectionChangedEventArgs( action, newItem, oldItem, 0);
+                int index = Keys.ToList().IndexOf(((KeyValuePair<string, object>)newItem).Key);
+                var args = new NotifyCollectionChangedEventArgs( action, newItem, oldItem, index);
                 CollectionChanged.Invoke(this, args);
             }
         }

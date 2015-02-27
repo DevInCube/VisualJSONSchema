@@ -181,7 +181,7 @@ namespace MyVisualJSONEditor.ViewModels
             Control = new ItemsControl();
             JsonSchema = Resources.Compositor_schema;            
             JsonData = Resources.Compositor;
-            //VM = new EventStoreVM();
+            VM = new CompositorVM();
             Refresh();
         }
 
