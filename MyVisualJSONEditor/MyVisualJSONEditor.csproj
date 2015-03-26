@@ -183,6 +183,10 @@
       <Project>{8c5279b5-2c1c-4bd2-b3d7-2e4168760fe5}</Project>
       <Name>VitML.JsonSchemaControlBuilder</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VitML.JsonSchemaViewModels\VitML.JsonVM.csproj">
+      <Project>{a03a049a-3c85-48b9-8774-47f07736a1c9}</Project>
+      <Name>VitML.JsonVM</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TestSchema.txt" />

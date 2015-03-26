@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VitML.JsonVM.Linq;
+using VitML.JsonVM.ViewModels;
 
 namespace MyVisualJSONEditor.ViewModels
 {

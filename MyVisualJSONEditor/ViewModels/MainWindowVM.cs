@@ -1,8 +1,6 @@
 ﻿using ICSharpCode.AvalonEdit.Document;
 using MyToolkit.Command;
-using MyToolkit.Model;
 using MyVisualJSONEditor.Properties;
-using MyVisualJSONEditor.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -19,6 +17,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using VitML.JsonVM.Linq;
+using VitML.JsonVM.ViewModels;
 
 namespace MyVisualJSONEditor.ViewModels
 {
