@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VitML.JsonSchemaControlBuilder.ViewModels;
-using VitML.JsonSchemaControlBuilder.ViewModels.JSchemaViewModels;
+using VitML.JsonVM.Common;
 
-namespace MyVisualJSONEditor.ViewModels
+namespace VitML.JsonVM.Linq
 {
     /// <summary>Represents a single JSON value. </summary>
     public class JValueVM : JTokenVM, IStyleDecorator

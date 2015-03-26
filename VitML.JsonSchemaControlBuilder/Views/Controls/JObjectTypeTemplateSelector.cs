@@ -1,6 +1,4 @@
-﻿using MyVisualJSONEditor.ViewModels;
-using MyVisualJSONEditor.Tools;
-using MyVisualJSONEditor.Views.Templates;
+﻿using MyVisualJSONEditor.Views.Templates;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using System;
@@ -11,13 +9,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using VitML.JsonSchemaControlBuilder;
+using VitML.JsonVM.Linq;
+using VitML.JsonVM.Extensions;
 
 namespace MyVisualJSONEditor.Views.Controls
 {
     public class JObjectTypeTemplateSelector : DataTemplateSelector
     {
-
-        public static JTemplateSelector TemplateSelector { get; set; }
 
         private static Dictionary<string, DataTemplate> Templates = new Dictionary<string, DataTemplate>();
        // private static ResourceDictionary dict = new ResourceDictionary();

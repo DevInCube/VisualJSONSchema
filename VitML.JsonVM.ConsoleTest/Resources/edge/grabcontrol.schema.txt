@@ -1,0 +1,229 @@
+﻿{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "id":"http://vit.com.ua/edgeserver/grabcontrol#",
+
+    "type":"object",
+	'format' : 'tab',
+
+    "properties":{
+
+        "Analyzer":{
+            "id":"Analyzer",
+            "type":"object",
+
+            "properties":{
+
+                "ParamSet":{
+                    "id":"ParamSet",
+                    "type":"object",
+
+                    "properties":{
+
+                        "Target":{
+                            "id":"Target",
+                            "type":"object",
+
+                            "properties":{
+
+                                "Median":{
+                                    "id":"Median",
+                                    "type":"array",
+									'format' : 'static',
+
+                                    "items":[
+                                        {
+                                            "id":"0",
+                                            "type":"integer"
+                                        },
+                                        {
+                                            "id":"1",
+                                            "type":"integer"
+                                        }
+                                    ],
+									"required":[ "0", "1" ],
+									"additionalProperties": false,
+                                },
+
+                                "SteadyState":{
+                                    "id":"SteadyState",
+                                    "type":"object",
+
+                                    "properties":{
+                                        "Unstable":{
+                                            "id":"Unstable",
+                                            "type":"integer"
+                                        },
+                                        "PreStable":{
+                                            "id":"PreStable",
+                                            "type":"integer"
+                                        },
+                                        "Stable":{
+                                            "id":"Stable",
+                                            "type":"integer"
+                                        }
+                                    },
+
+									"required":[ "Unstable", "PreStable", "Stable" ],
+									"additionalProperties": false,
+                                }
+                            },
+
+                            "required":[ "Median", "SteadyState" ],
+							"additionalProperties": false,
+                        },
+
+                        "Sweep":{
+                            "id":"Sweep",
+                            "type":"object",
+
+                            "properties":{
+
+                                "Gain":{
+                                    "id":"Gain",
+                                    "type":"array",
+									'format' : 'static',
+
+                                    "items":[
+                                        {
+                                            "id":"0",
+                                            "type":"number"
+                                        },
+                                        {
+                                            "id":"1",
+                                            "type":"number"
+                                        },
+                                        {
+                                            "id":"2",
+                                            "type":"number"
+                                        }
+                                    ],
+									"required":[ "0", "1", "2" ],
+									"additionalProperties": false,
+                                },
+
+                                "ExpTime":{
+                                    "id":"ExpTime",
+                                    "type":"array",
+									'format' : 'static',
+
+                                    "items":[
+                                        {
+                                            "id":"0",
+                                            "type":"integer"
+                                        },
+                                        {
+                                            "id":"1",
+                                            "type":"integer"
+                                        },
+                                        {
+                                            "id":"2",
+                                            "type":"integer"
+                                        }
+                                    ],
+									"required":[ "0", "1", "2" ],
+									"additionalProperties": false,
+                                },
+
+                                "Lut12":{
+                                    "id":"Lut12",
+                                    "type":"object",
+
+                                    "properties":{
+                                        "Day":{
+                                            "id":"Day",
+                                            "type":"string"
+                                        },
+                                        "Night":{
+                                            "id":"Night",
+                                            "type":"string"
+                                        },
+                                        "Default":{
+                                            "id":"Default",
+                                            "type":"string"
+                                        }
+                                    },
+
+									"required":[ "Day", "Night", "Default" ],
+									"additionalProperties": false,
+                                }
+                            },
+
+							"required":[ "Gain", "ExpTime", "Lut12" ],
+							"additionalProperties": false,
+                        }
+                    },
+                    "required":[ "Target", "Sweep" ],
+					"additionalProperties": false,
+                }
+            },
+            "required":[
+                "ParamSet"
+            ]
+        },
+        "FileApi":{
+            "id":"FileApi",
+            "type":"object",
+
+            "properties":{
+
+                "CheckFrameReact":{
+                    "id":"CheckFrameReact",
+                    "type":"object",
+
+                    "properties":{
+
+                        "Meta":{
+                            "id":"Meta",
+                            "type":"object",
+
+                            "properties":{
+
+                                "ParamSet":{
+                                    "id":"ParamSet",
+                                    "type":"object",
+                                    
+									'oneOf' : [{'$ref' : 'definitions#/definitions/EventDir'}],
+                                }
+                            },
+
+							"required":[ "ParamSet" ],
+							"additionalProperties": false,
+                        },
+
+                        "Data":{
+                            "id":"Data",
+                            "type":"object",
+
+                            "properties":{
+
+                                 "ParamSet":{
+                                    "id":"ParamSet",
+                                    "type":"object",
+                                    
+									'oneOf' : [{'$ref' : 'definitions#/definitions/EventDir'}],
+                                }
+                            },
+
+							"required":[ "ParamSet" ],
+							"additionalProperties": false,
+                        }
+                    },
+
+					"required":[ "Meta", "Data" ],
+					"additionalProperties": false,
+                },
+
+                "CheckFrameEvent":{
+                    "id":"CheckFrameEvent",
+                    "type":"array",
+                    "items": { '$ref' : 'definitions#/definitions/EventDir' },
+                }
+            },
+
+			"required":[ "CheckFrameReact", "CheckFrameEvent" ],
+			"additionalProperties": false,
+        }
+    },
+    "required":[ "Analyzer", "FileApi" ],
+	"additionalProperties": false,
+}

@@ -1,4 +1,4 @@
-﻿using MyVisualJSONEditor.ViewModels;
+﻿
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using System;

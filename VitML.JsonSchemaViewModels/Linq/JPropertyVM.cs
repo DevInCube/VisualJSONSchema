@@ -4,15 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MyVisualJSONEditor.Tools;
 using System.Windows.Input;
-using MyToolkit.Command;
-using Xceed.Wpf.Toolkit;
-using VitML.JsonSchemaControlBuilder.ViewModels;
-using System.Windows;
-using VitML.JsonSchemaControlBuilder.ViewModels.JSchemaViewModels;
+using VitML.JsonVM.Common;
+using VitML.JsonVM.ViewModels;
+using VitML.JsonVM.Extensions;
 
-namespace MyVisualJSONEditor.ViewModels
+namespace VitML.JsonVM.Linq
 {
     /// <summary>Describes a JSON property. </summary>
     public class JPropertyVM : ObservableObject, IStyleDecorator

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyVisualJSONEditor.ViewModels
+namespace VitML.JsonVM.Linq
 {
 
     public interface IJsonArray : IList<object>

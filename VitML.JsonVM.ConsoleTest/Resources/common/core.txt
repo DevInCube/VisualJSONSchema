@@ -1,0 +1,14 @@
+﻿{
+
+	"id" : "http://vit.com.ua/edgeserver/core#",
+	"$schema": "http://json-schema.org/draft-04/schema#",
+
+	'definitions' : {
+		
+		'uint' : {
+			
+			'type' : 'integer',
+			'minimum' : 0,
+		},
+	}
+}

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VitML.JsonVM.Common;
 
-namespace VitML.JsonSchemaControlBuilder.ViewModels.JSchemaViewModels
+namespace VitML.JsonVM.Linq
 {
     public interface IStyleDecorator
     {

@@ -1,0 +1,107 @@
+﻿{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "id":"http://vit.com.ua/edgeserver/lpr#",
+
+    "type":"object",
+	'format' : 'tab',
+
+    "properties":{
+
+        "media-source":{
+
+            "id":"media-source",
+            "type":"object",
+
+            "properties":{
+
+                "data_input_dir":{
+                    "id":"data_input_dir",
+                    "type":"string"
+                },
+                "meta_input_dir":{
+                    "id":"meta_input_dir",
+                    "type":"string"
+                },
+                "media_extension":{
+                    "id":"media_extension",
+                    "type":"string"
+                }
+            },
+
+            "required":[
+                "data_input_dir",
+                "meta_input_dir",
+                "media_extension"
+            ],
+			"additionalProperties": false,
+        },
+
+        "output":{
+
+            "id":"output",
+            "type":"object",
+
+            "properties":{
+
+                "meta_queue_set":{
+                    "id":"meta_queue_set",
+                    "type":"array",
+                    'format' : 'list',
+                    
+                    'Style' : {
+                    	'MaxHeight':400,
+                    	'MinHeight':400,
+                    },
+
+                    "items":{
+                        "type":"object",
+                        
+                        'Style':{
+                        	'DisplayMemberPath' : 'dir',
+                        },
+
+                        "properties":{
+                            "prefix":{
+                                "id":"prefix",
+                                "type":"string"
+                            },
+                            "suffix":{
+                                "id":"suffix",
+                                "type":"string"
+                            },
+                            "dir":{
+                                "id":"dir",
+                                "type":"string"
+                            },
+                            "type":{
+                                "id":"type",
+                                "type":"string",
+								'enum':['track', 'scene']
+                            }
+                        },
+						"required":[ 'prefix', 'suffix', 'dir', 'type'],
+						"additionalProperties": false,
+                    },
+                }
+            },
+			"required":[ 'meta_queue_set' ],
+			"additionalProperties": false,
+        },
+
+        "recognizer":{
+            "id":"recognizer",
+            "type":"object",
+            "properties":{
+
+            }
+        }
+
+    },
+
+    "required":[
+        "media-source",
+        "output",
+        "recognizer"
+    ],
+	"additionalProperties": false,
+}

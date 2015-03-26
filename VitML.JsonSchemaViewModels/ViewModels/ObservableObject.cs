@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyVisualJSONEditor.ViewModels
+namespace VitML.JsonVM.ViewModels
 {
     public class ObservableObject : INotifyPropertyChanged
     {
+
         #region inotify
        
         public event PropertyChangedEventHandler PropertyChanged;

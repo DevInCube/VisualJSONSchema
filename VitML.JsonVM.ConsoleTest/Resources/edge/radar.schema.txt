@@ -1,0 +1,98 @@
+﻿{
+	"id" : "http://vit.com.ua/edgeserver/radar",
+	"$schema": "http://json-schema.org/draft-04/schema#",
+
+	"title" : "Radar main.conf",
+
+	'definitions' : {
+
+		'QueueSetObject' : {
+
+			'type' : 'object',
+
+			'properties' : {
+
+				"QueueSet":	{ 
+
+					'type' : 'array',
+
+					'items' : {
+
+						'type' : 'object',
+
+						'properties' : {
+
+							"File": {
+								'type' : 'string'
+							},
+
+							"ParamSet" : {
+								'type' : 'object',
+								'oneOf' : [{'$ref':'definitions#/definitions/EventDir'}],
+							},
+
+						},
+
+						"required" : [ 'File' ],
+						"additionalProperties": false,
+					},
+				},
+			},
+			"required" : [ 'QueueSet'],
+			"additionalProperties": false,
+		},
+
+	},
+
+	'properties' : {
+		
+		"RxPipe": {
+			'type' : 'string'
+		},
+
+		"MappingConf" : {
+			'type' : 'string'
+		},
+
+		"Driver" : {
+			'type' : 'object',
+
+			'properties' : {
+				"File": {
+					'type' : 'string'
+				},
+				"ParamSet" : {
+					'type' : 'object',
+					'oneOf' : [
+						{'$ref' : 'drivers#definitions/smartmicro39'},
+					],
+				},
+			},
+			"required" : [ 'File', "ParamSet" ],
+			"additionalProperties": false,
+		},
+
+		"Tracker" : {
+			
+			'type' : 'object',
+
+			'properties' : {
+				"SceneTout":		{ '$ref':'core#/definitions/uint' },
+				"CloseTout":		{ '$ref':'core#/definitions/uint' },
+				"MaxFragSize":		{ '$ref':'core#/definitions/uint' },
+				"MaxTrackCount":	{ '$ref':'core#/definitions/uint' },
+				"MaxSceneCount":	{ '$ref':'core#/definitions/uint' },
+			},
+			"required" : [ 'SceneTout', "CloseTout", 'MaxFragSize', 'MaxTrackCount', 'MaxSceneCount' ],
+			"additionalProperties": false,
+		},
+
+		"SceneExport": { '$ref':'#/definitions/QueueSetObject' },
+
+		"TrackExport": { '$ref':'#/definitions/QueueSetObject' },
+
+	},
+
+	"required" : [ 'RxPipe', "MappingConf", 'Driver', 'Tracker', 'SceneExport', 'TrackExport' ],
+    "additionalProperties": false
+}

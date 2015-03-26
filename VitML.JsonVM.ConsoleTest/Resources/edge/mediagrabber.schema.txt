@@ -1,0 +1,117 @@
+﻿{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "id":"http://vit.com.ua/edgeserver/mediagrabber#",
+
+    "type":"object",
+
+    "properties":{
+
+        "TxPipes":{
+            "id":"TxPipes",
+            "type":"array",
+
+            "items": {
+                    "type":"string"
+            },
+
+			"default" : "",
+        },
+
+        "Driver":{
+            "id":"Driver",
+            "type":"object",
+
+            "properties":{
+                "Vendor":{
+                    "id":"Vendor",
+                    "type":"string"
+                },
+                "Model":{
+                    "id":"Model",
+                    "type":"string"
+                },
+                "Firmware":{
+                    "id":"Firmware",
+                    "type":"string"
+                },
+                "Id":{
+                    "id":"Id",
+                    "type":"string"
+                },
+                "File":{
+                    "id":"File",
+                    "type":"string"
+                },
+                "ParamSet":{
+                    "id":"ParamSet",
+                    "type":"object",
+                    "properties":{
+
+                    }
+                }
+            },
+            "required":[ "Vendor", "Model", "Firmware", "Id", "File", "ParamSet" ],
+			"additionalProperties": false,
+        },
+
+        "FrameExport" : { '$ref' : 'definitions#/definitions/EventDir' },
+
+        "SceneExport":{
+            "id":"SceneExport",
+            "type":"object",
+
+            "properties":{
+                "EntrySet":{
+                    "id":"EntrySet",
+                    "type":"array",
+                    "items" : { '$ref' : 'definitions#/definitions/EventDir' },
+                }
+            },
+            "required":[ "EntrySet" ],
+			"additionalProperties": false,
+        },
+
+        "FileApi":{
+            "id":"FileApi",
+            "type":"object",
+
+            "properties":{
+
+                "HaltEvent":{
+                    "id":"HaltEvent",
+                    "type":"object",
+
+					'allOf' : [
+						{'$ref' : 'definitions#/definitions/EventDir'},
+						{
+							'properties' : {
+
+								"SignalAbsentTout":{
+									"id":"SignalAbsentTout",
+									"type":"integer"
+								},
+								"DeviceAbsentTout":{
+									"id":"DeviceAbsentTout",
+									"type":"integer"
+								}
+							},
+
+							"required":[ "SignalAbsentTout", "DeviceAbsentTout" ],
+						}
+					],
+                }
+
+            },
+            "required":[ "HaltEvent" ],
+			"additionalProperties": false,
+        }
+    },
+    "required":[
+        "TxPipes",
+        "Driver",
+        "FrameExport",
+        "SceneExport",
+        "FileApi"
+    ],
+	"additionalProperties": false,
+}

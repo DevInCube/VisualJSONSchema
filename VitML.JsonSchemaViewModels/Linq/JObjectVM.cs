@@ -9,9 +9,10 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using MyVisualJSONEditor.Tools;
+using VitML.JsonVM.Common;
+using VitML.JsonVM.Extensions;
 
-namespace MyVisualJSONEditor.ViewModels
+namespace VitML.JsonVM.Linq
 {
 
     public interface IJsonData
@@ -76,7 +77,12 @@ namespace MyVisualJSONEditor.ViewModels
             this.PropertyChanged += JObjectVM_PropertyChanged;
         }
 
-        public static JTokenVM FromSchema(JSchema schema)
+        public static JTokenVM FromSchema(JSchemaEx jex)
+        {
+            return FromSchema(jex.Schema);
+        }
+
+        internal static JTokenVM FromSchema(JSchema schema)
         {
             if (schema.OneOf.Count > 0)
             {
@@ -134,7 +140,7 @@ namespace MyVisualJSONEditor.ViewModels
             {
                 return schema;
             }
-        }
+        }        
 
         public static JObjectVM FromJson(JObject obj, JSchema schema)
         {
@@ -201,7 +207,7 @@ namespace MyVisualJSONEditor.ViewModels
             {
                 case (JSchemaType.Boolean):
                     return new JValue(false);
-                case (JSchemaType.Float):
+                case (JSchemaType.Number):
                     return new JValue(0F);
                 case (JSchemaType.Integer):
                     return new JValue(0);

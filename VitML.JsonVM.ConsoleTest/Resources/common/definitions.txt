@@ -1,0 +1,53 @@
+﻿{
+
+	"id" : "http://vit.com.ua/edgeserver/definitions#",
+	"$schema": "http://json-schema.org/draft-04/schema#",
+
+	'definitions' : {
+		
+		'EventDir' : {
+			
+			'type' : 'object',
+
+			'properties' : {
+                      
+				"Prefix":{
+					'type' : 'string',
+				},                            
+				"Suffix":{
+					'type' : 'string',
+				},                              
+				"Dir":{
+					'type' : 'string',
+				}
+			},
+
+			"required" : [ 'Prefix', 'Suffix', 'Dir' ],
+		},
+
+		'FrameReact' : {
+			
+			'type' : 'object',
+
+			'properties' : {
+
+				"Channel": {
+					'type' : 'string',
+				},                             
+				"Prefix":{
+					'type' : 'string',
+				},                            
+				"Suffix":{
+					'type' : 'string',
+				},                              
+				"Dir":{
+					'type' : 'string',
+				}
+			},
+
+			"required" : [ 'Channel', 'Prefix', 'Suffix', 'Dir' ],
+			"additionalProperties": false,
+		},
+
+	}
+}

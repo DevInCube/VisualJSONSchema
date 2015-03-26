@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyVisualJSONEditor.Tools
+namespace VitML.JsonVM.Extensions
 {
     public static class JSchemaExtension
     {

@@ -1,0 +1,123 @@
+﻿{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "id":"http://vit.com.ua/edgeserver/compositor#",
+
+    "type":"object",
+	'format':'tab',
+
+	'definitions' : {
+		
+	},
+
+    "properties":{
+
+        "Source":{
+
+            "id":"Source",
+            "type":"object",
+
+            "properties":{
+
+                "MasterName":{
+                    "id":"MasterName",
+                    "type": ["string", "null"],
+					'format':'label',
+                },
+
+				"SetMaster":{
+                    'type':'string',
+                    'format':'button',
+					'ignore':'true',
+					'default':'Set as Master',
+                },
+
+                "QueueSet":{
+                    "id":"QueueSet",
+                    "type":"array",
+
+					'format' : 'list',
+
+					'Style' : { 
+						'MaxHeight' : 450,
+						'MinHeight' : 450,
+					},
+
+                    "items": {
+                        "type":"object",
+
+						'Style' : { 
+							'DisplayMemberPath' : 'Name',
+						},
+
+                        "properties":{
+                            "Name":{
+                                "id":"Name",
+                                "type":"string",
+								'default':'name',
+                            },
+                            "Prefix":{
+                                "id":"Prefix",
+                                "type":"string"
+                            },
+                            "Suffix":{
+                                "id":"Suffix",
+                                "type":"string"
+                            },
+                            "Dir":{
+                                "id":"Dir",
+                                "type":"string"
+                            },
+                            "Remove":{
+                                "id":"Remove",
+                                "type":"boolean"
+                            },
+                            "Sink":{
+                                "id":"Sink",
+                                "type":"boolean"
+                            },
+                            "Tout":{
+                                "id":"Tout",
+                                "type":"integer"
+                            },
+                        },
+
+						"required":[ "Name", "Prefix", "Suffix", "Dir", "Remove", "Sink", "Tout" ],
+						"additionalProperties": false,
+                    }
+                    
+                }
+            },
+            "required":[ "MasterName", "QueueSet" ],
+			"additionalProperties": false,
+        },
+
+        "Sink":{
+            "id":"Sink",
+            "type":"object",
+            "properties":{
+                "QueueSet":{
+                    "id":"QueueSet",
+                    "type":"array",
+
+					'format' : 'list',
+
+					'Style' : {
+						'MaxHeight' : 300,
+						'MinHeight' : 300,
+					},
+                    
+					"items": { '$ref' : 'definitions#/definitions/EventDir' },
+                }
+            },
+
+			"required":[ "QueueSet" ],
+			"additionalProperties": false,
+        }
+    },
+
+    "required":[
+        "Source",
+        "Sink"
+    ],
+	"additionalProperties": false,
+}

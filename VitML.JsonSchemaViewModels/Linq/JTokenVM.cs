@@ -1,5 +1,4 @@
-﻿using MyToolkit.Collections;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using System;
@@ -8,8 +7,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VitML.JsonVM.ViewModels;
 
-namespace MyVisualJSONEditor.ViewModels
+namespace VitML.JsonVM.Linq
 {
 
     public abstract class JTokenVM : ObservableDictionary
