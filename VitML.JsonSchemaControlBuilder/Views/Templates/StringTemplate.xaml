@@ -10,13 +10,19 @@
         <mtkConv:NotConverter x:Key="NotConverter"/>
         <mtkConv:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
-    <StackPanel Background="WhiteSmoke" 
+    <Grid Background="WhiteSmoke" 
                 IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
                 Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" 
                    Visibility="{Binding Key, Converter={StaticResource VisibilityConverter}}"/>
-        <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
+        <TextBlock Grid.Row="1" Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
                     Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
-        <TextBox Margin="0,0,0,8" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-    </StackPanel>
+        <TextBox  Grid.Row="2" Margin="0,0,0,8" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+    </Grid>
 </UserControl>

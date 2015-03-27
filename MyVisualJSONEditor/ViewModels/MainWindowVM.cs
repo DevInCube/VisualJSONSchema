@@ -195,8 +195,8 @@ namespace MyVisualJSONEditor.ViewModels
             Control = new ItemsControl();
 
             Modules = new ObservableCollection<AModuleVM>();
-            Modules.Add(new MediaGrabberVM());
             Modules.Add(new CompositorVM());
+            Modules.Add(new MediaGrabberVM());
             Modules.Add(new EventStoreVM());
             Modules.Add(new LPRVM());
 

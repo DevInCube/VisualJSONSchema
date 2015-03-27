@@ -77,6 +77,7 @@
     <Compile Include="Views\Controls\BindablePasswordBox.xaml.cs">
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\JBuilderTemplateSelector.cs" />
     <Compile Include="Views\Controls\JObjectTypeTemplateSelector.cs" />
     <Compile Include="Views\Controls\TabControlEx.cs" />
     <Compile Include="Views\Converters\DateConverter.cs" />
@@ -88,6 +89,9 @@
     <Compile Include="Views\Converters\NumberRangeConverter.cs" />
     <Compile Include="Views\Converters\TimeConverter.cs" />
     <Compile Include="Views\ExpandingGroupBox.cs" />
+    <Compile Include="Views\JBuilder.xaml.cs">
+      <DependentUpon>JBuilder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\JsonSchemaBuilder.xaml.cs">
       <DependentUpon>JsonSchemaBuilder.xaml</DependentUpon>
     </Compile>
@@ -159,6 +163,10 @@
     <Page Include="Views\Controls\BindablePasswordBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\JBuilder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\JsonSchemaBuilder.xaml">
       <Generator>MSBuild:Compile</Generator>

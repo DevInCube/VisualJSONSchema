@@ -7,6 +7,7 @@
         xmlns:s="clr-namespace:System;assembly=mscorlib"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:bld="clr-namespace:MyVisualJSONEditor.Views;assembly=VitML.JsonSchemaControlBuilder"
+        xmlns:bld2="clr-namespace:VitML.JsonSchemaControlBuilder.Views;assembly=VitML.JsonSchemaControlBuilder"
         xmlns:views="clr-namespace:MyVisualJSONEditor.Views"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
@@ -102,7 +103,7 @@
                             </DockPanel>
                             <DockPanel Height="Auto" Margin="10,5,5,5" Grid.Column="1">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                    <bld:JsonSchemaBuilder x:Name="builder" Data="{Binding Data}"/>
+                                    <bld2:JBuilder x:Name="builder" Data="{Binding Data}"/>
                                 </ScrollViewer>
                             </DockPanel>
                         </DockPanel>

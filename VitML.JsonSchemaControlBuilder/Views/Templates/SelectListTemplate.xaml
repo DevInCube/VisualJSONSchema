@@ -8,16 +8,22 @@
              xmlns:myConv="clr-namespace:MyVisualJSONEditor.Views.Converters"
              mc:Ignorable="d" 
              d:DesignWidth="300">
-    <StackPanel Background="WhiteSmoke" 
+    <Grid Background="WhiteSmoke" 
           IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
           Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <TextBlock Text="{Binding Key, FallbackValue=Key}" Margin="0,0,0,4"/>
-        <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
+        <TextBlock Grid.Row="1" Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
                             Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
-        <ComboBox ItemsSource="{Binding Value.Items}" 
+        <ComboBox Grid.Row="2" ItemsSource="{Binding Value.Items}" 
                   SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
                   DisplayMemberPath="{Binding Style.DisplayMemberPath, FallbackValue=Value}"
                   VerticalAlignment="Top" Margin="0,0,0,8">
         </ComboBox>
-    </StackPanel>
+    </Grid>
 </UserControl>
