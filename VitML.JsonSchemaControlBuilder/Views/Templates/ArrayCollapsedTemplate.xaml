@@ -14,6 +14,8 @@
              x:Name="this">
     <UserControl.Resources>
         <conv:MemberPathConverter x:Key="MemberPathConverter"/>
+        <mtkConv:NotConverter x:Key="NotConverter"/>
+        <mtkConv:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
     <Grid Background="WhiteSmoke"
               IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"

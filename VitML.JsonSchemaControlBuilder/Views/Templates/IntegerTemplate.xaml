@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mtkConv="clr-namespace:MyToolkit.Converters;assembly=MyToolkit.Extended"
              xmlns:myConv="clr-namespace:MyVisualJSONEditor.Views.Converters"
               xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
              mc:Ignorable="d" 
@@ -10,6 +11,8 @@
     <UserControl.Resources>
         <myConv:IntegerRangeConverter x:Key="IntegerRangeConverter"/>
         <myConv:IntegerConverter x:Key="IntegerConverter"/>
+        <mtkConv:NotConverter x:Key="NotConverter"/>
+        <mtkConv:VisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
     <StackPanel Background="WhiteSmoke"
                 IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"

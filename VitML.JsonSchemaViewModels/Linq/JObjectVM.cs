@@ -143,7 +143,7 @@ namespace VitML.JsonVM.Linq
         }        
 
         public static JObjectVM FromJson(JObject obj, JSchema schema)
-        {
+        {                        
             schema = CheckSchema(schema, obj);
             var result = new JObjectVM();
             foreach (var property in schema.Properties)
