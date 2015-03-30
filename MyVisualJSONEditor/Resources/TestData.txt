@@ -1,4 +1,12 @@
 {
 	'boolean' : true,
-	'string' : 'string'
+	'string' : 'string',
+	'object' : {
+		'bool1' : true,
+		'string2' : 'string',
+	},
+	'objectNesting' : {
+		'object' : null,
+	},
+	'static_list' : [13,14],
 }

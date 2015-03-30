@@ -113,7 +113,7 @@
             </Style>
 
             <Style x:Key="JValueStyle" TargetType="FrameworkElement">
-                <Setter Property="Margin" Value="0,0,0,5"/>
+                <Setter Property="Margin" Value="0,0,0,2"/>
             </Style>
 
             <Style x:Key="RemoveArrayItemButton" TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
@@ -194,11 +194,12 @@
                         <Button Content="Add"
                                 Click="OnAddArrayObject" Tag="{Binding Mode=OneTime}"
                                 Style="{StaticResource FlatButton}"/>
-                        <TextBlock  Text="{Binding Value.Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
-                                                Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" />
+                        <TextBlock Text="{Binding Value.Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
+                                   Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" />
                     </StackPanel>
-
-                    <Grid Grid.Row="3">
+                    <Grid Grid.Row="3" 
+                          MinHeight="{Binding Style.MinHeight, Mode=OneWay, FallbackValue=Auto}"
+                          MaxHeight="{Binding Style.MaxHeight, Mode=OneWay, FallbackValue=Auto}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -209,11 +210,12 @@
                                 SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
                                 Style="{StaticResource ListBase}">
                         </ListBox>
-                        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto"  Visibility="{Binding ElementName=list, Path=SelectedItem, Converter={StaticResource VisibilityConverter}}">
+                        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto"  
+                                      Visibility="{Binding ElementName=list, Path=SelectedItem, Converter={StaticResource VisibilityConverter}}">
                             <DockPanel Margin="4" DataContext="{Binding ElementName=list, Path=SelectedItem}">
-                                <Button DockPanel.Dock="Right" Content="X" 
-                                        Click="OnRemoveArrayObject" 
-                                        Tag="{Binding Mode=OneTime}" 
+                                <Button DockPanel.Dock="Right" Content="X"
+                                        Click="OnRemoveArrayObject"
+                                        Tag="{Binding Mode=OneTime}"
                                         Style="{StaticResource RemoveArrayItemButton}"/>
                                 <local:JBuilder Data="{Binding Mode=OneTime}" Margin="4,8,4,0" />
                             </DockPanel>
@@ -243,15 +245,21 @@
             
             <DataTemplate x:Key="ArrayStatic">
                 <Grid Style="{StaticResource ContainerStyle}">
-                    <GroupBox Header="{Binding Key, Mode=OneTime, FallbackValue=ListName}">
-                        <ItemsControl ItemsSource="{Binding Value.Items, Mode=OneTime}" Focusable="False" Margin="5" >
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <local:JBuilder Data="{Binding Mode=OneTime}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </GroupBox>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
+                    <ItemsControl Grid.Row="2"  ItemsSource="{Binding Value.Items, Mode=OneTime}" Focusable="False" Margin="5" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:JBuilder Data="{Binding Mode=OneTime}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
             </DataTemplate>
                                    
@@ -273,17 +281,19 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal">
                         <Button Content="Add" Click="OnAddArrayObject" Tag="{Binding Mode=OneTime}" Style="{StaticResource FlatButton}" />
                         <TextBlock  Margin="0,0,0,3" 
                                     Text="{Binding Value.Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
                                     Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" 
                                     VerticalAlignment="Center"/>
                     </StackPanel>
-                    <ListBox        Grid.Row="2"
+                    <ListBox        Grid.Row="3"
                                     ItemsSource="{Binding Value.Items, Mode=OneTime}"
                                     ItemTemplate="{StaticResource ArrayItem}"
                                     VirtualizingPanel.IsVirtualizing="True"
@@ -445,7 +455,58 @@
                               Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
-            
+
+            <DataTemplate x:Key="Date">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <xctk:DateTimePicker Grid.Row="2"  Format="LongDate" 
+                                         HorizontalAlignment="Left" 
+                                         TimePickerVisibility="Collapsed" TimeFormat="Custom" AutoCloseCalendar="True"
+                                         Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter},FallbackValue=00:00:00}"
+                                         Style="{StaticResource JValueStyle}"/>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="Time">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <xctk:TimePicker Grid.Row="2" TextAlignment="Left" 
+                                     HorizontalAlignment="Left" 
+                                     Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TimeConverter},FallbackValue=00:00:00}"
+                                     Style="{StaticResource JValueStyle}"/>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="DateTime">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <xctk:DateTimePicker Grid.Row="2"  HorizontalAlignment="Left" 
+                                     Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter}, FallbackValue=00:00}"
+                                     Style="{StaticResource JValueStyle}"/>
+                </Grid>
+            </DataTemplate>            
+
         </ContentPresenter.Resources>
         
         <ContentPresenter.ContentTemplateSelector>

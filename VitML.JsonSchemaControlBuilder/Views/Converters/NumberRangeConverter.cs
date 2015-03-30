@@ -14,7 +14,7 @@ namespace MyVisualJSONEditor.Views.Converters
         {
             if (value == null)
                 return parameter.ToString() == "min" ? float.MinValue : float.MaxValue;
-            return (float)value;
+            return (float)System.Convert.ToSingle(value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

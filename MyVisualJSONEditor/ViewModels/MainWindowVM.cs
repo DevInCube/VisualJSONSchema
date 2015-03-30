@@ -1,6 +1,7 @@
 ﻿using ICSharpCode.AvalonEdit.Document;
 using MyToolkit.Command;
 using MyVisualJSONEditor.Properties;
+using MyVisualJSONEditor.ViewModels.Modules;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -195,6 +196,7 @@ namespace MyVisualJSONEditor.ViewModels
             Control = new ItemsControl();
 
             Modules = new ObservableCollection<AModuleVM>();
+            Modules.Add(new TestVM());
             Modules.Add(new CompositorVM());
             Modules.Add(new MediaGrabberVM());
             Modules.Add(new EventStoreVM());

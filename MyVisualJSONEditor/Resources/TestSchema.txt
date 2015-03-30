@@ -1,21 +1,68 @@
 {
-	'type':'object', 
-	
+	'type':'object',
 
     'title':'Root Object Title',
 	'description' : 'This is Root Object description',
 
     'properties':{
 
+		'label' : {
+            'type':'string',
+			'format':'label',
+			'default' : 'Label Content',
+			'description' : 'This is just a label',
+        },
+
+		'string' : {
+            'type':'string',	
+			'description' : 'This is just a textbox control',		
+        },
+
+		'integer' : {
+            'type':'integer',	
+			'maximum' : 9,
+			'description' : 'This is just an up-down integer control, maximum 9',		
+        },
+
+		'number' : {
+            'type':'number',
+			'minimum' : -0.56,	
+			'description' : 'This is just a n up-down number control, minimum -0.56',		
+        },
+
+		'date' : {
+			'type':'string',
+            'format':'date',			
+			'description' : 'This is date control',		
+        },
+
+		'time' : {
+			'type':'string',
+            'format':'time',			
+			'description' : 'This is time control',		
+        },
+
+		'datetime' : {
+			'type':'string',
+            'format':'date-time',			
+			'description' : 'This is datetime control',		
+        },
+
 		'boolean' : {
             'type':'boolean',
 			default : true,
-			readonly : true
+			readonly : true,
+			'description' : 'A readonly checkbox',		
         },
-        'string' : {
+
+		"button":{
             'type':'string',
-			visible : false
-        },
+            'format':'button',
+			'ignore' : 'true',
+			'default' : 'Action',
+			'description' : "Button to perform action",
+        },		        
+
 		'object' : {
 
 			type : [ 'object', 'null'],
@@ -34,31 +81,120 @@
 			'default':{
 				'bool1' : true, 
 				string2 : 'default'
-			}
+			},
+			required : ['bool1', 'string2'],
 		},
-       
-		'number' : {
-            'type':'number'
-        },
-		'integer' : {
-            'type':'integer',
-			minimum : 0
-        },
+
+		'objectNesting' : {
+
+			type : [ 'object', 'null'],
+
+			title : 'This is the object',
+			description : 'This is the parent object description',
+
+			'properties' : {
+
+				'object' : {
+
+					type : [ 'object', 'null'],
+
+					title : 'This is the object',
+					description : 'This is the nested object description',
+
+					'properties' : {
+						'bool1' : {
+							'type':'boolean'
+						},
+						'string2' : {
+							'type':'string'
+						},
+					},
+					'default':{
+						'bool1' : true, 
+						string2 : 'default'
+					},
+					required : ['bool1', 'string2'],
+				},
+			},
+			required : ['object'],
+		},
 		
-        'listTest' : {
+		'static_list' : {
+			 'type' : 'array',
+			'format' : 'static',
+			
+			description : 'This is a static list of some objects',
+			
+			
+			 "items":[
+                {
+                    "id":"0",
+                    "type":"integer",
+                },
+                {
+                    "id":"1",
+                    "type":"integer",
+                }
+            ],
+			"required":[ "0", "1" ],
+			"additionalProperties": false,
+		},
+		
+        'list' : {
             'type' : 'array',
+			description : 'This is the dynamic list with some style',
+			
+			'Style' : {
+				'MinHeight' : '200',
+				'MaxHeight' : '200',
+			},
+            
             'items' : {
                 'type':'object',
                 'properties':{
                     'ok':{
                         'type':'integer',
 						minimum : 0,
-						maximum : 5
+						maximum : 5,
                     }
                 }
             }
-        }
+        },
+        
+        'list_list' : {
+            'type' : 'array',
+            'format' : 'list',
+			description : 'This is the dynamic formatted list with some style',
+			
+			'Style' : {
+				'MinHeight' : '200',
+				'MaxHeight' : '200',
+			},
+            
+            'items' : {
+                'type':'object',
+                
+                'Style' : {
+                	'DisplayMemberPath' : 'someCount',
+                },
+                
+                'properties':{
+                    'someCount':{
+                        'type':'integer',
+						minimum : 0,
+						maximum : 5,
+						default : 0,
+                    }
+                }
+            }
+        },
     },
 
-	required : ['boolean', 'string']
+	required : [
+		'boolean', 
+		'string', 
+		'object', 
+		'objectNesting', 
+		'static_list' 
+	]
 }
