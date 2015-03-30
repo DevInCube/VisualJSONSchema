@@ -55,7 +55,7 @@ namespace MyVisualJSONEditor.ViewModels
 
         void first_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            var name = e.PropertyName;
+            var name = e.PropertyName;           
             return;
         }
 
@@ -68,7 +68,7 @@ namespace MyVisualJSONEditor.ViewModels
         void sources_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals("SelectedIndex"))
-            {
+            {                
                 vm.GetProperty("Source.SetMaster").IsEnabled = (sender as JArrayVM).SelectedIndex >= 0;
             }
         }

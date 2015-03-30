@@ -32,7 +32,7 @@ namespace VitML.JsonVM.Linq
         /// <returns>The <see cref="JToken"/>. </returns>
         public override JToken ToJToken()
         {
-            return new JValue(Value);
+            return (Value is JValue) ? Value as JValue : new JValue(Value);
         }
 
         #region IStyleDecorator

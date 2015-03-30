@@ -51,12 +51,12 @@
         </Style>
 
         <DataTemplate x:Key="titleText">
-            <Border Height="24" BorderThickness="0,0,0,2" BorderBrush="LightSteelBlue">
+            <Border Height="24" BorderThickness="0,0,0,0" BorderBrush="LightSteelBlue">
                 <TextBlock Text="{Binding}" 
                         Margin="4 0"
                         VerticalAlignment="Center"
                         Foreground="Black"
-                        FontSize="16" 
+                        FontSize="20"
                         FontWeight="Thin"
                         Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}"
                         TextWrapping="Wrap"/>
@@ -70,317 +70,379 @@
     </UserControl.Resources>
     
     <ContentPresenter x:Name="Presenter">
+        
         <ContentPresenter.Resources>
 
+            <Style x:Key="ContainerStyle" TargetType="Grid">                
+                <Setter Property="IsEnabled" Value="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}" />
+                <Setter Property="Visibility" Value="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}" />
+                <Setter Property="Margin" Value="5"/>
+            </Style>
+
+            <Style x:Key="InnerContainerStyle" TargetType="Grid">
+                <Setter Property="Margin" Value="5"/>                
+            </Style>
+
+            <Style x:Key="HideableText" TargetType="TextBlock">
+                <Style.Triggers>
+                    <Trigger Property="Text" Value="">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </Trigger>
+                    <Trigger Property="Text" Value="{x:Null}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="KeyTextStyle" TargetType="TextBlock" BasedOn="{StaticResource HideableText}">
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Margin" Value="0,0,0,3"/>
+            </Style>
+
+            <Style x:Key="KeyObjectTextStyle" TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="Thin"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Margin" Value="4,2,0,2"/>
+            </Style>
+
+            <Style x:Key="DescTextStyle" TargetType="TextBlock" BasedOn="{StaticResource HideableText}">
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="Margin" Value="4,0,0,2"/>
+                <Setter Property="Height" Value="Auto"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+
+            <Style x:Key="JValueStyle" TargetType="FrameworkElement">
+                <Setter Property="Margin" Value="0,0,0,5"/>
+            </Style>
+
+            <Style x:Key="RemoveArrayItemButton" TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Setter Property="Width" Value="26"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+
+            <Style x:Key="FlatButton" TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="MinWidth" Value="75"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Padding" Value="8,4,8,4"/>
+                <Setter Property="Margin" Value="0,5,5,4"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+            </Style>
+
+            <Style x:Key="ListBase" TargetType="ListBox">
+                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="BorderThickness" Value="2"/>               
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+
+            <Style x:Key="ListStyle" TargetType="ListBox" BasedOn="{StaticResource ListBase}">
+                <Setter Property="Background" Value="WhiteSmoke"/>                
+            </Style>
+
+            <Style x:Key="ObjectBorder" TargetType="Border">
+                <Setter Property="BorderBrush" Value="SteelBlue"/>
+                <Setter Property="BorderThickness" Value="2,0,0,0"/>                
+            </Style>
+
             <DataTemplate x:Key="Root">
-                <ItemsControl Background="WhiteSmoke" ItemsSource="{Binding Properties, Mode=OneWay}" Focusable="False" >
+                <ItemsControl ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:JBuilder Data="{Binding}" />
+                            <local:JBuilder Data="{Binding Mode=OneWay}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </DataTemplate>
             
             <DataTemplate x:Key="TabRoot">
-                <Grid Background="WhiteSmoke" Visibility="{Binding IsVisible, Mode=OneWay, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
-                    <ItemsControl ItemsSource="{Binding Properties, Mode=OneWay}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Properties, Mode=OneTime}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Expander Header="{Binding Path=Key, Mode=OneWay, FallbackValue=Header}" IsExpanded="False" >
-                                    <Grid>
-                                        <local:JBuilder Data="{Binding}" Margin="5"/>
-                                    </Grid>
+                                <Expander Header="{Binding Path=Key, Mode=OneTime, FallbackValue=Header}" IsExpanded="False" >
+                                    <local:JBuilder Data="{Binding Mode=OneTime}" Margin="5"/>
                                 </Expander>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>                    
+                    </ItemsControl>
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="List">
-                <Grid Background="WhiteSmoke"
-                      IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
-                      Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
-                    <GroupBox Header="{Binding Key, FallbackValue=ListName}" Grid.ColumnSpan="2"
-                        Height="{Binding Style.Height, Mode=OneWay, FallbackValue=Auto}"
-                        MinHeight="{Binding Style.MinHeight, Mode=OneWay, FallbackValue=Auto}"
-                        MaxHeight="{Binding Style.MaxHeight, Mode=OneWay, FallbackValue=Auto}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <DockPanel  Grid.Column="0" Margin="5">
-                                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-                                    <Button Content="+ Add" HorizontalAlignment="Stretch" Padding="8,4,8,4" Margin="0,5,10,4" 
-                                            Click="OnAddArrayObject" Tag="{Binding}" />
-                                    <TextBlock  Margin="0,0,0,3" Text="{Binding Value.Items.Count, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
-                                                Visibility="{Binding Style.ShowCount, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" />
-                                </StackPanel>
-                                <ListBox x:Name="list" 
-                                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                         BorderBrush="Black"
-                                         BorderThickness="2"
-                                         DisplayMemberPath="DisplayMemberPath"
-                                         ItemsSource="{Binding Value.Items}"
-                                         SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}">                                    
-                                </ListBox>
-                            </DockPanel>
-
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="1" Visibility="{Binding ElementName=list, Path=SelectedItem, Converter={StaticResource VisibilityConverter}}">
-                                <Border Margin="4" BorderBrush="DimGray" BorderThickness="0,0,0,2" DataContext="{Binding ElementName=list, Path=SelectedItem}">
-                                    <Grid>
-                                        <GroupBox Header="Item" Background="WhiteSmoke">
-                                            <local:JBuilder Data="{Binding}" Margin="4,8,4,0" />
-                                        </GroupBox>
-                                        <Button Content="Remove" HorizontalAlignment="Right" 
-                                                MinWidth="75" Height="23" VerticalAlignment="Top"
-                                                Click="OnRemoveArrayObject" 
-                                                Tag="{Binding}" Margin="4,0,12,4" />
-                                    </Grid>
-                                </Border>                                
-                            </ScrollViewer>
-                        </Grid>
-
-                    </GroupBox>
-                </Grid>
-            </DataTemplate>
-            
-            <DataTemplate x:Key="SelectList">
-                <Grid Background="WhiteSmoke" 
-                      IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
-                      Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
+                <Grid Style="{StaticResource ContainerStyle}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition />                        
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, FallbackValue=Key}" Margin="0,0,0,4"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
-                            Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
-                    <ComboBox Grid.Row="2" ItemsSource="{Binding Value.Items}" 
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                        <Button Content="Add"
+                                Click="OnAddArrayObject" Tag="{Binding Mode=OneTime}"
+                                Style="{StaticResource FlatButton}"/>
+                        <TextBlock  Text="{Binding Value.Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
+                                                Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" />
+                    </StackPanel>
+
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ListBox x:Name="list"
+                                DisplayMemberPath="DisplayMemberPath"
+                                ItemsSource="{Binding Value.Items, Mode=OneTime}"
+                                SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
+                                Style="{StaticResource ListBase}">
+                        </ListBox>
+                        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto"  Visibility="{Binding ElementName=list, Path=SelectedItem, Converter={StaticResource VisibilityConverter}}">
+                            <DockPanel Margin="4" DataContext="{Binding ElementName=list, Path=SelectedItem}">
+                                <Button DockPanel.Dock="Right" Content="X" 
+                                        Click="OnRemoveArrayObject" 
+                                        Tag="{Binding Mode=OneTime}" 
+                                        Style="{StaticResource RemoveArrayItemButton}"/>
+                                <local:JBuilder Data="{Binding Mode=OneTime}" Margin="4,8,4,0" />
+                            </DockPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="SelectList">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
+                    <ComboBox Grid.Row="2" 
+                              ItemsSource="{Binding Value.Items, Mode=OneTime}" 
                               SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
-                              DisplayMemberPath="{Binding Style.DisplayMemberPath, FallbackValue=Value}"
-                              VerticalAlignment="Top" Margin="0,0,0,8">
+                              DisplayMemberPath="{Binding Style.DisplayMemberPath, Mode=OneTime, FallbackValue=Value}"
+                              VerticalAlignment="Top" Style="{StaticResource JValueStyle}">
                     </ComboBox>
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="ArrayStatic">
-                <Grid Background="WhiteSmoke"
-                      IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
-                      Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
-
-                    <GroupBox Header="{Binding Key, FallbackValue=ListName}">
-                        <ItemsControl ItemsSource="{Binding Value.Items}" Background="White" Focusable="False" Margin="5" >
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <GroupBox Header="{Binding Key, Mode=OneTime, FallbackValue=ListName}">
+                        <ItemsControl ItemsSource="{Binding Value.Items, Mode=OneTime}" Focusable="False" Margin="5" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <local:JBuilder Data="{Binding}" />
+                                    <local:JBuilder Data="{Binding Mode=OneTime}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </GroupBox>
                 </Grid>
             </DataTemplate>
-            
+                                   
             <DataTemplate x:Key="ArrayItem">
-                <Border Margin="4" BorderBrush="DimGray" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
-                    <Grid>
-                        <GroupBox Header="Item" Background="WhiteSmoke">
-                            <local:JBuilder Data="{Binding}" Margin="4,8,4,0" />
-                        </GroupBox>
-                        <Button Content="Remove" HorizontalAlignment="Right" 
-                    MinWidth="75" Height="23" VerticalAlignment="Top"
-                    Click="OnRemoveArrayObject" 
-                    Tag="{Binding}" Margin="4,0,12,4" />
-                    </Grid>
+                <Border Margin="4" Background="White" HorizontalAlignment="Stretch">
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right" 
+                                Content="X"
+                                Click="OnRemoveArrayObject" 
+                                Tag="{Binding Mode=OneTime}" 
+                                Style="{StaticResource RemoveArrayItemButton}"/>
+                        <local:JBuilder Data="{Binding Mode=OneTime}" />
+                    </DockPanel>
                 </Border>
             </DataTemplate>
             
             <DataTemplate x:Key="Array">
-                <Grid Background="WhiteSmoke"
-                      IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
-                      Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
-
-                    <GroupBox Header="{Binding Key, FallbackValue=ListName}">
-                        <StackPanel Margin="0,8,0,0">
-                            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-                                <Button Content="+ Add" HorizontalAlignment="Stretch" Padding="8,4,8,4" Margin="0,5,10,4" 
-                                            Click="OnAddArrayObject" Tag="{Binding}" />
-                                <TextBlock  Margin="0,0,0,3" Text="{Binding Value.Items.Count, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
-                                                Visibility="{Binding Style.ShowCount, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" 
-                                            VerticalAlignment="Center"/>
-                            </StackPanel>
-                            <ListBox 
-                                    ItemsSource="{Binding Value.Items}" Background="White" Focusable="False"
-                                    ItemTemplate="{StaticResource ArrayItem}" HorizontalContentAlignment="Stretch"
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Button Content="Add" Click="OnAddArrayObject" Tag="{Binding Mode=OneTime}" Style="{StaticResource FlatButton}" />
+                        <TextBlock  Margin="0,0,0,3" 
+                                    Text="{Binding Value.Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
+                                    Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" 
+                                    VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <ListBox        Grid.Row="2"
+                                    ItemsSource="{Binding Value.Items, Mode=OneTime}"
+                                    ItemTemplate="{StaticResource ArrayItem}"
                                     VirtualizingPanel.IsVirtualizing="True"
                                     VirtualizingPanel.VirtualizationMode="Recycling"
                                     Height="{Binding Style.Height, Mode=OneWay, FallbackValue=Auto}"
                                     MinHeight="{Binding Style.MinHeight, Mode=OneWay, FallbackValue=Auto}"
                                     MaxHeight="{Binding Style.MaxHeight, Mode=OneWay, FallbackValue=Auto}"
-                                    BorderBrush="Black" BorderThickness="2"
-                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                    Style="{StaticResource ListStyle}"                                    
                                     />
-                        </StackPanel>
-                    </GroupBox>
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="Object">
-                <Grid Background="WhiteSmoke" Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
-                    <GroupBox Header="{Binding Key, FallbackValue=Key}">
-                        <Expander Header="{Binding Schema.Description, FallbackValue=Description}" IsExpanded="{Binding IsExpanded, Mode=OneWay}">
-                            <StackPanel IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}" Margin="5">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <GroupBox Header="{Binding Key, Mode=OneTime, FallbackValue=Key}">
+                        <Expander Header="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" IsExpanded="{Binding IsExpanded, Mode=OneWay}">
+                            <Grid Style="{StaticResource ContainerStyle}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
                                 <CheckBox IsChecked="{Binding HasValue, Mode=OneWay}"
                                         Margin="4,8,4,4" Content="Specify values" 
-                                        Checked="OnCreateObject" Unchecked="OnRemoveObject" Tag="{Binding}" />
-                                <local:JBuilder Data="{Binding Value}" />
-                            </StackPanel>
+                                        Checked="OnCreateObject" Unchecked="OnRemoveObject" Tag="{Binding Mode=OneTime}" />
+                                <local:JBuilder Grid.Row="1" Data="{Binding Value, Mode=OneTime}" />
+                            </Grid>
                         </Expander>
                     </GroupBox>
                 </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="ObjectRequired">
-                <Grid Background="WhiteSmoke" Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
-                    <GroupBox Header="{Binding Key}">
-                        <local:JBuilder Data="{Binding Value}" Margin="5"/>
-                    </GroupBox>
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Border Style="{StaticResource ObjectBorder}">
+                        <Grid Style="{StaticResource InnerContainerStyle}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyObjectTextStyle}"/>
+                            <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                            <local:JBuilder Grid.Row="2" Data="{Binding Value, Mode=OneWay}" Style="{StaticResource JValueStyle}"/>
+                        </Grid>
+                    </Border>
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="ObjectSimple">
-                <local:JBuilder Data="{Binding}" />
+                <local:JBuilder Data="{Binding Mode=OneTime}" />
             </DataTemplate>
             
             <DataTemplate x:Key="Button">
-                <Grid Background="WhiteSmoke" 
-                      IsEnabled="{Binding IsEnabled, FallbackValue=false}"
-                      Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
+                <Grid Style="{StaticResource ContainerStyle}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
-                                Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
-                    <Button Grid.Row="1" Content="{Binding Value, FallbackValue=Value}"
-                            Command="{Binding Command}"
-                            VerticalAlignment="Top" Margin="0,0,0,8">
-                    </Button>
+                    <TextBlock Grid.Row="0" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <Button Grid.Row="1" HorizontalAlignment="Left"
+                            Content="{Binding Value, Mode=OneWay, FallbackValue=Value}"
+                            Command="{Binding Command, Mode=OneWay}"
+                            Style="{StaticResource FlatButton}"/>
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="Label">
-                <Grid Background="WhiteSmoke" Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
+                <Grid Style="{StaticResource ContainerStyle}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" 
-                            Visibility="{Binding Key, Converter={StaticResource VisibilityConverter}}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
-                            Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
-                    <Label Grid.Row="2" Margin="0,0,0,8" Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=NULL}" />
+                    <TextBlock Text="{Binding Key, Mode=OneWay, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <Label Grid.Row="2" Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=NULL}" Style="{StaticResource JValueStyle}" />
                 </Grid>
-            </DataTemplate>
+            </DataTemplate>            
             
             <DataTemplate x:Key="String">
-                <Grid Background="WhiteSmoke" 
-                        IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
-                        Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
+                <Grid Style="{StaticResource ContainerStyle}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" 
-                                Visibility="{Binding Key, Converter={StaticResource VisibilityConverter}}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
-                                Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
-                    <TextBox  Grid.Row="2" Margin="0,0,0,8" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <TextBox Grid.Row="2" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="Integer">
-                <Grid Background="WhiteSmoke"
-                        IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
-                        Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
+                <Grid Style="{StaticResource ContainerStyle}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" 
-                            Visibility="{Binding Key, Converter={StaticResource VisibilityConverter}}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4" 
-                            Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
-                    <xctk:IntegerUpDown Grid.Row="2" Margin="0,0,0,8" TextAlignment="Left"
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <xctk:IntegerUpDown Grid.Row="2" TextAlignment="Left"
                             Minimum="{Binding Schema.Minimum, Converter={StaticResource IntegerRangeConverter}, ConverterParameter=min}"
                             Maximum="{Binding Schema.Maximum, Converter={StaticResource IntegerRangeConverter}, ConverterParameter=max}"
-                            Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntegerConverter}}" />
+                            Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntegerConverter}}" 
+                            Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="Number">
-                <Grid Background="WhiteSmoke"
-                        IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
-                        Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
+                <Grid Style="{StaticResource ContainerStyle}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock  Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" 
-                            Visibility="{Binding Key, Converter={StaticResource VisibilityConverter}}"/>
-                    <TextBlock Grid.Row="1"  Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4" 
-			                Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
-                    <xctk:DoubleUpDown Grid.Row="2"  Margin="0,0,0,8" TextAlignment="Left"
-			                        Minimum="{Binding Schema.Minimum, Converter={StaticResource NumberRangeConverter}, ConverterParameter=min}"
-			                        Maximum="{Binding Schema.Maximum, Converter={StaticResource NumberRangeConverter}, ConverterParameter=max}"
-			                        Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NumberConverter}}" />
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <xctk:DoubleUpDown Grid.Row="2" TextAlignment="Left"
+			                        Minimum="{Binding Schema.Minimum, Mode=OneTime, Converter={StaticResource NumberRangeConverter}, ConverterParameter=min}"
+			                        Maximum="{Binding Schema.Maximum, Mode=OneTime, Converter={StaticResource NumberRangeConverter}, ConverterParameter=max}"
+			                        Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NumberConverter}}" 
+                                    Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="Password">
-                <Grid Background="WhiteSmoke" 
-                        IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
-                        Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
+                <Grid Style="{StaticResource ContainerStyle}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" />
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, FallbackValue=Description}" Margin="0,0,0,4"
-                         Visibility="{Binding Schema.Description, Converter={StaticResource VisibilityConverter}}"/>
-                    <controls:BindablePasswordBox Grid.Row="2" Margin="0,0,0,8" Password="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <controls:BindablePasswordBox Grid.Row="2" Password="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="Boolean">
-                <Grid Background="WhiteSmoke"
-                        IsEnabled="{Binding IsReadonly, FallbackValue=false, Converter={StaticResource NotConverter}}"
-                        Visibility="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}">
+                <Grid Style="{StaticResource ContainerStyle}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, FallbackValue=Key}" FontWeight="Bold" Margin="0,0,0,4" />
-                    <CheckBox Grid.Row="1" Content="{Binding Schema.Description, FallbackValue=Description}" IsThreeState="False"
-                            IsChecked="{Binding Value, Mode=TwoWay, FallbackValue=false}" Margin="0,0,0,8" />
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <CheckBox Grid.Row="1" 
+                              IsThreeState="False"
+                              Content="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}"
+                              IsChecked="{Binding Value, Mode=TwoWay, FallbackValue=false}" 
+                              Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
             
