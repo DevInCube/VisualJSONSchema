@@ -17,6 +17,9 @@
         <myConv:NumberRangeConverter x:Key="NumberRangeConverter"/>
         <myConv:IntegerRangeConverter x:Key="IntegerRangeConverter"/>
         <myConv:IntegerConverter x:Key="IntegerConverter"/>
+        <myConv:DateConverter x:Key="DateConverter"/>
+        <myConv:TimeConverter x:Key="TimeConverter"/>
+        <myConv:DateTimeConverter x:Key="DateTimeConverter"/>
         <mtkConv:NotConverter x:Key="NotConverter"/>
         <mtkConv:VisibilityConverter x:Key="VisibilityConverter"/>
 
@@ -151,6 +154,11 @@
                 <Setter Property="BorderThickness" Value="2,0,0,0"/>                
             </Style>
 
+            <Style x:Key="ComboStyle" BasedOn="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}" TargetType="ComboBox">
+                <Setter Property="Margin" Value="0,0,0,2"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+
             <DataTemplate x:Key="Root">
                 <ItemsControl ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
                     <ItemsControl.ItemTemplate>
@@ -177,6 +185,23 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                </Grid>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="Enum">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}" />
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
+                    <ComboBox Grid.Row="2" 
+                              ItemsSource="{Binding Schema.Enum}" 
+                              SelectedItem="{Binding Value}" 
+                              Style="{StaticResource ComboStyle}"/>
                 </Grid>
             </DataTemplate>
             
@@ -238,7 +263,7 @@
                               ItemsSource="{Binding Value.Items, Mode=OneTime}" 
                               SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
                               DisplayMemberPath="{Binding Style.DisplayMemberPath, Mode=OneTime, FallbackValue=Value}"
-                              VerticalAlignment="Top" Style="{StaticResource JValueStyle}">
+                              VerticalAlignment="Top" Style="{StaticResource ComboStyle}">
                     </ComboBox>
                 </Grid>
             </DataTemplate>
@@ -302,7 +327,13 @@
                                     MinHeight="{Binding Style.MinHeight, Mode=OneWay, FallbackValue=Auto}"
                                     MaxHeight="{Binding Style.MaxHeight, Mode=OneWay, FallbackValue=Auto}"
                                     Style="{StaticResource ListStyle}"                                    
-                                    />
+                                    >
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="Focusable" Value="False"/>
+                            </Style>
+                         </ListBox.ItemContainerStyle>
+                    </ListBox>
                 </Grid>
             </DataTemplate>
             
@@ -502,7 +533,7 @@
                     <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <xctk:DateTimePicker Grid.Row="2"  HorizontalAlignment="Left" 
-                                     Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter}, FallbackValue=00:00}"
+                                     Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateTimeConverter}, FallbackValue=00:00}"
                                      Style="{StaticResource JValueStyle}"/>
                 </Grid>
             </DataTemplate>            

@@ -14,8 +14,21 @@
         },
 
 		'string' : {
+            'type':'string',
+			'pattern' : '^[a-z]{1}[0-9]+$',	
+			'description' : 'This is just a textbox control \r\n which matches the pattern "^[a-z]{1}[0-9]+$"',		
+        },
+
+		'ipv4' : {
             'type':'string',	
-			'description' : 'This is just a textbox control',		
+            'format':'ipv4',	
+			'description' : 'This is just a Ipv4 control',		
+        },
+
+		'password' : {
+            'type':'string',	
+            'format':'password',	
+			'description' : 'This is passwordbox control',		
         },
 
 		'integer' : {
@@ -118,6 +131,22 @@
 			},
 			required : ['object'],
 		},
+
+		'enum' : {
+			'type' : 'string',
+			'enum' : ['Test1', 'Test2'],
+		},
+
+		'select_list' : {
+            'type' : 'array',
+            'format' : 'select',
+			description : 'This is the select list',			
+            
+            'items' : {
+                'type':'string',                
+            },
+            default : [ 'Test1', 'sadssad' ],
+        },
 		
 		'static_list' : {
 			 'type' : 'array',
@@ -195,6 +224,7 @@
 		'string', 
 		'object', 
 		'objectNesting', 
-		'static_list' 
+		'static_list',
+		'select_list',
 	]
 }

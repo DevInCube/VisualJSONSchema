@@ -1,6 +1,7 @@
 {
 	'boolean' : true,
-	'string' : 'string',
+	'string' : 'x123',
+	'ipv4' : '192.168.100.0',
 	'object' : {
 		'bool1' : true,
 		'string2' : 'string',
@@ -9,4 +10,5 @@
 		'object' : null,
 	},
 	'static_list' : [13,14],
+	'select_list' : ['0', 'ListItem1', 'Item2', 'end.'],
 }

@@ -213,7 +213,7 @@ namespace VitML.JsonVM.Linq
                     return new JValue(0);
                 case (JSchemaType.String):
                     if (sh.Format == "date-time") return new DateTime();
-                    if (sh.Format == "date") return new DateTime();
+                    if (sh.Format == "date") return (new DateTime()).ToString("yyyy-MM-dd");
                     if (sh.Format == "time") return new TimeSpan();
                     if (sh.Format == "ipv4") return new JValue(IPAddress.None); //@todo @test
                     return new JValue(String.Empty);

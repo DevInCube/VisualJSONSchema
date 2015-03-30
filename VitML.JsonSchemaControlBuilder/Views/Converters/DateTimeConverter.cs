@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace MyVisualJSONEditor.Views.Converters
 {
-    public class DateConverter : IValueConverter
+    public class DateTimeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -20,7 +20,7 @@ namespace MyVisualJSONEditor.Views.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((DateTime)value).ToString("yyyy-MM-dd");
+            return value;
         }
     }
 }
