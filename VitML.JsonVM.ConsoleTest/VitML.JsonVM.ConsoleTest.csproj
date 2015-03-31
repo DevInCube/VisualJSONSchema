@@ -60,6 +60,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VitML.Json.Schema\VitML.Json.Schema.csproj">
+      <Project>{2924fd6f-86b7-41a2-8d2c-e1b7bd757c75}</Project>
+      <Name>VitML.Json.Schema</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VitML.JsonSchemaViewModels\VitML.JsonVM.csproj">
       <Project>{a03a049a-3c85-48b9-8774-47f07736a1c9}</Project>
       <Name>VitML.JsonVM</Name>
