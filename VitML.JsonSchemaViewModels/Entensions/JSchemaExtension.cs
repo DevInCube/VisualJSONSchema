@@ -67,6 +67,20 @@ namespace VitML.JsonVM.Extensions
             }
         }
 
+        public static JSchema MatchData(this IList<JSchema> schemas, JToken data)
+        {
+            if (data == null)
+                return null;
+            foreach (var sh in schemas)
+            {
+                if (data.IsValid(sh))
+                {
+                    return sh;
+                }
+            }
+            return null;
+        }
+
         public static string GetDisplayMemberPath(this JSchema sh)
         {
             if (sh != null)

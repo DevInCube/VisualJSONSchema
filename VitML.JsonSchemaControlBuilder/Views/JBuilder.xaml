@@ -159,6 +159,13 @@
                 <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style>
 
+            <Style x:Key="ComboAltStyle" BasedOn="{StaticResource ComboStyle}" TargetType="ComboBox">
+                <Setter Property="Margin" Value="4,4,0,2"/>
+                <Setter Property="Foreground" Value="LightSteelBlue"/>
+                <Setter Property="FontWeight" Value="Thin"/>
+                <Setter Property="FontSize" Value="18"/>
+            </Style>
+
             <DataTemplate x:Key="Root">
                 <ItemsControl ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
                     <ItemsControl.ItemTemplate>
@@ -354,6 +361,29 @@
                             </Grid>
                         </Expander>
                     </GroupBox>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ObjectAlt">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Border Style="{StaticResource ObjectBorder}">
+                        <Grid Style="{StaticResource InnerContainerStyle}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyObjectTextStyle}"/>
+                            <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                            <ComboBox Grid.Row="2" 
+                                      ItemsSource="{Binding OriginalSchema.OneOf, Mode=OneTime}" 
+                                      SelectedItem="{Binding SelectedSchema, Mode=TwoWay}"
+                                      DisplayMemberPath="Title"
+                                      VerticalAlignment="Top" Style="{StaticResource ComboAltStyle}"/>
+                            <local:JBuilder Grid.Row="3" Data="{Binding Value, Mode=OneWay}" Style="{StaticResource JValueStyle}"/>
+                        </Grid>
+                    </Border>
                 </Grid>
             </DataTemplate>
 

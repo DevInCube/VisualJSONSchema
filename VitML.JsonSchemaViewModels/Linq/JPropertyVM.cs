@@ -18,6 +18,7 @@ namespace VitML.JsonVM.Linq
         private bool _IsEnabled = true;
         private PropertyStyle style;
         private ICommand _Command;
+        private JSchema _SelectedSchema;
 
         /// <summary>Initializes a new instance of the <see cref="JsonPropertyModel"/> class. </summary>
         /// <param name="key">The key of the property. </param>
@@ -27,7 +28,8 @@ namespace VitML.JsonVM.Linq
         {
             Key = key;
             Parent = parent;
-            Schema = schema;
+            OriginalSchema = schema;
+            Schema = schema;            
 
             object ext = Schema.GetExtension("Style");
             if (ext != null && (ext is JToken))
@@ -48,6 +50,16 @@ namespace VitML.JsonVM.Linq
 
         /// <summary>Gets the property type as schema. </summary>
         public JSchema Schema { get; private set; }
+        public JSchema OriginalSchema { get; private set; }
+        public JSchema SelectedSchema {
+            get { return _SelectedSchema; }
+            set {
+                _SelectedSchema = value;
+                Schema = _SelectedSchema;
+                JTokenVM data = JObjectVM.FromSchema(Schema);
+                Value = data;
+            }
+        }
 
         /// <summary>Gets a value indicating whether the property is required. </summary>
         public bool IsRequired
@@ -66,6 +78,12 @@ namespace VitML.JsonVM.Linq
             set
             {
                 Parent[Key] = value;
+
+                if (OriginalSchema.OneOf.Count > 0)
+                {
+                    var val = value as JObjectVM;                                        
+                    SelectedSchema = OriginalSchema.OneOf.MatchData(JToken.Parse(val.ToJson()));
+                }
 
                 OnPropertyChanged("Value");
                 OnPropertyChanged("HasValue");

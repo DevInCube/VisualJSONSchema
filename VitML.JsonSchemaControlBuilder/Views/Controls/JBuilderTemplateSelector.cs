@@ -91,6 +91,8 @@ namespace MyVisualJSONEditor.Views.Controls
                 {
                     case ("simple"):
                         return (DataTemplate)presenter.Resources["ObjectSimple"];
+                    case ("alt"):
+                        return (DataTemplate)presenter.Resources["ObjectAlt"];
                 }
                 if (required)
                     return (DataTemplate)presenter.Resources["ObjectRequired"];

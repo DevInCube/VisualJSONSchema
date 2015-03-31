@@ -4,6 +4,46 @@
     'title':'Root Object Title',
 	'description' : 'This is Root Object description',
 
+	'definitions' : {
+	
+		'obj1' : {
+		
+			'title' : 'Object1',
+			'type' : [ 'object', 'null'],
+
+			'description' : 'This is the object description',
+
+			'properties' : {
+				'bool1' : {
+					'type':'boolean',
+				},
+				'string2' : {
+					'type':'string',
+				},
+			},
+			'default':{
+				'bool1' : true, 
+				string2 : 'default'
+			},
+			required : ['bool1', 'string2'],
+		},
+		'obj2' : {
+		
+			'title' : 'Object2',
+			'type' : [ 'object', 'null'],
+
+			'description' : 'This is the object ',
+
+			'properties' : {
+				'integer' : {
+					'type':'integer',
+				},
+			},
+			required : ['integer'],
+		}
+		
+	},
+
     'properties':{
 
 		'label' : {
@@ -130,6 +170,18 @@
 				},
 			},
 			required : ['object'],
+		},
+
+		'alt_object' : {
+
+			'type' : [ 'object', 'null'],
+			'format' : 'alt',			
+			'description' : 'This is the alternative object',
+
+			'oneOf' : [
+				{'$ref' : '#/definitions/obj1'},
+				{'$ref' : '#/definitions/obj2'},
+			],
 		},
 
 		'enum' : {
