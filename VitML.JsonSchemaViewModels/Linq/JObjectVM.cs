@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
+using My.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -150,7 +150,10 @@ namespace VitML.JsonVM.Linq
             {
                 if (property.Value.Type.HasFlag(JSchemaType.Array))
                 {
-                    var propertySchema = property.Value.Items.First();//@todo
+                    var propertySchema =
+                        property.Value.ItemsArray.Count == 0
+                        ? property.Value.ItemsSchema
+                        : property.Value.ItemsArray.First();//@todo
                     var value = obj[property.Key];
                     List<JTokenVM> list = null;
                     if (value != null)
@@ -236,7 +239,11 @@ namespace VitML.JsonVM.Linq
                     {
                         foreach (var obj in ((JArrayVM)property.Value).Items)
                         {
-                            obj.Schema = CheckSchema(propertyInfo.Value.Items.First(), null); //here i use only first schema
+                            var propertySchema =
+                                propertyInfo.Value.ItemsArray.Count == 0
+                                ? propertyInfo.Value.ItemsSchema
+                                : propertyInfo.Value.ItemsArray.First();
+                            obj.Schema = CheckSchema(propertySchema, null); //here i use only first schema
                         }
                     }
                     _Properties.Add(property);

@@ -36,7 +36,7 @@ namespace MyVisualJSONEditor.Views.Templates
                 property.Value = new ObservableCollection<JTokenVM>();
 
             var list = (property.Value as JArrayVM).Items;
-            var schema = property.Schema.Items;
+            var schema = property.Schema.ItemsArray;
 
             var obj = JObjectVM.FromSchema(schema.First());
             obj.ParentList = list;

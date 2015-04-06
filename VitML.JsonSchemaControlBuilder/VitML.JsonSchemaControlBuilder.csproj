@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="My.Json.Schema">
+      <HintPath>..\..\..\..\..\..\VIT.Projects\My.Json.Schema\My.Json.Schema\bin\Debug\My.Json.Schema.dll</HintPath>
+    </Reference>
     <Reference Include="MyToolkit">
       <HintPath>..\packages\MyToolkit.2.3.28.0\lib\portable-net45+wp8+win8+wpa81\MyToolkit.dll</HintPath>
     </Reference>
@@ -38,9 +41,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json.Schema">
-      <HintPath>..\packages\Newtonsoft.Json.Schema.1.0.6\lib\net45\Newtonsoft.Json.Schema.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

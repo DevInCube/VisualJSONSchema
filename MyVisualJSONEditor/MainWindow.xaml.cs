@@ -1,5 +1,5 @@
 ﻿using MyVisualJSONEditor.ViewModels;
-using Newtonsoft.Json.Schema;
+using My.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.Linq;

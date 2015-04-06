@@ -1,6 +1,6 @@
 ﻿using MyVisualJSONEditor.Views.Templates;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
+using My.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,7 +124,7 @@ namespace MyVisualJSONEditor.Views.Controls
                 else
                     return GetTemplate("Integer");
             }
-            if (type == JSchemaType.Float)
+            if (type == JSchemaType.Number)
                 return GetTemplate("Number");
             if (type == JSchemaType.Boolean)
                 return GetTemplate("Boolean");

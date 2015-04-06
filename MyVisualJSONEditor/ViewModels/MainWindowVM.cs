@@ -4,7 +4,7 @@ using MyVisualJSONEditor.Properties;
 using MyVisualJSONEditor.ViewModels.Modules;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
+using My.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -182,12 +182,9 @@ namespace MyVisualJSONEditor.ViewModels
             RefreshCommand = new RelayCommand(Refresh);
 
             refResolver = new JSchemaPreloadedResolver();
-            JSchema coreSchema = JSchema.Parse(Resources.core);
-            JSchema shDefinitions = JSchema.Parse(Resources.definitions);
-            JSchema driverDefinitions = JSchema.Parse(Resources.drivers);
-            refResolver.Add(coreSchema, new Uri("http://vit.com.ua/edgeserver/core"));
-            refResolver.Add(shDefinitions, new Uri("http://vit.com.ua/edgeserver/definitions"));
-            refResolver.Add(driverDefinitions, new Uri("http://vit.com.ua/edgeserver/drivers"));
+            refResolver.Add(new Uri("http://vit.com.ua/edgeserver/core"), Resources.core );
+            refResolver.Add( new Uri("http://vit.com.ua/edgeserver/definitions"),Resources.definitions);
+            refResolver.Add(new Uri("http://vit.com.ua/edgeserver/drivers"), Resources.drivers);
 
             this.PropertyChanged += MainWindowVM_PropertyChanged;
             ValidationErrors = new ObservableCollection<string>();
@@ -229,9 +226,9 @@ namespace MyVisualJSONEditor.ViewModels
                 DataError = ex.Message;
                 return;
             }
-            IList<string> validErrors = null;
+            IList<string> validErrors = new List<string>();
             ValidationErrors.Clear();
-            bool isValid = jdata.IsValid(JSchema, out validErrors);
+            bool isValid = jdata.IsValid(JSchema);//@todo , out validErrors
             if (isValid)
             {
                 Data = JObjectVM.FromJson(jdata, JSchema);
@@ -267,8 +264,8 @@ namespace MyVisualJSONEditor.ViewModels
         {
             ResultData = Data.ToJson();
             ResultValidationErrors.Clear();
-            IList<string> validErrors = null;
-            _IsResultValid = JObject.Parse(ResultData).IsValid(JSchema, out validErrors);
+            IList<string> validErrors = new List<string>();
+            _IsResultValid = JObject.Parse(ResultData).IsValid(JSchema); //@todo , out validErrors
             foreach (var error in validErrors)
                 ResultValidationErrors.Add(error);
             OnPropertyChanged("ResultDataStatusColor");

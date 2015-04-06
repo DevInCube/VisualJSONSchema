@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Schema;
+﻿using Newtonsoft.Json;
+using My.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.Linq;

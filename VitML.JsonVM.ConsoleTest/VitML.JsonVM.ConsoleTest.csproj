@@ -36,7 +36,8 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json.Schema">
+    <Reference Include="Newtonsoft.Json.Schema, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.Schema.1.0.8\lib\net40\Newtonsoft.Json.Schema.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -55,19 +56,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ScriptEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\VitML.Json.Schema\VitML.Json.Schema.csproj">
-      <Project>{2924fd6f-86b7-41a2-8d2c-e1b7bd757c75}</Project>
-      <Name>VitML.Json.Schema</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VitML.JsonSchemaViewModels\VitML.JsonVM.csproj">
-      <Project>{a03a049a-3c85-48b9-8774-47f07736a1c9}</Project>
-      <Name>VitML.JsonVM</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -108,6 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\edge\radar.schema.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\jjv.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
