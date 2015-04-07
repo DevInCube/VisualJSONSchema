@@ -27,7 +27,7 @@ namespace MyVisualJSONEditor.ViewModels
     {
 
         private AModuleVM _SelectedModule;
-        private TextDocument _JsonSchemaDoc, _JsonDataDoc;
+        private TextDocument _JsonSchemaDoc, _JsonDataDoc, _ResultDataDoc;
         private JObjectVM _Data;
         private JSchema _JSchema;
         private JSchemaPreloadedResolver refResolver;
@@ -55,6 +55,16 @@ namespace MyVisualJSONEditor.ViewModels
             }
         }
 
+        public TextDocument ResultDataDoc
+        {
+            get { return _ResultDataDoc; }
+            set
+            {
+                _ResultDataDoc = value;
+                OnPropertyChanged("ResultDataDoc");
+            }
+        }
+
         public string JsonSchema
         {
             get { return JsonSchemaDoc.Text; }
@@ -75,17 +85,6 @@ namespace MyVisualJSONEditor.ViewModels
                 JsonDataDoc.Text = value;
                 OnPropertyChanged("JsonDataDoc");
                 OnPropertyChanged("JsonData");
-            }
-
-        }
-
-        public string ResultData
-        {
-            get { return _ResultData; }
-            set
-            {
-                _ResultData = value;
-                OnPropertyChanged("ResultData");
             }
 
         }
@@ -262,10 +261,12 @@ namespace MyVisualJSONEditor.ViewModels
 
         void ShowResult()
         {
-            ResultData = Data.ToJson();
+            ResultDataDoc = new TextDocument();
+            string result = Data.ToJson();
+            ResultDataDoc.Text = result;        
             ResultValidationErrors.Clear();
             IList<string> validErrors = null;
-            _IsResultValid = JObject.Parse(ResultData).IsValid(JSchema, out validErrors);
+            _IsResultValid = JObject.Parse(result).IsValid(JSchema, out validErrors);
             foreach (var error in validErrors)
                 ResultValidationErrors.Add(error);
             OnPropertyChanged("ResultDataStatusColor");

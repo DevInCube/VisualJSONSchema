@@ -189,7 +189,7 @@
 
 		"SocketApi": {
 				
-			"title" : "SocketApi",
+			"title" : "Socket API",
 			"type" : "object",
 
 			"properties" : {
@@ -211,7 +211,7 @@
 
 		"FileApi":
 		{
-			"title" : "SocketApi",
+			"title" : "File API",
 			"type" : "object",
 
 			"properties" : {

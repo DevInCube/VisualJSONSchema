@@ -117,9 +117,11 @@
                                         <ItemsControl ItemsSource="{Binding ResultValidationErrors}" Margin="5"/>
                                     </ScrollViewer>
                                 </DockPanel>
-                                <TextBox  Text="{Binding ResultData}" 
-                                          Background="{Binding ResultDataStatusColor}" 
-                                          Style="{StaticResource textEditor}"  />
+                                <avalonEdit:TextEditor
+                                                Style="{StaticResource CodeEditor}"
+                                                Background="{Binding ResultDataStatusColor}"
+                                                Document="{Binding ResultDataDoc}">
+                                </avalonEdit:TextEditor>                               
                             </DockPanel>
                         </Grid>
                     </xcad:LayoutAnchorable>
