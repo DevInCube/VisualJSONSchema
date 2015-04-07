@@ -228,7 +228,7 @@ namespace MyVisualJSONEditor.ViewModels
             }
             IList<string> validErrors = new List<string>();
             ValidationErrors.Clear();
-            bool isValid = jdata.IsValid(JSchema);//@todo , out validErrors
+            bool isValid = jdata.IsValid(JSchema, out validErrors);
             if (isValid)
             {
                 Data = JObjectVM.FromJson(jdata, JSchema);
@@ -264,8 +264,8 @@ namespace MyVisualJSONEditor.ViewModels
         {
             ResultData = Data.ToJson();
             ResultValidationErrors.Clear();
-            IList<string> validErrors = new List<string>();
-            _IsResultValid = JObject.Parse(ResultData).IsValid(JSchema); //@todo , out validErrors
+            IList<string> validErrors = null;
+            _IsResultValid = JObject.Parse(ResultData).IsValid(JSchema, out validErrors);
             foreach (var error in validErrors)
                 ResultValidationErrors.Add(error);
             OnPropertyChanged("ResultDataStatusColor");

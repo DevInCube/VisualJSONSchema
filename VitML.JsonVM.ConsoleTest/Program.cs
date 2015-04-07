@@ -27,14 +27,14 @@ namespace VitML.JsonVM.ConsoleTest
     },
     'additionalProperties': false,    
     'oneOf' : [{'$ref':'#/definitions/test'}],
-}";
+}";        
             var sh1 = JSchema.Parse(shStr);
             var sh2 = JSchema.Parse(@"
 {
     'type' : ['string','integer'],
 }
 ");
-            var valid = JValue.Parse("'dsdf'").IsValid(sh2);
+            var valid = JValue.Parse("'dsdf'").IsValid(sh2 );
             return;
             JSchemaPreloadedResolver res = new JSchemaPreloadedResolver();
             var r = JSchema.Parse(@"{

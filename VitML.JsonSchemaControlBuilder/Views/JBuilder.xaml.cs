@@ -56,9 +56,14 @@ namespace VitML.JsonSchemaControlBuilder.Views
                 property.Value = new ObservableCollection<JTokenVM>();
 
             var list = (property.Value as JArrayVM).Items;
-            var schema = property.Schema.ItemsArray;
 
-            var obj = JObjectVM.FromSchema(schema.First());
+            //@todo
+            var schema = 
+                property.Schema.ItemsArray.Count > 0 
+                ? property.Schema.ItemsArray.First()
+                : property.Schema.ItemsSchema;
+
+            var obj = JObjectVM.FromSchema(schema);
             obj.ParentList = list;
 
             list.Add(obj);
