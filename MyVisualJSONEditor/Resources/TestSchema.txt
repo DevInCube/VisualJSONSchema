@@ -30,7 +30,7 @@
 		'obj2' : {
 		
 			'title' : 'Object2',
-			'type' : [ 'object', 'null'],
+			'type' : [ 'object'],
 
 			'description' : 'This is the object ',
 
@@ -47,10 +47,12 @@
     'properties':{
 
 		'label' : {
-            'type':'string',
+			'title':'',			
+			'description':'This is just a description\r\n of label without title',
+			
+			'type':'string',
 			'format':'label',
-			'default' : 'Label Content',
-			'description' : 'This is just a label',
+			'default' : 'Label Content is a value of this string',
         },
 
 		'string' : {

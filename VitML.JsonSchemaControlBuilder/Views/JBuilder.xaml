@@ -186,7 +186,7 @@
                     <ItemsControl Grid.Row="1" ItemsSource="{Binding Properties, Mode=OneTime}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Expander Header="{Binding Path=Key, Mode=OneTime, FallbackValue=Header}" IsExpanded="False" >
+                                <Expander Header="{Binding KeyTitle, Mode=OneTime, FallbackValue=Header}" IsExpanded="False" >
                                     <local:JBuilder Data="{Binding Mode=OneTime}" Margin="5"/>
                                 </Expander>
                             </DataTemplate>
@@ -203,7 +203,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}" />
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}" />
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
                     <ComboBox Grid.Row="2" 
                               ItemsSource="{Binding Schema.Enum}" 
@@ -220,7 +220,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition />                        
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
                         <Button Content="Add"
@@ -264,7 +264,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
                     <ComboBox Grid.Row="2" 
                               ItemsSource="{Binding Value.Items, Mode=OneTime}" 
@@ -283,7 +283,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
                     <ItemsControl Grid.Row="2"  ItemsSource="{Binding Value.Items, Mode=OneTime}" Focusable="False" Margin="5" >
                         <ItemsControl.ItemTemplate>
@@ -316,7 +316,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
                         <Button Content="Add" Click="OnAddArrayObject" Tag="{Binding Mode=OneTime}" Style="{StaticResource FlatButton}" />
@@ -346,7 +346,7 @@
             
             <DataTemplate x:Key="Object">
                 <Grid Style="{StaticResource ContainerStyle}">
-                    <GroupBox Header="{Binding Key, Mode=OneTime, FallbackValue=Key}">
+                    <GroupBox Header="{Binding KeyTitle, Mode=OneTime}">
                         <Expander Header="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" IsExpanded="{Binding IsExpanded, Mode=OneWay}">
                             <Grid Style="{StaticResource ContainerStyle}">
                                 <Grid.RowDefinitions>
@@ -374,7 +374,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyObjectTextStyle}"/>
+                            <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyObjectTextStyle}"/>
                             <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                             <ComboBox Grid.Row="2" 
                                       ItemsSource="{Binding OriginalSchema.OneOf, Mode=OneTime}" 
@@ -396,7 +396,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyObjectTextStyle}"/>
+                            <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyObjectTextStyle}"/>
                             <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                             <local:JBuilder Grid.Row="2" Data="{Binding Value, Mode=OneWay}" Style="{StaticResource JValueStyle}"/>
                         </Grid>
@@ -431,7 +431,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneWay, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneWay}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <Label Grid.Row="2" Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=NULL}" Style="{StaticResource JValueStyle}" />
                 </Grid>
@@ -445,7 +445,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <TextBox Grid.Row="2" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource JValueStyle}" />
                 </Grid>
@@ -459,7 +459,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <xctk:IntegerUpDown Grid.Row="2" TextAlignment="Left"
                             Minimum="{Binding Schema.Minimum, Converter={StaticResource IntegerRangeConverter}, ConverterParameter=min}"
@@ -477,7 +477,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <xctk:DoubleUpDown Grid.Row="2" TextAlignment="Left"
 			                        Minimum="{Binding Schema.Minimum, Mode=OneTime, Converter={StaticResource NumberRangeConverter}, ConverterParameter=min}"
@@ -495,7 +495,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <controls:BindablePasswordBox Grid.Row="2" Password="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource JValueStyle}" />
                 </Grid>
@@ -508,7 +508,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <CheckBox Grid.Row="1" 
                               IsThreeState="False"
                               Content="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}"
@@ -525,7 +525,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <xctk:DateTimePicker Grid.Row="2"  Format="LongDate" 
                                          HorizontalAlignment="Left" 
@@ -543,7 +543,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <xctk:TimePicker Grid.Row="2" TextAlignment="Left" 
                                      HorizontalAlignment="Left" 
@@ -560,7 +560,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding Key, Mode=OneTime, FallbackValue=Key}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <xctk:DateTimePicker Grid.Row="2"  HorizontalAlignment="Left" 
                                      Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateTimeConverter}, FallbackValue=00:00}"

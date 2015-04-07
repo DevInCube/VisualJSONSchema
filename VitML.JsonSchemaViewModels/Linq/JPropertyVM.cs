@@ -44,6 +44,13 @@ namespace VitML.JsonVM.Linq
 
         /// <summary>Gets the property key. </summary>
         public string Key { get; private set; }
+        public string KeyTitle
+        {
+            get
+            {
+                return (Schema.Title ?? Key) ?? null;
+            }
+        }
 
         /// <summary>Gets the parent object. </summary>
         public JObjectVM Parent { get; private set; }
