@@ -405,7 +405,7 @@
             </DataTemplate>
             
             <DataTemplate x:Key="ObjectSimple">
-                <local:JBuilder Data="{Binding Mode=OneTime}" />
+                <local:JBuilder Data="{Binding Value, Mode=OneTime}" />
             </DataTemplate>
             
             <DataTemplate x:Key="Button">
