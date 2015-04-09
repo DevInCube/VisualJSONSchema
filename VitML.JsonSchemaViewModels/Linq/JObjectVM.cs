@@ -10,6 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using VitML.JsonVM.Common;
+using VitML.JsonVM;
 
 namespace VitML.JsonVM.Linq
 {
@@ -187,7 +188,7 @@ namespace VitML.JsonVM.Linq
                     if (token is JObject)
                         result[property.Key] = FromJson((JObject)token, pSchema);
                     else
-                        result[property.Key] = null;
+                        result[property.Key] = GetDefaultValue(pSchema);
                 }
                 else
                 {
@@ -204,34 +205,7 @@ namespace VitML.JsonVM.Linq
 
         private static object GetDefaultValue(JSchema sh)
         {
-            if (sh.Default != null)
-            {
-                if (sh.Default is JValue)
-                    return ((JValue)sh.Default).Value;
-                else
-                    return sh.Default;
-            }
-            if (sh.Enum.Count > 0)
-                return sh.Enum.First();
-            switch (sh.Type)
-            {
-                case (JSchemaType.Boolean):
-                    return new JValue(false);
-                case (JSchemaType.Number):
-                    return new JValue(0F);
-                case (JSchemaType.Integer):
-                    return new JValue(0);
-                case (JSchemaType.String):
-                    if (sh.Format == "date-time") return new DateTime();
-                    if (sh.Format == "date") return (new DateTime()).ToString("yyyy-MM-dd");
-                    if (sh.Format == "time") return new TimeSpan();
-                    if (sh.Format == "ipv4") return new JValue(IPAddress.None.ToString()); //@todo @test
-                    return new JValue(String.Empty);
-                case (JSchemaType.Null):
-                    return null;
-                default:
-                    return null;
-            }
+            return sh.GenerateData();            
         }
 
         protected override void OnSetSchema()
@@ -274,8 +248,8 @@ namespace VitML.JsonVM.Linq
                     obj[pair.Key] = ((JTokenVM)pair.Value).ToJToken();
                 else
                 {
-                    if (pair.Value is JValue)
-                        obj[pair.Key] = pair.Value as JValue;
+                    if (pair.Value is JToken)
+                        obj[pair.Key] = pair.Value as JToken;
                     else
                         obj[pair.Key] = new JValue(pair.Value);
                 }

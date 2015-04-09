@@ -5,11 +5,68 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using VitML.JsonVM.Linq;
 
 namespace VitML.JsonVM
 {
     public static class JSchemaExtension
     {
+
+        public static object GenerateData(this JSchema sh)
+        {
+            if (sh.Default != null)
+            {
+                if (sh.Default is JValue)
+                    return ((JValue)sh.Default).Value;
+                else
+                    return sh.Default;
+            }
+
+            if (sh.Enum.Count > 0)
+            {
+                return sh.Enum.First();
+            }
+
+            switch (sh.Type)
+            {
+                case (JSchemaType.Object):
+                    {
+                        return null;
+                        //@todo generate object
+                        JObjectVM objVM = new JObjectVM();
+                        JObject obj = new JObject();
+                        foreach (string req in sh.Required)
+                            obj.Add(new JProperty(req, sh.Properties[req].GenerateData()));
+
+                        objVM["Value"] = obj;
+                        objVM.Schema = sh;
+                        return objVM;
+                    }
+                case (JSchemaType.Array):
+                    return new JArray();
+                case (JSchemaType.Boolean):
+                    return new JValue(false);
+                case (JSchemaType.Number):
+                    return new JValue(0F);
+                case (JSchemaType.Integer):
+                    return new JValue(0);
+                case (JSchemaType.String):
+                    if (sh.Format == "date-time") return new DateTime();
+                    if (sh.Format == "date") return (new DateTime()).ToString("yyyy-MM-dd");
+                    if (sh.Format == "time") return new TimeSpan();
+                    if (sh.Format == "ipv4") return new JValue(IPAddress.None.ToString());
+                    if (sh.Format == "ipv6") return new JValue("::");
+                    if (sh.Format == "email") return new JValue("mail@mail");
+                    if (sh.Format == "uri") return new JValue("uri:");
+                    if (sh.Format == "hostname") return new JValue("host");
+                    return new JValue(String.Empty);
+                case (JSchemaType.Null):
+                    return null;
+                default:
+                    return null;
+            }
+        }
 
         public static bool HasFlag(this JSchemaType? nType, JSchemaType flag)
         {
