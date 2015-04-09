@@ -262,33 +262,6 @@ namespace VitML.JsonVM.ConsoleTest {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /* jshint proto: true */
-        ///
-        ////**
-        /// * jjv.js -- A javascript library to validate json input through a json-schema.
-        /// *
-        /// * Copyright (c) 2013 Alex Cornejo.
-        /// *
-        /// * Redistributable under a MIT-style open source license.
-        /// */
-        ///
-        ///(function () {
-        ///    var clone = function (obj) {
-        ///        // Handle the 3 simple types (string, number, function), and null or undefined
-        ///        if (obj === null || typeof obj !== &apos;object&apos;) return obj;
-        ///        var copy;
-        ///
-        ///        // Handle Date
-        ///        if (obj instanceof Date) {
-        ///   [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string jjv {
-            get {
-                return ResourceManager.GetString("jjv", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {
         ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
         ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/lpr#&quot;,

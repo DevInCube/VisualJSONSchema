@@ -46,6 +46,17 @@
 
     'properties':{
 
+		'cool' : {
+			title:'Test array',
+			description:'with different items schema and items count constraints',
+
+    		type:'array',
+    		items:[{type:'string'},{'type':'boolean'}],
+    		additionalItems:{'type':'integer'},
+    		maxItems:4,
+    		minItems:1,
+    	},
+
 		'label' : {
 			'title':'',			
 			'description':'This is just a description\r\n of label without title',

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace VitML.JsonVM.ConsoleTest
@@ -16,25 +17,39 @@ namespace VitML.JsonVM.ConsoleTest
         {
 
             string shStr = @"{
+    'id' : 'http://valid.com/#',
     'definitions' : {
         'test' : {
+            '$schema' : 'http://json-schema.org/draft-04/schema#',
             'type' : 'string',
         }
     },
     'type':'object',
     'properties': {
-        'foo': {'type': 'string'}
+        'foo': {
+            'id' : 'id2',
+            'type': 'string',
+            'pattern':'',
+        },
+        'foo2': {
+            'type': 'array',
+            'minItems' : -1,
+        }
     },
-    'additionalProperties': false,    
-    'oneOf' : [{'$ref':'#/definitions/test'}],
+    'patternProperties' : {
+        '' : {}
+    },
+    'additionalProperties': true
 }";        
-            var sh1 = JSchema.Parse(shStr);
+            var sh1 = JSchema.Parse(shStr);            
+            JObject obj = JObject.Parse("{ 'foo':'ok'}");
+            var isValid = obj.IsValid(sh1);
             var sh2 = JSchema.Parse(@"
 {
     'type' : ['string','integer'],
 }
 ");
-            var valid = JValue.Parse("'dsdf'").IsValid(sh2 );
+            var valid = JValue.Parse("'dsdf'").IsValid(sh2);
             return;
             JSchemaPreloadedResolver res = new JSchemaPreloadedResolver();
             var r = JSchema.Parse(@"{

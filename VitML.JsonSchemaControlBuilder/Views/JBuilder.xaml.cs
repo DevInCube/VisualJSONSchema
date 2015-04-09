@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VitML.JsonVM.Linq;
+using VitML.JsonVM;
 
 namespace VitML.JsonSchemaControlBuilder.Views
 {
@@ -51,18 +52,18 @@ namespace VitML.JsonSchemaControlBuilder.Views
         private void OnAddArrayObject(object sender, RoutedEventArgs e)
         {
             var property = (JPropertyVM)((Button)sender).Tag;
-
+            
             if (property.Value == null)
                 property.Value = new ObservableCollection<JTokenVM>();
 
             var list = (property.Value as JArrayVM).Items;
 
-            //@todo
-            var schema = 
-                property.Schema.ItemsArray.Count > 0 
-                ? property.Schema.ItemsArray.First()
-                : property.Schema.ItemsSchema;
+            if (property.Schema.MaxItems != null)
+                if (list.Count >= property.Schema.MaxItems)
+                    return;
 
+            var schema = property.Schema.GetItemSchemaByIndex(list.Count);
+              
             var obj = JObjectVM.FromSchema(schema);
             obj.ParentList = list;
 
@@ -71,7 +72,8 @@ namespace VitML.JsonSchemaControlBuilder.Views
 
         private void OnRemoveArrayObject(object sender, RoutedEventArgs e)
         {
-            var obj = (JTokenVM)((Button)sender).Tag;
+            JTokenVM obj = (JTokenVM)((Button)sender).Tag;
+
             obj.ParentList.Remove(obj);
         }
 

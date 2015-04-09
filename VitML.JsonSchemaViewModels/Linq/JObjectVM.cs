@@ -10,7 +10,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using VitML.JsonVM.Common;
-using VitML.JsonVM.Extensions;
 
 namespace VitML.JsonVM.Linq
 {
@@ -148,20 +147,28 @@ namespace VitML.JsonVM.Linq
             var result = new JObjectVM();
             foreach (var property in schema.Properties)
             {
-                if (property.Value.Type.HasFlag(JSchemaType.Array))
+                JSchema pSchema = property.Value;
+                if (pSchema.Type.HasFlag(JSchemaType.Array))
                 {
-                    var propertySchema =
-                        property.Value.ItemsArray.Count == 0
-                        ? property.Value.ItemsSchema
-                        : property.Value.ItemsArray.First();//@todo
                     var value = obj[property.Key];
                     List<JTokenVM> list = null;
                     if (value != null)
                     {
-                        var objects = value.Select(o => o is JObject ?
-                            (JTokenVM)JObjectVM.FromJson((JObject)o, propertySchema) 
-                            : JValueVM.FromJson((JValue)o, CheckSchema(propertySchema, o))
-                        );
+                        var objects = new List<JTokenVM>();
+
+                        int index = 0;
+                        foreach (var item in value)
+                        {
+                            var propertySchema = pSchema.GetItemSchemaByIndex(index);
+
+                            JTokenVM itemVM;
+                            if (item is JObject)
+                                itemVM = (JTokenVM)JObjectVM.FromJson((JObject)item, propertySchema);
+                            else
+                                itemVM = JValueVM.FromJson((JValue)item, CheckSchema(propertySchema, item));
+                            objects.Add(itemVM);
+                            index++;
+                        }
 
                         list = new List<JTokenVM>(objects);
                     }
@@ -174,11 +181,11 @@ namespace VitML.JsonVM.Linq
                     foreach (var item in list)
                         array.Items.Add(item);
                 }
-                else if (property.Value.Type.HasFlag(JSchemaType.Object))
+                else if (pSchema.Type.HasFlag(JSchemaType.Object))
                 {
                     var token = obj[property.Key];
                     if (token is JObject)
-                        result[property.Key] = FromJson((JObject)token, property.Value);
+                        result[property.Key] = FromJson((JObject)token, pSchema);
                     else
                         result[property.Key] = null;
                 }
@@ -188,7 +195,7 @@ namespace VitML.JsonVM.Linq
                     if (obj.TryGetValue(property.Key, out value))
                         result[property.Key] = (JValue)value;
                     else
-                        result[property.Key] = GetDefaultValue(property.Value);
+                        result[property.Key] = GetDefaultValue(pSchema);
                 }
             }
             result.Schema = schema;
@@ -237,13 +244,13 @@ namespace VitML.JsonVM.Linq
                     var property = new JPropertyVM(propertyInfo.Key, this, propertyInfo.Value);
                     if (property.Value is JArrayVM)
                     {
-                        foreach (var obj in ((JArrayVM)property.Value).Items)
+                        JArrayVM arrayVM = property.Value as JArrayVM;
+
+                        int index = 0;
+                        foreach (var obj in arrayVM.Items)
                         {
-                            var propertySchema =
-                                propertyInfo.Value.ItemsArray.Count == 0
-                                ? propertyInfo.Value.ItemsSchema
-                                : propertyInfo.Value.ItemsArray.First();
-                            obj.Schema = CheckSchema(propertySchema, null); //here i use only first schema
+                            var propertySchema = propertyInfo.Value.GetItemSchemaByIndex(index++);                            
+                            obj.Schema = CheckSchema(propertySchema, null);
                         }
                     }
                     _Properties.Add(property);

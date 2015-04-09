@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VitML.JsonVM.Extensions
+namespace VitML.JsonVM
 {
     public static class JSchemaExtension
     {
@@ -96,6 +96,26 @@ namespace VitML.JsonVM.Extensions
                 }
             }
             return "Value";
+        }
+
+        public static JSchema GetItemSchemaByIndex(this JSchema pSchema, int index)
+        {
+            if (index < 0) throw new IndexOutOfRangeException();
+
+            int itemsCount = pSchema.ItemsArray.Count;
+            JSchema propertySchema;
+            if (itemsCount == 0)
+            {
+                propertySchema = pSchema.ItemsSchema;
+            }
+            else
+            {
+                if (index < itemsCount)
+                    propertySchema = pSchema.ItemsArray[index];
+                else
+                    propertySchema = pSchema.AdditionalItems;
+            }
+            return propertySchema;
         }
     }
 }

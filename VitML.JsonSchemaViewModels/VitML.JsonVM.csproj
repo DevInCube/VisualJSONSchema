@@ -53,7 +53,7 @@
     <Compile Include="Common\JSchemaEx.cs" />
     <Compile Include="Common\JSchemaLinker.cs" />
     <Compile Include="Common\PropertyStyle.cs" />
-    <Compile Include="Entensions\JSchemaExtension.cs" />
+    <Compile Include="JSchemaExtension.cs" />
     <Compile Include="Linq\IStyleDecorator.cs" />
     <Compile Include="Linq\JArrayVM.cs" />
     <Compile Include="Linq\JObjectVM.cs" />

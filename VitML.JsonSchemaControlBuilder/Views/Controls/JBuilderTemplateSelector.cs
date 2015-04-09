@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Controls;
 using VitML.JsonSchemaControlBuilder;
 using VitML.JsonVM.Linq;
-using VitML.JsonVM.Extensions;
 
 namespace MyVisualJSONEditor.Views.Controls
 {

@@ -7,7 +7,6 @@ using System.Text;
 using System.Windows.Input;
 using VitML.JsonVM.Common;
 using VitML.JsonVM.ViewModels;
-using VitML.JsonVM.Extensions;
 
 namespace VitML.JsonVM.Linq
 {
