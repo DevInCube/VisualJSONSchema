@@ -52,14 +52,11 @@ namespace VitML.JsonSchemaControlBuilder.Views
         private void OnAddArrayObject(object sender, RoutedEventArgs e)
         {
             var property = (JPropertyVM)((Button)sender).Tag;
-
-
+            
             if (property.Value == null)
-                property.Value = JObjectVM.FromSchema(property.Schema);
+                property.Value = new ObservableCollection<JTokenVM>();
 
-            JArrayVM arrayVM = property.Value as JArrayVM;
-
-            var list = arrayVM.Items;
+            var list = (property.Value as JArrayVM).Items;
 
             if (property.Schema.MaxItems != null)
                 if (list.Count >= property.Schema.MaxItems)
