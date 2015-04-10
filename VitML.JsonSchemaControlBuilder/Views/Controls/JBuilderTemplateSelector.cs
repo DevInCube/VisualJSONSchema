@@ -1,5 +1,4 @@
-﻿using MyVisualJSONEditor.Views.Templates;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using My.Json.Schema;
 using System;
 using System.Collections.Generic;

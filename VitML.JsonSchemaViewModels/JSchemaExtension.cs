@@ -13,14 +13,15 @@ namespace VitML.JsonVM
     public static class JSchemaExtension
     {
 
-        public static object GenerateData(this JSchema sh)
+        public static JToken GenerateData(this JSchema sh)
         {
-            if (sh.Default != null)
+            var def = sh.Default;
+            if (def != null)
             {
-                if (sh.Default is JValue)
-                    return ((JValue)sh.Default).Value;
+                if (def is JToken)
+                    return def as JToken;             
                 else
-                    return sh.Default;
+                    return new JValue(def);
             }
 
             if (sh.Enum.Count > 0)
@@ -28,23 +29,52 @@ namespace VitML.JsonVM
                 return sh.Enum.First();
             }
 
+            if (sh.Type.HasFlag(JSchemaType.Null))
+                return JValue.CreateNull();
+
+            if (sh.OneOf.Count > 0)
+            {
+                JSchema first = sh.OneOf.First();
+                return first.GenerateData();
+            }
+
+            if (sh.AnyOf.Count > 0)
+            {
+                JSchema first = sh.AnyOf.First();
+                return first.GenerateData();
+            }
+
+            if (sh.AllOf.Count > 0)
+            {
+                JSchema composite = sh.MergeSchemaAllOf();
+                return composite.GenerateData();
+            }
+
             switch (sh.Type)
             {
                 case (JSchemaType.Object):
                     {
-                        return null;
-                        //@todo generate object
-                        JObjectVM objVM = new JObjectVM();
                         JObject obj = new JObject();
                         foreach (string req in sh.Required)
                             obj.Add(new JProperty(req, sh.Properties[req].GenerateData()));
-
-                        objVM["Value"] = obj;
-                        objVM.Schema = sh;
-                        return objVM;
+                        return obj;
                     }
                 case (JSchemaType.Array):
-                    return new JArray();
+                    {
+                        JArray arr = new JArray();
+                        if (sh.MinItems != null)
+                        {
+                            if (sh.ItemsSchema != null)
+                            {
+                                for (int i = 0; i < sh.MinItems; i++)
+                                    arr.Add(sh.ItemsSchema.GenerateData());
+                            }
+                            else if(sh.ItemsArray.Count > 0){
+
+                            }
+                        }
+                        return arr;
+                    }
                 case (JSchemaType.Boolean):
                     return new JValue(false);
                 case (JSchemaType.Number):
@@ -52,17 +82,17 @@ namespace VitML.JsonVM
                 case (JSchemaType.Integer):
                     return new JValue(0);
                 case (JSchemaType.String):
-                    if (sh.Format == "date-time") return new DateTime();
-                    if (sh.Format == "date") return (new DateTime()).ToString("yyyy-MM-dd");
-                    if (sh.Format == "time") return new TimeSpan();
+                    if (sh.Format == "date-time") return new JValue(new DateTime());
+                    if (sh.Format == "date") return new JValue((new DateTime()).ToString("yyyy-MM-dd"));
+                    if (sh.Format == "time") return new JValue(new TimeSpan());
                     if (sh.Format == "ipv4") return new JValue(IPAddress.None.ToString());
                     if (sh.Format == "ipv6") return new JValue("::");
                     if (sh.Format == "email") return new JValue("mail@mail");
                     if (sh.Format == "uri") return new JValue("uri:");
                     if (sh.Format == "hostname") return new JValue("host");
-                    return new JValue(String.Empty);
+                    return JValue.CreateString(String.Empty);
                 case (JSchemaType.Null):
-                    return null;
+                    return JValue.CreateNull();
                 default:
                     return null;
             }
@@ -89,13 +119,53 @@ namespace VitML.JsonVM
         }
 
         private static void Merge(JSchema parent, JSchema child)
-        {
+        {            
             foreach (var p in child.Properties)
                 if (!parent.Properties.ContainsKey(p.Key))
                     parent.Properties.Add(p);
             foreach (var r in child.Required)
                 if (!parent.Required.Contains(r))
                     parent.Required.Add(r);
+        }
+
+        private static JSchema MergeSchemas(JSchema f, JSchema s)
+        {
+            JSchema n = new JSchema();
+
+            n.Type = s.Type != JSchemaType.None ? s.Type : f.Type;
+
+            foreach (var p in s.Properties)
+                if (!f.Properties.ContainsKey(p.Key))
+                    f.Properties.Add(p);
+            foreach (var r in s.Required)
+                if (!f.Required.Contains(r))
+                    f.Required.Add(r);
+
+            n.Minimum = s.Minimum ?? f.Minimum;
+            n.Maximum = s.Maximum ?? f.Maximum;
+
+            n.MinLength = s.MinLength ?? f.MinLength;
+            n.MaxLength = s.MaxLength ?? f.MaxLength;
+
+            n.MinItems = s.MinItems ?? f.MinItems;
+            n.MaxItems = s.MaxItems ?? f.MaxItems;
+
+            n.MinProperties = s.MinProperties ?? f.MinProperties;
+            n.MaxProperties = s.MaxProperties ?? f.MaxProperties;            
+
+            n.Default = s.Default ?? f.Default;
+
+            //@todo other properties
+      
+            return n;
+        }
+
+        public static JSchema MergeSchemaAllOf(this JSchema schema)
+        {
+            JSchema newSchema = new JSchema();
+            foreach (var sh in schema.AllOf)
+                newSchema = MergeSchemas(newSchema, sh);
+            return newSchema;
         }
 
         public static void MergeAllOf(this JSchema schema)
@@ -129,12 +199,8 @@ namespace VitML.JsonVM
             if (data == null)
                 return null;
             foreach (var sh in schemas)
-            {
-                if (data.IsValid(sh))
-                {
+                if (data.IsValid(sh)) 
                     return sh;
-                }
-            }
             return null;
         }
 

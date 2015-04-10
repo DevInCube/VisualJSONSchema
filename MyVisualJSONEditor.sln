@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VitML.JsonVM", "VitML.JsonS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VitML.JsonVM.ConsoleTest", "VitML.JsonVM.ConsoleTest\VitML.JsonVM.ConsoleTest.csproj", "{93744515-2F7F-4709-9DBC-A505D8A4DA4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VitML.JsonVM.Tests", "VitML.JsonVM.Tests\VitML.JsonVM.Tests.csproj", "{AA4A0D3E-846D-4CCD-9DEE-E69373DB9860}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{93744515-2F7F-4709-9DBC-A505D8A4DA4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93744515-2F7F-4709-9DBC-A505D8A4DA4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93744515-2F7F-4709-9DBC-A505D8A4DA4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA4A0D3E-846D-4CCD-9DEE-E69373DB9860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA4A0D3E-846D-4CCD-9DEE-E69373DB9860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA4A0D3E-846D-4CCD-9DEE-E69373DB9860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA4A0D3E-846D-4CCD-9DEE-E69373DB9860}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

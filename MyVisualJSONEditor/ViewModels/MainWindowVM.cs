@@ -230,7 +230,7 @@ namespace MyVisualJSONEditor.ViewModels
             bool isValid = jdata.IsValid(JSchema, out validErrors);
             if (isValid)
             {
-                Data = JObjectVM.FromJson(jdata, JSchema);
+                Data = JObjectVM.FromJson(jdata, JSchema) as JObjectVM;
                 Data.PropertyChanged += (se, ar) =>
                 {
                     ShowResult();
