@@ -106,84 +106,51 @@ namespace VitML.JsonVM.Linq
 
         public static JTokenVM FromJson(JToken token, JSchema schema)
         {
-            if (token == null)
-                return null;
+            if (token == null) return JValueVM.FromJson(null, schema);
+
+            schema = CheckSchema(schema, token);
+
             switch (token.Type)
             {
                 case (JTokenType.Object):
                     {
                         JObject obj = token as JObject;
-                        schema = CheckSchema(schema, obj);
-                        var result = new JObjectVM();
+                        JObjectVM objVM = new JObjectVM(); 
+                  
                         foreach (var property in schema.Properties)
                         {
                             JSchema pSchema = property.Value;
-                            if (pSchema.Type.HasFlag(JSchemaType.Array))
-                            {
-                                var value = obj[property.Key];
-                                List<JTokenVM> list = null;
-                                if (value != null)
-                                {
-                                    var objects = new List<JTokenVM>();
+                            JToken pData;
+                            if (!obj.TryGetValue(property.Key, out pData))
+                                pData = pSchema.GenerateData();
 
-                                    int index = 0;
-                                    foreach (var item in value)
-                                    {
-                                        var propertySchema = pSchema.GetItemSchemaByIndex(index);
-
-                                        JTokenVM itemVM;
-                                        if (item is JObject)
-                                            itemVM = (JTokenVM)JObjectVM.FromJson((JObject)item, propertySchema);
-                                        else
-                                            itemVM = JValueVM.FromJson((JValue)item, CheckSchema(propertySchema, item));
-                                        objects.Add(itemVM);
-                                        index++;
-                                    }
-
-                                    list = new List<JTokenVM>(objects);
-                                }
-                                else
-                                {
-                                    list = new List<JTokenVM>();
-                                }
-                                JArrayVM array = new JArrayVM();
-                                result[property.Key] = array;
-                                foreach (var item in list)
-                                    array.Items.Add(item);
-                            }
-                            else if (pSchema.Type.HasFlag(JSchemaType.Object))
-                            {
-                                var tok = obj[property.Key];
-                                JObject jobject;
-                                if (tok is JObject)
-                                    jobject = tok as JObject;
-                                else
-                                    jobject = pSchema.GenerateData() as JObject;
-
-                                result[property.Key] = FromJson(jobject, pSchema);
-                            }
-                            else
-                            {
-                                JToken value;
-                                if (!obj.TryGetValue(property.Key, out value))
-                                    value = pSchema.GenerateData();
-                                result[property.Key] = value as JValue;
-                            }
+                            objVM[property.Key] = FromJson(pData, pSchema);
                         }
-                        result.Schema = schema;
-                        return result;
+
+                        objVM.Schema = schema;
+                        return objVM;
                     }
                 case (JTokenType.Array):
                     {
-                        throw new NotImplementedException();
+                        JArray array = token as JArray;
+                        JArrayVM arrayVM = new JArrayVM();
+                        
+                        for(int index = 0; index < array.Count; index++)
+                        {
+                            JSchema itemSchema = schema.GetItemSchemaByIndex(index);
+                            JToken item = array[index];
+                            if (item == null)
+                                item = itemSchema.GenerateData(); 
+
+                            arrayVM.Items.Add(FromJson(item, itemSchema));
+                        }
+
+                        arrayVM.Schema = schema;
+                        return arrayVM;
                     }
                 default:
-                    {
-                        JValue value = token as JValue;
-                        return new JValueVM() { 
-                            Value = value, 
-                            Schema = schema 
-                        };
+                    {                        
+                        return JValueVM.FromJson(token as JValue, schema);
                     }
             }
         }
@@ -215,8 +182,6 @@ namespace VitML.JsonVM.Linq
         /// <summary>Gets the object's properties. </summary>
         public IEnumerable<JPropertyVM> Properties { get { return _Properties; } }
 
-        /// <summary>Converts the <see cref="JsonTokenModel"/> to a <see cref="JToken"/>. </summary>
-        /// <returns>The <see cref="JToken"/>. </returns>
         public override JToken ToJToken()
         {
             var obj = new JObject();
@@ -224,6 +189,7 @@ namespace VitML.JsonVM.Linq
             {
                 bool ignore = Properties.FirstOrDefault(x => x.Key == pair.Key).Ignore;
                 if (ignore) continue;
+
                 if (pair.Value is JTokenVM)
                     obj[pair.Key] = ((JTokenVM)pair.Value).ToJToken();
                 else
@@ -239,97 +205,8 @@ namespace VitML.JsonVM.Linq
 
         public object GetValue(string path)
         {
-            StringBuilder nameBuffer = new StringBuilder();
-            string propName = null;
-            int index = 0;
-            bool hasIndexer = false;
-            object result = null;
-            JTokenVM obj = this;
-            for (int pos = 0; pos <= path.Length; pos++)
-            {
-                bool isEOF = pos == path.Length;
-                char ch =(char)0;
-                if(!isEOF)
-                    ch = path[pos];
-                if (isEOF || ch == '.')
-                {
-                    propName = nameBuffer.ToString();
-                    nameBuffer.Clear();
-                    if (obj is JArrayVM)
-                    {
-                        throw new Exception("illegal array call");
-                    }
-                    else if (obj is JObjectVM)
-                    {
-                        JPropertyVM prop = (obj as JObjectVM).Properties.FirstOrDefault(x => x.Key == propName);
-                        if (!hasIndexer)
-                        {
-                            if (isEOF)
-                                result = prop;
-                            else
-                                obj = prop.Value as JTokenVM;
-                        }
-                        else
-                        {
-                            hasIndexer = false;
-                            obj = prop.Value as JTokenVM;
-                            if (obj is JArrayVM)
-                            {
-                                object value = (obj as JArrayVM).Data[index];
-                                if (isEOF)
-                                    result = value;
-                                else
-                                {
-                                    if (value is JTokenVM)
-                                        obj = value as JTokenVM;
-                                    else
-                                        throw new Exception("is not a JTokenVM item but a " + value.GetType());
-                                }
-                            }
-                            else
-                            {
-                                throw new Exception("cant call indexer on JObjectVM");
-                            }
-                        }
-                    }
-                    continue;
-                }
-                else if (ch == '[')
-                {
-                    index = ReadIntIndexer(path, pos + 1, ref pos);
-                    hasIndexer = true;
-                    continue;
-                }
-                nameBuffer.Append(ch);
-            }
-            return result;
-        }
-
-        private int ReadIntIndexer(string path, int startPos, ref int endPos)
-        {
-            StringBuilder buffer = new StringBuilder();
-            for (int pos = startPos; pos < path.Length; pos++)
-            {
-                char ch = path[pos];
-                bool isLastChar = pos == path.Length - 1;
-                if (ch == ']' || isLastChar)
-                {
-                    string index = buffer.ToString();
-                    buffer.Clear();
-                    int indexInt = 0;
-                    if (int.TryParse(index, out indexInt))
-                    {
-                        endPos = pos;
-                        return indexInt;
-                    }
-                    else
-                    {
-                        throw new NotImplementedException("Path dict not supperted");
-                    }
-                }
-                buffer.Append(ch);
-            }
-            throw new Exception("unclosed indexer");
+            var reader = new JTokenVMPathReader(this);
+            return reader.GetValue(path);
         }
 
         public JType GetValue<JType>(string path)

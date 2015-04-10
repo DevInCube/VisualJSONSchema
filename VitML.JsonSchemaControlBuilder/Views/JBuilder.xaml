@@ -325,7 +325,7 @@
                                     VerticalAlignment="Center"/>
                     </StackPanel>
                     <ListBox        Grid.Row="3"
-                                    ItemsSource="{Binding Value.Items, Mode=OneTime}"
+                                    ItemsSource="{Binding Value.Items, Mode=OneWay}"
                                     ItemTemplate="{StaticResource ArrayItem}"
                                     VirtualizingPanel.IsVirtualizing="True"
                                     VirtualizingPanel.VirtualizationMode="Recycling"
@@ -416,7 +416,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <Button Grid.Row="1" HorizontalAlignment="Left"
-                            Content="{Binding Value, Mode=OneWay, FallbackValue=Value}"
+                            Content="{Binding Value.Value, Mode=OneWay, FallbackValue=Value}"
                             Command="{Binding Command, Mode=OneWay}"
                             Style="{StaticResource FlatButton}"/>
                 </Grid>
@@ -432,7 +432,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding KeyTitle, Mode=OneWay}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <Label Grid.Row="2" Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=NULL}" Style="{StaticResource JValueStyle}" />
+                    <Label Grid.Row="2" Content="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=NULL}" Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>            
             
@@ -446,7 +446,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <TextBox Grid.Row="2" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource JValueStyle}" />
+                    <TextBox Grid.Row="2" Text="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
             
@@ -463,7 +463,7 @@
                     <xctk:IntegerUpDown Grid.Row="2" TextAlignment="Left"
                             Minimum="{Binding Schema.Minimum, Converter={StaticResource IntegerRangeConverter}, ConverterParameter=min}"
                             Maximum="{Binding Schema.Maximum, Converter={StaticResource IntegerRangeConverter}, ConverterParameter=max}"
-                            Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntegerConverter}}" 
+                            Text="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntegerConverter}}" 
                             Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
@@ -481,7 +481,7 @@
                     <xctk:DoubleUpDown Grid.Row="2" TextAlignment="Left"
 			                        Minimum="{Binding Schema.Minimum, Mode=OneTime, Converter={StaticResource NumberRangeConverter}, ConverterParameter=min}"
 			                        Maximum="{Binding Schema.Maximum, Mode=OneTime, Converter={StaticResource NumberRangeConverter}, ConverterParameter=max}"
-			                        Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NumberConverter}}" 
+			                        Text="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NumberConverter}}" 
                                     Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
@@ -496,7 +496,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <controls:BindablePasswordBox Grid.Row="2" Password="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource JValueStyle}" />
+                    <controls:BindablePasswordBox Grid.Row="2" Password="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
             
@@ -511,7 +511,7 @@
                     <CheckBox Grid.Row="1" 
                               IsThreeState="False"
                               Content="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}"
-                              IsChecked="{Binding Value, Mode=TwoWay, FallbackValue=false}" 
+                              IsChecked="{Binding Value.Value, Mode=TwoWay, FallbackValue=false}" 
                               Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
@@ -529,7 +529,7 @@
                     <xctk:DateTimePicker Grid.Row="2"  Format="LongDate" 
                                          HorizontalAlignment="Left" 
                                          TimePickerVisibility="Collapsed" TimeFormat="Custom" AutoCloseCalendar="True"
-                                         Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter},FallbackValue=00:00:00}"
+                                         Value="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter},FallbackValue=00:00:00}"
                                          Style="{StaticResource JValueStyle}"/>
                 </Grid>
             </DataTemplate>
@@ -546,7 +546,7 @@
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <xctk:TimePicker Grid.Row="2" TextAlignment="Left" 
                                      HorizontalAlignment="Left" 
-                                     Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TimeConverter},FallbackValue=00:00:00}"
+                                     Value="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TimeConverter},FallbackValue=00:00:00}"
                                      Style="{StaticResource JValueStyle}"/>
                 </Grid>
             </DataTemplate>
@@ -562,7 +562,7 @@
                     <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                     <xctk:DateTimePicker Grid.Row="2"  HorizontalAlignment="Left" 
-                                     Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateTimeConverter}, FallbackValue=00:00}"
+                                     Value="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateTimeConverter}, FallbackValue=00:00}"
                                      Style="{StaticResource JValueStyle}"/>
                 </Grid>
             </DataTemplate>            
