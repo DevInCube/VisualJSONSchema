@@ -108,6 +108,9 @@ namespace VitML.JsonVM.Linq
         {
             if (token == null)
                 return null;
+
+            schema = CheckSchema(schema, token);
+
             switch (token.Type)
             {
                 case (JTokenType.Object):
@@ -122,52 +125,29 @@ namespace VitML.JsonVM.Linq
                             if (pData == null)
                                 pData = pSchema.GenerateData();
                              
-                            if (pSchema.Type.HasFlag(JSchemaType.Array))
-                            {
-                                JArray array = pData as JArray;
-                                JArrayVM arrayVM = new JArrayVM();
-
-                                int index = 0;
-                                for (int i = 0; i < array.Count; i++)
-                                {
-                                    JToken item = array[i];
-                                    var propertySchema = pSchema.GetItemSchemaByIndex(index);
-
-                                    JTokenVM itemVM;
-                                    if (item is JObject)
-                                        itemVM = (JTokenVM)JObjectVM.FromJson((JObject)item, propertySchema);
-                                    else
-                                        itemVM = JValueVM.FromJson((JValue)item, CheckSchema(propertySchema, item));
-                                    arrayVM.Items.Add(itemVM);
-                                }
-  
-                                result[property.Key] = arrayVM;
-                            }
-                            else if (pSchema.Type.HasFlag(JSchemaType.Object))
-                            {
-                                var tok = obj[property.Key];
-                                JObject jobject;
-                                if (tok is JObject)
-                                    jobject = tok as JObject;
-                                else
-                                    jobject = pSchema.GenerateData() as JObject;
-
-                                result[property.Key] = FromJson(jobject, pSchema);
-                            }
+                            if (pSchema.Type.HasFlag(JSchemaType.Array)
+                                || pSchema.Type.HasFlag(JSchemaType.Object))
+                                result[property.Key] = FromJson(pData, pSchema);
                             else
-                            {
-                                JToken value;
-                                if (!obj.TryGetValue(property.Key, out value))
-                                    value = pSchema.GenerateData();
-                                result[property.Key] = value as JValue;
-                            }
+                                result[property.Key] = pData as JValue;
                         }
                         result.Schema = schema;
                         return result;
                     }
                 case (JTokenType.Array):
                     {
-                        throw new NotImplementedException();
+                        JArray array = token as JArray;
+                        JArrayVM arrayVM = new JArrayVM();
+
+                        int index = 0;
+                        for (int i = 0; i < array.Count; i++)
+                        {
+                            JToken item = array[i];
+                            var propertySchema = schema.GetItemSchemaByIndex(index);
+                            arrayVM.Items.Add(FromJson(item, propertySchema));
+                        }
+                        arrayVM.Schema = schema;
+                        return arrayVM;
                     }
                 default:
                     {
