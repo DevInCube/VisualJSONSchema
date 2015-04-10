@@ -127,7 +127,29 @@
 			'ignore' : 'true',
 			'default' : 'Action',
 			'description' : "Button to perform action",
-        },		        
+        },		       
+		
+		'unreq_object' : {
+
+			type : [ 'object', 'null'],
+
+			title : 'Unrequired Object',
+			description : 'This is the unrequired object description',
+
+			'properties' : {
+				'bool1' : {
+					'type':'boolean'
+				},
+				'string2' : {
+					'type':'string'
+				},
+			},
+			'default':{
+				'bool1' : true, 
+				string2 : 'default'
+			},
+			required : ['bool1', 'string2'],
+		}, 
 
 		'object' : {
 

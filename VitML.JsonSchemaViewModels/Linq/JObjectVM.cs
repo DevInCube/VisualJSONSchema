@@ -68,6 +68,7 @@ namespace VitML.JsonVM.Linq
                     }
                 };
             }
+            this.OnPropertyChanged(name);
         }
 
         private static JSchema CheckSchema(JSchema schema, JToken data)
@@ -138,8 +139,7 @@ namespace VitML.JsonVM.Linq
                         JValue value = token as JValue;
                         return new JValueVM()
                         {
-                            Value = value,
-                            Schema = schema
+                            Value = value
                         };
                     }
             }
@@ -238,7 +238,7 @@ namespace VitML.JsonVM.Linq
             if (e.PropertyName.Equals(DisplayMemberPathPropertyName))
                 OnPropertyChanged("DisplayMemberPath");
         }
-       
+
     }
 
     class JsonDataImpl : IJsonData

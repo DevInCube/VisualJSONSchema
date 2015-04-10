@@ -345,22 +345,27 @@
             
             <DataTemplate x:Key="Object">
                 <Grid Style="{StaticResource ContainerStyle}">
-                    <GroupBox Header="{Binding KeyTitle, Mode=OneTime}">
-                        <Expander Header="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" IsExpanded="{Binding IsExpanded, Mode=OneWay}">
+                    <Border BorderBrush="LightGray" BorderThickness="2" Padding="5">
+
+                        <Expander Header="{Binding KeyTitle, Mode=OneTime, FallbackValue=KeyTitle}" IsExpanded="{Binding IsExpanded, Mode=OneWay}">
                             <Grid Style="{StaticResource ContainerStyle}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <CheckBox IsChecked="{Binding HasValue, Mode=OneWay}"
-                                        Margin="4,8,4,4" Content="{Binding}"
-                                        Checked="OnCreateObject" Unchecked="OnRemoveObject" Tag="{Binding Mode=OneTime}" />
-                                <local:JBuilder Grid.Row="1" Data="{Binding Value, Mode=OneTime}" />
+                                <TextBlock Grid.Row="0" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                                <CheckBox Grid.Row="1" IsChecked="{Binding HasValue, Mode=OneWay}"
+                                          Margin="4,8,4,4" Content="Specify value"
+                                          Checked="OnCreateObject" Unchecked="OnRemoveObject" 
+                                          Tag="{Binding Mode=OneTime}" />
+                                <local:JBuilder Grid.Row="2" Data="{Binding Value, Mode=OneWay}" />
                             </Grid>
                         </Expander>
-                    </GroupBox>
+                    </Border>
                 </Grid>
+              
             </DataTemplate>
 
             <DataTemplate x:Key="ObjectAlt">
@@ -565,7 +570,13 @@
                                      Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateTimeConverter}, FallbackValue=00:00}"
                                      Style="{StaticResource JValueStyle}"/>
                 </Grid>
-            </DataTemplate>            
+            </DataTemplate>
+
+            <DataTemplate x:Key="Null">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Label Content="NULL" Foreground="IndianRed"/>
+                </Grid>
+            </DataTemplate>
 
         </ContentPresenter.Resources>
         

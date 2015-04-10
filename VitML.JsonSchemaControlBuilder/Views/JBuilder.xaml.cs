@@ -85,7 +85,9 @@ namespace VitML.JsonSchemaControlBuilder.Views
                 if (property.Parent[property.Key] == null)
                 {
                     property.Parent[property.Key] = JObjectVM.FromSchema(property.Schema);
-                    //property.RaisePropertyChanged<JPropertyVM>(i => i.HasValue); //@todo
+
+                    property.RaisePropertyChanged("Value");
+                    property.RaisePropertyChanged("HasValue");
                 }
             }
         }
@@ -98,7 +100,9 @@ namespace VitML.JsonSchemaControlBuilder.Views
                 if (property.Parent.ContainsKey(property.Key) && property.Parent[property.Key] != null)
                 {
                     property.Parent[property.Key] = null;
-                    //property.RaisePropertyChanged<JPropertyVM>(i => i.HasValue); //@todo
+
+                    property.RaisePropertyChanged("Value");
+                    property.RaisePropertyChanged("HasValue");
                 }
             }
         }

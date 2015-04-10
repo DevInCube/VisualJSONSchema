@@ -174,5 +174,10 @@ namespace VitML.JsonVM.Linq
 
         #endregion Properties
 
+
+        public void RaisePropertyChanged(string p)
+        {
+            OnPropertyChanged(p);
+        }
     }
 }

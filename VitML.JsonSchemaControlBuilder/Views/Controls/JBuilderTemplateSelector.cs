@@ -47,8 +47,8 @@ namespace MyVisualJSONEditor.Views.Controls
                 expanded = ((JPropertyVM)item).IsExpanded;
             }
 
-            if (item is JValue && (item as JValue).Value == null)
-                return base.SelectTemplate(item, container);
+            if ((item is JValue && (item as JValue).Value == null) || schema == null)
+                return (DataTemplate)presenter.Resources["Null"];
 
             var type = schema.Type;
 
