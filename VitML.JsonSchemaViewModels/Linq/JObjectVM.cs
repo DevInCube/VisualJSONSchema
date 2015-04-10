@@ -118,38 +118,30 @@ namespace VitML.JsonVM.Linq
                         foreach (var property in schema.Properties)
                         {
                             JSchema pSchema = property.Value;
+                            JToken pData = obj[property.Key];
+                            if (pData == null)
+                                pData = pSchema.GenerateData();
+                             
                             if (pSchema.Type.HasFlag(JSchemaType.Array))
                             {
-                                var value = obj[property.Key];
-                                List<JTokenVM> list = null;
-                                if (value != null)
+                                JArray array = pData as JArray;
+                                JArrayVM arrayVM = new JArrayVM();
+
+                                int index = 0;
+                                for (int i = 0; i < array.Count; i++)
                                 {
-                                    var objects = new List<JTokenVM>();
+                                    JToken item = array[i];
+                                    var propertySchema = pSchema.GetItemSchemaByIndex(index);
 
-                                    int index = 0;
-                                    foreach (var item in value)
-                                    {
-                                        var propertySchema = pSchema.GetItemSchemaByIndex(index);
-
-                                        JTokenVM itemVM;
-                                        if (item is JObject)
-                                            itemVM = (JTokenVM)JObjectVM.FromJson((JObject)item, propertySchema);
-                                        else
-                                            itemVM = JValueVM.FromJson((JValue)item, CheckSchema(propertySchema, item));
-                                        objects.Add(itemVM);
-                                        index++;
-                                    }
-
-                                    list = new List<JTokenVM>(objects);
+                                    JTokenVM itemVM;
+                                    if (item is JObject)
+                                        itemVM = (JTokenVM)JObjectVM.FromJson((JObject)item, propertySchema);
+                                    else
+                                        itemVM = JValueVM.FromJson((JValue)item, CheckSchema(propertySchema, item));
+                                    arrayVM.Items.Add(itemVM);
                                 }
-                                else
-                                {
-                                    list = new List<JTokenVM>();
-                                }
-                                JArrayVM array = new JArrayVM();
-                                result[property.Key] = array;
-                                foreach (var item in list)
-                                    array.Items.Add(item);
+  
+                                result[property.Key] = arrayVM;
                             }
                             else if (pSchema.Type.HasFlag(JSchemaType.Object))
                             {
@@ -215,8 +207,6 @@ namespace VitML.JsonVM.Linq
         /// <summary>Gets the object's properties. </summary>
         public IEnumerable<JPropertyVM> Properties { get { return _Properties; } }
 
-        /// <summary>Converts the <see cref="JsonTokenModel"/> to a <see cref="JToken"/>. </summary>
-        /// <returns>The <see cref="JToken"/>. </returns>
         public override JToken ToJToken()
         {
             var obj = new JObject();

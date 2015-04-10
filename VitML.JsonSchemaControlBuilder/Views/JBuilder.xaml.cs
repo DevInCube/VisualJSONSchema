@@ -54,7 +54,7 @@ namespace VitML.JsonSchemaControlBuilder.Views
             var property = (JPropertyVM)((Button)sender).Tag;
             
             if (property.Value == null)
-                property.Value = new ObservableCollection<JTokenVM>();
+                property.Value = new JArrayVM() { Schema = property.Schema };
 
             var list = (property.Value as JArrayVM).Items;
 
