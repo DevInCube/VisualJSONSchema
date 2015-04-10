@@ -149,7 +149,7 @@ namespace VitML.JsonVM.Linq
             get
             {
                 var pair = Schema.ExtensionData.FirstOrDefault(x => x.Key == "DisplayMemberPath");
-                string path = "Value";
+                string path = "Value.Value";
                 if (!pair.Equals(default(KeyValuePair<string, JToken>)))
                     path += "." + pair.Value.ToString();
                 return path;
