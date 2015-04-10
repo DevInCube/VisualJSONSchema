@@ -70,13 +70,6 @@ namespace VitML.JsonVM.Linq
                                 }
                             };
                         }
-                        else if (value is JTokenVM)
-                        {
-                            (value as JTokenVM).PropertyChanged += (se1, ar1) =>
-                            {
-                                this.OnPropertyChanged(ar1.PropertyName);
-                            };
-                        }
                     }
                     
                 }
@@ -146,12 +139,10 @@ namespace VitML.JsonVM.Linq
                         {
                             JSchema itemSchema = schema.GetItemSchemaByIndex(index);
                             JToken item = array[index];
-
                             if (item == null)
                                 item = itemSchema.GenerateData(); 
 
-                            JTokenVM itemVM = FromJson(item, itemSchema);
-                            arrayVM.Items.Add(itemVM);
+                            arrayVM.Items.Add(FromJson(item, itemSchema));
                         }
 
                         arrayVM.Schema = schema;

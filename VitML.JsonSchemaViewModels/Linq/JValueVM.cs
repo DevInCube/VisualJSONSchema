@@ -25,7 +25,7 @@ namespace VitML.JsonVM.Linq
         public object Value
         {
             get { return ContainsKey("Value") ? this["Value"] : null; }
-            set { this["Value"] = value; OnPropertyChanged("Value"); }
+            set { this["Value"] = value; }
         }
 
         /// <summary>Converts the <see cref="JsonTokenModel"/> to a <see cref="JToken"/>. </summary>
