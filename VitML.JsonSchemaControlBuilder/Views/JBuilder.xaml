@@ -354,7 +354,7 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <CheckBox IsChecked="{Binding HasValue, Mode=OneWay}"
-                                        Margin="4,8,4,4" Content="Specify values" 
+                                        Margin="4,8,4,4" Content="{Binding}"
                                         Checked="OnCreateObject" Unchecked="OnRemoveObject" Tag="{Binding Mode=OneTime}" />
                                 <local:JBuilder Grid.Row="1" Data="{Binding Value, Mode=OneTime}" />
                             </Grid>

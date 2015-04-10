@@ -24,79 +24,62 @@ namespace VitML.JsonVM.Linq
     public class JObjectVM : JTokenVM
     {
 
-        private List<JPropertyVM> _Properties;
+        private IList<JPropertyVM> _Properties;
 
         public IJsonData Data { get; private set; }
+        public IList<JPropertyVM> Properties { get { return _Properties; } }
 
         public JObjectVM()
         {
             Data = new JsonDataImpl(this);
-            this.CollectionChanged += (se, ar) =>
+
+            this.PropertyChanged += JObjectVM_PropertyChanged;
+        }
+
+        protected override void OnDataChanged(string name, object value)
+        {
+            string key = name;
+            if (value is JObjectVM)
             {
-                if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add 
-                    || ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
+                var jobj = value as JObjectVM;
+                jobj.PropertyChanged += (se2, ar2) =>
                 {
-                    if (ar.NewItems[0] is KeyValuePair<string, object>)
+                    this.OnPropertyChanged(name + "." + ar2.PropertyName);
+                };
+            }
+            else if (value is JArrayVM)
+            {
+                var list = (value as JArrayVM).Items;
+                list.CollectionChanged += (se1, ar1) =>
+                {
+                    this.OnPropertyChanged(key);
+                    if (ar1.Action == NotifyCollectionChangedAction.Add
+                        || ar1.Action == NotifyCollectionChangedAction.Replace)
                     {
-                        var pair = (KeyValuePair<string, object>)ar.NewItems[0];
-                        string key = pair.Key;
-                        var value = pair.Value;
-                        if (value is JObjectVM)
+                        foreach (JTokenVM item in ar1.NewItems)
                         {
-                            var jobj = value as JObjectVM;
-                            jobj.PropertyChanged += (se2, ar2) =>
+                            item.PropertyChanged += (senderItem, e2) =>
                             {
-                                this.OnPropertyChanged(pair.Key + "." + ar2.PropertyName);
-                            };
-                        }
-                        else if (value is JArrayVM)
-                        {
-                            var list = (value as JArrayVM).Items;
-                            list.CollectionChanged += (se1, ar1) =>
-                            {
-                                this.OnPropertyChanged(key);
-                                if (ar1.Action == NotifyCollectionChangedAction.Add
-                                    || ar1.Action == NotifyCollectionChangedAction.Replace)
-                                {
-                                    foreach (JTokenVM item in ar1.NewItems)
-                                    {
-                                        item.PropertyChanged += (senderItem, e2) =>
-                                        {
-                                            int index = list.IndexOf(senderItem as JTokenVM);
-                                            string msg = String.Format("{0}[{1}].{2}", key, index, e2.PropertyName);
-                                            this.OnPropertyChanged(msg);
-                                        };
-                                    }
-                                }
+                                int index = list.IndexOf(senderItem as JTokenVM);
+                                string msg = String.Format("{0}[{1}].{2}", key, index, e2.PropertyName);
+                                this.OnPropertyChanged(msg);
                             };
                         }
                     }
-                    
-                }
-            };
-            this.PropertyChanged += JObjectVM_PropertyChanged;
+                };
+            }
         }
 
         private static JSchema CheckSchema(JSchema schema, JToken data)
         {
             if (schema.OneOf.Count > 0)
-            {
-                schema.ChooseOneOf(data);
-                return schema;
-            }
+                return schema.OneOf.Choose(data);
             else if(schema.AllOf.Count > 0) 
-            {
-                schema.MergeAllOf();
-                return schema;
-            }
+                return schema.MergeSchemaAllOf();
             else if (schema.AnyOf.Count > 0)
-            {
-                throw new NotImplementedException("AnyOf");
-            }
+                return schema.AnyOf.Choose(data);                
             else
-            {
                 return schema;
-            }
         }
 
         public static JTokenVM FromSchema(JSchema Schema)
@@ -116,23 +99,24 @@ namespace VitML.JsonVM.Linq
                 case (JTokenType.Object):
                     {
                         JObject obj = token as JObject;
+                        JObjectVM objectVM = new JObjectVM();
+
                         schema = CheckSchema(schema, obj);
-                        var result = new JObjectVM();
                         foreach (var property in schema.Properties)
                         {
                             JSchema pSchema = property.Value;
                             JToken pData = obj[property.Key];
                             if (pData == null)
-                                pData = pSchema.GenerateData();
-                             
+                                pData = pSchema.GenerateData();                             
+
                             if (pSchema.Type.HasFlag(JSchemaType.Array)
                                 || pSchema.Type.HasFlag(JSchemaType.Object))
-                                result[property.Key] = FromJson(pData, pSchema);
+                                objectVM[property.Key] = FromJson(pData, pSchema);
                             else
-                                result[property.Key] = pData as JValue;
+                                objectVM[property.Key] = pData as JValue;
                         }
-                        result.Schema = schema;
-                        return result;
+                        objectVM.Schema = schema;
+                        return objectVM;
                     }
                 case (JTokenType.Array):
                     {
@@ -152,9 +136,10 @@ namespace VitML.JsonVM.Linq
                 default:
                     {
                         JValue value = token as JValue;
-                        return new JValueVM() { 
-                            Value = value, 
-                            Schema = schema 
+                        return new JValueVM()
+                        {
+                            Value = value,
+                            Schema = schema
                         };
                     }
             }
@@ -183,9 +168,6 @@ namespace VitML.JsonVM.Linq
                 }
             }
         }
-
-        /// <summary>Gets the object's properties. </summary>
-        public IEnumerable<JPropertyVM> Properties { get { return _Properties; } }
 
         public override JToken ToJToken()
         {
@@ -242,7 +224,9 @@ namespace VitML.JsonVM.Linq
             return GetValue(name) as JPropertyVM;
         }
 
-        public string DisplayMemberPathPropertyName { get { return this.Schema.GetDisplayMemberPath(); } }
+        public string DisplayMemberPathPropertyName { 
+            get { return this.Schema.GetDisplayMemberPath(); } 
+        }
 
         public object DisplayMemberPath
         {

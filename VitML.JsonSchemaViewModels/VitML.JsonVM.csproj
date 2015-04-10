@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\PropertyStyle.cs" />
+    <Compile Include="JDataChangedEventArgs.cs" />
+    <Compile Include="JDataChangedEventHandler.cs" />
     <Compile Include="JPathReader.cs" />
     <Compile Include="JSchemaExtension.cs" />
     <Compile Include="Linq\IStyleDecorator.cs" />

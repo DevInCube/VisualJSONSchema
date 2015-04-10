@@ -168,30 +168,13 @@ namespace VitML.JsonVM
             return newSchema;
         }
 
-        public static void MergeAllOf(this JSchema schema)
+        public static JSchema Choose(this IList<JSchema> shList, JToken data)
         {
-            foreach (var sh in schema.AllOf)
-                Merge(schema, sh);
-            schema.AllOf.Clear();
-        }
-
-        public static void ChooseOneOf(this JSchema schema, JToken data)
-        {
-            if (schema.OneOf.Count == 1)
-                Merge(schema, schema.OneOf.First());
-            else
-            {
-                if (data == null) 
-                    return;
-                foreach (var sh in schema.OneOf)
-                {
-                    if(data.IsValid(sh))
-                    {
-                        Merge(schema, sh);
-                        return;
-                    }
-                }
-            }
+            if (data == null) throw new ArgumentNullException("data is null");
+            foreach (var sh in shList)
+                if (data.IsValid(sh))
+                    return sh;
+            throw new Exception("data is not valid against anyOf");
         }
 
         public static JSchema MatchData(this IList<JSchema> schemas, JToken data)

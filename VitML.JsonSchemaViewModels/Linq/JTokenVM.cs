@@ -26,10 +26,30 @@ namespace VitML.JsonVM.Linq
         /// <summary>Gets or sets the parent list if applicable (may be null). </summary>
         public ObservableCollection<JTokenVM> ParentList { get; set; }
 
+        public event JDataChangedEventHandler DataChanged;
+
         public JTokenVM()
         {
             //ParentList = new ObservableCollection<JTokenVM>();
+
+            this.CollectionChanged += (se, ar) =>
+            {                
+                if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add
+                    || ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
+                {
+                    if (ar.NewItems[0] is KeyValuePair<string, object>)
+                    {
+                        var pair = (KeyValuePair<string, object>)ar.NewItems[0];
+                        OnDataChanged(pair.Key, pair.Value);
+                        var handler = DataChanged;
+                        if (handler != null)
+                            handler.Invoke(this, new JDataChangedEventArgs(pair.Key, pair.Value));
+                    }
+                }
+            };
         }
+
+        protected virtual void OnDataChanged(string name, object value) { }
 
         protected virtual void OnSetSchema() { }
 
