@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\PropertyStyle.cs" />
+    <Compile Include="JPathReader.cs" />
     <Compile Include="JSchemaExtension.cs" />
     <Compile Include="Linq\IStyleDecorator.cs" />
     <Compile Include="Linq\JArrayVM.cs" />
