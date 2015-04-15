@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using VitML.JsonVM.Linq;
+using VitML.JsonVM.Schema;
 
 namespace VitML.JsonVM
 {
@@ -202,6 +203,14 @@ namespace VitML.JsonVM
                 }
             }
             return "Value";
+        }
+
+        public static bool GetIgnore(this JSchema sh)
+        {
+            var ext = sh.GetExtension(JSchemaExtendedKeywords.Ignore);
+            if (ext != null)
+                return bool.Parse(ext.ToString());
+            return false;
         }
 
         public static JSchema GetItemSchemaByIndex(this JSchema pSchema, int index)

@@ -31,7 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="My.Json.Schema">
+    <Reference Include="My.Json.Schema, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\VIT.Projects\My.Json.Schema\My.Json.Schema\bin\Debug\My.Json.Schema.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
@@ -55,13 +56,13 @@
     <Compile Include="JDataChangedEventHandler.cs" />
     <Compile Include="JPathReader.cs" />
     <Compile Include="JSchemaExtension.cs" />
-    <Compile Include="Linq\IStyleDecorator.cs" />
     <Compile Include="Linq\JArrayVM.cs" />
     <Compile Include="Linq\JObjectVM.cs" />
     <Compile Include="Linq\JPropertyVM.cs" />
     <Compile Include="Linq\JTokenVM.cs" />
     <Compile Include="Linq\JValueVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schema\JSchemaExtendedKeyword.cs" />
     <Compile Include="ViewModels\ObservableDictionary.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
   </ItemGroup>

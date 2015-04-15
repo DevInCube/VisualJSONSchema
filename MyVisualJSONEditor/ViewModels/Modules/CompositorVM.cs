@@ -40,7 +40,7 @@ namespace MyVisualJSONEditor.ViewModels
                     {
                         name = selected["Name"].ToString();
                     }
-                    vm.Data["Source.MasterName"] = name;
+                    //vm.Data["Source.MasterName"] = name;
                 });
             }
             sources.Items.CollectionChanged += Items_CollectionChanged;

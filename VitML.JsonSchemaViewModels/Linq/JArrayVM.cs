@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using My.Json.Schema;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace VitML.JsonVM.Linq
 {
 
-    public interface IJsonArray : IList<object>
+    public interface IJsonArray : IList<JToken>
     {
         //
     }
@@ -20,7 +21,8 @@ namespace VitML.JsonVM.Linq
 
         public IJsonArray Data { get; private set; }
 
-        public JArrayVM()
+        public JArrayVM(JSchema schema, JToken data)
+            : base(schema, data)
         {
             this.Data = new JsonArrayImpl(this);
             this.Items = new ObservableCollection<JTokenVM>();
@@ -109,33 +111,29 @@ namespace VitML.JsonVM.Linq
             this.vm = vm;
         }
 
-        private JTokenVM CreateItem(object item)
+        private JTokenVM CreateItem(JSchema schema, JToken item)
         {
-            JTokenVM val = null;
-            if (item is JTokenVM)
-                val = item as JTokenVM;
-            else
-                val = new JValueVM() { Value = item };
+            JTokenVM val = new JValueVM(schema, item);           
             val.ParentList = vm.Items;
             return val;
         }
 
-        private JTokenVM GetItem(object item)
+        private JTokenVM GetItem(JToken item)
         {
             return vm.Items.FirstOrDefault(x => x["Value"] == item);
         }
 
-        public int IndexOf(object item)
+        public int IndexOf(JToken item)
         {
             var it = GetItem(item);
             if (it == null) return -1;
             return vm.Items.IndexOf(it);
         }
 
-        public void Insert(int index, object item)
+        public void Insert(int index, JToken item)
         {
-
-            vm.Items.Insert(index, CreateItem(item));
+            var schema = vm.Schema.GetItemSchemaByIndex(index);
+            vm.Items.Insert(index, CreateItem(schema, item));
         }
 
         public void RemoveAt(int index)
@@ -143,25 +141,24 @@ namespace VitML.JsonVM.Linq
             vm.Items.RemoveAt(index);
         }
 
-        public object this[int index]
+        public JToken this[int index]
         {
             get
             {
-                var item = vm.Items[index];
-                if (item is JValueVM)
-                    return vm.Items[index]["Value"];
-                else
-                    return item;
+                return vm.Items[index].Data;                
             }
             set
             {
-                vm.Items[index]["Value"] = value;
+                //vm.Items[index].Data = value;
             }
         }
 
-        public void Add(object item)
+        public void Add(JToken item)
         {
-            vm.Items.Add(CreateItem(item));
+            int index = vm.Items.Count;
+            var schema = vm.Schema.GetItemSchemaByIndex(index);
+
+            vm.Items.Add(CreateItem(schema, item));
         }
 
         public void Clear()
@@ -169,12 +166,12 @@ namespace VitML.JsonVM.Linq
             vm.Items.Clear();
         }
 
-        public bool Contains(object item)
+        public bool Contains(JToken item)
         {
             return GetItem(item) != null;
         }
 
-        public void CopyTo(object[] array, int arrayIndex)
+        public void CopyTo(JToken[] array, int arrayIndex)
         {
             throw new NotImplementedException();
         }
@@ -189,17 +186,17 @@ namespace VitML.JsonVM.Linq
             get { return false; }
         }
 
-        public bool Remove(object item)
+        public bool Remove(JToken item)
         {
             JTokenVM it = GetItem(item);
             return vm.Items.Remove(it);
         }
 
-        public IEnumerator<object> GetEnumerator()
+        public IEnumerator<JToken> GetEnumerator()
         {
             foreach (var item in vm.Items)
             {
-                yield return item["Value"];
+                yield return item.Data;
             }
         }
 

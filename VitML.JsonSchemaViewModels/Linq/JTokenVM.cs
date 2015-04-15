@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VitML.JsonVM.ViewModels;
+using VitML.JsonVM.Schema;
 
 namespace VitML.JsonVM.Linq
 {
@@ -15,12 +16,16 @@ namespace VitML.JsonVM.Linq
     public abstract class JTokenVM : ObservableDictionary
     {
 
-        private JSchema _Schema;
+        private JSchema originalSchema;
+        private JToken data;
+
         /// <summary>Gets or sets the schema of the token. </summary>
-        public JSchema Schema
+        public JSchema Schema { get; private set; }
+
+        public JToken Data
         {
-            get { return _Schema; }
-            set { _Schema = value; OnSetSchema(); }
+            get { return data; }
+            private set { data = value; OnPropertyChanged("Data"); /*@todo OnSetData();*/ }
         }
 
         /// <summary>Gets or sets the parent list if applicable (may be null). </summary>
@@ -28,8 +33,16 @@ namespace VitML.JsonVM.Linq
 
         public event JDataChangedEventHandler DataChanged;
 
-        public JTokenVM()
+        public JTokenVM(JSchema schema, JToken data)
         {
+            if (schema == null) throw new ArgumentNullException("schema");
+
+            this.Data = data;
+            this.originalSchema = schema;
+
+            this.Schema = schema;//@todo
+            //@todo resolve schema
+
             //ParentList = new ObservableCollection<JTokenVM>();
 
             this.CollectionChanged += (se, ar) =>
@@ -50,9 +63,6 @@ namespace VitML.JsonVM.Linq
         }
 
         protected virtual void OnDataChanged(string name, object value) { }
-
-        protected virtual void OnSetSchema() { }
-
 
         /// <summary>Converts the token to a JSON string. </summary>
         /// <returns>The JSON string. </returns>

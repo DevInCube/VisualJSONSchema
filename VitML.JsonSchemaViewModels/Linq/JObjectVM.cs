@@ -11,13 +11,14 @@ using System.Text;
 using System.Threading.Tasks;
 using VitML.JsonVM.Common;
 using VitML.JsonVM;
+using VitML.JsonVM.Schema;
 
 namespace VitML.JsonVM.Linq
 {
 
     public interface IJsonData
     {
-        object this[string key] { get; set; }
+        JTokenVM this[string key] { get; set; }
     }
 
     /// <summary>Represents a JSON object. </summary>
@@ -29,9 +30,26 @@ namespace VitML.JsonVM.Linq
         public IJsonData Data { get; private set; }
         public IList<JPropertyVM> Properties { get { return _Properties; } }
 
-        public JObjectVM()
+        public JObjectVM(JSchema schema, JToken data)
+            : base(schema, data)
         {
             Data = new JsonDataImpl(this);
+
+            _Properties = new List<JPropertyVM>();
+            if (Schema.Properties != null)
+            {
+                foreach (var propertyInfo in Schema.Properties)
+                {
+                    JSchema pSchema = propertyInfo.Value;
+
+                    var property = new JPropertyVM(propertyInfo.Key, this);
+
+                    JTokenVM pValue = JObjectVM.FromSchema(pSchema);
+                    property.Value = pValue;
+                    
+                    _Properties.Add(property);
+                }
+            }
 
             this.PropertyChanged += JObjectVM_PropertyChanged;
         }
@@ -68,6 +86,13 @@ namespace VitML.JsonVM.Linq
                     }
                 };
             }
+            else
+            {
+                var val = value as JValueVM;
+                val.PropertyChanged += (se1, ar1) => {
+                    this.OnPropertyChanged(key);
+                };
+            }
             this.OnPropertyChanged(name);
         }
 
@@ -90,39 +115,32 @@ namespace VitML.JsonVM.Linq
 
         public static JTokenVM FromJson(JToken token, JSchema schema)
         {
-            if (token == null)
-                return null;
-
-            schema = CheckSchema(schema, token);
+            if (token == null) token = JValue.CreateNull();   
+       
+            //Check @todo
 
             switch (token.Type)
             {
                 case (JTokenType.Object):
                     {
                         JObject obj = token as JObject;
-                        JObjectVM objectVM = new JObjectVM();
-
-                        schema = CheckSchema(schema, obj);
+                        JObjectVM objectVM = new JObjectVM(schema, token);
+                        
                         foreach (var property in schema.Properties)
                         {
                             JSchema pSchema = property.Value;
                             JToken pData = obj[property.Key];
                             if (pData == null)
-                                pData = pSchema.GenerateData();                             
+                                pData = pSchema.GenerateData();
 
-                            if (pSchema.Type.HasFlag(JSchemaType.Array)
-                                || pSchema.Type.HasFlag(JSchemaType.Object))
-                                objectVM[property.Key] = FromJson(pData, pSchema);
-                            else
-                                objectVM[property.Key] = pData as JValue;
-                        }
-                        objectVM.Schema = schema;
+                            objectVM[property.Key] = FromJson(pData, pSchema);                         
+                        }                        
                         return objectVM;
                     }
                 case (JTokenType.Array):
                     {
                         JArray array = token as JArray;
-                        JArrayVM arrayVM = new JArrayVM();
+                        JArrayVM arrayVM = new JArrayVM(schema, token);
 
                         int index = 0;
                         for (int i = 0; i < array.Count; i++)
@@ -130,42 +148,16 @@ namespace VitML.JsonVM.Linq
                             JToken item = array[i];
                             var propertySchema = schema.GetItemSchemaByIndex(index);
                             arrayVM.Items.Add(FromJson(item, propertySchema));
-                        }
-                        arrayVM.Schema = schema;
+                        }                        
                         return arrayVM;
                     }
                 default:
                     {
                         JValue value = token as JValue;
-                        return new JValueVM()
-                        {
-                            Value = value
-                        };
+                        JValueVM vm = new JValueVM(schema, token);
+                        vm.Value = value;                        
+                        return vm;
                     }
-            }
-        }
-
-        protected override void OnSetSchema()
-        {
-            _Properties = new List<JPropertyVM>();
-            if (Schema.Properties != null)
-            {
-                foreach (var propertyInfo in Schema.Properties)
-                {
-                    var property = new JPropertyVM(propertyInfo.Key, this, propertyInfo.Value);
-                    if (property.Value is JArrayVM)
-                    {
-                        JArrayVM arrayVM = property.Value as JArrayVM;
-
-                        int index = 0;
-                        foreach (var obj in arrayVM.Items)
-                        {
-                            var propertySchema = propertyInfo.Value.GetItemSchemaByIndex(index++);                            
-                            obj.Schema = CheckSchema(propertySchema, null);
-                        }
-                    }
-                    _Properties.Add(property);
-                }
             }
         }
 
@@ -174,10 +166,11 @@ namespace VitML.JsonVM.Linq
             var obj = new JObject();
             foreach (var pair in this)
             {
-                bool ignore = Properties.FirstOrDefault(x => x.Key == pair.Key).Ignore;
+                JTokenVM value = (JTokenVM)pair.Value;
+                bool ignore = value.Schema.GetIgnore();
                 if (ignore) continue;
                 if (pair.Value is JTokenVM)
-                    obj[pair.Key] = ((JTokenVM)pair.Value).ToJToken();
+                    obj[pair.Key] = value.ToJToken();
                 else
                 {
                     if (pair.Value is JToken)
@@ -207,7 +200,7 @@ namespace VitML.JsonVM.Linq
                 throw new Exception("type missmatch");
         }
 
-        public void SetValue(string path, object value)
+        public void SetValue(string path, JTokenVM value)
         {
             object obj = GetValue(path);
              if (obj == null) return;
@@ -225,7 +218,7 @@ namespace VitML.JsonVM.Linq
         }
 
         public string DisplayMemberPathPropertyName { 
-            get { return this.Schema.GetDisplayMemberPath(); } 
+            get { return this.Schema.GetDisplayMemberPath(); }
         }
 
         public object DisplayMemberPath
@@ -250,9 +243,9 @@ namespace VitML.JsonVM.Linq
             this.vm = vm;
         }
 
-        public object this[string key]
+        public JTokenVM this[string key]
         {
-            get { return vm.GetValue<object>(key); }
+            get { return vm.GetValue<JTokenVM>(key); }
             set { vm.SetValue(key, value); }
         }
     }

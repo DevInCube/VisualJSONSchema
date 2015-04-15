@@ -210,7 +210,9 @@
 		'alt_object' : {
 
 			'type' : [ 'object', 'null'],
-			'format' : 'alt',			
+			'format' : 'alt',	
+			
+			title:'alternative object',
 			'description' : 'This is the alternative object',
 
 			'oneOf' : [
@@ -222,11 +224,15 @@
 		'enum' : {
 			'type' : 'string',
 			'enum' : ['Test1', 'Test2'],
+
+			title:'string enum',
 		},
 
 		'select_list' : {
             'type' : 'array',
             'format' : 'select',
+
+			title:'combobox list',
 			description : 'This is the select list',			
             
             'items' : {
@@ -239,6 +245,7 @@
 			 'type' : 'array',
 			'format' : 'static',
 			
+			title:'static list',
 			description : 'This is a static list of some objects',
 			
 			
@@ -258,6 +265,8 @@
 		
         'list' : {
             'type' : 'array',
+
+			title:'dynamic list',
 			description : 'This is the dynamic list with some style',
 			
 			'Style' : {
@@ -280,6 +289,8 @@
         'list_list' : {
             'type' : 'array',
             'format' : 'list',
+
+			title:'list list',
 			description : 'This is the dynamic formatted list with some style',
 			
 			'Style' : {

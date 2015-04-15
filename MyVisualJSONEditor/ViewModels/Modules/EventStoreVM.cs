@@ -49,6 +49,8 @@ namespace MyVisualJSONEditor.ViewModels
         public override void Init(JObjectVM vm)
         {
             this.VM = vm;
+
+            /*
             JObjectVM ps = VM.Data["Store"] as JObjectVM;
             ps.PropertyChanged += (AccessKeyEvent, o) =>
             {
@@ -95,7 +97,7 @@ namespace MyVisualJSONEditor.ViewModels
                 foreach (var post in postList)
                     posts.Data.Add(post);
                 posts.SelectedIndex = selIndex;
-            });
+            });*/
         }
     }
 }

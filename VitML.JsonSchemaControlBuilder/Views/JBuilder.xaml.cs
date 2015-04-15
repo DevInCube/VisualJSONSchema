@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VitML.JsonVM.Linq;
 using VitML.JsonVM;
+using VitML.JsonVM.Schema;
+using My.Json.Schema;
 
 namespace VitML.JsonSchemaControlBuilder.Views
 {
@@ -30,7 +32,7 @@ namespace VitML.JsonSchemaControlBuilder.Views
         }
 
         public static readonly DependencyProperty DataProperty = DependencyProperty.Register(
-         "Data", typeof(object), typeof(JBuilder), new PropertyMetadata(default(object), OnChange));
+            "Data", typeof(object), typeof(JBuilder), new PropertyMetadata(default(object), OnChange));
 
         /// <summary>Gets or sets the <see cref="JsonObjectModel"/> to edit with the editor. </summary>
         public object Data
@@ -51,20 +53,21 @@ namespace VitML.JsonSchemaControlBuilder.Views
 
         private void OnAddArrayObject(object sender, RoutedEventArgs e)
         {
-            var property = (JPropertyVM)((Button)sender).Tag;
-            
-            if (property.Value == null)
-                property.Value = new JArrayVM() { Schema = property.Schema };
+            object tag = ((Button)sender).Tag;
 
-            var list = (property.Value as JArrayVM).Items;
+            JArrayVM vm = tag as JArrayVM;
 
-            if (property.Schema.MaxItems != null)
-                if (list.Count >= property.Schema.MaxItems)
+            var list = vm.Items;
+
+            JSchema schemaEx = vm.Schema;
+
+            if (schemaEx.MaxItems != null)
+                if (list.Count >= schemaEx.MaxItems)
                     return;
 
-            var schema = property.Schema.GetItemSchemaByIndex(list.Count);
+            JSchema schema = schemaEx.GetItemSchemaByIndex(list.Count);
               
-            var obj = JObjectVM.FromSchema(schema);
+            JTokenVM obj = JObjectVM.FromSchema(schema);
             obj.ParentList = list;
 
             list.Add(obj);
@@ -79,7 +82,10 @@ namespace VitML.JsonSchemaControlBuilder.Views
 
         private void OnCreateObject(object sender, RoutedEventArgs e)
         {
+            throw new NotImplementedException();
+            /*
             var property = (JPropertyVM)((CheckBox)sender).Tag;
+
             if (property != null)
             {
                 if (property.Parent[property.Key] == null)
@@ -89,7 +95,7 @@ namespace VitML.JsonSchemaControlBuilder.Views
                     property.RaisePropertyChanged("Value");
                     property.RaisePropertyChanged("HasValue");
                 }
-            }
+            }*/
         }
 
         private void OnRemoveObject(object sender, RoutedEventArgs e)

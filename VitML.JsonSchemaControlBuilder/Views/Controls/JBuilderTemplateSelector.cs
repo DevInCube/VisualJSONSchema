@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using VitML.JsonSchemaControlBuilder;
 using VitML.JsonVM.Linq;
+using VitML.JsonVM.Schema;
 
 namespace MyVisualJSONEditor.Views.Controls
 {
@@ -19,36 +20,26 @@ namespace MyVisualJSONEditor.Views.Controls
         {
             if (item == null) return null;
 
-            var presenter = (FrameworkElement)container;
-
-           // if (TemplateSelector != null)
-                //return TemplateSelector.SelectTemplate(item, container);
-
-            if (item is JObjectVM)
-            {
-                if ((item as JObjectVM).Schema.Format == "tab")
-                    return (DataTemplate)presenter.Resources["TabRoot"];
-                else
-                    return (DataTemplate)presenter.Resources["Root"];
-            }
+            FrameworkElement presenter = (FrameworkElement)container;
 
             JSchema schema = null;
-            bool required = false;
-            bool expanded = true;
+            bool required = false;         
+
             if (item is JTokenVM)
             {
-                schema = ((JTokenVM)item).Schema;
+                JTokenVM vm = item as JTokenVM;
+                if(vm.Data == null)
+                    return (DataTemplate)presenter.Resources["Null"];
+                schema = vm.Schema;
+                if (schema == null)
+                    throw new Exception("schema is missing");
+                //required = schema.GetRequired();
             }
-
-            if (item is JPropertyVM)
+            else
             {
-                schema = ((JPropertyVM)item).Schema;
-                required = ((JPropertyVM)item).IsRequired;
-                expanded = ((JPropertyVM)item).IsExpanded;
+                return (DataTemplate)presenter.Resources["Error"];
+                //throw new Exception("vm required");
             }
-
-            if ((item is JValue && (item as JValue).Value == null) || schema == null)
-                return (DataTemplate)presenter.Resources["Null"];
 
             var type = schema.Type;
 
@@ -90,6 +81,9 @@ namespace MyVisualJSONEditor.Views.Controls
             {
                 switch (schema.Format)
                 {
+                    case ("tab"):
+                        return (DataTemplate)presenter.Resources["TabRoot"];
+                    //return (DataTemplate)presenter.Resources["Root"]; //@todo
                     case ("simple"):
                         return (DataTemplate)presenter.Resources["ObjectSimple"];
                     case ("alt"):
@@ -98,7 +92,7 @@ namespace MyVisualJSONEditor.Views.Controls
                 if (required)
                     return (DataTemplate)presenter.Resources["ObjectRequired"];
                 else
-                    return (DataTemplate)presenter.Resources["Object"];
+                    return (DataTemplate)presenter.Resources["ObjectRequired"]; //@todo
             }
             if (type == JSchemaType.Array)
             {

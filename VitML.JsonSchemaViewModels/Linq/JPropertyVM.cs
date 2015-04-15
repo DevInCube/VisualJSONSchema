@@ -7,32 +7,25 @@ using System.Text;
 using System.Windows.Input;
 using VitML.JsonVM.Common;
 using VitML.JsonVM.ViewModels;
+using VitML.JsonVM.Schema;
 
 namespace VitML.JsonVM.Linq
 {
     /// <summary>Describes a JSON property. </summary>
-    public class JPropertyVM : ObservableObject, IStyleDecorator
+    public class JPropertyVM : ObservableObject
     {
 
-        private bool _IsEnabled = true;
-        private PropertyStyle style;
-        private ICommand _Command;
-        private JSchema _SelectedSchema;
+        private bool _IsEnabled = true;     
+        private ICommand _Command;        
 
         /// <summary>Initializes a new instance of the <see cref="JsonPropertyModel"/> class. </summary>
         /// <param name="key">The key of the property. </param>
         /// <param name="parent">The parent object. </param>
         /// <param name="schema">The property type as schema object. </param>
-        public JPropertyVM(string key, JObjectVM parent, JSchema schema)
+        public JPropertyVM(string key, JObjectVM parent)
         {
             Key = key;
-            Parent = parent;
-            OriginalSchema = schema;
-            Schema = schema;            
-
-            object ext = Schema.GetExtension("Style");
-            if (ext != null && (ext is JToken))
-                style = PropertyStyle.Parse(ext as JToken);
+            Parent = parent;                    
 
             Parent.PropertyChanged += (sender, args) =>
             {
@@ -47,25 +40,12 @@ namespace VitML.JsonVM.Linq
         {
             get
             {
-                return (Schema.Title ?? Key) ?? null;
+                return (Value.Schema.Title ?? Key) ?? null;
             }
         }
 
         /// <summary>Gets the parent object. </summary>
-        public JObjectVM Parent { get; private set; }
-
-        /// <summary>Gets the property type as schema. </summary>
-        public JSchema Schema { get; private set; }
-        public JSchema OriginalSchema { get; private set; }
-        public JSchema SelectedSchema {
-            get { return _SelectedSchema; }
-            set {
-                _SelectedSchema = value;
-                Schema = _SelectedSchema;
-                JTokenVM data = JObjectVM.FromSchema(Schema);
-                Value = data;
-            }
-        }
+        public JObjectVM Parent { get; private set; }        
 
         /// <summary>Gets a value indicating whether the property is required. </summary>
         public bool IsRequired
@@ -74,22 +54,21 @@ namespace VitML.JsonVM.Linq
         }
 
         /// <summary>Gets or sets the value of the property. </summary>
-        public object Value
+        public JTokenVM Value
         {
             get
             {
                 object val = Parent.ContainsKey(Key) ? Parent[Key] : null;
-                return val;
+                if (!(val is JTokenVM)) throw new Exception("baaaaad");
+                return val as JTokenVM;
             }
             set
             {
+                if (value == null) throw new ArgumentNullException();
+
                 Parent[Key] = value;
 
-                if (OriginalSchema.OneOf.Count > 0)
-                {
-                    var val = value as JObjectVM;                                        
-                    SelectedSchema = OriginalSchema.OneOf.MatchData(JToken.Parse(val.ToJson()));
-                }
+                //Schema.SetData(value); //Change schema @todo
 
                 OnPropertyChanged("Value");
                 OnPropertyChanged("HasValue");
@@ -99,64 +78,8 @@ namespace VitML.JsonVM.Linq
         /// <summary>Gets a value indicating whether the property has a value. </summary>
         public bool HasValue
         {
-            get { return Value != null; }
+            get { return !JToken.DeepEquals(Value.Data, JValue.CreateNull()); }
         }
-
-        public bool IsReadonly
-        {
-            get
-            {
-                var pair = Schema.ExtensionData.FirstOrDefault(x => x.Key == "readonly");
-                if (!pair.Equals(default(KeyValuePair<string, JToken>)))
-                    return bool.Parse(pair.Value.ToString());
-                return false;
-            }
-        }
-
-        public bool IsVisible
-        {
-            get
-            {
-                var pair = Schema.ExtensionData.FirstOrDefault(x => x.Key == "visible");
-                if (!pair.Equals(default(KeyValuePair<string, JToken>)))
-                    return bool.Parse(pair.Value.ToString());
-                return true;
-            }
-        }
-
-        public bool Ignore
-        {
-            get
-            {
-                var pair = Schema.ExtensionData.FirstOrDefault(x => x.Key == "ignore");
-                if (!pair.Equals(default(KeyValuePair<string, JToken>)))
-                    return bool.Parse(pair.Value.ToString());
-                return false;
-            }
-        }
-
-        public bool IsExpanded
-        {
-            get
-            {
-                object ext = Schema.GetExtension("IsExpanded");
-                return (ext == null) ? true : bool.Parse(ext.ToString());
-            }
-        }
-
-        public string DisplayMemberPath
-        {
-            get
-            {
-                var pair = Schema.ExtensionData.FirstOrDefault(x => x.Key == "DisplayMemberPath");
-                string path = "Value";
-                if (!pair.Equals(default(KeyValuePair<string, JToken>)))
-                    path += "." + pair.Value.ToString();
-                return path;
-            }
-        }
-
-        public PropertyStyle Style { get { return style; } }
 
         #region Properties
 
