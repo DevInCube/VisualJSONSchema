@@ -31,13 +31,14 @@ namespace MyVisualJSONEditor.Views.Controls
                 if (vm is JValueVM)
                 {
                     JValueVM jvalue = vm as JValueVM;
-                    if (jvalue.Value == null)
+                    if (jvalue.Value == null
+                        || jvalue.Value.Type == JTokenType.Null)
                         return (DataTemplate)presenter.Resources["Null"];
                 }
                 schema = vm.Schema;
                 if (schema == null)
                     throw new Exception("schema is missing");
-                //required = schema.GetRequired();
+                required = vm.IsRequired;
             }
             else
             {
@@ -95,7 +96,7 @@ namespace MyVisualJSONEditor.Views.Controls
                 if (required)
                     return (DataTemplate)presenter.Resources["ObjectRequired"];
                 else
-                    return (DataTemplate)presenter.Resources["ObjectRequired"]; //@todo
+                    return (DataTemplate)presenter.Resources["Object"]; 
             }
             if (type == JSchemaType.Array)
             {
@@ -112,7 +113,7 @@ namespace MyVisualJSONEditor.Views.Controls
                 }
             }            
 
-            return base.SelectTemplate(item, container);
+            return (DataTemplate)presenter.Resources["UndefinedType"];
         }
     }
 }

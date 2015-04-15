@@ -49,6 +49,8 @@ namespace VitML.JsonVM.Linq
                 string key = pair.Key;
                 JTokenVM value = pair.Value;
 
+                value.IsRequired = Schema.IsRequired(key);
+
                 BindListener(key, value);
             }
         }
@@ -132,67 +134,14 @@ namespace VitML.JsonVM.Linq
             {
                 JSchema pSchema = property.Value;
                 JToken pData = obj[property.Key];
+
                 if (pData == null)
                     pData = pSchema.GenerateData();
 
-                Properties[property.Key] = FromJson(pData, pSchema);
+                JTokenVM tokenVM = FromJson(pData, pSchema);
+                Properties[property.Key] = tokenVM;
             }     
-        }
-
-        /*
-        protected override void OnDataChanged(string name, object value)
-        {
-            string key = name;
-            if (value is JObjectVM)
-            {
-                var jobj = value as JObjectVM;
-                jobj.PropertyChanged += (se2, ar2) =>
-                {
-                    this.OnPropertyChanged(name + "." + ar2.PropertyName);
-                };
-            }
-            else if (value is JArrayVM)
-            {
-                var list = (value as JArrayVM).Items;
-                list.CollectionChanged += (se1, ar1) =>
-                {
-                    this.OnPropertyChanged(key);
-                    if (ar1.Action == NotifyCollectionChangedAction.Add
-                        || ar1.Action == NotifyCollectionChangedAction.Replace)
-                    {
-                        foreach (JTokenVM item in ar1.NewItems)
-                        {
-                            item.PropertyChanged += (senderItem, e2) =>
-                            {
-                                int index = list.IndexOf(senderItem as JTokenVM);
-                                string msg = String.Format("{0}[{1}].{2}", key, index, e2.PropertyName);
-                                this.OnPropertyChanged(msg);
-                            };
-                        }
-                    }
-                };
-            }
-            else
-            {
-                var val = value as JValueVM;
-                val.PropertyChanged += (se1, ar1) => {
-                    this.OnPropertyChanged(key);
-                };
-            }
-            this.OnPropertyChanged(name);
-        }*/
-
-        private static JSchema CheckSchema(JSchema schema, JToken data)
-        {
-            if (schema.OneOf.Count > 0)
-                return schema.OneOf.Choose(data);
-            else if(schema.AllOf.Count > 0) 
-                return schema.MergeSchemaAllOf();
-            else if (schema.AnyOf.Count > 0)
-                return schema.AnyOf.Choose(data);                
-            else
-                return schema;
-        }
+        }        
 
         public static JTokenVM FromSchema(JSchema Schema)
         {
@@ -210,38 +159,19 @@ namespace VitML.JsonVM.Linq
                 case (JTokenType.Object):
                     {
                         JObject obj = token as JObject;
-                        JObjectVM objectVM = JObjectVM.Create(schema, obj);
-                        /*
-                        foreach (var property in schema.Properties)
-                        {
-                            JSchema pSchema = property.Value;
-                            JToken pData = obj[property.Key];
-                            if (pData == null)
-                                pData = pSchema.GenerateData();
-
-                            objectVM[property.Key] = FromJson(pData, pSchema);                         
-                        }    */                    
+                        JObjectVM objectVM = JObjectVM.Create(schema, obj);        
                         return objectVM;
                     }
                 case (JTokenType.Array):
                     {
                         JArray array = token as JArray;
-                        JArrayVM arrayVM = JArrayVM.Create(schema, array);
-                        /*
-                        int index = 0;
-                        for (int i = 0; i < array.Count; i++)
-                        {
-                            JToken item = array[i];
-                            var propertySchema = schema.GetItemSchemaByIndex(index);
-                            arrayVM.Items.Add(FromJson(item, propertySchema));
-                        }    */                 
+                        JArrayVM arrayVM = JArrayVM.Create(schema, array);        
                         return arrayVM;
                     }
                 default:
                     {
                         JValue value = token as JValue;
-                        JValueVM vm = JValueVM.Create(schema, value);
-                        //vm.Value = value;                        
+                        JValueVM vm = JValueVM.Create(schema, value);                       
                         return vm;
                     }
             }
@@ -253,6 +183,7 @@ namespace VitML.JsonVM.Linq
             foreach (var pair in this.Properties)
             {
                 JTokenVM value = (JTokenVM)pair.Value;
+                if (!HasValue) continue;
                 bool ignore = value.Schema.GetIgnore();
                 if (ignore) continue;
                 if (pair.Value is JTokenVM)

@@ -27,13 +27,13 @@ namespace VitML.JsonVM.Linq
 
             if (Items == null) CreateItems();
             
-           // this.SelectedIndex = 0;
+            this.SelectedIndex = 0;
            // this.DisplayMemberPath = "";
            // this.CollectionChanged += JArrayVM_CollectionChanged;
         }
 
         private void CreateItems()
-        {            
+        {
             this.Items = new ObservableCollection<JTokenVM>();
             this.Items.CollectionChanged += Items_CollectionChanged;
         }
@@ -76,17 +76,19 @@ namespace VitML.JsonVM.Linq
                 OnPropertyChanged("Items");
             }
         }
-        /*
+        
+        private int _SelectedIndex;
+
         public int SelectedIndex
         {
-            get { return ContainsKey("SelectedIndex") ? int.Parse(this["SelectedIndex"].ToString()) : 0; }
+            get { return _SelectedIndex; }
             set
             {
-                this["SelectedIndex"] = value;
+                _SelectedIndex = value;
                 OnPropertyChanged("SelectedIndex");
             }
-        }*/
-        /*
+        }
+        
         public object SelectedItem
         {
             get { 
@@ -95,7 +97,7 @@ namespace VitML.JsonVM.Linq
                     return Data[index];
                 return null;
             }
-        }*/
+        }
 
         /*
         public string DisplayMemberPath

@@ -268,8 +268,8 @@
                     <TextBlock Text="{Binding Schema.Title, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
                     <ComboBox Grid.Row="2" 
-                              ItemsSource="{Binding Value.Items, Mode=OneTime}" 
-                              SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
+                              ItemsSource="{Binding Items, Mode=OneTime}" 
+                              SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
                               DisplayMemberPath="{Binding Style.DisplayMemberPath, Mode=OneTime, FallbackValue=Value}"
                               VerticalAlignment="Top" Style="{StaticResource ComboStyle}">
                     </ComboBox>
@@ -348,13 +348,12 @@
             <DataTemplate x:Key="Object">
                 <Grid Style="{StaticResource ContainerStyle}">
                     <Border BorderBrush="LightGray" BorderThickness="2" Padding="5">
-
                         <Expander Header="{Binding Schema.Title, Mode=OneTime, FallbackValue=Schema.Title}" IsExpanded="{Binding IsExpanded, Mode=OneWay}">
                             <Grid Style="{StaticResource ContainerStyle}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>                           
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
@@ -362,7 +361,14 @@
                                           Margin="4,8,4,4" Content="Specify value"
                                           Checked="OnCreateObject" Unchecked="OnRemoveObject" 
                                           Tag="{Binding Mode=OneTime}" />
-                                <local:JBuilder Grid.Row="2" Data="{Binding Value, Mode=OneWay}" />
+                                <ItemsControl Grid.Row="2" ItemsSource="{Binding Properties, Mode=OneWay}" Focusable="False"
+                                              Visibility="{Binding HasValue, Converter={StaticResource VisibilityConverter}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <local:JBuilder Data="{Binding Value, Mode=OneWay}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </Grid>
                         </Expander>
                     </Border>
@@ -384,8 +390,8 @@
                             <TextBlock Text="{Binding Schema.Title, Mode=OneTime}" Style="{StaticResource KeyObjectTextStyle}"/>
                             <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
                             <ComboBox Grid.Row="2" 
-                                      ItemsSource="{Binding OriginalSchema.OneOf, Mode=OneTime}" 
-                                      SelectedItem="{Binding SelectedSchema, Mode=TwoWay}"
+                                      ItemsSource="{Binding AlternativeSchemas, Mode=OneTime}" 
+                                      SelectedItem="{Binding Schema, Mode=TwoWay}"
                                       DisplayMemberPath="Title"
                                       VerticalAlignment="Top" Style="{StaticResource ComboAltStyle}"/>
                             <ItemsControl Grid.Row="3" ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
@@ -597,6 +603,12 @@
             <DataTemplate x:Key="Error">
                 <Grid Style="{StaticResource ContainerStyle}">
                     <Label Content="__ERROR__" Background="Red" Foreground="White"/>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="UndefinedType">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Label Content="UndefinedType" Background="Red" Foreground="White"/>
                 </Grid>
             </DataTemplate>
 

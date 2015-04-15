@@ -99,6 +99,20 @@ namespace VitML.JsonVM
             }
         }
 
+        public static JSchema CheckSchema(this JSchema schema, JToken data)
+        {
+            if (data == null) return schema;
+
+            if (schema.OneOf.Count > 0)
+                return schema.OneOf.Choose(data);
+            else if (schema.AllOf.Count > 0)
+                return schema.MergeSchemaAllOf();
+            else if (schema.AnyOf.Count > 0)
+                return schema.AnyOf.Choose(data);
+            else
+                return schema;
+        }
+
         public static bool HasFlag(this JSchemaType? nType, JSchemaType flag)
         {
             if (nType == null) return false;
@@ -127,20 +141,30 @@ namespace VitML.JsonVM
             foreach (var r in child.Required)
                 if (!parent.Required.Contains(r))
                     parent.Required.Add(r);
-        }
+        }      
 
         private static JSchema MergeSchemas(JSchema f, JSchema s)
         {
             JSchema n = new JSchema();
 
+            n.Title = s.Title ?? f.Title;
+            n.Description = s.Description ?? f.Description;
+
             n.Type = s.Type != JSchemaType.None ? s.Type : f.Type;
 
+            foreach (var p in f.Properties)
+                if (!n.Properties.ContainsKey(p.Key))
+                    n.Properties.Add(p);
+            foreach (var r in f.Required)
+                if (!n.Required.Contains(r))
+                    n.Required.Add(r);
+
             foreach (var p in s.Properties)
-                if (!f.Properties.ContainsKey(p.Key))
-                    f.Properties.Add(p);
+                if (!n.Properties.ContainsKey(p.Key))
+                    n.Properties.Add(p);
             foreach (var r in s.Required)
-                if (!f.Required.Contains(r))
-                    f.Required.Add(r);
+                if (!n.Required.Contains(r))
+                    n.Required.Add(r);
 
             n.Minimum = s.Minimum ?? f.Minimum;
             n.Maximum = s.Maximum ?? f.Maximum;
@@ -164,6 +188,11 @@ namespace VitML.JsonVM
         public static JSchema MergeSchemaAllOf(this JSchema schema)
         {
             JSchema newSchema = new JSchema();
+
+            newSchema.Title = schema.Title;
+            newSchema.Description = schema.Description;
+            newSchema.Type = schema.Type;
+
             foreach (var sh in schema.AllOf)
                 newSchema = MergeSchemas(newSchema, sh);
             return newSchema;

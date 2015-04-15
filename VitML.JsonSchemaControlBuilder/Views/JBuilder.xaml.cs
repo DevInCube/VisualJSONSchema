@@ -82,38 +82,21 @@ namespace VitML.JsonSchemaControlBuilder.Views
 
         private void OnCreateObject(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
-            /*
-            var property = (JPropertyVM)((CheckBox)sender).Tag;
+            var objVM = (JObjectVM)((CheckBox)sender).Tag;
 
-            if (property != null)
+            if (objVM != null)
             {
-                if (property.Parent[property.Key] == null)
-                {
-                    property.Parent[property.Key] = JObjectVM.FromSchema(property.Schema);
-
-                    property.RaisePropertyChanged("Value");
-                    property.RaisePropertyChanged("HasValue");
-                }
-            }*/
+                objVM.SetData(objVM.Schema.GenerateData());               
+            }
         }
 
         private void OnRemoveObject(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
-
-            /*
-            var property = (JPropertyVM)((CheckBox)sender).Tag;
-            if (property != null)
+            var objVM = (JObjectVM)((CheckBox)sender).Tag;
+            if (objVM != null)
             {
-                if (property.Parent.ContainsKey(property.Key) && property.Parent[property.Key] != null)
-                {
-                    property.Parent[property.Key] = null;
-
-                    property.RaisePropertyChanged("Value");
-                    property.RaisePropertyChanged("HasValue");
-                }
-            }*/
+                objVM.SetData(null);
+            }
         }
     }
 }

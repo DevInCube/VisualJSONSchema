@@ -17,41 +17,48 @@ namespace VitML.JsonVM.Linq
     {
 
         private JSchema originalSchema;
+        private bool _HasValue;
+        private JSchema _Schema;
 
         /// <summary>Gets or sets the schema of the token. </summary>
-        public JSchema Schema { get; private set; }
+        public JSchema Schema
+        {
+            get { return _Schema;  }
+            set 
+            { 
+                _Schema = value; 
+                OnPropertyChanged("Schema");
+            }
+        }
 
         /// <summary>Gets or sets the parent list if applicable (may be null). </summary>
-        public JArrayVM ParentList { get; set; }   
+        public JArrayVM ParentList { get; set; }
+
+        public bool IsRequired { get; set; }
+
+        public bool HasValue
+        {
+            get { return _HasValue; }
+            set { _HasValue = value; OnPropertyChanged("HasValue"); }
+        }
+
+        public List<JSchema> AlternativeSchemas { get; private set; }
 
         public JTokenVM()
-        {                       
-            //@todo resolve schema
-
-            //ParentList = new ObservableCollection<JTokenVM>();
-            /*
-            this.CollectionChanged += (se, ar) =>
-            {                
-                if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add
-                    || ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Replace)
-                {
-                    if (ar.NewItems[0] is KeyValuePair<string, object>)
-                    {
-                        var pair = (KeyValuePair<string, object>)ar.NewItems[0];
-                        OnDataChanged(pair.Key, pair.Value);
-                        var handler = DataChanged;
-                        if (handler != null)
-                            handler.Invoke(this, new JDataChangedEventArgs(pair.Key, pair.Value));
-                    }
-                }
-            };*/
+        {
+            IsRequired = true;            
         }
 
         public virtual void SetSchema(JSchema schema)
         {
-            if (schema == null) throw new ArgumentNullException("schema");
+            if (schema == null) throw new ArgumentNullException("schema");            
 
             this.originalSchema = schema;
+
+            this.AlternativeSchemas = new List<JSchema>();
+            foreach (var alt in originalSchema.OneOf)
+                this.AlternativeSchemas.Add(alt);
+            OnPropertyChanged("AlternativeSchemas");
 
             this.Schema = schema;
         }
@@ -60,7 +67,9 @@ namespace VitML.JsonVM.Linq
         {
             if (originalSchema == null) throw new ArgumentNullException("originalSchema");
 
-            //@change schema @todo
+            Schema = originalSchema.CheckSchema(data);
+
+            HasValue = !(data == null || data.Type == JTokenType.Null);
         }
 
         /// <summary>Converts the token to a JSON string. </summary>
@@ -74,5 +83,7 @@ namespace VitML.JsonVM.Linq
         /// <summary>Converts the <see cref="JsonTokenModel"/> to a <see cref="JToken"/>. </summary>
         /// <returns>The <see cref="JToken"/>. </returns>
         public abstract JToken ToJToken();
+
+      
     }
 }

@@ -40,7 +40,19 @@
 				},
 			},
 			required : ['integer'],
-		}
+		},
+		
+		'allof_p1' : {
+			properties:{ 'p1' : {'type':'boolean', title:'p1'}},
+		},
+		'allof_p2' : {
+			description:'Overriden description 2',
+			properties:{ 'p2' : {'type':'string', title:'p2'}},		
+		},
+		'allof_p3' : {
+			title:'Overriden title 3',
+			properties:{ 'p3' : {'type':'integer', title:'p3'}},	
+		},
 		
 	},
 
@@ -56,6 +68,33 @@
     		maxItems:4,
     		minItems:1,
     	},
+    	
+    	'allOf' : {
+    		title:'All Of',
+			description:'Description0',
+    		
+    		type:'object',
+    		
+    		allOf: [
+    			{'$ref':'#/definitions/allof_p1'},
+    			{'$ref':'#/definitions/allof_p2'},
+    			{'$ref':'#/definitions/allof_p3'},
+    		],
+    	},
+
+		'alt_object' : {
+
+			'type' : [ 'object', 'null'],
+			'format' : 'alt',	
+			
+			title:'alternative object',
+			'description' : 'This is the alternative object',
+
+			'oneOf' : [
+				{'$ref' : '#/definitions/obj1'},
+				{'$ref' : '#/definitions/obj2'},
+			],
+		},
 
 		'label' : {
 			'title':'',			
@@ -205,21 +244,7 @@
 				},
 			},
 			required : ['object'],
-		},
-
-		'alt_object' : {
-
-			'type' : [ 'object', 'null'],
-			'format' : 'alt',	
-			
-			title:'alternative object',
-			'description' : 'This is the alternative object',
-
-			'oneOf' : [
-				{'$ref' : '#/definitions/obj1'},
-				{'$ref' : '#/definitions/obj2'},
-			],
-		},
+		},		
 
 		'enum' : {
 			'type' : 'string',
@@ -318,6 +343,7 @@
     },
 
 	required : [
+		'allOf',
 		'boolean', 
 		'string', 
 		'object', 
