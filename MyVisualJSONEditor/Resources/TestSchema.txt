@@ -51,7 +51,7 @@
 			description:'with different items schema and items count constraints',
 
     		type:'array',
-    		items:[{type:'string'},{'type':'boolean'}],
+    		items:[{type:'string'},{'type':'array', title:'inner array'}],
     		additionalItems:{'type':'integer'},
     		maxItems:4,
     		minItems:1,

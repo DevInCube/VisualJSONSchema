@@ -28,8 +28,12 @@ namespace MyVisualJSONEditor.Views.Controls
             if (item is JTokenVM)
             {
                 JTokenVM vm = item as JTokenVM;
-                if(vm.Data == null)
-                    return (DataTemplate)presenter.Resources["Null"];
+                if (vm is JValueVM)
+                {
+                    JValueVM jvalue = vm as JValueVM;
+                    if (jvalue.Value == null)
+                        return (DataTemplate)presenter.Resources["Null"];
+                }
                 schema = vm.Schema;
                 if (schema == null)
                     throw new Exception("schema is missing");
@@ -37,8 +41,7 @@ namespace MyVisualJSONEditor.Views.Controls
             }
             else
             {
-                return (DataTemplate)presenter.Resources["Error"];
-                //throw new Exception("vm required");
+                return (DataTemplate)presenter.Resources["Error"];                
             }
 
             var type = schema.Type;

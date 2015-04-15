@@ -24,6 +24,7 @@ namespace MyVisualJSONEditor.ViewModels
         public override void Init(JObjectVM vm)
         {
             this.vm = vm;
+            /*
             vm.PropertyChanged += vm_PropertyChanged;
             JObjectVM first = vm.GetValue<JObjectVM>("Source.QueueSet[0]");
             JObjectVM source = vm.GetValue<JObjectVM>("Source");
@@ -44,7 +45,7 @@ namespace MyVisualJSONEditor.ViewModels
                 });
             }
             sources.Items.CollectionChanged += Items_CollectionChanged;
-            sources.PropertyChanged += sources_PropertyChanged;
+            sources.PropertyChanged += sources_PropertyChanged;*/
         }
 
         void source_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -69,12 +70,13 @@ namespace MyVisualJSONEditor.ViewModels
         {
             if (e.PropertyName.Equals("SelectedIndex"))
             {                
-                vm.GetProperty("Source.SetMaster").IsEnabled = (sender as JArrayVM).SelectedIndex >= 0;
+                //vm.GetProperty("Source.SetMaster").IsEnabled = (sender as JArrayVM).SelectedIndex >= 0;
             }
         }
 
         void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            /*
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
                 JObjectVM removedItem = (e.OldItems[0] as JObjectVM);
@@ -82,7 +84,7 @@ namespace MyVisualJSONEditor.ViewModels
                 {
                     vm.Data["Source.MasterName"] = null;
                 }
-            }
+            }*/
         }
     }
 }

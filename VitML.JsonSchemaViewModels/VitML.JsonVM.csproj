@@ -65,6 +65,7 @@
     <Compile Include="Schema\JSchemaExtendedKeyword.cs" />
     <Compile Include="ViewModels\ObservableDictionary.cs" />
     <Compile Include="ViewModels\ObservableObject.cs" />
+    <Compile Include="ViewModels\PropertyDictionary.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

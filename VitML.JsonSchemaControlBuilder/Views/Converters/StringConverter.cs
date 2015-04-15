@@ -9,21 +9,16 @@ using System.Windows.Data;
 
 namespace MyVisualJSONEditor.Views.Converters
 {
-    public class DateTimeConverter : IValueConverter
+    public class StringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-                return null;
-
-            //JToken token = value as JToken;
-
-            return value is DateTime ? value : DateTime.Parse(value.ToString());
+            return (value as JValue).Value<string>();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value;
+            return JValue.CreateString(value as string);
         }
     }
 }

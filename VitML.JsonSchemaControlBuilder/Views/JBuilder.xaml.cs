@@ -68,7 +68,7 @@ namespace VitML.JsonSchemaControlBuilder.Views
             JSchema schema = schemaEx.GetItemSchemaByIndex(list.Count);
               
             JTokenVM obj = JObjectVM.FromSchema(schema);
-            obj.ParentList = list;
+            obj.ParentList = vm;
 
             list.Add(obj);
         }
@@ -77,7 +77,7 @@ namespace VitML.JsonSchemaControlBuilder.Views
         {
             JTokenVM obj = (JTokenVM)((Button)sender).Tag;
 
-            obj.ParentList.Remove(obj);
+            obj.ParentList.Items.Remove(obj);
         }
 
         private void OnCreateObject(object sender, RoutedEventArgs e)
@@ -100,6 +100,9 @@ namespace VitML.JsonSchemaControlBuilder.Views
 
         private void OnRemoveObject(object sender, RoutedEventArgs e)
         {
+            throw new NotImplementedException();
+
+            /*
             var property = (JPropertyVM)((CheckBox)sender).Tag;
             if (property != null)
             {
@@ -110,7 +113,7 @@ namespace VitML.JsonSchemaControlBuilder.Views
                     property.RaisePropertyChanged("Value");
                     property.RaisePropertyChanged("HasValue");
                 }
-            }
+            }*/
         }
     }
 }

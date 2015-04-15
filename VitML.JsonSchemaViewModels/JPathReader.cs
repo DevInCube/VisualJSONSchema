@@ -40,6 +40,7 @@ namespace VitML.JsonVM
                     }
                     else if (obj is JObjectVM)
                     {
+                        /*
                         JPropertyVM prop = (obj as JObjectVM).Properties.FirstOrDefault(x => x.Key == propName);
                         if (!hasIndexer)
                         {
@@ -69,7 +70,7 @@ namespace VitML.JsonVM
                             {
                                 throw new Exception("cant call indexer on JObjectVM");
                             }
-                        }
+                        }*/
                     }
                     continue;
                 }

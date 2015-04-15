@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -12,19 +13,21 @@ namespace MyVisualJSONEditor.Views.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null ? value.ToString() : null;
+            return (value as JValue).Value<long>();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            long integer;
             try
             {
-                return long.Parse(value.ToString());
+                integer = long.Parse(value.ToString());
             }
             catch
             {
-                return default(long);
+                integer = default(long);
             }
+            return new JValue(integer);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace VitML.JsonVM.Linq
         {
             get
             {
-                return (Value.Schema.Title ?? Key) ?? null;
+                return null;// (Value.Schema.Title ?? Key) ?? null;
             }
         }
 
@@ -52,7 +52,7 @@ namespace VitML.JsonVM.Linq
         {
             get { return Parent.Schema.IsRequired(Key); }
         }
-
+        /*
         /// <summary>Gets or sets the value of the property. </summary>
         public JTokenVM Value
         {
@@ -73,12 +73,12 @@ namespace VitML.JsonVM.Linq
                 OnPropertyChanged("Value");
                 OnPropertyChanged("HasValue");
             }
-        }
+        }*/
 
         /// <summary>Gets a value indicating whether the property has a value. </summary>
         public bool HasValue
         {
-            get { return !JToken.DeepEquals(Value.Data, JValue.CreateNull()); }
+            get { return false;}// !JToken.DeepEquals(Value.Data, JValue.CreateNull()); }
         }
 
         #region Properties

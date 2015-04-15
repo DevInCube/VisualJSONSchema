@@ -21,15 +21,21 @@ namespace VitML.JsonVM.Linq
 
         public IJsonArray Data { get; private set; }
 
-        public JArrayVM(JSchema schema, JToken data)
-            : base(schema, data)
+        private JArrayVM()
         {
             this.Data = new JsonArrayImpl(this);
+
+            if (Items == null) CreateItems();
+            
+           // this.SelectedIndex = 0;
+           // this.DisplayMemberPath = "";
+           // this.CollectionChanged += JArrayVM_CollectionChanged;
+        }
+
+        private void CreateItems()
+        {            
             this.Items = new ObservableCollection<JTokenVM>();
             this.Items.CollectionChanged += Items_CollectionChanged;
-            this.SelectedIndex = 0;
-            this.DisplayMemberPath = "";
-            this.CollectionChanged += JArrayVM_CollectionChanged;
         }
 
         void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -38,7 +44,7 @@ namespace VitML.JsonVM.Linq
                 || e.Action == NotifyCollectionChangedAction.Replace)
             {
                 JTokenVM token = e.NewItems[0] as JTokenVM;
-                token.ParentList = this.Items;
+                token.ParentList = this;
             }
         }
 
@@ -59,16 +65,18 @@ namespace VitML.JsonVM.Linq
             return jArray;
         }
 
+        private ObservableCollection<JTokenVM> _Items;
+
         public ObservableCollection<JTokenVM> Items
         {
-            get { return ContainsKey("Value") ? this["Value"] as ObservableCollection<JTokenVM> : null; }
+            get { return _Items; }
             private set
             {
-                this["Value"] = value;
+                _Items = value;
                 OnPropertyChanged("Items");
             }
         }
-
+        /*
         public int SelectedIndex
         {
             get { return ContainsKey("SelectedIndex") ? int.Parse(this["SelectedIndex"].ToString()) : 0; }
@@ -77,8 +85,8 @@ namespace VitML.JsonVM.Linq
                 this["SelectedIndex"] = value;
                 OnPropertyChanged("SelectedIndex");
             }
-        }
-
+        }*/
+        /*
         public object SelectedItem
         {
             get { 
@@ -87,8 +95,9 @@ namespace VitML.JsonVM.Linq
                     return Data[index];
                 return null;
             }
-        }
+        }*/
 
+        /*
         public string DisplayMemberPath
         {
             get { return "Value" + (ContainsKey("DisplayMemberPath") ? "." + this["DisplayMemberPath"] : ""); }
@@ -97,8 +106,36 @@ namespace VitML.JsonVM.Linq
                 this["DisplayMemberPath"] = value;
                 OnPropertyChanged("DisplayMemberPath");
             }
+        }*/
+
+
+        public override void SetData(JToken data)
+        {
+            base.SetData(data);
+
+            if (!(data is JArray)) throw new Exception("data is not JArray");
+
+            JArray array = data as JArray;
+
+            if (Items == null) CreateItems();
+            this.Items.Clear();
+
+            int index = 0;
+            for (int i = 0; i < array.Count; i++)
+            {
+                JToken item = array[i];
+                var propertySchema = this.Schema.GetItemSchemaByIndex(index);
+                this.Items.Add(JObjectVM.FromJson(item, propertySchema));
+            }       
         }
 
+        public static JArrayVM Create(JSchema schema, JArray array)
+        {
+            JArrayVM arr = new JArrayVM();
+            arr.SetSchema(schema);
+            arr.SetData(array);
+            return arr;
+        }
     }
 
     class JsonArrayImpl : IJsonArray
@@ -113,14 +150,14 @@ namespace VitML.JsonVM.Linq
 
         private JTokenVM CreateItem(JSchema schema, JToken item)
         {
-            JTokenVM val = new JValueVM(schema, item);           
-            val.ParentList = vm.Items;
+            JTokenVM val = JValueVM.Create(schema, item);           
+            val.ParentList = vm;
             return val;
         }
 
         private JTokenVM GetItem(JToken item)
         {
-            return vm.Items.FirstOrDefault(x => x["Value"] == item);
+            return null;//@todo vm.Items.FirstOrDefault(x => x == item);
         }
 
         public int IndexOf(JToken item)
@@ -145,7 +182,7 @@ namespace VitML.JsonVM.Linq
         {
             get
             {
-                return vm.Items[index].Data;                
+                return null;//vm.Items[index]["Value"];  @todo
             }
             set
             {
@@ -196,7 +233,7 @@ namespace VitML.JsonVM.Linq
         {
             foreach (var item in vm.Items)
             {
-                yield return item.Data;
+                yield return null;//@todo item.Data;
             }
         }
 

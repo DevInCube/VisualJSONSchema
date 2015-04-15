@@ -13,38 +13,23 @@ using VitML.JsonVM.Schema;
 namespace VitML.JsonVM.Linq
 {
 
-    public abstract class JTokenVM : ObservableDictionary
+    public abstract class JTokenVM : ObservableObject
     {
 
         private JSchema originalSchema;
-        private JToken data;
 
         /// <summary>Gets or sets the schema of the token. </summary>
         public JSchema Schema { get; private set; }
 
-        public JToken Data
-        {
-            get { return data; }
-            private set { data = value; OnPropertyChanged("Data"); /*@todo OnSetData();*/ }
-        }
-
         /// <summary>Gets or sets the parent list if applicable (may be null). </summary>
-        public ObservableCollection<JTokenVM> ParentList { get; set; }
+        public JArrayVM ParentList { get; set; }   
 
-        public event JDataChangedEventHandler DataChanged;
-
-        public JTokenVM(JSchema schema, JToken data)
-        {
-            if (schema == null) throw new ArgumentNullException("schema");
-
-            this.Data = data;
-            this.originalSchema = schema;
-
-            this.Schema = schema;//@todo
+        public JTokenVM()
+        {                       
             //@todo resolve schema
 
             //ParentList = new ObservableCollection<JTokenVM>();
-
+            /*
             this.CollectionChanged += (se, ar) =>
             {                
                 if (ar.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add
@@ -59,10 +44,24 @@ namespace VitML.JsonVM.Linq
                             handler.Invoke(this, new JDataChangedEventArgs(pair.Key, pair.Value));
                     }
                 }
-            };
+            };*/
         }
 
-        protected virtual void OnDataChanged(string name, object value) { }
+        public virtual void SetSchema(JSchema schema)
+        {
+            if (schema == null) throw new ArgumentNullException("schema");
+
+            this.originalSchema = schema;
+
+            this.Schema = schema;
+        }
+
+        public virtual void SetData(JToken data)
+        {
+            if (originalSchema == null) throw new ArgumentNullException("originalSchema");
+
+            //@change schema @todo
+        }
 
         /// <summary>Converts the token to a JSON string. </summary>
         /// <returns>The JSON string. </returns>

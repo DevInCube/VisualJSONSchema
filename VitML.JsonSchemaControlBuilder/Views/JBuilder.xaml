@@ -21,6 +21,8 @@
         <myConv:DateTimeConverter x:Key="DateTimeConverter"/>
         <mtkConv:NotConverter x:Key="NotConverter"/>
         <mtkConv:VisibilityConverter x:Key="VisibilityConverter"/>
+        <myConv:StringConverter x:Key="StringConverter"/>
+        <myConv:BooleanConverter x:Key="BooleanConverter"/>
 
         <Style TargetType="{x:Type controls:TabControlEx}">
             <Setter Property="Template">
@@ -225,7 +227,7 @@
                         <Button Content="Add"
                                 Click="OnAddArrayObject" Tag="{Binding Mode=OneTime}"
                                 Style="{StaticResource FlatButton}"/>
-                        <TextBlock Text="{Binding Value.Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
+                        <TextBlock Text="{Binding Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
                                    Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" />
                     </StackPanel>
                     <Grid Grid.Row="3" 
@@ -237,7 +239,7 @@
                         </Grid.ColumnDefinitions>
                         <ListBox x:Name="list"
                                 DisplayMemberPath="DisplayMemberPath"
-                                ItemsSource="{Binding Value.Items, Mode=OneTime}"
+                                ItemsSource="{Binding Items, Mode=OneTime}"
                                 SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
                                 Style="{StaticResource ListBase}">
                         </ListBox>
@@ -295,7 +297,7 @@
             </DataTemplate>
                                    
             <DataTemplate x:Key="ArrayItem">
-                <Border Margin="4" Background="White" HorizontalAlignment="Stretch">
+                <Border Margin="4" Padding="5" Background="White" HorizontalAlignment="Stretch">
                     <DockPanel>
                         <Button DockPanel.Dock="Right" 
                                 Content="X"
@@ -320,12 +322,12 @@
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
                         <Button Content="Add" Click="OnAddArrayObject" Tag="{Binding Mode=OneTime}" Style="{StaticResource FlatButton}" />
                         <TextBlock  Margin="0,0,0,3" 
-                                    Text="{Binding Value.Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
+                                    Text="{Binding Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
                                     Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" 
                                     VerticalAlignment="Center"/>
                     </StackPanel>
                     <ListBox        Grid.Row="3"
-                                    ItemsSource="{Binding Value.Items, Mode=OneTime}"
+                                    ItemsSource="{Binding Items, Mode=OneTime}"
                                     ItemTemplate="{StaticResource ArrayItem}"
                                     VirtualizingPanel.IsVirtualizing="True"
                                     VirtualizingPanel.VirtualizationMode="Recycling"
@@ -451,7 +453,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding Schema.Title, Mode=OneWay}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <Label Grid.Row="2" Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=NULL}" Style="{StaticResource JValueStyle}" />
+                    <Label Grid.Row="2" Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=NULL, Converter={StaticResource StringConverter}}" Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>            
             
@@ -465,7 +467,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding Schema.Title, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <TextBox Grid.Row="2" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource JValueStyle}" />
+                    <TextBox Grid.Row="2" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringConverter}}" Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
             
@@ -500,7 +502,7 @@
                     <xctk:DoubleUpDown Grid.Row="2" TextAlignment="Left"
 			                        Minimum="{Binding Schema.Minimum, Mode=OneTime, Converter={StaticResource NumberRangeConverter}, ConverterParameter=min}"
 			                        Maximum="{Binding Schema.Maximum, Mode=OneTime, Converter={StaticResource NumberRangeConverter}, ConverterParameter=max}"
-			                        Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NumberConverter}}" 
+			                        Text="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NumberConverter}}" 
                                     Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
@@ -515,7 +517,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding Schema.Title, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <controls:BindablePasswordBox Grid.Row="2" Password="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource JValueStyle}" />
+                    <controls:BindablePasswordBox Grid.Row="2" Password="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringConverter}}" Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>
             
@@ -530,7 +532,7 @@
                     <CheckBox Grid.Row="1" 
                               IsThreeState="False"
                               Content="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}"
-                              IsChecked="{Binding Value, Mode=TwoWay, FallbackValue=false}" 
+                              IsChecked="{Binding Value, Mode=TwoWay, FallbackValue=false, Converter={StaticResource BooleanConverter}}" 
                               Style="{StaticResource JValueStyle}" />
                 </Grid>
             </DataTemplate>

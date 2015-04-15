@@ -14,27 +14,37 @@ namespace VitML.JsonVM.Linq
     {
 
         /// <summary>Initializes a new instance of the <see cref="JsonValueModel"/> class. </summary>
-        public JValueVM(JSchema schema, JToken data)
-            : base(schema, data)
+        private JValueVM()
         {
-            this["Value"] = null;
-        }
-
-        public string Key { get { return null; } }
-
-        /// <summary>Gets or sets the value. </summary>
-        public object Value
-        {
-            get { return ContainsKey("Value") ? this["Value"] : null; }
-            set { this["Value"] = value; OnPropertyChanged("Value"); }
+            //this["Value"] = null;
         }
 
         /// <summary>Converts the <see cref="JsonTokenModel"/> to a <see cref="JToken"/>. </summary>
         /// <returns>The <see cref="JToken"/>. </returns>
         public override JToken ToJToken()
         {
-            return (Value is JValue) ? Value as JValue : new JValue(Value);
-        }    
-       
+            return Value;
+        }
+
+
+        public override void SetData(JToken data)
+        {
+            base.SetData(data);
+
+            if (!(data is JValue)) throw new ArgumentException("data is not JValue");
+
+            this.Value = data;
+        }
+
+        private JToken _Value;
+        public JToken Value { get { return _Value; } set { _Value = value; OnPropertyChanged("Value"); } }
+
+        public static JValueVM Create(JSchema schema, JToken data)
+        {
+            JValueVM vm = new JValueVM();
+            vm.SetSchema(schema);
+            vm.SetData(data);
+            return vm;
+        }
     }
 }
