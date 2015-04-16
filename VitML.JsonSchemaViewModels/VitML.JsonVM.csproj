@@ -58,7 +58,6 @@
     <Compile Include="JSchemaExtension.cs" />
     <Compile Include="Linq\JArrayVM.cs" />
     <Compile Include="Linq\JObjectVM.cs" />
-    <Compile Include="Linq\JPropertyVM.cs" />
     <Compile Include="Linq\JTokenVM.cs" />
     <Compile Include="Linq\JValueVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

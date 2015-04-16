@@ -25,6 +25,7 @@ namespace VitML.JsonVM.Linq
     /// <summary>Represents a JSON object. </summary>
     public class JObjectVM : JTokenVM
     {
+        private string _DisplayMemberPath;
 
         public PropertyDictionary Properties { get; private set; }
 
@@ -118,6 +119,29 @@ namespace VitML.JsonVM.Linq
                     Properties.Add(key, Create(pSchema, null));
                 }
             }
+
+            var defaultPath = this.Schema.GetDisplayMemberPath();
+            _DisplayMemberPath = ResolveDisplayMemberPath(defaultPath);
+        }
+
+        private string ResolveDisplayMemberPath(string defaultPath)
+        {
+            if (String.IsNullOrWhiteSpace(defaultPath))
+            {
+                if (Properties.Count > 0)
+                    return Properties.First().Key;
+                else
+                {
+                    if (Schema != null)
+                        return Schema.Title ?? "";
+                    else
+                        return "";
+                }
+            }
+            else
+            {
+                return defaultPath;
+            }
         }
 
         public override void SetData(JToken data)
@@ -206,8 +230,8 @@ namespace VitML.JsonVM.Linq
         {
             object value = GetValue(path);
             if (value == null) return default(JType);
-            if(value is JPropertyVM)
-                value = null;//@todo (value as JPropertyVM).Value;
+            if (value is KeyValuePair<string, JTokenVM>)
+                value = ((KeyValuePair<string, JTokenVM>)value).Value;
             if (value is JType)
                 return (JType)value;
             else
@@ -217,50 +241,26 @@ namespace VitML.JsonVM.Linq
         public void SetValue(string path, object value)
         {
             object obj = GetValue(path);
-             if (obj == null) return;
-            // if (obj is JPropertyVM)
-              //   (obj as JPropertyVM).Value = null;//@todo value as JTokenVM;
-             else if (obj is JTokenVM)
-                 (obj as JTokenVM).SetData(value as JToken);
-             else
-                 throw new NotImplementedException("cant set to " + obj.GetType());
-        }
-
-        public JPropertyVM GetProperty(string name)
-        {
-            return GetValue(name) as JPropertyVM;
+            if (obj == null) return;
+            if (obj is JTokenVM)
+                (obj as JTokenVM).SetData(value as JToken);
+            else if (obj is KeyValuePair<string, JTokenVM>)
+                throw new NotImplementedException("cant set to " + obj.GetType());
+            else
+                throw new NotImplementedException("cant set to " + obj.GetType());
         }
 
         public string DisplayMemberPathPropertyName 
-        { 
-            get 
-            { 
-                var path = this.Schema.GetDisplayMemberPath();
-                if(String.IsNullOrWhiteSpace(path))
-                {
-                    if (Properties.Count > 0)
-                        return Properties.First().Key;
-                    else
-                    {
-                        if (Schema != null)
-                            return Schema.Title ?? "";
-                        else
-                            return "";
-                    }
-                }
-                else
-                {
-                    return path;
-                }
-            }
+        {
+            get { return _DisplayMemberPath; }
         }
 
         public string DisplayMemberPath
         {
             get {
                 var pathReader = new JPathReader(this);
-                var path = DisplayMemberPathPropertyName;
-                JTokenVM token = pathReader.GetToken(path);
+                var displayPath = DisplayMemberPathPropertyName;
+                JTokenVM token = pathReader.GetToken(displayPath);
                 string result = null;
                 if (token != null)
                 {
@@ -270,7 +270,7 @@ namespace VitML.JsonVM.Linq
                         result = token.ToJson();
                 }
                 if (string.IsNullOrWhiteSpace(result))
-                    return String.Format("{0}:<empty>", path);
+                    return String.Format("{0}:<empty>", displayPath);
                 else
                     return result;
             }
