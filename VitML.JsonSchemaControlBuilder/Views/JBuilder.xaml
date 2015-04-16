@@ -337,22 +337,35 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>                           
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                                <CheckBox Grid.Row="1" IsChecked="{Binding HasValue, Mode=OneWay}"
-                                          Margin="4,8,4,4" Content="Specify value"
-                                          Checked="OnCreateObject" Unchecked="OnRemoveObject" 
-                                          Tag="{Binding Mode=OneTime}" />
-                                <ItemsControl Grid.Row="2" ItemsSource="{Binding Properties, Mode=OneWay}" Focusable="False"
-                                              Visibility="{Binding HasValue, Converter={StaticResource VisibilityConverter}}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <local:JBuilder Data="{Binding Value, Mode=OneWay}" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                                
+                                <Grid Grid.Row="1" Visibility="{Binding HasValue, Mode=OneWay, Converter={StaticResource VisConverter}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ItemsControl ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <local:JBuilder Data="{Binding Value, Mode=OneWay}" />
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <Button Grid.Column="1" 
+                                        Content="X"
+                                        Click="OnRemoveObject" 
+                                        Tag="{Binding Mode=OneTime}" 
+                                        Style="{StaticResource RemoveArrayItemButton}"
+                                         Visibility="{Binding IsNullable, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
+                                </Grid>
+                                <StackPanel Orientation="Horizontal" Grid.Row="1" Visibility="{Binding HasValue, Mode=OneWay, Converter={StaticResource VisConverter}, ConverterParameter=true}">
+                                    <Label Content="No value" VerticalAlignment="Center"/>
+                                    <Button Content="Create" Click="OnCreateObject" Style="{StaticResource FlatButton}" Tag="{Binding}"
+                                        Visibility="{Binding IsNullable, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
+                                </StackPanel>
+                               
                             </Grid>
                         </Expander>
                     </Border>

@@ -83,7 +83,7 @@ namespace VitML.JsonSchemaControlBuilder.Views
 
         private void OnCreateObject(object sender, RoutedEventArgs e)
         {
-            var objVM = (JObjectVM)((CheckBox)sender).Tag;
+            var objVM = (JObjectVM)((Button)sender).Tag;
 
             if (objVM != null)
             {
@@ -93,7 +93,7 @@ namespace VitML.JsonSchemaControlBuilder.Views
 
         private void OnRemoveObject(object sender, RoutedEventArgs e)
         {
-            var objVM = (JObjectVM)((CheckBox)sender).Tag;
+            var objVM = (JObjectVM)((Button)sender).Tag;
             if (objVM != null)
             {
                 objVM.SetData(null);
