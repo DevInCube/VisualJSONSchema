@@ -148,7 +148,7 @@ namespace VitML.JsonVM.Linq
         {
             base.SetData(data);
 
-            if (data == null) return;//@todo
+            if (data == null || data.Type == JTokenType.Null) return;//@todo
 
             if (!(data is JObject)) throw new Exception("data is not JObject");
 
@@ -159,10 +159,13 @@ namespace VitML.JsonVM.Linq
                 JSchema pSchema = property.Value;
                 JToken pData = obj[property.Key];
 
+                bool spec = pData != null;
                 if (pData == null)
                     pData = pSchema.GenerateData();
 
                 JTokenVM tokenVM = FromJson(pData, pSchema);
+                if (!spec) tokenVM.IsSpecified = false;
+                
                 Properties[property.Key] = tokenVM;
             }     
             OnPropertyChanged("Properties");

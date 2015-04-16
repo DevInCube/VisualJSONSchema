@@ -1,0 +1,172 @@
+﻿<UserControl x:Class="VitML.JsonSchemaControlBuilder.Views.RequireBuilder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+             xmlns:mtkConv="clr-namespace:MyToolkit.Converters;assembly=MyToolkit.Extended"
+             xmlns:myConv="clr-namespace:MyVisualJSONEditor.Views.Converters"
+             xmlns:controls="clr-namespace:MyVisualJSONEditor.Views.Controls" 
+             xmlns:local="clr-namespace:VitML.JsonSchemaControlBuilder.Views" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             x:Name="this"
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+
+        <mtkConv:NotConverter x:Key="NotConverter"/>
+        <mtkConv:VisibilityConverter x:Key="VisibilityConverter"/>
+        <myConv:VisConverter x:Key="VisConverter"/>        
+        <myConv:BooleanConverter x:Key="BooleanConverter"/>
+
+    </UserControl.Resources>
+
+    <ContentPresenter x:Name="Presenter">
+
+        <ContentPresenter.Resources>
+
+            <Style x:Key="ContainerStyle" TargetType="Grid">
+                <Setter Property="IsEnabled" Value="{Binding IsReadonly, FallbackValue=true, Converter={StaticResource NotConverter}}" />
+                <Setter Property="Visibility" Value="{Binding IsVisible, FallbackValue=true, Converter={StaticResource VisibilityConverter}}" />
+                <Setter Property="Margin" Value="5,2,5,5"/>
+            </Style>
+
+            <Style x:Key="InnerContainerStyle" TargetType="Grid">
+                <Setter Property="Margin" Value="5"/>
+            </Style>
+
+            <Style x:Key="HideableText" TargetType="TextBlock">
+                <Style.Triggers>
+                    <Trigger Property="Text" Value="">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </Trigger>
+                    <Trigger Property="Text" Value="{x:Null}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="KeyTextStyle" TargetType="TextBlock" BasedOn="{StaticResource HideableText}">
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Margin" Value="0,0,0,3"/>
+            </Style>
+
+            <Style x:Key="KeyObjectTextStyle" TargetType="TextBlock" BasedOn="{StaticResource HideableText}">
+                <Setter Property="FontWeight" Value="Thin"/>
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Margin" Value="4,2,0,2"/>
+            </Style>
+
+            <Style x:Key="DescTextStyle" TargetType="TextBlock" BasedOn="{StaticResource HideableText}">
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="Margin" Value="0,0,0,2"/>
+                <Setter Property="Height" Value="Auto"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+
+            <Style x:Key="RemoveArrayItemButton" TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Setter Property="Width" Value="26"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+            </Style>
+            
+            <Style x:Key="FlatButton" TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="MinWidth" Value="75"/>
+                <Setter Property="Height" Value="26"/>
+                <Setter Property="Padding" Value="8,4,8,4"/>
+                <Setter Property="Margin" Value="0,5,5,4"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+            </Style>
+
+            <Style x:Key="CreateTokenButton" TargetType="Button" BasedOn="{StaticResource FlatButton}">
+                <Setter Property="MinWidth" Value="23"/>
+                <Setter Property="Width" Value="23"/>
+                <Setter Property="Height" Value="23"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0,0,5,0"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="BorderBrush" Value="#ccc"/>
+                <Setter Property="Background" Value="#ccc"/>
+            </Style>
+            
+            <Style x:Key="NoValueStyle" TargetType="Label">
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="Padding" Value="4,3,0,0"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="Foreground" Value="Gray"/>
+            </Style>
+
+            <DataTemplate x:Key="Unrequired">
+                <Border BorderBrush="LightGray" BorderThickness="0">
+                    <Grid Style="{StaticResource ContainerStyle}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>                            
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
+                        <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <Button  Content="-"
+                                        Click="OnRemoveObject"
+                                        Tag="{Binding Mode=OneTime}"
+                                        Style="{StaticResource CreateTokenButton}"
+                                        Visibility="{Binding IsSpecified, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
+                                <Button Content="+"
+                                        Click="OnCreateObject"
+                                        Tag="{Binding Mode=OneTime}"
+                                        Style="{StaticResource CreateTokenButton}"
+                                        Visibility="{Binding IsSpecified, Mode=OneWay, Converter={StaticResource VisConverter}, ConverterParameter=true}"/>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <local:JBuilder  Data="{Binding Mode=OneTime}" Visibility="{Binding IsSpecified, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
+                                <Label Content="No value" Visibility="{Binding IsSpecified, Mode=OneWay, Converter={StaticResource VisConverter}, ConverterParameter=true}"
+                                       Style="{StaticResource NoValueStyle}"/>
+                            </Grid>
+                        </Grid>                        
+                        
+                    </Grid>
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="Required">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                    <local:JBuilder Grid.Row="2" Data="{Binding Mode=OneTime}" />
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="Error">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Label Content="__ERROR__" Background="Red" Foreground="White"/>
+                </Grid>
+            </DataTemplate>
+
+
+        </ContentPresenter.Resources>
+
+        <ContentPresenter.ContentTemplateSelector>
+            <controls:RequireBuilderTemplateSelector />
+        </ContentPresenter.ContentTemplateSelector>
+
+    </ContentPresenter>
+</UserControl>

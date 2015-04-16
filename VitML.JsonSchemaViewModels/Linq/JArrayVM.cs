@@ -99,21 +99,11 @@ namespace VitML.JsonVM.Linq
             }
         }
 
-        /*
-        public string DisplayMemberPath
-        {
-            get { return "Value" + (ContainsKey("DisplayMemberPath") ? "." + this["DisplayMemberPath"] : ""); }
-            set
-            {
-                this["DisplayMemberPath"] = value;
-                OnPropertyChanged("DisplayMemberPath");
-            }
-        }*/
-
-
         public override void SetData(JToken data)
         {
             base.SetData(data);
+
+            if (data == null || data.Type == JTokenType.Null) return;//@todo
 
             if (!(data is JArray)) throw new Exception("data is not JArray");
 
@@ -128,7 +118,8 @@ namespace VitML.JsonVM.Linq
                 JToken item = array[i];
                 var propertySchema = this.Schema.GetItemSchemaByIndex(index);
                 this.Items.Add(JObjectVM.FromJson(item, propertySchema));
-            }       
+            }
+            OnPropertyChanged("Items");
         }
 
         public static JArrayVM Create(JSchema schema, JArray array)

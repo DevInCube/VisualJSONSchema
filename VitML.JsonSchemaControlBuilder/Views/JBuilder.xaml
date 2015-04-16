@@ -119,6 +119,7 @@
 
             <Style x:Key="JValueStyle" TargetType="FrameworkElement">
                 <Setter Property="Margin" Value="0,0,0,2"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
             </Style>
 
             <Style x:Key="RemoveArrayItemButton" TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
@@ -134,7 +135,7 @@
                 <Setter Property="MinWidth" Value="75"/>
                 <Setter Property="Height" Value="26"/>
                 <Setter Property="Padding" Value="8,4,8,4"/>
-                <Setter Property="Margin" Value="0,5,5,4"/>
+                <Setter Property="Margin" Value="0,0,5,4"/>
                 <Setter Property="VerticalAlignment" Value="Top"/>
                 <Setter Property="HorizontalAlignment" Value="Right"/>
             </Style>
@@ -166,46 +167,22 @@
                 <Setter Property="Foreground" Value="LightSteelBlue"/>
                 <Setter Property="FontWeight" Value="Thin"/>
                 <Setter Property="FontSize" Value="18"/>
-            </Style>
-
-            <DataTemplate x:Key="Root">
-                <ItemsControl ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:JBuilder Data="{Binding Mode=OneWay}" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </DataTemplate>          
+            </Style>         
             
             <DataTemplate x:Key="Enum">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}" />
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
-                    <ComboBox Grid.Row="2" 
-                              ItemsSource="{Binding Schema.Enum}" 
-                              SelectedItem="{Binding Value}" 
-                              Style="{StaticResource ComboStyle}"/>
-                </Grid>
+                <ComboBox  ItemsSource="{Binding Schema.Enum}" 
+                            SelectedItem="{Binding Value}" 
+                            Style="{StaticResource ComboStyle}"/>
             </DataTemplate>
             
             <DataTemplate x:Key="List">
-                <Grid Style="{StaticResource ContainerStyle}">
+                <Grid >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition />                        
                     </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
                         <Button Content="Add"
                                 Click="OnAddArrayObject" Tag="{Binding Mode=OneTime}"
                                 Style="{StaticResource FlatButton}"/>
@@ -213,7 +190,7 @@
                                    Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" 
                                    VerticalAlignment="Center"/>
                     </StackPanel>
-                    <Grid Grid.Row="3" 
+                    <Grid Grid.Row="2" 
                           Height="{Binding Style.Height, Mode=OneWay, FallbackValue=Auto}"
                           MinHeight="{Binding Style.MinHeight, Mode=OneWay, FallbackValue=Auto}"
                           MaxHeight="{Binding Style.MaxHeight, Mode=OneWay, FallbackValue=Auto}">
@@ -242,42 +219,21 @@
             </DataTemplate>
             
             <DataTemplate x:Key="SelectList">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
-                    <ComboBox Grid.Row="2" 
-                              ItemsSource="{Binding Items, Mode=OneTime}" 
+                <ComboBox ItemsSource="{Binding Items, Mode=OneTime}" 
                               SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
                               DisplayMemberPath="{Binding Style.DisplayMemberPath, Mode=OneTime, FallbackValue=Value}"
                               VerticalAlignment="Top" Style="{StaticResource ComboStyle}">
-                    </ComboBox>
-                </Grid>
+                </ComboBox>
             </DataTemplate>
             
             <DataTemplate x:Key="ArrayStatic">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
-                    <ItemsControl Grid.Row="2"  ItemsSource="{Binding Value.Items, Mode=OneTime}" Focusable="False" Margin="5" >
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:JBuilder Data="{Binding Mode=OneTime}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Grid>
+                <ItemsControl   ItemsSource="{Binding Value.Items, Mode=OneTime}" Focusable="False" Margin="5" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:JBuilder Data="{Binding Mode=OneTime}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </DataTemplate>
                                    
             <DataTemplate x:Key="ArrayItem">
@@ -294,23 +250,20 @@
             </DataTemplate>
             
             <DataTemplate x:Key="Array">
-                <Grid Style="{StaticResource ContainerStyle}">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    </Grid.RowDefinitions>                  
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
                         <Button Content="Add" Click="OnAddArrayObject" Tag="{Binding Mode=OneTime}" Style="{StaticResource FlatButton}" />
                         <TextBlock  Margin="0,0,0,3" 
                                     Text="{Binding Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
                                     Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" 
                                     VerticalAlignment="Center"/>
                     </StackPanel>
-                    <ListBox        Grid.Row="3"
+                    <ListBox        Grid.Row="1"
                                     ItemsSource="{Binding Items, Mode=OneTime}"
                                     ItemTemplate="{StaticResource ArrayItem}"
                                     VirtualizingPanel.IsVirtualizing="True"
@@ -328,310 +281,141 @@
                     </ListBox>
                 </Grid>
             </DataTemplate>
-            
-            <DataTemplate x:Key="Object">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Border BorderBrush="LightGray" BorderThickness="2" Padding="5">
-                        <Expander Header="{Binding KeyTitle, Mode=OneTime, FallbackValue=KeyTitle}" IsExpanded="{Binding IsExpanded, Mode=OneWay}">
-                            <Grid Style="{StaticResource ContainerStyle}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                                
-                                <Grid Grid.Row="1" Visibility="{Binding HasValue, Mode=OneWay, Converter={StaticResource VisConverter}}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <ItemsControl ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <local:JBuilder Data="{Binding Value, Mode=OneWay}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                    <Button Grid.Column="1" 
-                                        Content="X"
-                                        Click="OnRemoveObject" 
-                                        Tag="{Binding Mode=OneTime}" 
-                                        Style="{StaticResource RemoveArrayItemButton}"
-                                         Visibility="{Binding IsNullable, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
-                                </Grid>
-                                <StackPanel Orientation="Horizontal" Grid.Row="1" Visibility="{Binding HasValue, Mode=OneWay, Converter={StaticResource VisConverter}, ConverterParameter=true}">
-                                    <Label Content="No value" VerticalAlignment="Center"/>
-                                    <Button Content="Create" Click="OnCreateObject" Style="{StaticResource FlatButton}" Tag="{Binding}"
-                                        Visibility="{Binding IsNullable, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
-                                </StackPanel>
-                               
-                            </Grid>
-                        </Expander>
-                    </Border>
-                </Grid>
-              
-            </DataTemplate>
 
             <DataTemplate x:Key="ObjectAlt">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Border Style="{StaticResource ObjectBorder}">
-                        <Grid Style="{StaticResource InnerContainerStyle}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyObjectTextStyle}"/>
-                            <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                            <ComboBox Grid.Row="2" 
+                <Border Style="{StaticResource ObjectBorder}">
+                    <Grid Style="{StaticResource InnerContainerStyle}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        
+                        <ComboBox Grid.Row="0" 
                                       ItemsSource="{Binding AlternativeSchemas, Mode=OneTime}" 
                                       SelectedItem="{Binding Schema, Mode=TwoWay}"
                                       DisplayMemberPath="Title"
                                       VerticalAlignment="Top" Style="{StaticResource ComboAltStyle}"/>
-                            <ItemsControl Grid.Row="3" ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <local:JBuilder Data="{Binding Value, Mode=OneWay}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>                            
-                        </Grid>
-                    </Border>
-                </Grid>
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:JBuilder Data="{Binding Value, Mode=OneWay}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Border>
             </DataTemplate>
 
-            <DataTemplate x:Key="ObjectRequired">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Border Style="{StaticResource ObjectBorder}">
-                        <Grid Style="{StaticResource InnerContainerStyle}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyObjectTextStyle}"/>
-                            <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                            <Grid Grid.Row="2" Visibility="{Binding HasValue, Mode=OneWay, Converter={StaticResource VisConverter}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto"/>                                    
-                                </Grid.ColumnDefinitions>
-                                <ItemsControl ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <local:JBuilder Data="{Binding Value, Mode=OneWay}" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                                <Button Grid.Column="1" 
-                                        Content="X"
+            <DataTemplate x:Key="Object">
+                <Border Style="{StaticResource ObjectBorder}">
+                    <Grid Style="{StaticResource InnerContainerStyle}">
+                        <Grid Grid.Row="2" Visibility="{Binding HasValue, Mode=OneWay, Converter={StaticResource VisConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ItemsControl ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <local:RequireBuilder Data="{Binding Value, Mode=OneWay}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Button Grid.Column="1" 
+                                        Content="NULL"
                                         Click="OnCreateNull" 
                                         Tag="{Binding Mode=OneTime}" 
                                         Style="{StaticResource RemoveArrayItemButton}"
                                          Visibility="{Binding IsNullable, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
-                            </Grid>
-                            <StackPanel Orientation="Horizontal" Grid.Row="2" Visibility="{Binding HasValue, Mode=OneWay, Converter={StaticResource VisConverter}, ConverterParameter=true}">
-                                <Label Content="NULL" Foreground="IndianRed" VerticalAlignment="Center"/>
-                                <Button Content="Create" Click="OnCreateFromNull" Style="{StaticResource FlatButton}" Tag="{Binding}"
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Grid.Row="2" Visibility="{Binding HasValue, Mode=OneWay, Converter={StaticResource VisConverter}, ConverterParameter=true}">
+                            <Label Content="NULL" Foreground="IndianRed" VerticalAlignment="Center"/>
+                            <Button Content="Create" Click="OnCreateFromNull" Style="{StaticResource FlatButton}" Tag="{Binding}"
                                         Visibility="{Binding IsNullable, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Border>                
             </DataTemplate>
 
-            <DataTemplate x:Key="TabRoot">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Border Style="{StaticResource ObjectBorder}">
-                        <Grid Style="{StaticResource InnerContainerStyle}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyObjectTextStyle}"/>
-                            <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                            <ItemsControl Grid.Row="2" ItemsSource="{Binding Properties, Mode=OneTime}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Expander Header="{Binding Value.KeyTitle, Mode=OneTime}" IsExpanded="False" >
-                                            <local:JBuilder Data="{Binding Value, Mode=OneTime}" Margin="5"/>
-                                        </Expander>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </Grid>
-                    </Border>
-                </Grid>
+            <DataTemplate x:Key="TabRoot">                
+                <Border Style="{StaticResource ObjectBorder}">
+                    <Grid Style="{StaticResource InnerContainerStyle}">
+                        <ItemsControl Grid.Row="2" ItemsSource="{Binding Properties, Mode=OneTime}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Expander Header="{Binding Value.KeyTitle, Mode=OneTime}" IsExpanded="False" >
+                                        <local:JBuilder Data="{Binding Value, Mode=OneTime}" Margin="5"/>
+                                    </Expander>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </Border>              
             </DataTemplate>            
-
-            <DataTemplate x:Key="ObjectSimple">
-                <local:JBuilder Data="{Binding Value, Mode=OneTime}" />
-            </DataTemplate>
             
             <DataTemplate x:Key="Button">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <Button Grid.Row="1" HorizontalAlignment="Left"
+                <Button Grid.Row="1" HorizontalAlignment="Left"
                             Content="{Binding Value, Mode=OneWay, FallbackValue=Value}"
                             Command="{Binding Command, Mode=OneWay}"
                             Style="{StaticResource FlatButton}"/>
-                </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="Label">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneWay}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <Label Grid.Row="2" Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=NULL, Converter={StaticResource StringConverter}}" Style="{StaticResource JValueStyle}" />
-                </Grid>
+                <Label Grid.Row="2" Content="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=NULL, Converter={StaticResource StringConverter}}" Style="{StaticResource JValueStyle}" />
             </DataTemplate>            
             
             <DataTemplate x:Key="String">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <TextBox Grid.Row="2" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringConverter}}" Style="{StaticResource JValueStyle}" />
-                </Grid>
+                <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringConverter}}" Style="{StaticResource JValueStyle}" />
             </DataTemplate>
             
             <DataTemplate x:Key="Integer">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <xctk:IntegerUpDown Grid.Row="2" TextAlignment="Left"
+                <xctk:IntegerUpDown TextAlignment="Left"
                             Minimum="{Binding Schema.Minimum, Converter={StaticResource IntegerRangeConverter}, ConverterParameter=min}"
                             Maximum="{Binding Schema.Maximum, Converter={StaticResource IntegerRangeConverter}, ConverterParameter=max}"
                             Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource IntegerConverter}}" 
                             Style="{StaticResource JValueStyle}" />
-                </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="Number">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <xctk:DoubleUpDown Grid.Row="2" TextAlignment="Left"
+                <xctk:DoubleUpDown  TextAlignment="Left"
 			                        Minimum="{Binding Schema.Minimum, Mode=OneTime, Converter={StaticResource NumberRangeConverter}, ConverterParameter=min}"
 			                        Maximum="{Binding Schema.Maximum, Mode=OneTime, Converter={StaticResource NumberRangeConverter}, ConverterParameter=max}"
 			                        Text="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NumberConverter}}" 
                                     Style="{StaticResource JValueStyle}" />
-                </Grid>
             </DataTemplate>
             
             <DataTemplate x:Key="Password">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <controls:BindablePasswordBox Grid.Row="2" Password="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringConverter}}" Style="{StaticResource JValueStyle}" />
-                </Grid>
+                <controls:BindablePasswordBox Password="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringConverter}}" Style="{StaticResource JValueStyle}" />
             </DataTemplate>
             
             <DataTemplate x:Key="Boolean">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <CheckBox Grid.Row="1" 
-                              IsThreeState="False"
-                              Content="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}"
-                              IsChecked="{Binding Value, Mode=TwoWay, FallbackValue=false, Converter={StaticResource BooleanConverter}}" 
-                              Style="{StaticResource JValueStyle}" />
-                </Grid>
+                <CheckBox Grid.Row="1" 
+                        IsThreeState="False"
+                        Content="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}"
+                        IsChecked="{Binding Value, Mode=TwoWay, FallbackValue=false, Converter={StaticResource BooleanConverter}}" 
+                        Style="{StaticResource JValueStyle}" />
             </DataTemplate>
 
             <DataTemplate x:Key="Date">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <xctk:DateTimePicker Grid.Row="2"  Format="LongDate" 
+                <xctk:DateTimePicker Grid.Row="2"  Format="LongDate" 
                                          HorizontalAlignment="Left" 
                                          TimePickerVisibility="Collapsed" TimeFormat="Custom" AutoCloseCalendar="True"
                                          Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateConverter},FallbackValue=00:00:00}"
                                          Style="{StaticResource JValueStyle}"/>
-                </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="Time">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <xctk:TimePicker Grid.Row="2" TextAlignment="Left" 
+                <xctk:TimePicker Grid.Row="2" TextAlignment="Left" 
                                      HorizontalAlignment="Left" 
                                      Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TimeConverter},FallbackValue=00:00:00}"
                                      Style="{StaticResource JValueStyle}"/>
-                </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="DateTime">
-                <Grid Style="{StaticResource ContainerStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
-                    <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <xctk:DateTimePicker Grid.Row="2"  HorizontalAlignment="Left" 
+                <xctk:DateTimePicker Grid.Row="2"  HorizontalAlignment="Left" 
                                      Value="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource DateTimeConverter}, FallbackValue=00:00}"
                                      Style="{StaticResource JValueStyle}"/>
-                </Grid>
             </DataTemplate>
 
             <DataTemplate x:Key="Null">

@@ -22,8 +22,7 @@ namespace MyVisualJSONEditor.Views.Controls
 
             FrameworkElement presenter = (FrameworkElement)container;
 
-            JSchema schema = null;
-            bool required = false;         
+            JSchema schema = null;                     
 
             if (item is JTokenVM)
             {
@@ -37,8 +36,7 @@ namespace MyVisualJSONEditor.Views.Controls
                 }
                 schema = vm.Schema;
                 if (schema == null)
-                    throw new Exception("schema is missing");
-                required = vm.IsRequired;
+                    throw new Exception("schema is missing");                
             }
             else
             {
@@ -87,16 +85,11 @@ namespace MyVisualJSONEditor.Views.Controls
                 {
                     case ("tab"):
                         return (DataTemplate)presenter.Resources["TabRoot"];
-                    //return (DataTemplate)presenter.Resources["Root"]; //@todo
-                    case ("simple"):
-                        return (DataTemplate)presenter.Resources["ObjectSimple"];
                     case ("alt"):
                         return (DataTemplate)presenter.Resources["ObjectAlt"];
+                    default:
+                        return (DataTemplate)presenter.Resources["Object"]; 
                 }
-                if (required)
-                    return (DataTemplate)presenter.Resources["ObjectRequired"];
-                else
-                    return (DataTemplate)presenter.Resources["Object"]; 
             }
             if (type == JSchemaType.Array)
             {

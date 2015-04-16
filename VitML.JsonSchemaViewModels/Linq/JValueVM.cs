@@ -31,6 +31,8 @@ namespace VitML.JsonVM.Linq
         {
             base.SetData(data);
 
+            if (data == null) return;//@todo
+
             if (!(data is JValue)) throw new ArgumentException("data is not JValue");
 
             this.Value = data;
