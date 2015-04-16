@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\PropertyStyle.cs" />
+    <Compile Include="Common\PropertyStyleReader.cs" />
     <Compile Include="JDataChangedEventArgs.cs" />
     <Compile Include="JDataChangedEventHandler.cs" />
     <Compile Include="JPathReader.cs" />

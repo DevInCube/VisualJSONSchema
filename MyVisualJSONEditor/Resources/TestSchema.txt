@@ -295,8 +295,8 @@
 			description : 'This is the dynamic list with some style',
 			
 			'Style' : {
-				'MinHeight' : '200',
-				'MaxHeight' : '200',
+				'MinHeight' : 200,
+				'MaxHeight' : 200,
 			},
             
             'items' : {
@@ -319,8 +319,8 @@
 			description : 'This is the dynamic formatted list with some style',
 			
 			'Style' : {
-				'MinHeight' : '200',
-				'MaxHeight' : '200',
+				'MinHeight' : 200,
+				'MaxHeight' : 200,
 			},
             
             'items' : {

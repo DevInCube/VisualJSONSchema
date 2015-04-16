@@ -4,6 +4,9 @@
 
     "type":"object",
 	'format' : 'tab',
+	
+	title:'LPR',
+	description:'LPR',
 
     "properties":{
 
@@ -11,19 +14,21 @@
 
             "id":"media-source",
             "type":"object",
+            
+            title:'Media source',
 
             "properties":{
 
                 "data_input_dir":{
-                    "id":"data_input_dir",
+                    "title":"data_input_dir",
                     "type":"string"
                 },
                 "meta_input_dir":{
-                    "id":"meta_input_dir",
+                    "title":"meta_input_dir",
                     "type":"string"
                 },
                 "media_extension":{
-                    "id":"media_extension",
+                    "title":"media_extension",
                     "type":"string"
                 }
             },
@@ -40,11 +45,13 @@
 
             "id":"output",
             "type":"object",
-
+            
+            title:'Output',
+            
             "properties":{
 
                 "meta_queue_set":{
-                    "id":"meta_queue_set",
+                    "title":"meta_queue_set",
                     "type":"array",
                     'format' : 'list',
                     
@@ -62,19 +69,19 @@
 
                         "properties":{
                             "prefix":{
-                                "id":"prefix",
+                                "title":"prefix",
                                 "type":"string"
                             },
                             "suffix":{
-                                "id":"suffix",
+                                "title":"suffix",
                                 "type":"string"
                             },
                             "dir":{
-                                "id":"dir",
+                                "title":"dir",
                                 "type":"string"
                             },
                             "type":{
-                                "id":"type",
+                                "title":"type",
                                 "type":"string",
 								'enum':['track', 'scene']
                             }
@@ -89,8 +96,12 @@
         },
 
         "recognizer":{
+        
             "id":"recognizer",
             "type":"object",
+            
+            title:'Recognizer',
+            
             "properties":{
 
             }

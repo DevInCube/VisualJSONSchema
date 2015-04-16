@@ -21,6 +21,12 @@ namespace VitML.JsonVM.Linq
         private bool _HasValue;
         private JSchema _Schema;
         private PropertyStyle _Style;
+        private string _KeyTitle;
+
+        public string KeyTitle
+        {
+            get { return _KeyTitle; }
+        }
 
         public PropertyStyle Style 
         { 
@@ -35,9 +41,9 @@ namespace VitML.JsonVM.Linq
             set 
             { 
                 _Schema = value;
-                if (_Schema.ExtensionData.ContainsKey(JSchemaExtendedKeywords.Style))
+                if (_Schema.ExtensionData.ContainsKey(JSchemaExtendedKeywords.Style.Key))
                 {
-                    var ext = _Schema.ExtensionData[JSchemaExtendedKeywords.Style];
+                    var ext = _Schema.ExtensionData[JSchemaExtendedKeywords.Style.Key];
                     Style = PropertyStyle.Parse(ext);
                 }
                 OnPropertyChanged("Schema");
@@ -74,6 +80,8 @@ namespace VitML.JsonVM.Linq
             OnPropertyChanged("AlternativeSchemas");
 
             this.Schema = schema;
+
+            _KeyTitle = Schema.Title;
         }
 
         public virtual void SetData(JToken data)

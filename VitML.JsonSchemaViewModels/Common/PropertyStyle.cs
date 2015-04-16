@@ -5,30 +5,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using VitML.JsonVM.Schema;
 
 namespace VitML.JsonVM.Common
 {
     public class PropertyStyle
     {
+        #region properties
 
         public Double Height { get; set; }
         public Double MinHeight { get; set; }
         public Double MaxHeight { get; set; }
 
+        public Double Width { get; set; }
+        public Double MinWidth { get; set; }
+        public Double MaxWidth { get; set; }
+
         public bool? ShowCount { get; set; }
 
         public string DisplayMemberPath { get; set; }
 
+        #endregion properties
+
         public static PropertyStyle Parse(JToken data)
         {
-            PropertyStyle st = new PropertyStyle();
-            st.Height = GetDouble("Height", data);
-            st.MinHeight = GetDouble("MinHeight", data);
-            st.MaxHeight = GetDouble("MaxHeight", data);
-            st.ShowCount = GetBool("ShowCount", data);
-            string memPath = GetValue("DisplayMemberPath", data);
-            st.DisplayMemberPath = ((memPath == null) ? "DisplayMemberPath" : memPath);
-            return st;
+            if (!(data is JObject)) throw new Exception("Style should be an object");
+
+            JObject style = data as JObject;
+            PropertyStyleReader reader = new PropertyStyleReader(style);
+            return reader.Read();           
         }
 
         private static string GetValue(string key, JToken data)
@@ -58,5 +63,5 @@ namespace VitML.JsonVM.Common
             if (val == null) return null;
             return bool.Parse(val);
         }
-    }
+    }    
 }
