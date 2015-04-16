@@ -21,6 +21,7 @@
         <myConv:DateTimeConverter x:Key="DateTimeConverter"/>
         <mtkConv:NotConverter x:Key="NotConverter"/>
         <mtkConv:VisibilityConverter x:Key="VisibilityConverter"/>
+        <myConv:VisConverter x:Key="VisConverter"/>
         <myConv:StringConverter x:Key="StringConverter"/>
         <myConv:BooleanConverter x:Key="BooleanConverter"/>
 
@@ -401,13 +402,30 @@
                             </Grid.RowDefinitions>
                             <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyObjectTextStyle}"/>
                             <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                            <ItemsControl Grid.Row="2" ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <local:JBuilder Data="{Binding Value, Mode=OneWay}" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                            <Grid Grid.Row="2" Visibility="{Binding HasValue, Mode=OneWay, Converter={StaticResource VisConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto"/>                                    
+                                </Grid.ColumnDefinitions>
+                                <ItemsControl ItemsSource="{Binding Properties, Mode=OneTime}" Focusable="False">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <local:JBuilder Data="{Binding Value, Mode=OneWay}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <Button Grid.Column="1" 
+                                        Content="X"
+                                        Click="OnCreateNull" 
+                                        Tag="{Binding Mode=OneTime}" 
+                                        Style="{StaticResource RemoveArrayItemButton}"
+                                         Visibility="{Binding IsNullable, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
+                            </Grid>
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Visibility="{Binding HasValue, Mode=OneWay, Converter={StaticResource VisConverter}, ConverterParameter=true}">
+                                <Label Content="NULL" Foreground="IndianRed" VerticalAlignment="Center"/>
+                                <Button Content="Create" Click="OnCreateFromNull" Style="{StaticResource FlatButton}" Tag="{Binding}"
+                                        Visibility="{Binding IsNullable, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
+                            </StackPanel>
                         </Grid>
                     </Border>
                 </Grid>

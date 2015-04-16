@@ -55,6 +55,7 @@
     <Compile Include="Common\PropertyStyleReader.cs" />
     <Compile Include="Generation\DataGenerationSettings.cs" />
     <Compile Include="Generation\DataGenerator.cs" />
+    <Compile Include="Generation\ForceLevel.cs" />
     <Compile Include="JDataChangedEventArgs.cs" />
     <Compile Include="JDataChangedEventHandler.cs" />
     <Compile Include="JPathReader.cs" />

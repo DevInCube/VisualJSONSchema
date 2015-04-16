@@ -16,7 +16,7 @@ namespace VitML.JsonVM.Tests
 
             DataGenerator gen = new DataGenerator(sh);
             DataGenerationSettings set = new DataGenerationSettings();
-            set.Force = false;
+            set.Force = ForceLevel.None;
 
             JToken res = gen.Generate(set);
 
@@ -30,11 +30,45 @@ namespace VitML.JsonVM.Tests
 
             DataGenerator gen = new DataGenerator(sh);
             DataGenerationSettings set = new DataGenerationSettings();
-            set.Force = true;
+            set.Force = ForceLevel.ForceAll;
 
             JToken res = gen.Generate(set);
 
             Assert.IsTrue(JToken.DeepEquals(new JObject(), res));
+        }
+
+        [TestMethod]
+        public void Generate_ForcedAllObject_CreatedNestedObjects()
+        {
+            JSchema sh = JSchema.Parse(@"{type:['null','object'],
+properties:{'nested':{type:['null','object']}}
+}");
+
+            DataGenerator gen = new DataGenerator(sh);
+            DataGenerationSettings set = new DataGenerationSettings();
+            set.Force = ForceLevel.ForceAll;
+            set.RequiredOnly = false;
+
+            JToken res = gen.Generate(set);
+
+            Assert.IsTrue(JToken.DeepEquals(JObject.Parse("{nested:{}}"), res));
+        }
+
+        [TestMethod]
+        public void Generate_ForcedFirstObject_CreatedNestedObjects()
+        {
+            JSchema sh = JSchema.Parse(@"{type:['null','object'],
+properties:{'nested':{type:['null','object']}}
+}");
+
+            DataGenerator gen = new DataGenerator(sh);
+            DataGenerationSettings set = new DataGenerationSettings();
+            set.Force = ForceLevel.ForceFirst;
+            set.RequiredOnly = false;
+
+            JToken res = gen.Generate(set);
+
+            Assert.IsTrue(JToken.DeepEquals(JObject.Parse("{nested:null}"), res));
         }
 
         [TestMethod]

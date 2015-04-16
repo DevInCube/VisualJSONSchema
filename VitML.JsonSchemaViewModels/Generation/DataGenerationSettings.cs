@@ -8,13 +8,13 @@ namespace VitML.JsonVM.Generation
     public class DataGenerationSettings
     {
 
-        public bool Force { get; set; }
+        public ForceLevel Force { get; set; }
         public bool RequiredOnly { get; set; }
-        public bool CreateMinItems { get; set; }
+        public bool CreateMinItems { get; set; }    
 
         public DataGenerationSettings()
         {
-            Force = false;
+            Force = ForceLevel.None;            
             RequiredOnly = true;
             CreateMinItems = true;
         }

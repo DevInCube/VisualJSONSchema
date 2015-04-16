@@ -44,10 +44,14 @@ namespace VitML.JsonVM.Generation
 
             if (sh.Type.HasFlag(JSchemaType.Null))
             {
-                if (settings.Force)
-                    type &= ~JSchemaType.Null;
-                else
+                if (settings.Force == ForceLevel.None)
                     return JValue.CreateNull();
+                else
+                {
+                    type &= ~JSchemaType.Null;
+                    if (settings.Force == ForceLevel.ForceFirst)
+                        settings.Force = ForceLevel.None;
+                }
             }
 
             if (sh.OneOf.Count > 0)

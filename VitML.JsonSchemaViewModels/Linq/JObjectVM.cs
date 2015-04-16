@@ -165,6 +165,7 @@ namespace VitML.JsonVM.Linq
                 JTokenVM tokenVM = FromJson(pData, pSchema);
                 Properties[property.Key] = tokenVM;
             }     
+            OnPropertyChanged("Properties");
         }        
 
         public static JTokenVM FromSchema(JSchema Schema)
@@ -174,9 +175,14 @@ namespace VitML.JsonVM.Linq
 
         public static JTokenVM FromJson(JToken token, JSchema schema)
         {
-            if (token == null) token = JValue.CreateNull();   
-       
-            //Check @todo
+            if (token == null || JValue.DeepEquals(JValue.CreateNull(), token as JValue))
+            {
+                if (schema.Type.HasFlag(JSchemaType.Object))
+                   return JObjectVM.Create(schema, null);
+                if (schema.Type.HasFlag(JSchemaType.Array))
+                    return JArrayVM.Create(schema, null);
+                return JValueVM.Create(schema, null);
+            }
 
             switch (token.Type)
             {
@@ -203,11 +209,11 @@ namespace VitML.JsonVM.Linq
 
         public override JToken ToJToken()
         {
+            if (!HasValue) return null;
             var obj = new JObject();
             foreach (var pair in this.Properties)
             {
                 JTokenVM value = (JTokenVM)pair.Value;
-                if (!HasValue) continue;
                 bool ignore = value.Schema.GetIgnore();
                 if (ignore) continue;
                 if (pair.Value is JTokenVM)

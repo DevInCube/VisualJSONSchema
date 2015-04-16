@@ -105,8 +105,16 @@ namespace VitML.JsonSchemaControlBuilder.Views
             object tag = ((Button)sender).Tag;
             JTokenVM token = tag as JTokenVM;
             DataGenerationSettings settings = new DataGenerationSettings();
-            settings.Force = true;
+            settings.Force = ForceLevel.ForceFirst;
             token.SetData(token.Schema.GenerateData(settings));
+        }
+
+        private void OnCreateNull(object sender, RoutedEventArgs e)
+        {
+            object tag = ((Button)sender).Tag;
+            JTokenVM token = tag as JTokenVM;
+
+            token.SetData(null);
         }
     }
 }
