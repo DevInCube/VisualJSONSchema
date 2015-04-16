@@ -214,6 +214,8 @@ namespace VitML.JsonVM.Linq
             foreach (var pair in this.Properties)
             {
                 JTokenVM value = (JTokenVM)pair.Value;
+                if (!value.IsSpecified)
+                    continue;
                 bool ignore = value.Schema.GetIgnore();
                 if (ignore) continue;
                 if (pair.Value is JTokenVM)

@@ -87,7 +87,8 @@ namespace VitML.JsonSchemaControlBuilder.Views
 
             if (objVM != null)
             {
-                objVM.SetData(objVM.Schema.GenerateData());               
+                objVM.SetData(objVM.Schema.GenerateData());
+                objVM.IsSpecified = true;
             }
         }
 
@@ -97,6 +98,7 @@ namespace VitML.JsonSchemaControlBuilder.Views
             if (objVM != null)
             {
                 objVM.SetData(null);
+                objVM.IsSpecified = false;
             }
         }
 

@@ -19,6 +19,7 @@ namespace VitML.JsonVM.Linq
 
         private JSchema originalSchema;
         private bool _HasValue;
+        private bool _IsSpecified;
         private JSchema _Schema;
         private PropertyStyle _Style;
         private string _KeyTitle;
@@ -62,6 +63,12 @@ namespace VitML.JsonVM.Linq
             set { _HasValue = value; OnPropertyChanged("HasValue"); }
         }
 
+        public bool IsSpecified
+        {
+            get { return _IsSpecified; }
+            set { _IsSpecified = value; OnPropertyChanged("IsSpecified"); }
+        }
+
         public bool IsNullable
         {
             get { return _IsNullable; }
@@ -72,7 +79,8 @@ namespace VitML.JsonVM.Linq
 
         public JTokenVM()
         {
-            IsRequired = true;            
+            IsRequired = true;
+            IsSpecified = true;
         }
 
         public virtual void SetSchema(JSchema schema)
