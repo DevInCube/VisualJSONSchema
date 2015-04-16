@@ -4,6 +4,7 @@ using Newtonsoft.Json.Schema;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,7 +16,8 @@ namespace VitML.JsonVM.ConsoleTest
     {
         static void Main(string[] args)
         {
-
+            MySchemaTest.Run();
+            return;
             string shStr = @"{
     'id' : 'http://valid.com/#',
     'definitions' : {

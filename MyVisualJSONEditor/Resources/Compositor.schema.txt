@@ -2,6 +2,9 @@
     "$schema":"http://json-schema.org/draft-04/schema#",
     "id":"http://vit.com.ua/edgeserver/compositor#",
 
+	title:'Compositor',
+	description:'Compositor',
+
     "type":"object",
 	'format':'tab',
 
@@ -15,7 +18,8 @@
 
             "id":"Source",
             "type":"object",
-
+			
+			title:'Source',
 			'description' : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
 
 
@@ -59,33 +63,34 @@
 
                         "properties":{
                             "Name":{
-                                "id":"Name",
+                                "title":"Name",
                                 "type":"string",
 								'default':'name',
                             },
                             "Prefix":{
-                                "id":"Prefix",
+                                "title":"Prefix",
                                 "type":"string"
                             },
                             "Suffix":{
-                                "id":"Suffix",
+                                "title":"Suffix",
                                 "type":"string"
                             },
                             "Dir":{
-                                "id":"Dir",
+                                "title":"Dir",
                                 "type":"string"
                             },
-                            "Remove":{
-                                "id":"Remove",
+                            "Remove":{                                
                                 "type":"boolean",
+                                
+                                'title' : 'Remove',
 								'description' : "Lorem Ipsum is simply dummy text of the printing and",
                             },
-                            "Sink":{
-                                "id":"Sink",
-                                "type":"boolean"
+                            "Sink":{                                
+                                "type":"boolean",                                
+                                title:'Sink',
                             },
                             "Tout":{
-                                "id":"Tout",
+                                "title":"Tout",
                                 "type":"integer"
                             },
                         },
@@ -104,6 +109,7 @@
             "id":"Sink",
             "type":"object",
 
+			title:'Sink',
 			'description' : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
 
             "properties":{

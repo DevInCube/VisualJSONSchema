@@ -60,7 +60,7 @@
                         Margin="4 0"
                         VerticalAlignment="Center"
                         Foreground="Black"
-                        FontSize="20"
+                        FontSize="18"
                         FontWeight="Thin"
                         Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}"
                         TextWrapping="Wrap"/>
@@ -175,26 +175,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </DataTemplate>
-            
-            <DataTemplate x:Key="TabRoot">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}" />
-                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Properties, Mode=OneTime}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Expander Header="{Binding Schema.Title, Mode=OneTime, FallbackValue=Header}" IsExpanded="False" >
-                                    <local:JBuilder Data="{Binding Mode=OneTime}" Margin="5"/>
-                                </Expander>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Grid>
-            </DataTemplate>
+            </DataTemplate>          
             
             <DataTemplate x:Key="Enum">
                 <Grid Style="{StaticResource ContainerStyle}">
@@ -429,7 +410,33 @@
                     </Border>
                 </Grid>
             </DataTemplate>
-            
+
+            <DataTemplate x:Key="TabRoot">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Border Style="{StaticResource ObjectBorder}">
+                        <Grid Style="{StaticResource InnerContainerStyle}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Schema.Title, Mode=OneTime}" Style="{StaticResource KeyObjectTextStyle}"/>
+                            <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
+                            <ItemsControl Grid.Row="2" ItemsSource="{Binding Properties, Mode=OneTime}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Expander Header="{Binding Value.Schema.Title, Mode=OneTime}" IsExpanded="False" >
+                                            <local:JBuilder Data="{Binding Value, Mode=OneTime}" Margin="5"/>
+                                        </Expander>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </DataTemplate>            
+
             <DataTemplate x:Key="ObjectSimple">
                 <local:JBuilder Data="{Binding Value, Mode=OneTime}" />
             </DataTemplate>
