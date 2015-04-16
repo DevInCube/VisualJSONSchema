@@ -18,6 +18,10 @@ namespace VitML.JsonVM
 
         public object GetValue(string path)
         {
+            if (path == null) throw new ArgumentNullException("path");
+
+            if (String.IsNullOrWhiteSpace(path)) return this.tokenVM;
+
             StringBuilder nameBuffer = new StringBuilder();
             string propName = null;
             int index = 0;
@@ -40,8 +44,7 @@ namespace VitML.JsonVM
                     }
                     else if (obj is JObjectVM)
                     {
-                        /*
-                        JPropertyVM prop = (obj as JObjectVM).Properties.FirstOrDefault(x => x.Key == propName);
+                        KeyValuePair<string, JTokenVM> prop = (obj as JObjectVM).Properties.FirstOrDefault(x => x.Key == propName);                        
                         if (!hasIndexer)
                         {
                             if (isEOF)
@@ -70,7 +73,7 @@ namespace VitML.JsonVM
                             {
                                 throw new Exception("cant call indexer on JObjectVM");
                             }
-                        }*/
+                        }
                     }
                     continue;
                 }
@@ -110,6 +113,15 @@ namespace VitML.JsonVM
                 buffer.Append(ch);
             }
             throw new Exception("unclosed indexer");
+        }
+
+        public JTokenVM GetToken(string path)
+        {
+            object res = GetValue(path);
+            if (res is KeyValuePair<string, JTokenVM>)
+                return ((KeyValuePair<string, JTokenVM>)res).Value;
+            else
+                return res as JTokenVM;
         }
     }
 }

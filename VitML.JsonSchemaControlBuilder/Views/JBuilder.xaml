@@ -209,9 +209,11 @@
                                 Click="OnAddArrayObject" Tag="{Binding Mode=OneTime}"
                                 Style="{StaticResource FlatButton}"/>
                         <TextBlock Text="{Binding Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
-                                   Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" />
+                                   Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" 
+                                   VerticalAlignment="Center"/>
                     </StackPanel>
                     <Grid Grid.Row="3" 
+                          Height="{Binding Style.Height, Mode=OneWay, FallbackValue=Auto}"
                           MinHeight="{Binding Style.MinHeight, Mode=OneWay, FallbackValue=Auto}"
                           MaxHeight="{Binding Style.MaxHeight, Mode=OneWay, FallbackValue=Auto}">
                         <Grid.ColumnDefinitions>

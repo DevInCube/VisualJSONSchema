@@ -231,7 +231,7 @@ namespace VitML.JsonVM
                     }
                 }
             }
-            return "Value";
+            return "";
         }
 
         public static bool GetIgnore(this JSchema sh)

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VitML.JsonVM.ViewModels;
 using VitML.JsonVM.Schema;
+using VitML.JsonVM.Common;
 
 namespace VitML.JsonVM.Linq
 {
@@ -19,6 +20,13 @@ namespace VitML.JsonVM.Linq
         private JSchema originalSchema;
         private bool _HasValue;
         private JSchema _Schema;
+        private PropertyStyle _Style;
+
+        public PropertyStyle Style 
+        { 
+            get { return _Style; }
+            private set { _Style = value; OnPropertyChanged("Style"); } 
+        }
 
         /// <summary>Gets or sets the schema of the token. </summary>
         public JSchema Schema
@@ -26,7 +34,12 @@ namespace VitML.JsonVM.Linq
             get { return _Schema;  }
             set 
             { 
-                _Schema = value; 
+                _Schema = value;
+                if (_Schema.ExtensionData.ContainsKey(JSchemaExtendedKeywords.Style))
+                {
+                    var ext = _Schema.ExtensionData[JSchemaExtendedKeywords.Style];
+                    Style = PropertyStyle.Parse(ext);
+                }
                 OnPropertyChanged("Schema");
             }
         }

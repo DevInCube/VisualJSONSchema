@@ -231,13 +231,49 @@ namespace VitML.JsonVM.Linq
             return GetValue(name) as JPropertyVM;
         }
 
-        public string DisplayMemberPathPropertyName { 
-            get { return this.Schema.GetDisplayMemberPath(); }
+        public string DisplayMemberPathPropertyName 
+        { 
+            get 
+            { 
+                var path = this.Schema.GetDisplayMemberPath();
+                if(String.IsNullOrWhiteSpace(path))
+                {
+                    if (Properties.Count > 0)
+                        return Properties.First().Key;
+                    else
+                    {
+                        if (Schema != null)
+                            return Schema.Title ?? "";
+                        else
+                            return "";
+                    }
+                }
+                else
+                {
+                    return path;
+                }
+            }
         }
 
-        public object DisplayMemberPath
+        public string DisplayMemberPath
         {
-            get { return "null";}// Data[DisplayMemberPathPropertyName]; }
+            get {
+                var pathReader = new JPathReader(this);
+                var path = DisplayMemberPathPropertyName;
+                JTokenVM token = pathReader.GetToken(path);
+                string result = null;
+                if (token != null)
+                {
+                    if (token is JValueVM)
+                        result = (token as JValueVM).Value.ToString();
+                    else
+                        result = token.ToJson();
+                }
+                if (string.IsNullOrWhiteSpace(result))
+                    return String.Format("{0}:<empty>", path);
+                else
+                    return result;
+            }
         }
 
         void JObjectVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
