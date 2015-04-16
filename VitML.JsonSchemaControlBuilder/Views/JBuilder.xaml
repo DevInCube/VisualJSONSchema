@@ -605,7 +605,10 @@
 
             <DataTemplate x:Key="Null">
                 <Grid Style="{StaticResource ContainerStyle}">
-                    <Label Content="NULL" Foreground="IndianRed"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="NULL" Foreground="IndianRed" VerticalAlignment="Center"/>
+                        <Button Content="Create" Click="OnCreateFromNull" Style="{StaticResource FlatButton}" Tag="{Binding}"/>
+                    </StackPanel>
                 </Grid>
             </DataTemplate>
 

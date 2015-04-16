@@ -17,6 +17,7 @@ using VitML.JsonVM.Linq;
 using VitML.JsonVM;
 using VitML.JsonVM.Schema;
 using My.Json.Schema;
+using VitML.JsonVM.Generation;
 
 namespace VitML.JsonSchemaControlBuilder.Views
 {
@@ -97,6 +98,15 @@ namespace VitML.JsonSchemaControlBuilder.Views
             {
                 objVM.SetData(null);
             }
+        }
+
+        private void OnCreateFromNull(object sender, RoutedEventArgs e)
+        {
+            object tag = ((Button)sender).Tag;
+            JTokenVM token = tag as JTokenVM;
+            DataGenerationSettings settings = new DataGenerationSettings();
+            settings.Force = true;
+            token.SetData(token.Schema.GenerateData(settings));
         }
     }
 }

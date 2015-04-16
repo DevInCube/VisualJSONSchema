@@ -51,6 +51,7 @@
             "properties":{
 
                 "meta_queue_set":{
+
                     "title":"meta_queue_set",
                     "type":"array",
                     'format' : 'list',
