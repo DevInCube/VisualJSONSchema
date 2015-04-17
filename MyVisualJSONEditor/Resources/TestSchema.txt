@@ -321,14 +321,13 @@
 			'Style' : {
 				'MinHeight' : 200,
 				'MaxHeight' : 200,
+				'ShowCount' : true,
+				'DisplayMemberPath' : 'someCount',
 			},
             
             'items' : {
+
                 'type':'object',
-                
-                'Style' : {
-                	'DisplayMemberPath' : 'someCount',
-                },
                 
                 'properties':{
                     'someCount':{

@@ -9,6 +9,40 @@ namespace VitML.JsonVM.Tests
     [TestClass]
     public class DataGeneratorTests
     {
+
+        [TestMethod]
+        public void Generate_TypeString_CreatesEmptyString()
+        {
+            JSchema sh = JSchema.Parse(@"{type:'string'}");
+
+            DataGenerator gen = new DataGenerator(sh);
+            JToken res = gen.Generate();
+
+            Assert.IsTrue(JToken.DeepEquals(JValue.CreateString(String.Empty), res));
+        }
+
+        [TestMethod]
+        public void Generate_ArrayItemsAsStringWithMin_CreatesArrayWithOneString()
+        {
+            JSchema sh = JSchema.Parse(@"{type:'array', items:{type:'string'}, minItems:1}");
+
+            DataGenerator gen = new DataGenerator(sh);
+            JToken res = gen.Generate();
+
+            Assert.IsTrue(JToken.DeepEquals(JArray.Parse("['']"), res));
+        }
+
+        [TestMethod]
+        public void Generate_ArrayItemsArrayAsStringWithMin_CreatesArrayWithOneString()
+        {
+            JSchema sh = JSchema.Parse(@"{type:'array', items:[{type:'string'}], minItems:1}");
+
+            DataGenerator gen = new DataGenerator(sh);
+            JToken res = gen.Generate();
+
+            Assert.IsTrue(JToken.DeepEquals(JArray.Parse("['']"), res));
+        }
+
         [TestMethod]
         public void Generate_UnforcedObject_CreatesJNull()
         {

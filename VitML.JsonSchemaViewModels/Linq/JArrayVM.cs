@@ -19,6 +19,11 @@ namespace VitML.JsonVM.Linq
     public class JArrayVM : JTokenVM
     {
 
+        private int _SelectedIndex;
+        private string _DisplayMemberPathPropertyName;
+        private ObservableCollection<JTokenVM> _Items;
+
+
         public IJsonArray Data { get; private set; }
 
         private JArrayVM()
@@ -65,8 +70,6 @@ namespace VitML.JsonVM.Linq
             return jArray;
         }
 
-        private ObservableCollection<JTokenVM> _Items;
-
         public ObservableCollection<JTokenVM> Items
         {
             get { return _Items; }
@@ -75,9 +78,7 @@ namespace VitML.JsonVM.Linq
                 _Items = value;
                 OnPropertyChanged("Items");
             }
-        }
-        
-        private int _SelectedIndex;
+        }              
 
         public int SelectedIndex
         {
@@ -99,11 +100,20 @@ namespace VitML.JsonVM.Linq
             }
         }
 
+        public string DisplayMemberPathPropertyName
+        {
+            get { return _DisplayMemberPathPropertyName; }
+        }
+
         public override void SetData(JToken data)
         {
             base.SetData(data);
 
-            if (data == null || data.Type == JTokenType.Null) return;//@todo
+            if (data == null || data.Type == JTokenType.Null)
+            {
+                OnPropertyChanged("Items");
+                return;//@todo
+            }
 
             if (!(data is JArray)) throw new Exception("data is not JArray");
 
@@ -121,6 +131,14 @@ namespace VitML.JsonVM.Linq
             }
             OnPropertyChanged("Items");
         }
+
+        public override void SetSchema(JSchema schema)
+        {
+            base.SetSchema(schema);
+
+            var defaultPath = this.Schema.GetDisplayMemberPath();
+            _DisplayMemberPathPropertyName = defaultPath;
+        }        
 
         public static JArrayVM Create(JSchema schema, JArray array)
         {

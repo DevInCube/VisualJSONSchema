@@ -24,8 +24,7 @@ namespace VitML.JsonVM.Linq
 
     /// <summary>Represents a JSON object. </summary>
     public class JObjectVM : JTokenVM
-    {
-        private string _DisplayMemberPath;
+    {        
 
         public PropertyDictionary Properties { get; private set; }
 
@@ -93,6 +92,10 @@ namespace VitML.JsonVM.Linq
                         }
                     }
                 };
+                arrVm.PropertyChanged += (se1, e1) =>
+                {
+                    this.OnPropertyChanged(String.Format("{0}.{1}", key, e1.PropertyName));
+                };
                 //@todo
             } 
         }
@@ -119,9 +122,7 @@ namespace VitML.JsonVM.Linq
                     Properties.Add(key, Create(pSchema, null));
                 }
             }
-
-            var defaultPath = this.Schema.GetDisplayMemberPath();
-            _DisplayMemberPath = ResolveDisplayMemberPath(defaultPath);
+            
         }
 
         private string ResolveDisplayMemberPath(string defaultPath)
@@ -259,18 +260,13 @@ namespace VitML.JsonVM.Linq
                 throw new NotImplementedException("cant set to " + obj.GetType());
             else
                 throw new NotImplementedException("cant set to " + obj.GetType());
-        }
+        }      
 
-        public string DisplayMemberPathPropertyName 
-        {
-            get { return _DisplayMemberPath; }
-        }
-
-        public string DisplayMemberPath
+        public override string DisplayMemberPath
         {
             get {
                 var pathReader = new JPathReader(this);
-                var displayPath = DisplayMemberPathPropertyName;
+                var displayPath = ResolveDisplayMemberPath(ParentList.DisplayMemberPathPropertyName);
                 JTokenVM token = pathReader.GetToken(displayPath);
                 string result = null;
                 if (token != null)
@@ -289,8 +285,9 @@ namespace VitML.JsonVM.Linq
 
         void JObjectVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName.Equals(DisplayMemberPathPropertyName))
-                OnPropertyChanged("DisplayMemberPath");
+            if (ParentList != null)
+                if (e.PropertyName.Equals(ResolveDisplayMemberPath(ParentList.DisplayMemberPathPropertyName)))
+                    OnPropertyChanged("DisplayMemberPath");
         }
     }
 

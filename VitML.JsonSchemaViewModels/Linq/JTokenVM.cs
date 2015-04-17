@@ -23,7 +23,7 @@ namespace VitML.JsonVM.Linq
         private JSchema _Schema;
         private PropertyStyle _Style;
         private string _KeyTitle;
-        private bool _IsNullable;
+        private bool _IsNullable;        
 
         public string KeyTitle
         {
@@ -77,6 +77,8 @@ namespace VitML.JsonVM.Linq
 
         public List<JSchema> AlternativeSchemas { get; private set; }
 
+        public virtual string DisplayMemberPath { get { return "<>"; } }
+
         public JTokenVM()
         {
             IsRequired = true;
@@ -97,7 +99,7 @@ namespace VitML.JsonVM.Linq
             this.Schema = schema;
 
             _KeyTitle = Schema.Title;
-            IsNullable = Schema.Type.HasFlag(JSchemaType.Null);
+            IsNullable = Schema.Type.HasFlag(JSchemaType.Null);            
         }
 
         public virtual void SetData(JToken data)

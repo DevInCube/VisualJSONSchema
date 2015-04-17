@@ -110,16 +110,7 @@ namespace VitML.JsonVM.Generation
                         {
                             if (sh.MinItems != null)
                             {
-                                if (sh.ItemsSchema != null)
-                                {
-                                    for (int i = 0; i < sh.MinItems; i++)
-                                    {
-                                        var gen = new DataGenerator(sh.ItemsSchema);
-                                        JToken token = gen.Generate(settings);
-                                        arr.Add(token);
-                                    }
-                                }
-                                else if (sh.ItemsArray.Count > 0)
+                                if (sh.ItemsArray.Count > 0)
                                 {
                                     for (int i = 0; i < sh.MinItems; i++)
                                     {
@@ -133,6 +124,15 @@ namespace VitML.JsonVM.Generation
                                             itemSchema = sh.AdditionalItems;
                                         }
                                         var gen = new DataGenerator(itemSchema);
+                                        JToken token = gen.Generate(settings);
+                                        arr.Add(token);
+                                    }
+                                }
+                                else if (sh.ItemsSchema != null)
+                                {
+                                    for (int i = 0; i < sh.MinItems; i++)
+                                    {
+                                        var gen = new DataGenerator(sh.ItemsSchema);
                                         JToken token = gen.Generate(settings);
                                         arr.Add(token);
                                     }
@@ -162,6 +162,11 @@ namespace VitML.JsonVM.Generation
                 default:
                     return null;
             }
+        }
+
+        public JToken Generate()
+        {
+            return Generate(new DataGenerationSettings());
         }
     }
 }

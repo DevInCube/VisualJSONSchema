@@ -167,12 +167,15 @@
                 <Setter Property="Foreground" Value="LightSteelBlue"/>
                 <Setter Property="FontWeight" Value="Thin"/>
                 <Setter Property="FontSize" Value="18"/>
-            </Style>         
-            
+            </Style>
+
+            <Style x:Key="CountLabel" TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="4,0,0,0"/>                
+            </Style>
+
             <DataTemplate x:Key="Enum">
-                <ComboBox  ItemsSource="{Binding Schema.Enum}" 
-                            SelectedItem="{Binding Value}" 
-                            Style="{StaticResource ComboStyle}"/>
+                <ComboBox ItemsSource="{Binding Schema.Enum}" SelectedItem="{Binding Value}" Style="{StaticResource ComboStyle}"/>
             </DataTemplate>
             
             <DataTemplate x:Key="List">
@@ -182,15 +185,15 @@
                         <RowDefinition />                        
                     </Grid.RowDefinitions>
                     
-                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
                         <Button Content="Add"
                                 Click="OnAddArrayObject" Tag="{Binding Mode=OneTime}"
                                 Style="{StaticResource FlatButton}"/>
                         <TextBlock Text="{Binding Items.Count, Mode=OneWay, StringFormat=Count: {0}, FallbackValue=Count: -1}" 
-                                   Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisibilityConverter}, FallbackValue=False}" 
-                                   VerticalAlignment="Center"/>
+                                   Visibility="{Binding Style.ShowCount, Mode=OneWay, Converter={StaticResource VisConverter}, FallbackValue=False}" 
+                                   Style="{StaticResource CountLabel}"/>
                     </StackPanel>
-                    <Grid Grid.Row="2" 
+                    <Grid Grid.Row="1" 
                           Height="{Binding Style.Height, Mode=OneWay, FallbackValue=Auto}"
                           MinHeight="{Binding Style.MinHeight, Mode=OneWay, FallbackValue=Auto}"
                           MaxHeight="{Binding Style.MaxHeight, Mode=OneWay, FallbackValue=Auto}">
@@ -219,15 +222,15 @@
             </DataTemplate>
             
             <DataTemplate x:Key="SelectList">
-                <ComboBox ItemsSource="{Binding Items, Mode=OneTime}" 
-                              SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
-                              DisplayMemberPath="{Binding Style.DisplayMemberPath, Mode=OneTime, FallbackValue=Value}"
-                              VerticalAlignment="Top" Style="{StaticResource ComboStyle}">
+                <ComboBox ItemsSource="{Binding Items, Mode=OneTime}"
+                            SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                            DisplayMemberPath="{Binding DisplayMemberPath, Mode=OneTime, FallbackValue=Value}"
+                            VerticalAlignment="Top" Style="{StaticResource ComboStyle}">
                 </ComboBox>
             </DataTemplate>
             
             <DataTemplate x:Key="ArrayStatic">
-                <ItemsControl   ItemsSource="{Binding Value.Items, Mode=OneTime}" Focusable="False" Margin="5" >
+                <ItemsControl   ItemsSource="{Binding Items, Mode=OneTime}" Focusable="False" Margin="5" >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <local:JBuilder Data="{Binding Mode=OneTime}" />

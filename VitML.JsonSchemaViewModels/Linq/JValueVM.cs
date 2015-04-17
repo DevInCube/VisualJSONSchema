@@ -13,10 +13,25 @@ namespace VitML.JsonVM.Linq
     public class JValueVM : JTokenVM
     {
 
+        public override string DisplayMemberPath
+        {
+            get
+            {
+                return (Value != null) ? Value.ToString() : "<empty>";
+            }
+        }
+
         /// <summary>Initializes a new instance of the <see cref="JsonValueModel"/> class. </summary>
         private JValueVM()
         {
             //this["Value"] = null;
+            PropertyChanged += JValueVM_PropertyChanged;
+        }
+
+        void JValueVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("Value"))
+                OnPropertyChanged("DisplayMemberPath");
         }
 
         /// <summary>Converts the <see cref="JsonTokenModel"/> to a <see cref="JToken"/>. </summary>
