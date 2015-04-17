@@ -12,12 +12,15 @@
 			'properties' : {
                       
 				"Prefix":{
+					title:'Prefix',
 					'type' : 'string',
 				},                            
 				"Suffix":{
+					title:'Suffix',
 					'type' : 'string',
 				},                              
 				"Dir":{
+					title:'Dir',
 					'type' : 'string',
 				}
 			},
@@ -29,24 +32,24 @@
 			
 			'type' : 'object',
 
-			'properties' : {
+			allOf : [				
+				{
+					'type' : 'object',
+					'properties' : {
 
-				"Channel": {
-					'type' : 'string',
-				},                             
-				"Prefix":{
-					'type' : 'string',
-				},                            
-				"Suffix":{
-					'type' : 'string',
-				},                              
-				"Dir":{
-					'type' : 'string',
-				}
-			},
+						"Channel": {
+							title:'Channel',
+							'type' : 'string',
+						},                             				
+					},
 
-			"required" : [ 'Channel', 'Prefix', 'Suffix', 'Dir' ],
-			"additionalProperties": false,
+					"required" : [ 'Channel' ],
+					"additionalProperties": false,
+				},
+				{'$ref':'#/definitions/EventDir'},
+			],
+
+			
 		},
 
 	}

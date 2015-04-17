@@ -224,7 +224,7 @@
             <DataTemplate x:Key="SelectList">
                 <ComboBox ItemsSource="{Binding Items, Mode=OneTime}"
                             SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
-                            DisplayMemberPath="{Binding DisplayMemberPath, Mode=OneTime, FallbackValue=Value}"
+                            DisplayMemberPath="DisplayMemberPath"
                             VerticalAlignment="Top" Style="{StaticResource ComboStyle}">
                 </ComboBox>
             </DataTemplate>

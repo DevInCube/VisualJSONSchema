@@ -60,6 +60,7 @@
     <Compile Include="SchemaExtensionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataGeneratorTests.cs" />
+    <Compile Include="LocalizationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VitML.JsonSchemaViewModels\VitML.JsonVM.csproj">

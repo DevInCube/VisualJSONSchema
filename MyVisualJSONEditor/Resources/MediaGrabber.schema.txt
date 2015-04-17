@@ -3,11 +3,15 @@
     "id":"http://vit.com.ua/edgeserver/mediagrabber#",
 
     "type":"object",
+    'format':'tab',
+
+	title:'Media Grabber',
+	description:'Media grabber description',
 
     "properties":{
 
         "TxPipes":{
-            "id":"TxPipes",
+            "title":"TxPipes",
             "type":"array",
 
             "items": {
@@ -18,32 +22,32 @@
         },
 
         "Driver":{
-            "id":"Driver",
+            "title":"Driver",
             "type":"object",
 
             "properties":{
                 "Vendor":{
-                    "id":"Vendor",
+                    "title":"Vendor",
                     "type":"string"
                 },
                 "Model":{
-                    "id":"Model",
+                    "title":"Model",
                     "type":"string"
                 },
                 "Firmware":{
-                    "id":"Firmware",
+                    "title":"Firmware",
                     "type":"string"
                 },
                 "Id":{
-                    "id":"Id",
+                    "title":"Id",
                     "type":"string"
                 },
                 "File":{
-                    "id":"File",
+                    "title":"File",
                     "type":"string"
                 },
                 "ParamSet":{
-                    "id":"ParamSet",
+                    "title":"ParamSet",
                     "type":"object",
                     "properties":{
 
@@ -54,10 +58,13 @@
 			"additionalProperties": false,
         },
 
-        "FrameExport" : { '$ref' : 'definitions#/definitions/EventDir' },
+        "FrameExport" : { 
+        	title:'FrameExport',
+        	allOf:[{'$ref' : 'definitions#/definitions/EventDir' }]
+        },
 
         "SceneExport":{
-            "id":"SceneExport",
+            "title":"SceneExport",
             "type":"object",
 
             "properties":{
@@ -72,13 +79,13 @@
         },
 
         "FileApi":{
-            "id":"FileApi",
+            "title":"FileApi",
             "type":"object",
 
             "properties":{
 
                 "HaltEvent":{
-                    "id":"HaltEvent",
+                    "title":"HaltEvent",
                     "type":"object",
 
 					'allOf' : [

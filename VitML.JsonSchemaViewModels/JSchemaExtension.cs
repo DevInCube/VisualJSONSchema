@@ -9,6 +9,9 @@ using System.Net;
 using VitML.JsonVM.Linq;
 using VitML.JsonVM.Schema;
 using VitML.JsonVM.Generation;
+using System.Globalization;
+using VitML.JsonVM.Localization;
+using System.Text.RegularExpressions;
 
 namespace VitML.JsonVM
 {
@@ -188,6 +191,15 @@ namespace VitML.JsonVM
                     propertySchema = pSchema.AdditionalItems;
             }
             return propertySchema;
+        }
+
+        public static void Localize(this JSchema schema, SchemaLocalizationData lang, CultureInfo info)
+        {
+            Regex regex = new Regex(@"\{\$loc\:.*\}");
+            foreach (Match match in regex.Matches(schema.Title))
+            {
+
+            }            
         }
     }
 }
