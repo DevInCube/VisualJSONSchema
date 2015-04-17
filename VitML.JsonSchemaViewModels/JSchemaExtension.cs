@@ -192,17 +192,5 @@ namespace VitML.JsonVM
             }
             return propertySchema;
         }
-
-        public static void Localize(this JSchema schema, SchemaLocalizationData lang, CultureInfo info)
-        {
-            Regex regex = new Regex(@"\{\$loc\:(.*?)\}");
-            foreach (Match match in regex.Matches(schema.Title))
-            {
-                string locKey = match.Groups[1].Value;
-                string locValue = lang.GetString(locKey, info);
-                if (locValue == null) locValue = locKey;
-                schema.Title = schema.Title.Replace("{$loc:" + locKey + "}", locValue);
-            }            
-        }
     }
 }

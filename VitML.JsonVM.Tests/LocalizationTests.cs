@@ -12,9 +12,7 @@ namespace VitML.JsonVM.Tests
     {
         [TestMethod]
         public void Loc_SetUALocalization_OK()
-        {
-            JSchema schema = JSchema.Parse("{title:'{$loc:title} 0'}");
-
+        {            
             SchemaLocalizationData lang = SchemaLocalizationData.Parse(@"
 {
     'uk-UA' : {
@@ -22,17 +20,34 @@ namespace VitML.JsonVM.Tests
     }
 }
 ");
-
-            schema.Localize(lang, new CultureInfo("uk-UA"));
+            string schemaStr = "{title:'{$loc:title} 0'}";
+            schemaStr = lang.Localize(schemaStr, new CultureInfo("uk-UA"));
+            JSchema schema = JSchema.Parse(schemaStr);
 
             Assert.AreEqual("Заголовок 0", schema.Title);
         }
 
         [TestMethod]
+        public void Loc_SetInnerSchemaUALocalization_OK()
+        {
+            SchemaLocalizationData lang = SchemaLocalizationData.Parse(@"
+{
+    'uk-UA' : {
+        'title' : 'Заголовок',
+        'title2' : 'Тест',
+    }
+}
+");
+            string schemaStr = "{title:'{$loc:title} 0', properties:{'test':{title:'{$loc:title2}'}}}";
+            schemaStr = lang.Localize(schemaStr, new CultureInfo("uk-UA"));
+            JSchema schema = JSchema.Parse(schemaStr);
+
+            Assert.AreEqual("Тест", schema.Properties["test"].Title);
+        }
+
+        [TestMethod]
         public void Loc_SetNonExistanceLang_LeavesKey()
         {
-            JSchema schema = JSchema.Parse("{title:'{$loc:title} 0'}");
-
             SchemaLocalizationData lang = SchemaLocalizationData.Parse(@"
 {
     'uk-UA' : {
@@ -40,8 +55,9 @@ namespace VitML.JsonVM.Tests
     }
 }
 ");
-
-            schema.Localize(lang, new CultureInfo("ru-RU"));
+            string schemaStr = "{title:'{$loc:title} 0'}";
+            schemaStr = lang.Localize(schemaStr, new CultureInfo("ru-RU"));
+            JSchema schema = JSchema.Parse(schemaStr);
 
             Assert.AreEqual("title 0", schema.Title);
         }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace VitML.JsonVM.Localization
 {
@@ -45,6 +46,20 @@ namespace VitML.JsonVM.Localization
                 }
             }
             return null;
+        }
+
+        public string Localize(string schemaStr, CultureInfo cultureInfo)
+        {
+            string pattern = @"\{\$loc\:(.*?)\}";
+            Regex regex = new Regex(pattern);
+            string replaced = Regex.Replace(schemaStr, pattern, 
+                m => {
+                    string locKey = m.Groups[1].Value;
+                    string locValue = GetString(locKey, cultureInfo);
+                    if (locValue == null) locValue = locKey;
+                    return locValue;
+                });
+            return replaced;    
         }
     }
 }
