@@ -123,10 +123,10 @@
             </Style>
 
             <Style x:Key="RemoveArrayItemButton" TargetType="Button" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <Setter Property="Width" Value="26"/>
-                <Setter Property="Height" Value="26"/>
+                <Setter Property="Width" Value="23"/>
+                <Setter Property="Height" Value="23"/>
                 <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Margin" Value="3,0,0,0"/>
                 <Setter Property="VerticalAlignment" Value="Top"/>
             </Style>
 
@@ -326,7 +326,7 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                             <Button Grid.Column="1" 
-                                        Content="NULL"
+                                        Content="X"
                                         Click="OnCreateNull" 
                                         Tag="{Binding Mode=OneTime}" 
                                         Style="{StaticResource RemoveArrayItemButton}"
