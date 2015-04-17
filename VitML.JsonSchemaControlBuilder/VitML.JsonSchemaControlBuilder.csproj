@@ -77,8 +77,8 @@
     <Compile Include="Views\Controls\BindablePasswordBox.xaml.cs">
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\RequireBuilderTemplateSelector.cs" />
-    <Compile Include="Views\Controls\JBuilderTemplateSelector.cs" />
+    <Compile Include="Views\Controls\ViewBuilderTemplateSelector.cs" />
+    <Compile Include="Views\Controls\TokenBuilderTemplateSelector.cs" />
     <Compile Include="Views\Controls\TabControlEx.cs" />
     <Compile Include="Views\Converters\VisConverter.cs" />
     <Compile Include="Views\Converters\DateTimeConverter.cs" />
@@ -93,11 +93,11 @@
     <Compile Include="Views\Converters\NumberRangeConverter.cs" />
     <Compile Include="Views\Converters\TimeConverter.cs" />
     <Compile Include="Views\ExpandingGroupBox.cs" />
-    <Compile Include="Views\JBuilder.xaml.cs">
-      <DependentUpon>JBuilder.xaml</DependentUpon>
+    <Compile Include="Views\TokenBuilder.xaml.cs">
+      <DependentUpon>TokenBuilder.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RequireBuilder.xaml.cs">
-      <DependentUpon>RequireBuilder.xaml</DependentUpon>
+    <Compile Include="Views\ViewBuilder.xaml.cs">
+      <DependentUpon>ViewBuilder.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -105,11 +105,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\JBuilder.xaml">
+    <Page Include="Views\TokenBuilder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RequireBuilder.xaml">
+    <Page Include="Views\ViewBuilder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

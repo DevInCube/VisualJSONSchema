@@ -24,16 +24,16 @@ namespace VitML.JsonSchemaControlBuilder.Views
     /// <summary>
     /// Interaction logic for JBuilder.xaml
     /// </summary>
-    public partial class JBuilder : UserControl
+    public partial class TokenBuilder : UserControl
     {
 
-        public JBuilder()
+        public TokenBuilder()
         {
             InitializeComponent();
         }
 
         public static readonly DependencyProperty DataProperty = DependencyProperty.Register(
-            "Data", typeof(object), typeof(JBuilder), new PropertyMetadata(default(object), OnChange));
+            "Data", typeof(object), typeof(TokenBuilder), new PropertyMetadata(default(object), OnChange));
 
         /// <summary>Gets or sets the <see cref="JsonObjectModel"/> to edit with the editor. </summary>
         public object Data
@@ -44,7 +44,7 @@ namespace VitML.JsonSchemaControlBuilder.Views
 
         private static void OnChange(object o, DependencyPropertyChangedEventArgs args)
         {
-            (o as JBuilder).Update();
+            (o as TokenBuilder).Update();
         }
 
         private void Update()

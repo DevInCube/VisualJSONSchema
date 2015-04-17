@@ -103,7 +103,7 @@
                             </DockPanel>
                             <DockPanel Height="Auto" Margin="10,5,5,5" Grid.Column="1">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                    <bld2:JBuilder x:Name="builder" Data="{Binding Data}"/>
+                                    <bld2:ViewBuilder x:Name="builder" Data="{Binding Data}"/>
                                 </ScrollViewer>
                             </DockPanel>
                         </DockPanel>

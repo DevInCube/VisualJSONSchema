@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="VitML.JsonSchemaControlBuilder.Views.RequireBuilder"
+﻿<UserControl x:Class="VitML.JsonSchemaControlBuilder.Views.ViewBuilder"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -131,7 +131,7 @@
                                         Visibility="{Binding IsSpecified, Mode=OneWay, Converter={StaticResource VisConverter}, ConverterParameter=true}"/>
                             </Grid>
                             <Grid Grid.Column="1">
-                                <local:JBuilder  Data="{Binding Mode=OneTime}" Visibility="{Binding IsSpecified, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
+                                <local:TokenBuilder  Data="{Binding Mode=OneTime}" Visibility="{Binding IsSpecified, Mode=OneWay, Converter={StaticResource VisConverter}}"/>
                                 <Label Content="No value" Visibility="{Binding IsSpecified, Mode=OneWay, Converter={StaticResource VisConverter}, ConverterParameter=true}"
                                        Style="{StaticResource NoValueStyle}"/>
                             </Grid>
@@ -151,7 +151,7 @@
 
                     <TextBlock Text="{Binding KeyTitle, Mode=OneTime}" Style="{StaticResource KeyTextStyle}"/>
                     <TextBlock Grid.Row="1" Text="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}" Style="{StaticResource DescTextStyle}"/>
-                    <local:JBuilder Grid.Row="2" Data="{Binding Mode=OneTime}" />
+                    <local:TokenBuilder Grid.Row="2" Data="{Binding Mode=OneTime}" />
                 </Grid>
             </DataTemplate>
 

@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using VitML.JsonSchemaControlBuilder;
 using VitML.JsonVM.Linq;
 using VitML.JsonVM.Schema;
+using VitML.JsonVM;
 
 namespace MyVisualJSONEditor.Views.Controls
 {
@@ -25,7 +26,7 @@ namespace MyVisualJSONEditor.Views.Controls
             if (item is JTokenVM)
             {
                 JTokenVM vm = item as JTokenVM;
-                if(vm.IsRequired)
+                if(vm.IsRequired || vm.Schema.GetIgnore())
                     return (DataTemplate)presenter.Resources["Required"];
                 else
                     return (DataTemplate)presenter.Resources["Unrequired"];                

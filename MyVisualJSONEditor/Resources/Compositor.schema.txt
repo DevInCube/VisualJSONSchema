@@ -26,10 +26,9 @@
             "properties":{
 
                 "MasterName":{
-                    "id":"MasterName",
+                    "title":"MasterName",
                     "type": ["string", "null"],
-					'format':'label',
-					'description' : "Lorem Ipsum is simply dummy text of the printing and",
+					'format':'label',					
                 },
 
 				"SetMaster":{
@@ -37,11 +36,11 @@
                     'format':'button',
 					'ignore':'true',
 					'default':'Set as Master',
-					'description' : "Lorem Ipsum is simply dummy text of the printing and",
+					'description' : "Selected source item will be set as master",
                 },
 
                 "QueueSet":{
-                    "id":"QueueSet",
+                    "title":"QueueSet",
                     "type":"array",
 
 					'description' : "Lorem Ipsum is simply dummy text of the printing and",
@@ -51,15 +50,11 @@
 					'Style' : { 
 						'MaxHeight' : 450,
 						'MinHeight' : 450,
+						'DisplayMemberPath' : 'Prefix',
 					},
 
                     "items": {
                         "type":"object",
-
-
-						'Style' : { 
-							'DisplayMemberPath' : 'Name',
-						},
 
                         "properties":{
                             "Name":{
@@ -106,7 +101,6 @@
         },
 
         "Sink":{
-            "id":"Sink",
             "type":"object",
 
 			title:'Sink',
@@ -114,7 +108,7 @@
 
             "properties":{
                 "QueueSet":{
-                    "id":"QueueSet",
+                    "title":"QueueSet",
                     "type":"array",
 
 					'format' : 'list',
