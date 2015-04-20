@@ -127,5 +127,112 @@ namespace VitML.JsonVM.Tests
 
             Assert.IsTrue(JToken.DeepEquals(JToken.Parse("'foobar'"), data));
         }
+
+        [TestMethod]
+        public void Parse1()
+        {
+            string schemaStr = @"
+
+ {
+	'id' : 'http://vit.com.ua/edgeserver/eventstore#',
+	'$schema': 'http://json-schema.org/draft-04/schema#',
+
+	'title' : 'EventStore main.xconf',
+	'type' : 'object',
+
+	'format' : 'tab',
+
+	'definitions' : {
+
+		'FileApiItem.ParamSet':
+		{
+			'type' : 'object',
+
+			'properties' : 
+			{
+				'Channel': {
+					'type': 'integer'
+				},
+				'Prefix': {
+					'type': 'string'
+				},
+				'Suffix': {
+					'type': 'string'
+				},
+				'Dir': {
+					'type': 'string'
+				},
+			},
+
+			'required' : [ 'Channel', 'Prefix', 'Suffix', 'Dir' ],
+			'additionalProperties': false,
+		}
+	},
+	
+	'properties' : {
+
+
+		'FileApi':
+		{
+			'title' : 'File API',
+			'type' : 'object',
+
+			'properties' : {
+
+				'AddFactReact':
+				{
+					'type' : 'array',
+					'format':'list',
+					
+					'Style' : {
+						'ShowCount' : false,
+						'MaxHeight' : 300,
+						'MinHeight' : 300,
+						'DisplayMemberPath' : 'ParamSet.Channel',
+					},
+
+					'items' : {
+						
+						'title' : 'item',
+						'type' : 'object',
+
+						'properties' : 
+						{
+							'ParamSet':
+							{
+								'type': 'object',
+								'format' : 'simple',
+
+								'oneOf': [
+									{ '$ref': '#/definitions/FileApiItem.ParamSet' }
+								]
+							}
+						},
+						'required' : [ 'ParamSet' ],
+						'additionalProperties': false,
+					},
+					'default' : {
+						'ParamSet': {
+							'Channel': 0,
+							'Prefix': '',
+							'Suffix': '',
+							'Dir': '/tmp/edge/event_store/store/0'
+						}
+					}
+				},
+			},
+
+			'required' : [ 'AddFactReact' ],
+			'additionalProperties': false,
+		}
+	},
+
+	'required' : [ 'FileApi' ],
+	'additionalProperties': false,
+}
+";
+            JSchema schema = JSchema.Parse(schemaStr);            
+            return;
+        }
     }
 }

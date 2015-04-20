@@ -27,16 +27,14 @@ namespace VitML.JsonVM.Linq
     public class JObjectVM : JTokenVM
     {
 
-        private IList<string> _RequiredPropertyNames;        
-
+        public IJsonData Data { get; private set; }
         public PropertyDictionary Properties { get; private set; }
 
         private JObjectVM()
         {
-            //Data = new JsonDataImpl(this);
+            Data = new JsonDataImpl(this);
 
             Properties = new PropertyDictionary();
-
             Properties.CollectionChanged += Properties_CollectionChanged;
 
             this.PropertyChanged += JObjectVM_PropertyChanged;
@@ -47,22 +45,14 @@ namespace VitML.JsonVM.Linq
             if(e.Action == NotifyCollectionChangedAction.Add
                 || e.Action == NotifyCollectionChangedAction.Replace)
             {
-
                 var pair = (KeyValuePair<string, JTokenVM>)(e.NewItems[0]);
                 string key = pair.Key;
                 JTokenVM value = pair.Value;
 
-                value.IsRequired = IsPropertyRequired(key);
+                value.IsRequired = Schema.IsRequired(key);
 
                 BindListener(key, value);
             }
-        }
-
-        public bool IsPropertyRequired(string propertyName)
-        {
-            if (_RequiredPropertyNames == null) 
-                return false;
-            return _RequiredPropertyNames.FirstOrDefault(x => x.Equals(propertyName)) != null;
         }
 
         private void BindListener(string key, JTokenVM value)
@@ -160,10 +150,7 @@ namespace VitML.JsonVM.Linq
 
                     Properties.Add(key, FromJson(null, pSchema));
                 }
-            }
-
-            _RequiredPropertyNames = Schema.Required;
-            
+            }            
         }
 
         private string ResolveDisplayMemberPath(string defaultPath)
@@ -344,7 +331,7 @@ namespace VitML.JsonVM.Linq
 
         public JToken this[string key]
         {
-            get { return vm.GetValue<JToken>(key); }
+            get { return vm.GetToken(key).ToJToken(); }
             set { vm.SetValue(key, value); }
         }
     }

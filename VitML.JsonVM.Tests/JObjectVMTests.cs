@@ -10,6 +10,35 @@ namespace VitML.JsonVM.Tests
     [TestClass]
     public class JObjectVMTests
     {
+
+        [TestMethod]
+        public void Data_SetAndGetString_Matches()
+        {
+            JSchema schema = JSchema.Parse(@"{
+    type:'object',
+    properties:{
+        'prop':{type:'string'}
+    }
+}");
+            JObjectVM vm = JObjectVM.FromSchema(schema) as JObjectVM;
+            vm.Data["prop"] = JValue.CreateString("test");
+            Assert.AreEqual("test", vm.Data["prop"].Value<string>());
+        }
+
+        [TestMethod]
+        public void Data_SetAndGetNumber_Matches()
+        {
+            JSchema schema = JSchema.Parse(@"{
+    type:'object',
+    properties:{
+        'num':{type:'number'}
+    }
+}");
+            JObjectVM vm = JObjectVM.FromSchema(schema) as JObjectVM;
+            vm.Data["num"] = new JValue(5.1D);
+            Assert.AreEqual(5.1D, vm.Data["num"].Value<double>());
+        }
+
         [TestMethod]
         public void Binding_InitialArrayItems_SendNotification()
         {
@@ -35,8 +64,8 @@ namespace VitML.JsonVM.Tests
                 if (ar.PropertyName.Equals("arr[0].prop.Value"))
                 {
                     JObjectVM objVM = (se as JObjectVM);
-                    JToken newvalue = (objVM.GetToken("arr[0].prop") as JValueVM).Value;
-                    if(newvalue.Value<string>().Equals("change"))
+                    string newValue = objVM.Data["arr[0].prop"].Value<string>();
+                    if (newValue.Equals("change"))
                     {
                         notified = true;
                         statsUpdatedEvent.Set();
@@ -44,8 +73,7 @@ namespace VitML.JsonVM.Tests
                 }
             };
 
-            JObjectVM obj = vm.GetValue<JObjectVM>("arr[0]");
-            obj.SetValue("prop", JValue.CreateString("change"));
+            vm.Data["arr[0].prop"] = JValue.CreateString("change");           
 
             statsUpdatedEvent.WaitOne(1000, false);
             Assert.IsTrue(notified);         

@@ -33,8 +33,6 @@ namespace VitML.JsonVM.Linq
             if (Items == null) CreateItems();
             
             this.SelectedIndex = 0;
-           // this.DisplayMemberPath = "";
-           // this.CollectionChanged += JArrayVM_CollectionChanged;
         }
 
         private void CreateItems()
@@ -125,7 +123,7 @@ namespace VitML.JsonVM.Linq
             for (int i = 0; i < array.Count; i++)
             {
                 JToken item = array[i];
-                var propertySchema = this.Schema.GetItemSchemaByIndex(index);
+                var propertySchema = this.Schema.GetItemSchemaByIndex(index).CheckSchema(item);
                 this.Items.Add(JObjectVM.FromJson(item, propertySchema));
             }
             OnPropertyChanged("Items");

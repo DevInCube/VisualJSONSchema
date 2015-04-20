@@ -51,23 +51,18 @@ namespace VitML.JsonVM
             return type.HasFlag(flag);
         }
 
+        public static bool IsRequired(this JSchema Schema, string key)
+        {
+            return Schema.Required.FirstOrDefault(x => x.Equals(key)) != null;
+        }
+
         public static object GetExtension(this JSchema sh, string key)
         {
             var pair = sh.ExtensionData.FirstOrDefault(x => x.Key.Equals(key));
             if (!pair.Equals(default(KeyValuePair<string, JToken>)))
                 return pair.Value;
             return null;
-        }
-
-        private static void Merge(JSchema parent, JSchema child)
-        {            
-            foreach (var p in child.Properties)
-                if (!parent.Properties.ContainsKey(p.Key))
-                    parent.Properties.Add(p);
-            foreach (var r in child.Required)
-                if (!parent.Required.Contains(r))
-                    parent.Required.Add(r);
-        }      
+        }    
 
         private static JSchema MergeSchemas(JSchema f, JSchema s)
         {
@@ -78,19 +73,22 @@ namespace VitML.JsonVM
 
             n.Type = s.Type != JSchemaType.None ? s.Type : f.Type;
 
-            foreach (var p in f.Properties)
-                if (!n.Properties.ContainsKey(p.Key))
-                    n.Properties.Add(p);
             foreach (var r in f.Required)
                 if (!n.Required.Contains(r))
                     n.Required.Add(r);
 
-            foreach (var p in s.Properties)
-                if (!n.Properties.ContainsKey(p.Key))
-                    n.Properties.Add(p);
             foreach (var r in s.Required)
                 if (!n.Required.Contains(r))
                     n.Required.Add(r);
+
+            foreach (var p in f.Properties)
+                if (!n.Properties.ContainsKey(p.Key))
+                    n.Properties.Add(p);          
+
+            foreach (var p in s.Properties)
+                if (!n.Properties.ContainsKey(p.Key))
+                    n.Properties.Add(p);
+           
 
             n.Minimum = s.Minimum ?? f.Minimum;
             n.Maximum = s.Maximum ?? f.Maximum;
@@ -133,16 +131,6 @@ namespace VitML.JsonVM
             throw new Exception("data is not valid against anyOf");
         }
 
-        public static JSchema MatchData(this IList<JSchema> schemas, JToken data)
-        {
-            if (data == null)
-                return null;
-            foreach (var sh in schemas)
-                if (data.IsValid(sh)) 
-                    return sh;
-            return null;
-        }
-
         public static bool GetIgnore(this JSchema sh)
         {
             var ext = sh.GetExtension(JSchemaExtendedKeywords.Ignore);
@@ -153,7 +141,7 @@ namespace VitML.JsonVM
 
         public static JSchema GetItemSchemaByIndex(this JSchema pSchema, int index)
         {
-            if (index < 0) throw new IndexOutOfRangeException();
+            if (index < 0) throw new IndexOutOfRangeException("schema index");
 
             int itemsCount = pSchema.ItemsArray.Count;
             JSchema propertySchema;
