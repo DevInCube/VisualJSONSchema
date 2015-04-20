@@ -20,7 +20,7 @@ namespace VitML.JsonVM.Linq
 
     public interface IJsonData
     {
-        object this[string key] { get; set; }
+        JToken this[string key] { get; set; }
     }
 
     /// <summary>Represents a JSON object. </summary>
@@ -71,7 +71,7 @@ namespace VitML.JsonVM.Linq
             {
                 value.PropertyChanged += (se1, e1) =>
                 {
-                    this.OnPropertyChanged(String.Format("{0}", key));
+                    this.OnPropertyChanged(String.Format("{0}.Value", key));
                 };
             }
             else if (value is JObjectVM)
@@ -274,6 +274,15 @@ namespace VitML.JsonVM.Linq
             return pathReader.GetValue(path);
         }
 
+        public JTokenVM GetToken(string path)
+        {
+            object value = GetValue(path);
+            if (value == null) return null;
+            if (value is KeyValuePair<string, JTokenVM>)
+                value = ((KeyValuePair<string, JTokenVM>)value).Value;
+            return value as JTokenVM;
+        }
+
         public JType GetValue<JType>(string path)
         {
             object value = GetValue(path);
@@ -286,16 +295,13 @@ namespace VitML.JsonVM.Linq
                 throw new Exception("type missmatch");
         }
 
-        public void SetValue(string path, object value)
+        public void SetValue(string path, JToken value)
         {
-            object obj = GetValue(path);
-            if (obj == null) return;
-            if (obj is JTokenVM)
-                (obj as JTokenVM).SetData(value as JToken);
-            else if (obj is KeyValuePair<string, JTokenVM>)
-                throw new NotImplementedException("cant set to " + obj.GetType());
-            else
-                throw new NotImplementedException("cant set to " + obj.GetType());
+            JTokenVM obj = GetToken(path);
+            if (obj == null)
+                throw new Exception(String.Format("No vm at path `{0}`", path));
+            JTokenVM tokenVM = obj as JTokenVM;
+            tokenVM.SetData(value);
         }      
 
         public override string DisplayMemberPath
@@ -336,9 +342,9 @@ namespace VitML.JsonVM.Linq
             this.vm = vm;
         }
 
-        public object this[string key]
+        public JToken this[string key]
         {
-            get { return vm.GetValue<object>(key); }
+            get { return vm.GetValue<JToken>(key); }
             set { vm.SetValue(key, value); }
         }
     }

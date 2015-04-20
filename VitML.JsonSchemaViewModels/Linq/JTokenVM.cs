@@ -41,7 +41,8 @@ namespace VitML.JsonVM.Linq
         {
             get { return _Schema;  }
             set 
-            { 
+            {
+                if (_Schema == value) return;
                 _Schema = value;
                 if (_Schema.ExtensionData.ContainsKey(JSchemaExtendedKeywords.Style.Key))
                 {

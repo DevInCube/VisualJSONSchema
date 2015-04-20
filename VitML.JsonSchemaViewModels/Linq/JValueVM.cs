@@ -13,6 +13,8 @@ namespace VitML.JsonVM.Linq
     public class JValueVM : JTokenVM
     {
 
+        private JToken _Value;
+
         public override string DisplayMemberPath
         {
             get
@@ -20,6 +22,8 @@ namespace VitML.JsonVM.Linq
                 return (Value != null) ? Value.ToString() : "<empty>";
             }
         }
+
+        public JToken Value { get { return _Value; } set { _Value = value; OnPropertyChanged("Value"); } }
 
         /// <summary>Initializes a new instance of the <see cref="JsonValueModel"/> class. </summary>
         private JValueVM()
@@ -41,7 +45,6 @@ namespace VitML.JsonVM.Linq
             return Value;
         }
 
-
         public override void SetData(JToken data)
         {
             base.SetData(data);
@@ -53,8 +56,6 @@ namespace VitML.JsonVM.Linq
             this.Value = data;
         }
 
-        private JToken _Value;
-        public JToken Value { get { return _Value; } set { _Value = value; OnPropertyChanged("Value"); } }
 
         public static JValueVM Create(JSchema schema, JToken data)
         {

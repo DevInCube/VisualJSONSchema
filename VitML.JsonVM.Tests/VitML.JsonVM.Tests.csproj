@@ -61,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataGeneratorTests.cs" />
     <Compile Include="LocalizationTests.cs" />
+    <Compile Include="JObjectVMTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VitML.JsonSchemaViewModels\VitML.JsonVM.csproj">
