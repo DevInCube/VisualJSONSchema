@@ -204,7 +204,7 @@
                         <ListBox x:Name="list"
                                 DisplayMemberPath="DisplayMemberPath"
                                 ItemsSource="{Binding Items, Mode=OneTime}"
-                                SelectedIndex="{Binding Value.SelectedIndex, Mode=TwoWay}"
+                                SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
                                 Style="{StaticResource ListBase}">
                         </ListBox>
                         <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto"  

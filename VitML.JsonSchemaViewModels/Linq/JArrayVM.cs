@@ -88,7 +88,7 @@ namespace VitML.JsonVM.Linq
             }
         }
         
-        public object SelectedItem
+        public JTokenVM SelectedItem
         {
             get { 
                 int index = this.SelectedIndex;
