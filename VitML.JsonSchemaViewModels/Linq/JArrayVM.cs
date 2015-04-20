@@ -118,8 +118,7 @@ namespace VitML.JsonVM.Linq
             if (!(data is JArray)) throw new Exception("data is not JArray");
 
             JArray array = data as JArray;
-
-            if (Items == null) CreateItems();
+            
             this.Items.Clear();
 
             int index = 0;
@@ -136,8 +135,9 @@ namespace VitML.JsonVM.Linq
         {
             base.SetSchema(schema);
 
-            var defaultPath = this.Schema.GetDisplayMemberPath();
-            _DisplayMemberPathPropertyName = defaultPath;
+            if (Style != null)
+                _DisplayMemberPathPropertyName = Style.DisplayMemberPath;
+            else _DisplayMemberPathPropertyName = "";
         }        
 
         public static JArrayVM Create(JSchema schema, JArray array)

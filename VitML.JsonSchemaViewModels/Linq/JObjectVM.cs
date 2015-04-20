@@ -13,6 +13,7 @@ using VitML.JsonVM.Common;
 using VitML.JsonVM;
 using VitML.JsonVM.Schema;
 using VitML.JsonVM.ViewModels;
+using System.Collections;
 
 namespace VitML.JsonVM.Linq
 {
@@ -24,7 +25,9 @@ namespace VitML.JsonVM.Linq
 
     /// <summary>Represents a JSON object. </summary>
     public class JObjectVM : JTokenVM
-    {        
+    {
+
+        private IList<string> _RequiredPropertyNames;        
 
         public PropertyDictionary Properties { get; private set; }
 
@@ -49,10 +52,17 @@ namespace VitML.JsonVM.Linq
                 string key = pair.Key;
                 JTokenVM value = pair.Value;
 
-                value.IsRequired = Schema.IsRequired(key);
+                value.IsRequired = IsPropertyRequired(key);
 
                 BindListener(key, value);
             }
+        }
+
+        public bool IsPropertyRequired(string propertyName)
+        {
+            if (_RequiredPropertyNames == null) 
+                return false;
+            return _RequiredPropertyNames.FirstOrDefault(x => x.Equals(propertyName)) != null;
         }
 
         private void BindListener(string key, JTokenVM value)
@@ -67,10 +77,23 @@ namespace VitML.JsonVM.Linq
             else if (value is JObjectVM)
             {
                 JObjectVM objVm = (value as JObjectVM);
+
+                if (objVm.Properties.Count > 0)
+                {
+                    IList props = objVm.Properties.Values.ToList();
+                    BindProperties(props, key);
+                }
+
                 objVm.Properties.CollectionChanged += (se1, e1) =>
                 {
-                    //@todo
+                    this.OnPropertyChanged(String.Format("{0}", key));
+                    if (e1.Action == NotifyCollectionChangedAction.Add
+                        || e1.Action == NotifyCollectionChangedAction.Replace)
+                    {
+                        BindProperties(e1.NewItems, key);
+                    }
                 };
+
                 objVm.PropertyChanged += (se1, e1) =>
                 {
                     this.OnPropertyChanged(String.Format("{0}.{1}", key, e1.PropertyName));
@@ -79,25 +102,41 @@ namespace VitML.JsonVM.Linq
             else if (value is JArrayVM)
             {
                 JArrayVM arrVm = (value as JArrayVM);
+
+                if (arrVm.Items.Count > 0)
+                {
+                    BindListItems(arrVm.Items, key);
+                }
+
                 arrVm.Items.CollectionChanged += (se1, e1) =>
                 {
                     this.OnPropertyChanged(String.Format("{0}", key));
                     if (e1.Action == NotifyCollectionChangedAction.Add
                         || e1.Action == NotifyCollectionChangedAction.Replace)
-                    {
-                        foreach (JTokenVM item in e1.NewItems)
-                        {
-                            int index = arrVm.Items.IndexOf(item);
-                            BindListener(String.Format("{0}[{1}]", key, index), item);                       
-                        }
+                    {                        
+                        BindListItems(e1.NewItems, key);
                     }
                 };
+
                 arrVm.PropertyChanged += (se1, e1) =>
                 {
                     this.OnPropertyChanged(String.Format("{0}.{1}", key, e1.PropertyName));
-                };
-                //@todo
+                };                
             } 
+        }
+
+        private void BindProperties(IList list, string key)
+        {
+            //@todo
+        }
+
+        private void BindListItems(IList list, string key)
+        {
+            foreach (JTokenVM item in list)
+            {
+                int index = list.IndexOf(item);
+                BindListener(String.Format("{0}[{1}]", key, index), item);
+            }
         }
 
         public static JObjectVM Create(JSchema schema, JToken data)
@@ -119,9 +158,11 @@ namespace VitML.JsonVM.Linq
                     string key = propertyInfo.Key;
                     JSchema pSchema = propertyInfo.Value;
 
-                    Properties.Add(key, Create(pSchema, null));
+                    Properties.Add(key, FromJson(null, pSchema));
                 }
             }
+
+            _RequiredPropertyNames = Schema.Required;
             
         }
 
@@ -132,12 +173,7 @@ namespace VitML.JsonVM.Linq
                 if (Properties.Count > 0)
                     return Properties.First().Key;
                 else
-                {
-                    if (Schema != null)
-                        return Schema.Title ?? "";
-                    else
-                        return "";
-                }
+                    return (Schema != null) ? (Schema.Title ?? "") : "";
             }
             else
             {

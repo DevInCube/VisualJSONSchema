@@ -51,11 +51,6 @@ namespace VitML.JsonVM
             return type.HasFlag(flag);
         }
 
-        public static bool IsRequired(this JSchema sh, string key)
-        {
-            return sh.Required.FirstOrDefault(x => x.Equals(key)) != null;
-        }
-
         public static object GetExtension(this JSchema sh, string key)
         {
             var pair = sh.ExtensionData.FirstOrDefault(x => x.Key.Equals(key));
@@ -146,23 +141,6 @@ namespace VitML.JsonVM
                 if (data.IsValid(sh)) 
                     return sh;
             return null;
-        }
-
-        public static string GetDisplayMemberPath(this JSchema sh)
-        {
-            if (sh != null)
-            {
-                object style = sh.GetExtension("Style");
-                if (style != null)
-                {
-                    object tok = (style as JToken).SelectToken("DisplayMemberPath");
-                    if (tok != null)
-                    {
-                        return (tok as JToken).Value<string>();
-                    }
-                }
-            }
-            return "";
         }
 
         public static bool GetIgnore(this JSchema sh)
