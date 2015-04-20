@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VitML.JsonVM.Common;
+using System.Windows.Input;
 
 namespace VitML.JsonVM.Linq
 {
@@ -14,21 +15,19 @@ namespace VitML.JsonVM.Linq
     {
 
         private JToken _Value;
+        private ICommand _Command;
 
-        public override string DisplayMemberPath
-        {
-            get
-            {
-                return (Value != null) ? Value.ToString() : "<empty>";
-            }
-        }
-
+        public override string DisplayMemberPath { get { return (Value != null) ? Value.ToString() : "<empty>"; } }
         public JToken Value { get { return _Value; } set { _Value = value; OnPropertyChanged("Value"); } }
+        public ICommand Command 
+        { 
+            get { return _Command; }
+            set { _Command = value; OnPropertyChanged("Command"); }
+        }
 
         /// <summary>Initializes a new instance of the <see cref="JsonValueModel"/> class. </summary>
         private JValueVM()
         {
-            //this["Value"] = null;
             PropertyChanged += JValueVM_PropertyChanged;
         }
 
@@ -55,7 +54,6 @@ namespace VitML.JsonVM.Linq
 
             this.Value = data;
         }
-
 
         public static JValueVM Create(JSchema schema, JToken data)
         {

@@ -24,6 +24,11 @@ namespace MyVisualJSONEditor.ViewModels
         public override void Init(JObjectVM vm)
         {
             this.vm = vm;
+
+            (vm.GetToken("Source.SetMaster") as JValueVM).Command = new RelayCommand(() =>
+            {
+                MessageBox.Show("OK");
+            });
             /*
             vm.PropertyChanged += vm_PropertyChanged;
             JObjectVM first = vm.GetValue<JObjectVM>("Source.QueueSet[0]");
