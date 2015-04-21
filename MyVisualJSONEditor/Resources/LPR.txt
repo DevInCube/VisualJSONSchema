@@ -1,4 +1,17 @@
 ﻿{
+	"apphost":
+	{
+		"component_path": "/opt/edge/libexec/lpr"
+	},
+	"core":
+	{
+		"load":
+		[
+			"edge-source-file",
+			"edge-recog-autocode",
+			"edge-out-file" 
+		]
+	},
     "media-source":{
         "data_input_dir":"/home/maxl/test/in_data",
         "meta_input_dir":"/home/maxl/test/in_meta",

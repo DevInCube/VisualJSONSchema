@@ -1,24 +1,45 @@
 ﻿{
     "$schema":"http://json-schema.org/draft-04/schema#",
     "id":"http://vit.com.ua/edgeserver/lpr#",
-
     "type":"object",
-	'format' : 'tab',
-	
-	title:'LPR',
-	description:'LPR',
-
+    "format":"tab",
+    "title":"LPR",
+    "description":"LPR",
     "properties":{
-
+        "apphost":{
+            "type":"object",
+            "title":"apphost",
+            "properties":{
+                "component_path":{
+                    "type":"string",
+                    "title":"component path"
+                }
+            },
+            "required":[
+                "component_path"
+            ]
+        },
+        "core":{
+            "type":"object",
+            "title":"core",
+            "properties":{
+                "load":{
+                    "type":"array",
+                    "title":"load",
+                    "items":{
+                        "type":"string"
+                    }
+                }
+            },
+            "required":[
+                "load"
+            ]
+        },
         "media-source":{
-
             "id":"media-source",
             "type":"object",
-            
-            title:'Media source',
-
+            "title":"Media source",
             "properties":{
-
                 "data_input_dir":{
                     "title":"data_input_dir",
                     "type":"string"
@@ -32,42 +53,31 @@
                     "type":"string"
                 }
             },
-
             "required":[
                 "data_input_dir",
                 "meta_input_dir",
                 "media_extension"
             ],
-			"additionalProperties": false,
+            "additionalProperties":false
         },
-
         "output":{
-
             "id":"output",
             "type":"object",
-            
-            title:'Output',
-            
+            "title":"Output",
             "properties":{
-
                 "meta_queue_set":{
-
                     "title":"meta_queue_set",
                     "type":"array",
-                    'format' : 'list',
-                    
-                    'Style' : {
-                    	'MaxHeight':400,
-                    	'MinHeight':400,
+                    "format":"list",
+                    "Style":{
+                        "MaxHeight":400,
+                        "MinHeight":400
                     },
-
                     "items":{
                         "type":"object",
-                        
-                        'Style':{
-                        	'DisplayMemberPath' : 'dir',
+                        "Style":{
+                            "DisplayMemberPath":"dir"
                         },
-
                         "properties":{
                             "prefix":{
                                 "title":"prefix",
@@ -84,36 +94,41 @@
                             "type":{
                                 "title":"type",
                                 "type":"string",
-								'enum':['track', 'scene']
+                                "enum":[
+                                    "track",
+                                    "scene"
+                                ]
                             }
                         },
-						"required":[ 'prefix', 'suffix', 'dir', 'type'],
-						"additionalProperties": false,
-                    },
+                        "required":[
+                            "prefix",
+                            "suffix",
+                            "dir",
+                            "type"
+                        ],
+                        "additionalProperties":false
+                    }
                 }
             },
-			"required":[ 'meta_queue_set' ],
-			"additionalProperties": false,
+            "required":[
+                "meta_queue_set"
+            ],
+            "additionalProperties":false
         },
-
         "recognizer":{
-        
             "id":"recognizer",
             "type":"object",
-            
-            title:'Recognizer',
-            
+            "title":"Recognizer",
             "properties":{
 
             }
         }
-
     },
-
     "required":[
+        "apphost",
         "media-source",
         "output",
         "recognizer"
     ],
-	"additionalProperties": false,
+    "additionalProperties":false
 }

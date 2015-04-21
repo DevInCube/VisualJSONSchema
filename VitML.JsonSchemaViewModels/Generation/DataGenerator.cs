@@ -87,6 +87,7 @@ namespace VitML.JsonVM.Generation
                         {
                             foreach (string req in sh.Required)
                             {
+                                if (!sh.Properties.ContainsKey(req)) continue;
                                 var gen = new DataGenerator(sh.Properties[req]);
                                 JToken token = gen.Generate(settings);
                                 obj.Add(new JProperty(req, token));
