@@ -16,6 +16,18 @@ namespace MyVisualJSONEditor.Views.Controls
     public class TokenBuilderTemplateSelector : DataTemplateSelector
     {
 
+        private static Dictionary<string, DataTemplate> customTemplates;
+
+        static TokenBuilderTemplateSelector()
+        {
+            customTemplates = new Dictionary<string, DataTemplate>();
+        }
+
+        public static void RegisterCustomTemplate(string key, DataTemplate template)
+        {
+            customTemplates.Add(key, template);
+        }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item == null) return null;
@@ -44,6 +56,13 @@ namespace MyVisualJSONEditor.Views.Controls
             }
 
             var type = schema.Type;
+
+            string customKeyword = "$custom:";
+            if (schema.Format != null && schema.Format.StartsWith(customKeyword))
+            {
+                string customKey = schema.Format.Replace(customKeyword, String.Empty);
+                return customTemplates[customKey];
+            }
 
             if (type.HasFlag(JSchemaType.String))
             {

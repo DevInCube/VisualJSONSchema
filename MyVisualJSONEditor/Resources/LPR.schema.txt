@@ -119,6 +119,9 @@
             "id":"recognizer",
             "type":"object",
             "title":"Recognizer",
+
+			'format':'$custom:test',
+
             "properties":{
 
             }

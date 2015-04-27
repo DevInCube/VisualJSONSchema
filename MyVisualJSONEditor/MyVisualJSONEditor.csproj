@@ -114,6 +114,12 @@
     <Compile Include="Views\Converters\NumberConverter.cs" />
     <Compile Include="Views\Converters\NumberRangeConverter.cs" />
     <Compile Include="Views\Converters\TimeConverter.cs" />
+    <Compile Include="Views\CustomTemplates.xaml.cs">
+      <DependentUpon>CustomTemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LPRControl.xaml.cs">
+      <DependentUpon>LPRControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TestWindow.xaml.cs">
       <DependentUpon>TestWindow.xaml</DependentUpon>
     </Compile>
@@ -129,6 +135,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\CustomTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LPRControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
