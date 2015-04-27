@@ -315,8 +315,12 @@ namespace VitML.JsonVM.Linq
         void JObjectVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (ParentList != null)
-                if (e.PropertyName.Equals(ResolveDisplayMemberPath(ParentList.DisplayMemberPathPropertyName)))
+            {
+                string memberPath = ResolveDisplayMemberPath(ParentList.DisplayMemberPathPropertyName);
+                string path = String.Format("{0}.Value", memberPath);
+                if (e.PropertyName.Equals(path))
                     OnPropertyChanged("DisplayMemberPath");
+            }
         }
     }
 

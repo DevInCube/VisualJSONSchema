@@ -14,7 +14,7 @@ using VitML.JsonVM;
 
 namespace MyVisualJSONEditor.Views.Controls
 {
-    public class RequireBuilderTemplateSelector : DataTemplateSelector
+    public class ViewBuilderTemplateSelector : DataTemplateSelector
     {
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)

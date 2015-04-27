@@ -443,7 +443,7 @@
         </ContentPresenter.Resources>
         
         <ContentPresenter.ContentTemplateSelector>
-            <controls:JBuilderTemplateSelector />
+            <controls:TokenBuilderTemplateSelector />
         </ContentPresenter.ContentTemplateSelector>
         
     </ContentPresenter>

@@ -13,7 +13,7 @@ using VitML.JsonVM.Schema;
 
 namespace MyVisualJSONEditor.Views.Controls
 {
-    public class JBuilderTemplateSelector : DataTemplateSelector
+    public class TokenBuilderTemplateSelector : DataTemplateSelector
     {
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)

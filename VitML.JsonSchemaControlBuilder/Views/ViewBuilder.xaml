@@ -165,7 +165,7 @@
         </ContentPresenter.Resources>
 
         <ContentPresenter.ContentTemplateSelector>
-            <controls:RequireBuilderTemplateSelector />
+            <controls:ViewBuilderTemplateSelector />
         </ContentPresenter.ContentTemplateSelector>
 
     </ContentPresenter>
