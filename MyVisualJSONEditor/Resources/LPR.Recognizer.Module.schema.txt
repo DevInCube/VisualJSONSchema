@@ -23,7 +23,8 @@
         }, 
 		"task_valid_time":{
             "type":"integer",
-            "title":"task_valid_time",            
+            "title":"task_valid_time",   
+			'$ref':'definitions#/definitions/uint',             
         }, 
 		"apply_unique":{
             "type":"boolean",

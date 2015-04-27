@@ -35,5 +35,69 @@
     },
     "recognizer":{
 
+		"generate_tracks":true,                
+		"generate_scenes":true,                
+		"tracks_only_lost":true,               
+		"task_valid_time":40,                  
+		"apply_unique": false,                 
+		"save_empty_result": false,            
+		"empty_result_dir": "/home/user/empty" ,
+
+
+		"principal_fps": 25,                                  
+		"principal_channels": 4,                               
+		"countries":["ua", "ru"],                              
+		"principal_thread_max":8,                              
+		"aorp_path": "/opt/edge/libexec/aorp/",
+
+
+		"principal_enable":1,                                 
+		"plate_inverse_analyze":1,                            
+		"plate_probability_min":10,                           
+		"plate_star_max":2,                                   
+		"plate_size_max":200,                                 
+		"plate_size_min":20,                                  
+		"plate_filter_rofactor":10,                           
+		"plate_filter_rodropfactor":10,                       
+		"plate_image_scale_factor":[2, 2],                    
+		"plate_image_size":[200, 200],                        
+		"plate_template":
+		[
+		  [804, 0, 0, "on"],
+		  [643, 0, 0, "on"]
+		],
+		"log_settings":1,                                     
+		"image_width":200,                                    
+		"image_height":200,                                   
+		"image_brightness":10,                                
+		"image_contrast":10,                                  
+		"image_blur":10,                                      
+		"image_threshold":10,                                 
+		"image_analyze_zone":
+		[
+			[50, 50, 100, 100],
+			[150, 150, 200, 200]
+		],
+		"image_azone_mask":
+		[
+		  [
+				[0.1, 0.3],
+				[0.3, 0.3],
+				[0.3, 0.1]
+			],
+			[
+				[0.2, 0.33],
+				[0.31, 0.33],
+				[0.23, 0.11]
+			]
+		],
+		"plate_ratio":[1, 0.5],                               
+		"dynamic_enable":1,                                   
+		"dynamic_output_frame_count":10,                      
+		"dynamic_output_timeout":1000,                        
+		"dynamic_output_period":1000,                         
+		"dynamic_with_duplicate":10,                          
+		"dynamic_duration_without_access":10000,              
+		"dynamic_comparable_time_max":10 
 	}
 }

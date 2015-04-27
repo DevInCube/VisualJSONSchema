@@ -12,6 +12,9 @@
         <DataTemplate x:Key="test">
             <local:LPRControl DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Key="countries">
+            <local:LPRCountries DataContext="{Binding}"/>
+        </DataTemplate>
     </UserControl.Resources>
     
     <Grid>

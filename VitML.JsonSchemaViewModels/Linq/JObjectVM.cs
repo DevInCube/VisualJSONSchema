@@ -130,10 +130,7 @@ namespace VitML.JsonVM.Linq
         }
 
         public static JObjectVM Create(JSchema schema, JToken data)
-        {
-            if (schema.Format !=null && schema.Format.StartsWith("$custom:"))
-                return JCustomObjectVM.Create(schema);
-
+        {         
             JObjectVM objectVM = new JObjectVM();
             objectVM.SetSchema(schema);
             objectVM.SetData(data);            
@@ -205,6 +202,9 @@ namespace VitML.JsonVM.Linq
 
         public static JTokenVM FromJson(JToken token, JSchema schema)
         {
+            if (schema.Format != null && schema.Format.StartsWith("$custom:"))
+                return JCustomVM.Create(schema, token);
+
             if (token == null || JValue.DeepEquals(JValue.CreateNull(), token as JValue))
             {
                 if (schema.Type.HasFlag(JSchemaType.Object))

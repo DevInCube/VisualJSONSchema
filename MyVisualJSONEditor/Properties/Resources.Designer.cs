@@ -402,13 +402,12 @@ namespace MyVisualJSONEditor.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
-        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/lpr#&quot;,
+        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/lpr.recognizer.module#&quot;,
         ///
         ///    &quot;type&quot;:&quot;object&quot;,
-        ///    &quot;format&quot;:&quot;tab&quot;,
         ///
-        ///    &quot;title&quot;:&quot;LPR&quot;,
-        ///    &quot;description&quot;:&quot;LPR&quot;,
+        ///    &quot;title&quot;:&quot;LPR Recognizer Module&quot;,
+        ///    &quot;description&quot;:&quot;LPR Recognizer Module&quot;,
         ///
         ///    &quot;properties&quot;:{
         ///
@@ -418,14 +417,41 @@ namespace MyVisualJSONEditor.Properties {
         ///        }, 
         ///		&quot;generate_scenes&quot;:{
         ///            &quot;type&quot;:&quot;boolean&quot;,
-        ///            &quot;title&quot;:&quot;generate_scenes&quot;,            
+        ///            &quot;title&quot;:&quot;generate_scenes&quot;,
         ///        }, 
-        ///		&quot;tracks_only_lost&quot;:{
-        ///            &quot;type&quot;: [rest of string was truncated]&quot;;.
+        ///		&quot;tracks_only_lost&quot;:{ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LPR_Recognizer_Module_schema {
             get {
                 return ResourceManager.GetString("LPR_Recognizer_Module_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/lpr.recognizer.principal#&quot;,
+        ///
+        ///    &quot;type&quot;:&quot;object&quot;,
+        ///
+        ///    &quot;title&quot;:&quot;LPR Recognizer Principal&quot;,
+        ///    &quot;description&quot;:&quot;LPR Recognizer Principal&quot;,
+        ///
+        ///    &quot;properties&quot;:{
+        ///
+        ///        &quot;principal_fps&quot;:{
+        ///            &quot;type&quot;:&quot;integer&quot;,
+        ///            &quot;title&quot;:&quot;principal_fps&quot;,            
+        ///        }, 
+        ///		&quot;principal_channels&quot;:{
+        ///            &quot;type&quot;:&quot;integer&quot;,
+        ///            &quot;title&quot;:&quot;principal_channels&quot;,
+        ///        }, 
+        ///		&quot;countrie [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LPR_Recognizer_Principal_schema {
+            get {
+                return ResourceManager.GetString("LPR_Recognizer_Principal_schema", resourceCulture);
             }
         }
         

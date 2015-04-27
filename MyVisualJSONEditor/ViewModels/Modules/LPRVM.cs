@@ -20,6 +20,9 @@ namespace MyVisualJSONEditor.ViewModels
             DataTemplate testTemplate = (DataTemplate)templates.Resources["test"];
             TokenBuilderTemplateSelector.RegisterCustomTemplate("test", testTemplate);
 
+            TokenBuilderTemplateSelector.RegisterCustomTemplate("countries", 
+                (DataTemplate)templates.Resources["countries"]);
+
             this.Schema = Resources.LPR_schema;
             this.Data = Resources.LPR;
         }

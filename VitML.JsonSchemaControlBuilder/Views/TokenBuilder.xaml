@@ -440,6 +440,12 @@
                 </Grid>
             </DataTemplate>
 
+            <DataTemplate x:Key="UnregisteredCustom">
+                <Grid Style="{StaticResource ContainerStyle}">
+                    <Label Content="UnregisteredCustom" Background="Red" Foreground="White"/>
+                </Grid>
+            </DataTemplate>
+
         </ContentPresenter.Resources>
         
         <ContentPresenter.ContentTemplateSelector>

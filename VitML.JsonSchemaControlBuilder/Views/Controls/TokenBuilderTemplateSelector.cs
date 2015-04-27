@@ -61,7 +61,10 @@ namespace MyVisualJSONEditor.Views.Controls
             if (schema.Format != null && schema.Format.StartsWith(customKeyword))
             {
                 string customKey = schema.Format.Replace(customKeyword, String.Empty);
-                return customTemplates[customKey];
+                if (customTemplates.ContainsKey(customKey))
+                    return customTemplates[customKey];
+                else
+                    return (DataTemplate)presenter.Resources["UnregisteredCustom"];
             }
 
             if (type.HasFlag(JSchemaType.String))

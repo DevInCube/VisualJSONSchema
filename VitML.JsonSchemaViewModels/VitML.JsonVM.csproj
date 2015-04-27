@@ -61,7 +61,7 @@
     <Compile Include="JPathReader.cs" />
     <Compile Include="JSchemaExtension.cs" />
     <Compile Include="Linq\JArrayVM.cs" />
-    <Compile Include="Linq\JCustomObjectVM.cs" />
+    <Compile Include="Linq\JCustomVM.cs" />
     <Compile Include="Linq\JObjectVM.cs" />
     <Compile Include="Linq\JsonDataProvider.cs" />
     <Compile Include="Linq\JTokenVM.cs" />

@@ -9,33 +9,30 @@
 
     "properties":{
 
-        "generate_tracks":{
-            "type":"boolean",
-            "title":"generate_tracks",            
-        }, 
-		"generate_scenes":{
-            "type":"boolean",
-            "title":"generate_scenes",
-        }, 
-		"tracks_only_lost":{
-            "type":"boolean",
-            "title":"tracks_only_lost",            
-        }, 
-		"task_valid_time":{
+        "principal_fps":{
             "type":"integer",
-            "title":"task_valid_time",            
+            "title":"principal_fps",  
+			'$ref':'definitions#/definitions/uint',    
         }, 
-		"apply_unique":{
-            "type":"boolean",
-            "title":"apply_unique",            
+		"principal_channels":{
+            "type":"integer",
+            "title":"principal_channels",
+			'$ref':'definitions#/definitions/uint',
         }, 
-		"save_empty_result":{
-            "type":"boolean",
-            "title":"save_empty_result",            
+		"countries":{
+            "type":"array",
+            "title":"countries", 
+
+			'format' : '$custom:countries',  
         }, 
-		"empty_result_dir":{
+		"principal_thread_max":{
+            "type":"integer",
+            "title":"principal_thread_max",  
+			'$ref':'definitions#/definitions/uint',          
+        }, 
+		"aorp_path":{
             "type":"string",
-            "title":"empty_result_dir",            
+            "title":"aorp_path",            
         },        
     },
     "required":[
@@ -43,7 +40,7 @@
 		"principal_channels"					,	
 		"countries"								,	
 		"principal_thread_max"					,	
-		"aorp_path": "/opt/edge/libexec/aorp/"  ,        
+		"aorp_path"
     ],
     "additionalProperties":false
 }
