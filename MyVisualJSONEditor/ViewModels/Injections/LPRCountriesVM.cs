@@ -22,7 +22,7 @@ namespace MyVisualJSONEditor.ViewModels.Injections
         }
 
 
-        public Newtonsoft.Json.Linq.JToken Data
+        public JToken Data
         {
             get { return countries; }
         }

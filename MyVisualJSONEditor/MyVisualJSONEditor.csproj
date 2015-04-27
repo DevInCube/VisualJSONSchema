@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="ViewModels\AModuleVM.cs" />
     <Compile Include="ViewModels\Injections\LPRCountriesVM.cs" />
+    <Compile Include="ViewModels\Injections\LPRVM.cs" />
     <Compile Include="ViewModels\Modules\LPRVM.cs" />
     <Compile Include="ViewModels\Modules\CompositorVM.cs" />
     <Compile Include="ViewModels\Modules\EventStoreVM.cs" />
