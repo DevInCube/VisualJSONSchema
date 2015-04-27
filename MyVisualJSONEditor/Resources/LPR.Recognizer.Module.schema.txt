@@ -1,0 +1,51 @@
+﻿{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "id":"http://vit.com.ua/edgeserver/lpr.recognizer.module#",
+
+    "type":"object",
+
+    "title":"LPR Recognizer Module",
+    "description":"LPR Recognizer Module",
+
+    "properties":{
+
+        "generate_tracks":{
+            "type":"boolean",
+            "title":"generate_tracks",            
+        }, 
+		"generate_scenes":{
+            "type":"boolean",
+            "title":"generate_scenes",
+        }, 
+		"tracks_only_lost":{
+            "type":"boolean",
+            "title":"tracks_only_lost",            
+        }, 
+		"task_valid_time":{
+            "type":"integer",
+            "title":"task_valid_time",            
+        }, 
+		"apply_unique":{
+            "type":"boolean",
+            "title":"apply_unique",            
+        }, 
+		"save_empty_result":{
+            "type":"boolean",
+            "title":"save_empty_result",            
+        }, 
+		"empty_result_dir":{
+            "type":"string",
+            "title":"empty_result_dir",            
+        },        
+    },
+    "required":[
+       "generate_tracks"	,                  
+		"generate_scenes"	,                 
+		"tracks_only_lost"	,                
+		"task_valid_time"	,                 
+		"apply_unique"		,                    
+		"save_empty_result"	,               
+		"empty_result_dir"	,            
+    ],
+    "additionalProperties":false
+}

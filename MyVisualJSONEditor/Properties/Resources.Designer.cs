@@ -101,7 +101,15 @@ namespace MyVisualJSONEditor.Properties {
         ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
         ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/compositor#&quot;,
         ///
+        ///	title:&apos;Compositor&apos;,
+        ///	description:&apos;Compositor&apos;,
+        ///
         ///    &quot;type&quot;:&quot;object&quot;,
+        ///	&apos;format&apos;:&apos;tab&apos;,
+        ///
+        ///	&apos;definitions&apos; : {
+        ///		
+        ///	},
         ///
         ///    &quot;properties&quot;:{
         ///
@@ -109,17 +117,9 @@ namespace MyVisualJSONEditor.Properties {
         ///
         ///            &quot;id&quot;:&quot;Source&quot;,
         ///            &quot;type&quot;:&quot;object&quot;,
-        ///
-        ///            &quot;properties&quot;:{
-        ///
-        ///                &quot;MasterName&quot;:{
-        ///                    &quot;id&quot;:&quot;MasterName&quot;,
-        ///                    &quot;type&quot;: [&quot;string&quot;, &quot;null&quot;]
-        ///                },
-        ///
-        ///                &quot;QueueSet&quot;:{
-        ///                    &quot;id&quot;:&quot;QueueSet&quot;,
-        ///                    &quot;type&quot;: [rest of string was truncated]&quot;;.
+        ///			
+        ///			title:&apos;Source&apos;,
+        ///			&apos;description&apos; : &quot;Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dum [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Compositor_schema {
             get {
@@ -164,20 +164,20 @@ namespace MyVisualJSONEditor.Properties {
         ///			&apos;properties&apos; : {
         ///                      
         ///				&quot;Prefix&quot;:{
+        ///					title:&apos;Prefix&apos;,
         ///					&apos;type&apos; : &apos;string&apos;,
         ///				},                            
         ///				&quot;Suffix&quot;:{
+        ///					title:&apos;Suffix&apos;,
         ///					&apos;type&apos; : &apos;string&apos;,
         ///				},                              
         ///				&quot;Dir&quot;:{
+        ///					title:&apos;Dir&apos;,
         ///					&apos;type&apos; : &apos;string&apos;,
         ///				}
         ///			},
         ///
-        ///			&quot;required&quot; : [ &apos;Prefix&apos;, &apos;Suffix&apos;, &apos;Dir&apos; ],
-        ///		},
-        ///
-        ///		&apos;FrameReac [rest of string was truncated]&quot;;.
+        ///			&quot;r [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string definitions {
             get {
@@ -192,8 +192,6 @@ namespace MyVisualJSONEditor.Properties {
         ///
         ///	&apos;definitions&apos; : {
         ///
-        ///	
-        ///		
         ///		&apos;smartmicro39&apos; : {
         ///
         ///			&quot;type&quot;:&quot;object&quot;,
@@ -218,7 +216,7 @@ namespace MyVisualJSONEditor.Properties {
         ///				},
         ///				&quot;AngleXY&quot;:{
         ///					&quot;id&quot;:&quot;AngleXY&quot;,
-        ///					&quot;t [rest of string was truncated]&quot;;.
+        ///					&quot;type&quot;:&quot;i [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string drivers {
             get {
@@ -370,6 +368,19 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///	&quot;apphost&quot;:
+        ///	{
+        ///		&quot;component_path&quot;: &quot;/opt/edge/libexec/lpr&quot;
+        ///	},
+        ///	&quot;core&quot;:
+        ///	{
+        ///		&quot;load&quot;:
+        ///		[
+        ///			&quot;edge-source-file&quot;,
+        ///			&quot;edge-recog-autocode&quot;,
+        ///			&quot;edge-out-file&quot; 
+        ///		]
+        ///	},
         ///    &quot;media-source&quot;:{
         ///        &quot;data_input_dir&quot;:&quot;/home/maxl/test/in_data&quot;,
         ///        &quot;meta_input_dir&quot;:&quot;/home/maxl/test/in_meta&quot;,
@@ -380,13 +391,7 @@ namespace MyVisualJSONEditor.Properties {
         ///            {
         ///                &quot;prefix&quot;:&quot;&quot;,
         ///                &quot;suffix&quot;:&quot;.lscene&quot;,
-        ///                &quot;dir&quot;:&quot;/var/spool/edge/lpr.x/scene.0/&quot;,
-        ///                &quot;type&quot;:&quot;scene&quot;
-        ///            },
-        ///            {
-        ///                &quot;prefix&quot;:&quot;&quot;,
-        ///                &quot;suffix&quot;:&quot;.ltrack&quot;,
-        ///                &quot;dir&quot;:&quot; [rest of string was truncated]&quot;;.
+        ///                &quot;dir&quot;:&quot;/var/spo [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LPR {
             get {
@@ -400,23 +405,50 @@ namespace MyVisualJSONEditor.Properties {
         ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/lpr#&quot;,
         ///
         ///    &quot;type&quot;:&quot;object&quot;,
-        ///	&apos;format&apos; : &apos;tab&apos;,
+        ///    &quot;format&quot;:&quot;tab&quot;,
+        ///
+        ///    &quot;title&quot;:&quot;LPR&quot;,
+        ///    &quot;description&quot;:&quot;LPR&quot;,
         ///
         ///    &quot;properties&quot;:{
         ///
-        ///        &quot;media-source&quot;:{
-        ///
-        ///            &quot;id&quot;:&quot;media-source&quot;,
+        ///        &quot;generate_tracks&quot;:{
+        ///            &quot;type&quot;:&quot;boolean&quot;,
+        ///            &quot;title&quot;:&quot;generate_tracks&quot;,            
+        ///        }, 
+        ///		&quot;generate_scenes&quot;:{
+        ///            &quot;type&quot;:&quot;boolean&quot;,
+        ///            &quot;title&quot;:&quot;generate_scenes&quot;,            
+        ///        }, 
+        ///		&quot;tracks_only_lost&quot;:{
+        ///            &quot;type&quot;: [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string LPR_Recognizer_Module_schema {
+            get {
+                return ResourceManager.GetString("LPR_Recognizer_Module_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/lpr#&quot;,
+        ///    &quot;type&quot;:&quot;object&quot;,
+        ///    &quot;format&quot;:&quot;tab&quot;,
+        ///    &quot;title&quot;:&quot;LPR&quot;,
+        ///    &quot;description&quot;:&quot;LPR&quot;,
+        ///    &quot;properties&quot;:{
+        ///        &quot;apphost&quot;:{
         ///            &quot;type&quot;:&quot;object&quot;,
-        ///
+        ///            &quot;title&quot;:&quot;apphost&quot;,
         ///            &quot;properties&quot;:{
-        ///
-        ///                &quot;data_input_dir&quot;:{
-        ///                    &quot;id&quot;:&quot;data_input_dir&quot;,
-        ///                    &quot;type&quot;:&quot;string&quot;
-        ///                },
-        ///                &quot;meta_input_dir&quot;:{
-        ///                    &quot;id&quot;:&quot;meta_input_di [rest of string was truncated]&quot;;.
+        ///                &quot;component_path&quot;:{
+        ///                    &quot;type&quot;:&quot;string&quot;,
+        ///                    &quot;title&quot;:&quot;component path&quot;
+        ///                }
+        ///            },
+        ///            &quot;required&quot;:[
+        ///    [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LPR_schema {
             get {
@@ -543,11 +575,15 @@ namespace MyVisualJSONEditor.Properties {
         ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/mediagrabber#&quot;,
         ///
         ///    &quot;type&quot;:&quot;object&quot;,
+        ///    &apos;format&apos;:&apos;tab&apos;,
+        ///
+        ///	title:&apos;Media Grabber&apos;,
+        ///	description:&apos;Media grabber description&apos;,
         ///
         ///    &quot;properties&quot;:{
         ///
         ///        &quot;TxPipes&quot;:{
-        ///            &quot;id&quot;:&quot;TxPipes&quot;,
+        ///            &quot;title&quot;:&quot;TxPipes&quot;,
         ///            &quot;type&quot;:&quot;array&quot;,
         ///
         ///            &quot;items&quot;: {
@@ -558,12 +594,8 @@ namespace MyVisualJSONEditor.Properties {
         ///        },
         ///
         ///        &quot;Driver&quot;:{
-        ///            &quot;id&quot;:&quot;Driver&quot;,
-        ///            &quot;type&quot;:&quot;object&quot;,
-        ///
-        ///            &quot;properties&quot;:{
-        ///                &quot;Vendor&quot;:{
-        ///                  [rest of string was truncated]&quot;;.
+        ///            &quot;title&quot;:&quot;Driver&quot;,
+        ///         [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MediaGrabber_schema {
             get {
@@ -718,8 +750,20 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///	&apos;cool&apos; : [&apos;string&apos;],
+        ///	allOf:{},
         ///	&apos;boolean&apos; : true,
-        ///	&apos;string&apos; : &apos;string&apos;
+        ///	&apos;string&apos; : &apos;x123&apos;,
+        ///	&apos;ipv4&apos; : &apos;192.168.100.0&apos;,
+        ///	&apos;object&apos; : {
+        ///		&apos;bool1&apos; : true,
+        ///		&apos;string2&apos; : &apos;string&apos;,
+        ///	},
+        ///	&apos;objectNesting&apos; : {
+        ///		&apos;object&apos; : null,
+        ///	},
+        ///	&apos;static_list&apos; : [13,14],
+        ///	&apos;select_list&apos; : [&apos;0&apos;, &apos;ListItem1&apos;, &apos;Item2&apos;, &apos;end.&apos;],
         ///}.
         /// </summary>
         internal static string TestData {
@@ -730,33 +774,35 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///	&apos;type&apos;:&apos;object&apos;, 
-        ///	
+        ///	&apos;type&apos;:&apos;object&apos;,
         ///
         ///    &apos;title&apos;:&apos;Root Object Title&apos;,
         ///	&apos;description&apos; : &apos;This is Root Object description&apos;,
         ///
-        ///    &apos;properties&apos;:{
+        ///	&apos;definitions&apos; : {
+        ///	
+        ///		&apos;obj1&apos; : {
+        ///		
+        ///			&apos;title&apos; : &apos;Object1&apos;,
+        ///			&apos;type&apos; : [ &apos;object&apos;, &apos;null&apos;],
         ///
-        ///		&apos;boolean&apos; : {
-        ///            &apos;type&apos;:&apos;boolean&apos;,
-        ///			default : true,
-        ///			readonly : true
-        ///        },
-        ///        &apos;string&apos; : {
-        ///            &apos;type&apos;:&apos;string&apos;,
-        ///			visible : false
-        ///        },
-        ///		&apos;object&apos; : {
-        ///
-        ///			type : [ &apos;object&apos;, &apos;null&apos;],
-        ///
-        ///			title : &apos;This is the object&apos;,
-        ///			description : &apos;This is the object description&apos;,
+        ///			&apos;description&apos; : &apos;This is the object description&apos;,
         ///
         ///			&apos;properties&apos; : {
         ///				&apos;bool1&apos; : {
-        ///					&apos;type&apos; [rest of string was truncated]&quot;;.
+        ///					&apos;type&apos;:&apos;boolean&apos;,
+        ///				},
+        ///				&apos;string2&apos; : {
+        ///					&apos;type&apos;:&apos;string&apos;,
+        ///				},
+        ///			},
+        ///			&apos;default&apos;:{
+        ///				&apos;bool1&apos; : true, 
+        ///				string2 : &apos;default&apos;
+        ///			},
+        ///			required : [&apos;bool1&apos;, &apos;string2&apos;],
+        ///		},
+        ///	 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TestSchema {
             get {

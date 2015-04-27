@@ -116,8 +116,9 @@
             "additionalProperties":false
         },
         "recognizer":{
-            "id":"recognizer",
+
             "type":"object",
+
             "title":"Recognizer",
 
 			'format':'$custom:test',
@@ -129,6 +130,7 @@
     },
     "required":[
         "apphost",
+		'core',
         "media-source",
         "output",
         "recognizer"

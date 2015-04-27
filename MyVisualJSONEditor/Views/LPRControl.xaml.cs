@@ -1,4 +1,7 @@
-﻿using System;
+﻿using My.Json.Schema;
+using MyVisualJSONEditor.Properties;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,24 +35,55 @@ namespace MyVisualJSONEditor.Views
         {
             if (e.NewValue is JTokenVM)
             {
-                this.DataContext = new LPRVM(e.NewValue as JTokenVM);
+                this.DataContext = new LPRVM(e.NewValue as JCustomObjectVM);
             }
         }
     }
 
-    class LPRVM : ObservableObject
+    class LPRVM : ObservableObject, IJsonDataProvider
     {
 
-        private JTokenVM jmodel;
+        private JCustomObjectVM jmodel;
 
         public string Test
         {
             get { return "Test OK"; }
         }
 
-        public LPRVM(JTokenVM jdata)
+        public JObjectVM ModuleVM { get; set; }
+        public JObjectVM PrincipalVM { get; set; }
+        public JObjectVM ParametersVM { get; set; }
+
+        public LPRVM(JCustomObjectVM jdata)
         {
             this.jmodel = jdata;
+            jdata.SetDataProvider(this);
+
+            JSchema moduleSchema = JSchema.Parse(Resources.LPR_Recognizer_Module_schema);
+            ModuleVM = JObjectVM.FromSchema(moduleSchema) as JObjectVM;
+
+            ModuleVM.PropertyChanged += ModuleVM_PropertyChanged;
+            this.PropertyChanged += LPRVM_PropertyChanged;
+        }
+
+        void ModuleVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.OnPropertyChanged("");
+        }
+
+        void LPRVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            jmodel.Notify();
+        }
+
+        public Newtonsoft.Json.Linq.JToken Data
+        {
+            get { return GenerateData(); }
+        }
+
+        private JToken GenerateData()
+        {
+            return ModuleVM.ToJToken();
         }
     }
 }

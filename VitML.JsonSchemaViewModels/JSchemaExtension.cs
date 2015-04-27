@@ -57,7 +57,7 @@ namespace VitML.JsonVM
         }
 
         public static object GetExtension(this JSchema sh, string key)
-        {
+        {            
             var pair = sh.ExtensionData.FirstOrDefault(x => x.Key.Equals(key));
             if (!pair.Equals(default(KeyValuePair<string, JToken>)))
                 return pair.Value;

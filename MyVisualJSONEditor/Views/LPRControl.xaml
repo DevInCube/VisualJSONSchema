@@ -3,10 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:bld2="clr-namespace:VitML.JsonSchemaControlBuilder.Views;assembly=VitML.JsonSchemaControlBuilder"
              mc:Ignorable="d" 
              x:Name="this"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid DataContext="{Binding DataContext, ElementName=this}">
-        <Label Content="{Binding Test, FallbackValue=NULL}" FontWeight="Bold" FontSize="32" Background="Blue"/>
+    <Grid DataContext="{Binding DataContext, ElementName=this}" Background="White">
+        <StackPanel>
+            <Expander Header="Module behaviour">
+                <Grid Margin="10">
+                    <bld2:TokenBuilder Data="{Binding ModuleVM}"/>
+                </Grid>
+            </Expander>
+            <Expander Header="AutocodeSDK principal">
+                <Grid Margin="10">
+                    <bld2:TokenBuilder Data="{Binding PrincipalVM}"/>
+                </Grid>
+            </Expander>
+            <Expander Header="AutocodeSDK direct parameters">
+                <Grid Margin="10">
+                    <bld2:TokenBuilder Data="{Binding ParametersVM}"/>
+                </Grid>
+            </Expander>
+        </StackPanel>
     </Grid>
 </UserControl>

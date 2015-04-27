@@ -30,7 +30,7 @@ namespace VitML.JsonVM.Linq
         public IJsonData Data { get; private set; }
         public PropertyDictionary Properties { get; private set; }
 
-        private JObjectVM()
+        protected JObjectVM()
         {
             Data = new JsonDataImpl(this);
 
@@ -131,6 +131,9 @@ namespace VitML.JsonVM.Linq
 
         public static JObjectVM Create(JSchema schema, JToken data)
         {
+            if (schema.Format !=null && schema.Format.StartsWith("$custom:"))
+                return JCustomObjectVM.Create(schema);
+
             JObjectVM objectVM = new JObjectVM();
             objectVM.SetSchema(schema);
             objectVM.SetData(data);            
