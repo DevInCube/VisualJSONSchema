@@ -39,8 +39,12 @@ namespace MyVisualJSONEditor.ViewModels.Injections
             JSchema principalSchema = JSchema.Parse(Resources.LPR_Recognizer_Principal_schema, refResolver);
             PrincipalVM = JObjectVM.FromJson(inData, principalSchema) as JObjectVM;
 
+            JSchema parametersSchema = JSchema.Parse(Resources.LPR_Recognizer_Parameters_schema, refResolver);
+            ParametersVM = JObjectVM.FromJson(inData, parametersSchema) as JObjectVM;
+
             ModuleVM.PropertyChanged += ModuleVM_PropertyChanged;
             PrincipalVM.PropertyChanged += ModuleVM_PropertyChanged;
+            ParametersVM.PropertyChanged += ModuleVM_PropertyChanged;
             this.PropertyChanged += LPRVM_PropertyChanged;
         }
 
@@ -73,6 +77,12 @@ namespace MyVisualJSONEditor.ViewModels.Injections
             if (principal != null)
             {
                 foreach (var prop in principal.Properties())
+                    result.Add(prop.Name, prop.Value);
+            }
+            JObject parameters = ParametersVM.ToJToken() as JObject;
+            if (parameters != null)
+            {
+                foreach (var prop in parameters.Properties())
                     result.Add(prop.Name, prop.Value);
             }
 

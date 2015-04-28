@@ -1,0 +1,83 @@
+﻿{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "id":"http://vit.com.ua/edgeserver/lpr.recognizer.parameters#",
+
+    "type":"object",
+
+    "title":"LPR Recognizer Parameters",
+    "description":"LPR Recognizer Parameters",
+
+    "properties":{
+
+        "principal_enable":{
+            "type":"integer",
+            "title":"principal_enable",  
+			'$ref':'definitions#/definitions/uint',    
+        }, 
+		 "plate_inverse_analyze":{
+            "type":"integer",
+            "title":"plate_inverse_analyze",     
+        }, 
+		 "plate_probability_min":{
+            "type":"integer",
+            "title":"plate_probability_min",  
+			'$ref':'definitions#/definitions/uint',    
+        }, 
+		 "plate_star_max":{
+            "type":"integer",
+            "title":"plate_star_max",  
+			'$ref':'definitions#/definitions/uint',    
+        }, 
+		 "plate_size_max":{
+            "type":"integer",
+            "title":"plate_size_max",  
+			'$ref':'definitions#/definitions/uint',    
+        }, 
+		 "plate_size_min":{
+            "type":"integer",
+            "title":"plate_size_min",  
+			'$ref':'definitions#/definitions/uint',    
+        }, 
+		 "plate_filter_rofactor":{
+            "type":"integer",
+            "title":"plate_filter_rofactor",  
+			'$ref':'definitions#/definitions/uint',    
+        }, 
+		 "plate_filter_rodropfactor":{
+            "type":"integer",
+            "title":"plate_filter_rodropfactor",  
+			'$ref':'definitions#/definitions/uint',    
+        }, 
+		"plate_image_scale_factor":{
+            "type":"array",
+            "title":"plate_image_scale_factor",  
+			
+			items:{ type: 'number', },   
+			minimum:2,
+			maximum:2,
+        }, 
+		"plate_image_size":{
+            "type":"array",
+            "title":"plate_image_size",  
+			
+			items:{ '$ref':'definitions#/definitions/uint' },   
+			minimum:2,
+			maximum:2,
+        }, 
+    },
+
+	required : [
+		'principal_enable',
+		'plate_inverse_analyze',
+		'plate_probability_min',
+		'plate_star_max',
+		'plate_size_max',
+		'plate_size_min',
+		'plate_filter_rofactor',
+		'plate_filter_rodropfactor',
+		'plate_image_scale_factor',
+		'plate_image_size',
+	],
+
+    "additionalProperties":false
+}

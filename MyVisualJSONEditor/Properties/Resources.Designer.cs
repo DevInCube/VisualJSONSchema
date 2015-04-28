@@ -430,6 +430,30 @@ namespace MyVisualJSONEditor.Properties {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/lpr.recognizer.parameters#&quot;,
+        ///
+        ///    &quot;type&quot;:&quot;object&quot;,
+        ///
+        ///    &quot;title&quot;:&quot;LPR Recognizer Parameters&quot;,
+        ///    &quot;description&quot;:&quot;LPR Recognizer Parameters&quot;,
+        ///
+        ///    &quot;properties&quot;:{
+        ///
+        ///       
+        ///    },
+        ///
+        ///    &quot;additionalProperties&quot;:false
+        ///}.
+        /// </summary>
+        internal static string LPR_Recognizer_Parameters_schema {
+            get {
+                return ResourceManager.GetString("LPR_Recognizer_Parameters_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
         ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/lpr.recognizer.principal#&quot;,
         ///
         ///    &quot;type&quot;:&quot;object&quot;,
@@ -441,13 +465,12 @@ namespace MyVisualJSONEditor.Properties {
         ///
         ///        &quot;principal_fps&quot;:{
         ///            &quot;type&quot;:&quot;integer&quot;,
-        ///            &quot;title&quot;:&quot;principal_fps&quot;,            
+        ///            &quot;title&quot;:&quot;principal_fps&quot;,  
+        ///			&apos;$ref&apos;:&apos;definitions#/definitions/uint&apos;,    
         ///        }, 
         ///		&quot;principal_channels&quot;:{
         ///            &quot;type&quot;:&quot;integer&quot;,
-        ///            &quot;title&quot;:&quot;principal_channels&quot;,
-        ///        }, 
-        ///		&quot;countrie [rest of string was truncated]&quot;;.
+        ///            &quot;title&quot;:&quot;principa [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LPR_Recognizer_Principal_schema {
             get {

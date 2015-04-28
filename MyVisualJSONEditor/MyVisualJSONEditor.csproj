@@ -196,6 +196,7 @@
     <Resource Include="Resources\core.txt" />
     <Resource Include="Resources\LPR.Recognizer.Module.schema.txt" />
     <Resource Include="Resources\LPR.Recognizer.Principal.schema.txt" />
+    <Resource Include="Resources\LPR.Recognizer.Parameters.schema.txt" />
     <Content Include="Resources\MediaCodec.txt" />
     <Resource Include="Resources\MediaStore.schema.txt" />
     <Resource Include="Resources\MediaStore.txt" />
