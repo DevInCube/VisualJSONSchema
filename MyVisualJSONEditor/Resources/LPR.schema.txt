@@ -116,16 +116,16 @@
             "additionalProperties":false
         },
         "recognizer":{
-
-            "type":"object",
-
             "title":"Recognizer",
 
+            "type":"object",
 			'format':'$custom:test',
 
-            "properties":{
-
-            }
+            allOf:[
+				{'$ref':'lpr.recognizer.module#'},
+				{'$ref':'lpr.recognizer.principal#'},
+				{'$ref':'lpr.recognizer.parameters#'},
+			],
         }
     },
     "required":[

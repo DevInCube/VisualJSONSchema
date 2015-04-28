@@ -34,6 +34,21 @@
 			],
 			minItems:4,
 			maxItems:4,
+		},
+		'image_azone_mask_item':{
+			type:'array',
+			format:'static',
+			items:{
+				type:'array',
+				format:'static',
+				items:{
+					type:'number',
+				},
+				minItems:2,
+				maxItems:2,
+			},
+			minItems:3,
+			maxItems:3,
 		},		
 	},
 
@@ -157,11 +172,13 @@
             "title":"image_analyze_zone",  
 			
             type:"array",			
-			items:{ '$ref':'#/definitions/image_analyze_zone_item' },   
-			minItems:0,
+			items:{ '$ref':'#/definitions/image_analyze_zone_item' },   			
         }, 		
 		'image_azone_mask':{
-			'title':'image_azone_mask not implemented yet',
+			'title':'image_azone_mask',
+
+			type:"array",			
+			items:{ '$ref':'#/definitions/image_azone_mask_item' },   			
 		},
 		"plate_ratio":{
             "title":"plate_ratio",  
@@ -242,6 +259,4 @@
 		"dynamic_duration_without_access",
 		"dynamic_comparable_time_max",
 	],
-
-    "additionalProperties":false
 }

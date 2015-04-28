@@ -42,5 +42,5 @@
 		"principal_thread_max"					,	
 		"aorp_path"
     ],
-    "additionalProperties":false
+
 }

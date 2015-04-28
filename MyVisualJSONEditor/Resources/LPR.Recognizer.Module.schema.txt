@@ -40,13 +40,12 @@
         },        
     },
     "required":[
-       "generate_tracks"	,                  
-		"generate_scenes"	,                 
-		"tracks_only_lost"	,                
-		"task_valid_time"	,                 
-		"apply_unique"		,                    
-		"save_empty_result"	,               
-		"empty_result_dir"	,            
+       "generate_tracks",                  
+		"generate_scenes",                 
+		"tracks_only_lost",                
+		"task_valid_time",                 
+		"apply_unique",                    
+		"save_empty_result",               
+		"empty_result_dir",            
     ],
-    "additionalProperties":false
 }

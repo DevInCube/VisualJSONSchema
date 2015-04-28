@@ -184,6 +184,9 @@ namespace MyVisualJSONEditor.ViewModels
             refResolver.Add(new Uri("http://vit.com.ua/edgeserver/core"), Resources.core );
             refResolver.Add( new Uri("http://vit.com.ua/edgeserver/definitions"),Resources.definitions);
             refResolver.Add(new Uri("http://vit.com.ua/edgeserver/drivers"), Resources.drivers);
+            refResolver.Add(new Uri("http://vit.com.ua/edgeserver/lpr.recognizer.module"), Resources.LPR_Recognizer_Module_schema);
+            refResolver.Add(new Uri("http://vit.com.ua/edgeserver/lpr.recognizer.principal"), Resources.LPR_Recognizer_Principal_schema);
+            refResolver.Add(new Uri("http://vit.com.ua/edgeserver/lpr.recognizer.parameters"), Resources.LPR_Recognizer_Parameters_schema);
 
             this.PropertyChanged += MainWindowVM_PropertyChanged;
             ValidationErrors = new ObservableCollection<string>();
