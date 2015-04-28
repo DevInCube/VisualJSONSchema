@@ -67,8 +67,9 @@ namespace VitML.JsonSchemaControlBuilder.Views
                     return;
 
             JSchema schema = schemaEx.GetItemSchemaByIndex(list.Count);
-              
-            JTokenVM obj = JObjectVM.FromSchema(schema);
+
+            var set = new DataGenerationSettings() { CreateMinItems = true };
+            JTokenVM obj = JObjectVM.FromJson(schema.GenerateData(set), schema);
             obj.ParentList = vm;
 
             list.Add(obj);

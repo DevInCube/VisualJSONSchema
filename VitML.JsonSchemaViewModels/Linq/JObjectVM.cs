@@ -112,7 +112,16 @@ namespace VitML.JsonVM.Linq
                 {
                     this.OnPropertyChanged(String.Format("{0}.{1}", key, e1.PropertyName));
                 };                
-            } 
+            }
+            else if (value is JCustomVM)
+            {
+                JCustomVM customVM = (value as JCustomVM);
+
+                customVM.PropertyChanged += (se1, e1) =>
+                {
+                    this.OnPropertyChanged(String.Format("{0}.{1}", key, e1.PropertyName));
+                };
+            }
         }
 
         private void BindProperties(IList list, string key)

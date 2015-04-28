@@ -92,6 +92,11 @@ namespace MyVisualJSONEditor.Views.Controls
             }
             if (type == JSchemaType.Integer)
             {
+                switch (schema.Format)
+                {
+                    case ("intbool"):
+                        return (DataTemplate)presenter.Resources["IntBool"];
+                }
                 if (schema.Enum.Count > 0)
                     return (DataTemplate)presenter.Resources["Enum"];
                 else

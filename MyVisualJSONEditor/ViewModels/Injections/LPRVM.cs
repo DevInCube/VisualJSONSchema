@@ -50,12 +50,12 @@ namespace MyVisualJSONEditor.ViewModels.Injections
 
         void ModuleVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            this.OnPropertyChanged("");
+            this.OnPropertyChanged(e.PropertyName);
         }
 
         void LPRVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            jmodel.Notify();
+            jmodel.Notify(e.PropertyName);
         }
 
         public Newtonsoft.Json.Linq.JToken Data

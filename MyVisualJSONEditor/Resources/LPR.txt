@@ -96,7 +96,7 @@
 		"dynamic_output_frame_count":10,                      
 		"dynamic_output_timeout":1000,                        
 		"dynamic_output_period":1000,                         
-		"dynamic_with_duplicate":10,                          
+		"dynamic_with_duplicate":1,
 		"dynamic_duration_without_access":10000,              
 		"dynamic_comparable_time_max":10 
 	}

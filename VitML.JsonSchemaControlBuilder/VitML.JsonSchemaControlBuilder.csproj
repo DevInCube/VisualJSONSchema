@@ -80,6 +80,7 @@
     <Compile Include="Views\Controls\ViewBuilderTemplateSelector.cs" />
     <Compile Include="Views\Controls\TokenBuilderTemplateSelector.cs" />
     <Compile Include="Views\Controls\TabControlEx.cs" />
+    <Compile Include="Views\Converters\IntBooleanConverter.cs" />
     <Compile Include="Views\Converters\VisConverter.cs" />
     <Compile Include="Views\Converters\DateTimeConverter.cs" />
     <Compile Include="Views\Converters\DateConverter.cs" />

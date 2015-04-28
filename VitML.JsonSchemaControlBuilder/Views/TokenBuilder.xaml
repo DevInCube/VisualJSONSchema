@@ -24,6 +24,7 @@
         <myConv:VisConverter x:Key="VisConverter"/>
         <myConv:StringConverter x:Key="StringConverter"/>
         <myConv:BooleanConverter x:Key="BooleanConverter"/>
+        <myConv:IntBooleanConverter x:Key="IntBooleanConverter"/>
 
         <Style TargetType="{x:Type controls:TabControlEx}">
             <Setter Property="Template">
@@ -393,8 +394,13 @@
             
             <DataTemplate x:Key="Boolean">
                 <CheckBox IsThreeState="False"
-                            Content="{Binding Schema.Description, Mode=OneTime, FallbackValue=Description}"
                             IsChecked="{Binding Value, Mode=TwoWay, FallbackValue=false, Converter={StaticResource BooleanConverter}}" 
+                            Style="{StaticResource JValueStyle}" />
+            </DataTemplate>
+
+            <DataTemplate x:Key="IntBool">
+                <CheckBox IsThreeState="False"                            
+                            IsChecked="{Binding Value, Mode=TwoWay, FallbackValue=false, Converter={StaticResource IntBooleanConverter}}" 
                             Style="{StaticResource JValueStyle}" />
             </DataTemplate>
 

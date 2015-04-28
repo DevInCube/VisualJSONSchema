@@ -57,5 +57,11 @@
 			minimum : 0,
 		},
 
+		'intbool':{
+			type:'integer',
+			format:'intbool',
+			enum:[0,1],  
+		},
+
 	}
 }

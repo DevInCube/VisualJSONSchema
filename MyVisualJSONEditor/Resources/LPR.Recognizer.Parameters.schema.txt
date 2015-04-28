@@ -7,63 +7,209 @@
     "title":"LPR Recognizer Parameters",
     "description":"LPR Recognizer Parameters",
 
+	'definitions':{
+		'plate_template_item':{
+			type:'array',
+			format:'static',
+			items:[
+				{'$ref':'definitions#/definitions/uint'},
+				{'$ref':'definitions#/definitions/uint'},
+				{'$ref':'definitions#/definitions/uint'},
+				{ 
+					type:'string', 
+					enum:['on','off'], 
+				},
+			],
+			minItems:4,
+			maxItems:4,
+		},
+		'image_analyze_zone_item':{
+			type:'array',
+			format:'static',
+			items:[
+				{'$ref':'definitions#/definitions/uint'},
+				{'$ref':'definitions#/definitions/uint'},
+				{'$ref':'definitions#/definitions/uint'},
+				{'$ref':'definitions#/definitions/uint'},
+			],
+			minItems:4,
+			maxItems:4,
+		},		
+	},
+
     "properties":{
 
-        "principal_enable":{
-            "type":"integer",
-            "title":"principal_enable",  
-			'$ref':'definitions#/definitions/uint',    
+        "principal_enable":{            
+            title:"principal_enable",
+			description:'Включить/выключить распознавание.',  
+			
+			'$ref':'definitions#/definitions/intbool',  
         }, 
 		 "plate_inverse_analyze":{
-            "type":"integer",
-            "title":"plate_inverse_analyze",     
+            title:"plate_inverse_analyze",
+			description:'Включить/выключить инверсный анализ изображения.',  
+			
+			'$ref':'definitions#/definitions/intbool',   
         }, 
 		 "plate_probability_min":{
-            "type":"integer",
             "title":"plate_probability_min",  
+			description:'Минимальное значение специальной характеристики номера, чтобы быть таковым.',  
+            
 			'$ref':'definitions#/definitions/uint',    
         }, 
-		 "plate_star_max":{
-            "type":"integer",
+		 "plate_star_max":{            
             "title":"plate_star_max",  
+			description:'Максимальное количество нераспознанных символов на номере, чтобы быть таковым.',  
+
 			'$ref':'definitions#/definitions/uint',    
         }, 
-		 "plate_size_max":{
-            "type":"integer",
+		 "plate_size_max":{           
             "title":"plate_size_max",  
+			description:'Максимальная ширина номера (в пикселях), чтобы быть таковым.',  
+
 			'$ref':'definitions#/definitions/uint',    
         }, 
-		 "plate_size_min":{
-            "type":"integer",
+		 "plate_size_min":{            
             "title":"plate_size_min",  
+			description:'Минимальная ширина номера (в пикселях), чтобы быть таковым.',  
+
 			'$ref':'definitions#/definitions/uint',    
         }, 
-		 "plate_filter_rofactor":{
-            "type":"integer",
+		 "plate_filter_rofactor":{            
             "title":"plate_filter_rofactor",  
+			description:'Коэффициент при фильтрации номерной пластины по плотности изображения (первая стратегия).',
+
 			'$ref':'definitions#/definitions/uint',    
         }, 
-		 "plate_filter_rodropfactor":{
-            "type":"integer",
+		 "plate_filter_rodropfactor":{            
             "title":"plate_filter_rodropfactor",  
+			description:'Коэффициент при фильтрации номерной пластины по плотности изображения (вторая стратегия).',
+
 			'$ref':'definitions#/definitions/uint',    
         }, 
 		"plate_image_scale_factor":{
             "type":"array",
+			'format':'static',
             "title":"plate_image_scale_factor",  
 			
 			items:{ type: 'number', },   
-			minimum:2,
-			maximum:2,
+			minItems:2,
+			maxItems:2,
         }, 
 		"plate_image_size":{
             "type":"array",
+			'format':'static',
             "title":"plate_image_size",  
 			
 			items:{ '$ref':'definitions#/definitions/uint' },   
-			minimum:2,
-			maximum:2,
+			minItems:2,
+			maxItems:2,
         }, 
+		"plate_template":{
+            "type":"array",			
+            "title":"plate_image_size",  
+			
+			items:{ '$ref':'#/definitions/plate_template_item' },   
+			minItems:0,
+        }, 
+		"log_settings":{
+            title:"log_settings",  
+			description:"Включить/выключить запись в лог файл список всех параметров распознавания. ",
+            
+			'$ref':'definitions#/definitions/intbool',
+        }, 
+		 "image_width":{            
+            "title":"image_width",  
+			
+			'$ref':'definitions#/definitions/uint',    
+        }, 
+		 "image_height":{           
+            "title":"image_height",  
+
+			'$ref':'definitions#/definitions/uint',    
+        }, 
+		 "image_brightness":{            
+            title:"image_brightness", 
+			 
+			type:"integer",
+			minimum:-100,
+			maximum:100,
+        }, 
+		 "image_contrast":{
+            title:"image_contrast",
+
+            type:"integer",
+			minimum:-100,
+			maximum:100,  
+        }, 
+		 "image_blur":{
+            "title":"image_blur",   
+
+            "type":"integer",
+        }, 
+		'image_threshold':{
+            "title":"image_threshold",  
+
+			"type":"integer",
+			minimum:0, 
+		},
+		"image_analyze_zone":{
+            "title":"image_analyze_zone",  
+			
+            type:"array",			
+			items:{ '$ref':'#/definitions/image_analyze_zone_item' },   
+			minItems:0,
+        }, 		
+		'image_azone_mask':{
+			'title':'image_azone_mask not implemented yet',
+		},
+		"plate_ratio":{
+            "title":"plate_ratio",  
+			
+            type:"array",
+			format:'static',
+			items:[ 
+				{'$ref':'definitions#/definitions/uint'},
+				{ type:'number', },
+			],   
+			minItems:2,
+			maxItems:2,
+        }, 
+		'dynamic_enable':{
+            "title":"dynamic_enable",  
+
+			'$ref':'definitions#/definitions/intbool',			
+		},
+		"dynamic_output_frame_count":{
+            "title":"dynamic_output_frame_count",  
+
+			'$ref':'definitions#/definitions/uint',
+		},
+		"dynamic_output_timeout":{		
+            "title":"dynamic_output_timeout",
+			
+			'$ref':'definitions#/definitions/uint',  
+		},
+		"dynamic_output_period":{			
+            "title":"dynamic_output_period",  
+			
+			'$ref':'definitions#/definitions/uint',   
+		},
+		"dynamic_with_duplicate":{			
+            "title":"dynamic_with_duplicate",  
+			
+			'$ref':'definitions#/definitions/intbool',
+		},
+		"dynamic_duration_without_access":{			
+            "title":"dynamic_duration_without_access",  
+			
+			'$ref':'definitions#/definitions/uint',
+		},
+		"dynamic_comparable_time_max":{			
+            "title":"dynamic_comparable_time_max",  
+			
+			'$ref':'definitions#/definitions/uint',
+		},
     },
 
 	required : [
@@ -77,6 +223,24 @@
 		'plate_filter_rodropfactor',
 		'plate_image_scale_factor',
 		'plate_image_size',
+		'plate_template',
+		'log_settings',
+		'image_width',
+		'image_height',
+		'image_brightness',
+		'image_contrast',
+		'image_blur',
+		'image_threshold',
+		'image_analyze_zone',
+		'image_azone_mask',
+		'plate_ratio',
+		'dynamic_enable',
+		"dynamic_output_frame_count",
+		"dynamic_output_timeout",
+		"dynamic_output_period",
+		"dynamic_with_duplicate",
+		"dynamic_duration_without_access",
+		"dynamic_comparable_time_max",
 	],
 
     "additionalProperties":false

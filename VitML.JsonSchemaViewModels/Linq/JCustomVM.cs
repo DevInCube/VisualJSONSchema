@@ -29,9 +29,9 @@ namespace VitML.JsonVM.Linq
             this.JsonData = data;
         }
 
-        public void Notify()
+        public void Notify(string propName)
         {
-            this.OnPropertyChanged("");
+            this.OnPropertyChanged(propName);
         }
 
         public void SetDataProvider(IJsonDataProvider provider)

@@ -119,11 +119,10 @@ namespace VitML.JsonVM.Linq
             
             this.Items.Clear();
 
-            int index = 0;
             for (int i = 0; i < array.Count; i++)
             {
                 JToken item = array[i];
-                var propertySchema = this.Schema.GetItemSchemaByIndex(index).CheckSchema(item);
+                var propertySchema = this.Schema.GetItemSchemaByIndex(i).CheckSchema(item);
                 this.Items.Add(JObjectVM.FromJson(item, propertySchema));
             }
             OnPropertyChanged("Items");
