@@ -1,0 +1,154 @@
+﻿{
+    "$schema":"http://json-schema.org/draft-04/schema#",
+    "id":"http://vit.com.ua/edgeserver/radar.drivers",
+
+	'definitions' : {
+		
+		'libdriver-protocol.so-params':{
+			type:'object',
+
+			properties:{
+
+				"File":{
+					"title":"File",
+					"type":"string",
+				},
+				"ParamSet":{
+					"description":"Параметры",
+					"type":"object",
+				},
+			},
+			required:[
+				'File',
+				'ParamSet',
+			],
+		},
+
+		'libdriver-protocol.so' : {
+			title:'libdriver-protocol.so',
+
+			"type":"object",
+
+			"properties":{
+
+				'Transport':{ 
+					title:'Transport',
+					'$ref':'#/definitions/libdriver-protocol.so-params',
+				},
+				'Device':{ 
+					title:'Transport',
+					'$ref':'#/definitions/libdriver-protocol.so-params',
+				},
+			},
+
+			"required":[
+				"Transport",
+				"Device",				
+			]
+		},
+
+		'libtransport-tcp.so':{
+			title:'libtransport-tcp.so',
+
+			type:'object',
+
+			properties:{
+
+				'TcpPort':{
+					title:'TcpPort',
+
+					type:'integer',
+					minimum: 0,
+					exclusiveMinimum: true,
+				},
+			},
+			required:[
+				'TcpPort',
+			],
+		},
+
+		'libtransport-com.so':{
+			title:'libtransport-com.so',
+
+			type:'object',
+
+			properties:{
+
+				'ComFile':{
+					title:'TcpPort',
+
+					type:'string',					
+				},
+				'ComRate':{
+					title:'ComRate',
+
+					type:'integer',
+					minimum: 0,
+					exclusiveMinimum: true,
+				},
+			},
+			required:[
+				'ComFile',
+				'ComRate',
+			],
+		},
+
+		'libprotocol-smartmicroX9.so':{
+			title:'libprotocol-smartmicroX9.so',
+
+			type:'object',
+
+			properties:{
+
+				'PosX':{
+					title:'PosX',
+
+					type:'integer',					
+				},
+				'PosY':{
+					title:'PosY',
+
+					type:'integer',					
+				},
+				'PosZ':{
+					title:'PosZ',
+
+					type:'integer',					
+				},
+				'PosH':{
+					title:'PosH',
+
+					type:'integer',					
+				},
+				'AngleXY':{
+					title:'AngleXY',
+
+					type:'integer',		
+					minimum: 0,			
+				},
+				'AngleXZ':{
+					title:'AngleXZ',
+
+					type:'integer',		
+					minimum: 0,			
+				},
+				'AngleYZ':{
+					title:'AngleYZ',
+
+					type:'integer',		
+					minimum: 0,			
+				},
+			},
+			required:[
+				'PosX',
+				'PosY',
+				'PosZ',
+				'PosH',
+				'AngleXY',
+				'AngleXZ',
+				'AngleYZ',
+			],
+		},
+	}
+
+}
