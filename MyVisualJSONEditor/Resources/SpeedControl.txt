@@ -1,0 +1,9 @@
+﻿{
+  "track_dirpath": "/var/spool/edge/tr0-sc0-track",
+  "event_store_workers_amount": 3,
+  "root_result_dirpath": "/var/spool/edge/sc0-es0-fact",
+  "mediastore_endpoint": "/var/spool/edge/sc0-ms0-uds",
+  "min_velocity_for_insert": 0,
+  "channel": 0,
+  "use_optimistic_load_frame_request": true,
+}

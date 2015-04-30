@@ -19,9 +19,9 @@
         "ExpTime":[1000, 2000, 5],        
         "Lut12":
         {
-          "Day":"/etc/edge/grabcontrol.0/day.lut",
-          "Night":"/etc/edge/grabcontrol.0/night.lut",
-          "Default":"/etc/edge/grabcontrol.0/default.lut"
+          "Default":"/etc/edge/grabcontrol.0/default.lut",
+          "Evening":"/etc/edge/grabcontrol.0/day.lut",
+          "Night":"/etc/edge/grabcontrol.0/night.lut"
         }
       }
     }
@@ -30,31 +30,13 @@
   {
     "CheckFrameReact":
     {
-      "Meta":
-      {
-        "ParamSet":
-        {
-          "Prefix":"",
-          "Suffix":".gframe",
-          "Dir":"/mnt/tmpramfs/mediagrabber.0/gscene"
-        }
-      },
-      "Data":
-      {
-        "ParamSet":
-        {
-          "Prefix":"",
-          "Suffix":".gscene",
-          "Dir":"/mnt/tmpramfs/mediagrabber.0/gframe"
-        }
-      }
+      "SceneDir": "/var/spool/edge/mg0-gc0-scene",
+      "FrameDir": "/var/spool/edge/mg0-gc0-frame"
     },
     "CheckFrameEvent":
     [
       {
-        "Prefix":"",
-        "Suffix":".cfs",
-        "Dir":"/mnt/tmpramfs/grabcontrol.0/checkFrameStatus"
+        "Dir":"/var/spool/edge/gc0-mg0-tune"
       }
     ]
   }

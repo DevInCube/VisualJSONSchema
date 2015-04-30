@@ -1,9 +1,7 @@
 ﻿{
   "TxPipes":
   [
-    "/tmp/Fifofile1",
-    "/tmp/Fifofile2",
-    "/tmp/Fifofile3"
+    "/var/spool/edge/mg0-ra0-pipe"
   ],
   "Driver":
   {
@@ -17,32 +15,26 @@
       
     }
   },
-  "FrameExport":
-  {
-    "Prefix":"",
-    "Suffix":".mgframe",
-    "Dir":""
-  },
-  "SceneExport":
-  {
-    "EntrySet":
-    [
-      {
-        "Prefix":"",
-        "Suffix":".mgscene",
-        "Dir":""
-      }
-    ]
-  },
   "FileApi":
   {
     "HaltEvent":
     {
-       "Prefix":"",                                        
-       "Suffix":".mghalt",                                 
-       "Dir":"/var/spool/edge/setupstore.0/mediagrabber.0", 
-       "SignalAbsentTout":3000,                             
-       "DeviceAbsentTout":600000                            
-    }
+       "Prefix":"",                                 
+       "Suffix":"",                                 
+       "Dir":"/var/spool/edge/mg0-ss0-halt",        
+       "SignalAbsentTout":3000,                     
+       "DeviceAbsentTout":600000                    
+    },
+    "SceneEvent":
+    [
+      {
+        "FrameDir":"/var/spool/edge/mg0-mc0-frame", 
+        "SceneDir":"/var/spool/edge/mg0-mc0-scene"  
+      },
+      {
+        "FrameDir":"/var/spool/edge/mg0-lr0-frame", 
+        "SceneDir":"/var/spool/edge/mg0-lr0-scene"  
+      }
+    ]
   }
 }

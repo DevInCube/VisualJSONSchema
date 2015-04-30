@@ -1,0 +1,33 @@
+﻿{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"id" : "http://vit.com.ua/edgeserver/overlayrender",
+
+	'title' : 'Overlay Render',
+
+	'type' : 'object',
+
+	
+	'properties' : {
+		
+		'source_url' : {
+			title:'source_url',
+			description:'source_url',
+
+			'type' : 'string',
+		},
+		'sink_dir' : {
+			title:'sink_dir',
+			description:'sink_dir',
+
+			'type' : 'string',
+		},
+		
+	},
+
+	"required" : [ 
+		"source_url",
+		"sink_dir",
+		
+	],
+    "additionalProperties": false,
+}

@@ -101,6 +101,12 @@
     <Compile Include="ViewModels\AModuleVM.cs" />
     <Compile Include="ViewModels\Injections\LPRCountriesVM.cs" />
     <Compile Include="ViewModels\Injections\LPRVM.cs" />
+    <Compile Include="ViewModels\Modules\GrabControlVM.cs" />
+    <Compile Include="ViewModels\Modules\OverlayServerVM.cs" />
+    <Compile Include="ViewModels\Modules\OverlayRenderVM.cs" />
+    <Compile Include="ViewModels\Modules\TrackerVM.cs" />
+    <Compile Include="ViewModels\Modules\SpeedControlVM.cs" />
+    <Compile Include="ViewModels\Modules\RadarVM.cs" />
     <Compile Include="ViewModels\Modules\LPRVM.cs" />
     <Compile Include="ViewModels\Modules\CompositorVM.cs" />
     <Compile Include="ViewModels\Modules\EventStoreVM.cs" />
@@ -181,6 +187,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Tracker.schema.txt" />
+    <Resource Include="Resources\Tracker.txt" />
+    <Resource Include="Resources\OverlayRender.txt" />
+    <Resource Include="Resources\OverlayRender.schema.txt" />
+    <Resource Include="Resources\OverlayServer.txt" />
+    <Resource Include="Resources\OverlayServer.schema.txt" />
+    <Resource Include="Resources\SpeedControl.txt" />
     <Resource Include="Resources\drivers.txt" />
     <Resource Include="Resources\MediaGrabber.schema.txt" />
     <Resource Include="Resources\MediaGrabber.txt" />
@@ -197,6 +210,8 @@
     <Resource Include="Resources\LPR.Recognizer.Module.schema.txt" />
     <Resource Include="Resources\LPR.Recognizer.Principal.schema.txt" />
     <Resource Include="Resources\LPR.Recognizer.Parameters.schema.txt" />
+    <Resource Include="Resources\Radar.drivers.schema.txt" />
+    <Resource Include="Resources\SpeedControl.schema.txt" />
     <Content Include="Resources\MediaCodec.txt" />
     <Resource Include="Resources\MediaStore.schema.txt" />
     <Resource Include="Resources\MediaStore.txt" />

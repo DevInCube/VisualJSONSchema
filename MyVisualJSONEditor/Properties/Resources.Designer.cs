@@ -101,8 +101,8 @@ namespace MyVisualJSONEditor.Properties {
         ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
         ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/compositor#&quot;,
         ///
-        ///	title:&apos;Compositor&apos;,
-        ///	description:&apos;Compositor&apos;,
+        ///	title: &apos;Compositor&apos;,
+        ///	description: &apos;Модуль осуществляет синхронизацию событий модулей системы. В результате формируется составное (композитное, агрегированное) событие. Это композитное событие включает данные от всех элементарных событий.&apos;,
         ///
         ///    &quot;type&quot;:&quot;object&quot;,
         ///	&apos;format&apos;:&apos;tab&apos;,
@@ -116,10 +116,7 @@ namespace MyVisualJSONEditor.Properties {
         ///        &quot;Source&quot;:{
         ///
         ///            &quot;id&quot;:&quot;Source&quot;,
-        ///            &quot;type&quot;:&quot;object&quot;,
-        ///			
-        ///			title:&apos;Source&apos;,
-        ///			&apos;description&apos; : &quot;Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dum [rest of string was truncated]&quot;;.
+        ///     [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Compositor_schema {
             get {
@@ -325,9 +322,9 @@ namespace MyVisualJSONEditor.Properties {
         ///        &quot;ExpTime&quot;:[1000, 2000, 5],        
         ///        &quot;Lut12&quot;:
         ///        {
-        ///          &quot;Day&quot;:&quot;/etc/edge/grabcontrol.0/day.lut&quot;,
-        ///          &quot;Night&quot;:&quot;/etc/edge/grabcontrol.0/night.lut&quot;,
-        ///          &quot;Default&quot;:&quot;/etc/edge/ [rest of string was truncated]&quot;;.
+        ///          &quot;Default&quot;:&quot;/etc/edge/grabcontrol.0/default.lut&quot;,
+        ///          &quot;Evening&quot;:&quot;/etc/edge/grabcontrol.0/day.lut&quot;,
+        ///          &quot;Night&quot;:&quot;/etc [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GrabControl {
             get {
@@ -340,25 +337,26 @@ namespace MyVisualJSONEditor.Properties {
         ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
         ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/grabcontrol#&quot;,
         ///
+        ///	title:&apos;Grab Control&apos;,
+        ///
         ///    &quot;type&quot;:&quot;object&quot;,
         ///	&apos;format&apos; : &apos;tab&apos;,
         ///
         ///    &quot;properties&quot;:{
         ///
         ///        &quot;Analyzer&quot;:{
-        ///            &quot;id&quot;:&quot;Analyzer&quot;,
-        ///            &quot;type&quot;:&quot;object&quot;,
+        ///            &quot;title&quot;:&quot;Analyzer&quot;,
+        ///
+        ///            &quot;type&quot;:&quot;object&quot;,            
         ///
         ///            &quot;properties&quot;:{
         ///
         ///                &quot;ParamSet&quot;:{
-        ///                    &quot;id&quot;:&quot;ParamSet&quot;,
+        ///                                
         ///                    &quot;type&quot;:&quot;object&quot;,
+        ///                    format:&apos;tab&apos;,
         ///
-        ///                    &quot;properties&quot;:{
-        ///
-        ///                        &quot;Target&quot;:{
-        ///                            &quot;id&quot; [rest of string was truncated]&quot;;.
+        ///                    &quot;properties&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GrabControl_schema {
             get {
@@ -437,13 +435,16 @@ namespace MyVisualJSONEditor.Properties {
         ///    &quot;title&quot;:&quot;LPR Recognizer Parameters&quot;,
         ///    &quot;description&quot;:&quot;LPR Recognizer Parameters&quot;,
         ///
-        ///    &quot;properties&quot;:{
-        ///
-        ///       
-        ///    },
-        ///
-        ///    &quot;additionalProperties&quot;:false
-        ///}.
+        ///	&apos;definitions&apos;:{
+        ///		&apos;plate_template_item&apos;:{
+        ///			type:&apos;array&apos;,
+        ///			format:&apos;static&apos;,
+        ///			items:[
+        ///				{&apos;$ref&apos;:&apos;definitions#/definitions/uint&apos;},
+        ///				{&apos;$ref&apos;:&apos;definitions#/definitions/uint&apos;},
+        ///				{&apos;$ref&apos;:&apos;definitions#/definitions/uint&apos;},
+        ///				{ 
+        ///					type:&apos;string&apos;, [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LPR_Recognizer_Parameters_schema {
             get {
@@ -551,26 +552,24 @@ namespace MyVisualJSONEditor.Properties {
         ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
         ///
         ///	&apos;title&apos; : &apos;MediaCodec main.conf&apos;,
+        ///
         ///	&apos;type&apos; : &apos;object&apos;,
+        ///	format:&apos;tab&apos;,
         ///
         ///	&apos;definitions&apos; : {
         ///		
-        ///		&apos;FrameParamSet&apos; : {
-        ///			
+        ///		&apos;FrameParamSet&apos; : {			
         ///			&apos;type&apos; : &apos;object&apos;,
         ///
         ///			&apos;properties&apos; : {
-        ///
         ///				&quot;FrameMeta&quot;: {&apos;$ref&apos; : &apos;definitions#/definitions/EventDir&apos;},
         ///				&quot;FrameData&quot;: {&apos;$ref&apos; : &apos;definitions#/definitions/EventDir&apos;},
         ///			},
-        ///
-        ///			&quot;required&quot; : [ &apos;FrameMeta&apos;, &quot;FrameData&quot; ],
-        ///			&quot;additionalProperties&quot;: false,
-        ///		},
-        ///	},
-        ///
-        ///	&apos;p [rest of string was truncated]&quot;;.
+        ///			&quot;required&quot; : [ 
+        ///				&apos;FrameMeta&apos;, 
+        ///				&quot;FrameData&quot; 
+        ///			],
+        ///			&quot;additionalProperti [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MediaCodec_schema {
             get {
@@ -582,9 +581,7 @@ namespace MyVisualJSONEditor.Properties {
         ///   Looks up a localized string similar to {
         ///  &quot;TxPipes&quot;:
         ///  [
-        ///    &quot;/tmp/Fifofile1&quot;,
-        ///    &quot;/tmp/Fifofile2&quot;,
-        ///    &quot;/tmp/Fifofile3&quot;
+        ///    &quot;/var/spool/edge/mg0-ra0-pipe&quot;
         ///  ],
         ///  &quot;Driver&quot;:
         ///  {
@@ -598,19 +595,14 @@ namespace MyVisualJSONEditor.Properties {
         ///      
         ///    }
         ///  },
-        ///  &quot;FrameExport&quot;:
+        ///  &quot;FileApi&quot;:
         ///  {
-        ///    &quot;Prefix&quot;:&quot;&quot;,
-        ///    &quot;Suffix&quot;:&quot;.mgframe&quot;,
-        ///    &quot;Dir&quot;:&quot;&quot;
-        ///  },
-        ///  &quot;SceneExport&quot;:
-        ///  {
-        ///    &quot;EntrySet&quot;:
-        ///    [
-        ///      {
-        ///        &quot;Prefix&quot;:&quot;&quot;,
-        ///        &quot;Suffi [rest of string was truncated]&quot;;.
+        ///    &quot;HaltEvent&quot;:
+        ///    {
+        ///       &quot;Prefix&quot;:&quot;&quot;,                                 
+        ///       &quot;Suffix&quot;:&quot;&quot;,                                 
+        ///       &quot;Dir&quot;:&quot;/var/spool/edge/mg0-ss0-halt&quot;,        
+        ///      [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MediaGrabber {
             get {
@@ -623,28 +615,24 @@ namespace MyVisualJSONEditor.Properties {
         ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
         ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/mediagrabber#&quot;,
         ///
-        ///    &quot;type&quot;:&quot;object&quot;,
-        ///    &apos;format&apos;:&apos;tab&apos;,
-        ///
         ///	title:&apos;Media Grabber&apos;,
         ///	description:&apos;Media grabber description&apos;,
+        ///
+        ///    type:&quot;object&quot;,
+        ///    format:&apos;tab&apos;,
         ///
         ///    &quot;properties&quot;:{
         ///
         ///        &quot;TxPipes&quot;:{
         ///            &quot;title&quot;:&quot;TxPipes&quot;,
+        ///			description:&apos;Множество именованных каналов для передачи событий формирования кадра.&apos;,
+        ///
         ///            &quot;type&quot;:&quot;array&quot;,
-        ///
-        ///            &quot;items&quot;: {
-        ///                    &quot;type&quot;:&quot;string&quot;
-        ///            },
-        ///
-        ///			&quot;default&quot; : &quot;&quot;,
+        ///            &quot;items&quot;: { &quot;type&quot;:&quot;string&quot;, },
+        ///			&quot;default&quot; : &quot;/&quot;,
         ///        },
         ///
-        ///        &quot;Driver&quot;:{
-        ///            &quot;title&quot;:&quot;Driver&quot;,
-        ///         [rest of string was truncated]&quot;;.
+        ///        [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MediaGrabber_schema {
             get {
@@ -696,9 +684,7 @@ namespace MyVisualJSONEditor.Properties {
         ///	&apos;type&apos; : &apos;object&apos;,
         ///
         ///	&apos;definitions&apos; : {
-        ///
-        ///		
-        ///
+        ///	
         ///		&apos;Store.ParamSet&apos; : {
         ///			
         ///			&apos;type&apos; : &apos;object&apos;,
@@ -706,7 +692,7 @@ namespace MyVisualJSONEditor.Properties {
         ///			&apos;properties&apos; : {
         ///				
         ///				&quot;RootDir&quot;: {
-        ///					&apos;type&apos; : &apos;string&apos;
+        ///					&apos;type&apos; : &apos;string&apos;,
         ///				},
         ///				&quot;Channels&quot;: { 
         ///
@@ -720,11 +706,127 @@ namespace MyVisualJSONEditor.Properties {
         ///						&quot;properties&quot; : 
         ///						{
         ///							&quot;Name&quot;: { 
-        /// [rest of string was truncated]&quot;;.
+        ///				 [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MediaStore_schema {
             get {
                 return ResourceManager.GetString("MediaStore_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;source_url&quot;: &quot;http://192.168.106.200:8080/stream/live&quot;, 
+        ///  &quot;sink_dir&quot;: &quot;Z:/overlayrender/&quot;                          
+        ///}
+        ///.
+        /// </summary>
+        internal static string OverlayRender {
+            get {
+                return ResourceManager.GetString("OverlayRender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/overlayrender&quot;,
+        ///
+        ///	&apos;title&apos; : &apos;Overlay Render&apos;,
+        ///
+        ///	&apos;type&apos; : &apos;object&apos;,
+        ///
+        ///	
+        ///	&apos;properties&apos; : {
+        ///		
+        ///		&apos;source_url&apos; : {
+        ///			title:&apos;source_url&apos;,
+        ///			description:&apos;source_url&apos;,
+        ///
+        ///			&apos;type&apos; : &apos;string&apos;,
+        ///		},
+        ///		&apos;sink_dir&apos; : {
+        ///			title:&apos;sink_dir&apos;,
+        ///			description:&apos;sink_dir&apos;,
+        ///
+        ///			&apos;type&apos; : &apos;string&apos;,
+        ///		},
+        ///		
+        ///	},
+        ///
+        ///	&quot;required&quot; : [ 
+        ///		&quot;source_url&quot;,
+        ///		&quot;sink_dir&quot;,
+        ///		
+        ///	],
+        ///    &quot;additionalProperties&quot;: false,
+        ///}.
+        /// </summary>
+        internal static string OverlayRender_schema {
+            get {
+                return ResourceManager.GetString("OverlayRender_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;FileApi&quot;:
+        ///  {
+        ///    &quot;StreamReact&quot;:
+        ///    {
+        ///      &quot;FrameDir&quot;:&quot;/var/spool/edge/mc1-os0-frame/&quot;,
+        ///      &quot;SceneDir&quot;:&quot;/var/spool/edge/tr0-os0-scene/&quot;
+        ///    },
+        ///    &quot;StreamEvent&quot;:
+        ///    {
+        ///      &quot;Dir&quot;:&quot;/var/spool/edge/os0-ocX-scene/&quot;,
+        ///      &quot;Fps&quot;:5
+        ///    }
+        ///  }
+        ///}
+        ///.
+        /// </summary>
+        internal static string OverlayServer {
+            get {
+                return ResourceManager.GetString("OverlayServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/overlayserver&quot;,
+        ///
+        ///	&apos;title&apos; : &apos;Overlay Server main.conf&apos;,
+        ///
+        ///	&apos;type&apos; : &apos;object&apos;,
+        ///
+        ///	
+        ///	&apos;properties&apos; : {
+        ///		
+        ///		&apos;FileApi&apos; : {
+        ///			&apos;title&apos; : &apos;FileApi&apos;,
+        ///
+        ///			&apos;type&apos; : &apos;object&apos;,
+        ///	
+        ///			&apos;properties&apos; : {
+        ///		
+        ///				&apos;StreamReact&apos; : {
+        ///					&apos;title&apos; : &apos;StreamReact&apos;,
+        ///
+        ///					&apos;type&apos; : &apos;object&apos;,
+        ///	
+        ///					&apos;properties&apos; : {
+        ///		
+        ///						&apos;FrameDir&apos; : {
+        ///							&apos;title&apos; : &apos;FrameDir&apos;,
+        ///							type:&apos;string&apos;,
+        ///						},	
+        ///						&apos;SceneD [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string OverlayServer_schema {
+            get {
+                return ResourceManager.GetString("OverlayServer_schema", resourceCulture);
             }
         }
         
@@ -735,8 +837,15 @@ namespace MyVisualJSONEditor.Properties {
         ///    &quot;Driver&quot;:{
         ///        &quot;File&quot;:&quot;/opt/edge/libexec/radar/libdriver-protocol.so&quot;,
         ///        &quot;ParamSet&quot;:{
+        ///			&quot;PosX&quot;:14,    
+        ///			&quot;PosY&quot;:14,    
+        ///			&quot;PosZ&quot;:14,    
+        ///			&quot;PosH&quot;:14,    
+        ///			&quot;AngleXY&quot;:14, 
+        ///			&quot;AngleXZ&quot;:14, 
+        ///			&quot;AngleYZ&quot;:14,  
+        ///		},
         ///
-        ///        }
         ///    },
         ///    &quot;Tracker&quot;:{
         ///        &quot;SceneTout&quot;:50,
@@ -745,12 +854,7 @@ namespace MyVisualJSONEditor.Properties {
         ///        &quot;MaxTrackCount&quot;:64,
         ///        &quot;MaxSceneCount&quot;:50
         ///    },
-        ///    &quot;SceneExport&quot;:{
-        ///        &quot;QueueSet&quot;:[
-        ///            {
-        ///                &quot;File&quot;:&quot;pathto/libscene_exporter.so&quot;,
-        ///                &quot;ParamSet&quot;:{
-        ///  [rest of string was truncated]&quot;;.
+        ///    &quot;SceneExpo [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Radar {
             get {
@@ -760,10 +864,50 @@ namespace MyVisualJSONEditor.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///    &quot;$schema&quot;:&quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///    &quot;id&quot;:&quot;http://vit.com.ua/edgeserver/radar.drivers&quot;,
+        ///
+        ///	&apos;definitions&apos; : {
+        ///		
+        ///		&apos;libdriver-protocol.so-params&apos;:{
+        ///			type:&apos;object&apos;,
+        ///
+        ///			properties:{
+        ///
+        ///				&quot;File&quot;:{
+        ///					&quot;title&quot;:&quot;File&quot;,
+        ///					&quot;type&quot;:&quot;string&quot;,
+        ///				},
+        ///				&quot;ParamSet&quot;:{
+        ///					&quot;description&quot;:&quot;Параметры&quot;,
+        ///					&quot;type&quot;:&quot;object&quot;,
+        ///				},
+        ///			},
+        ///			required:[
+        ///				&apos;File&apos;,
+        ///				&apos;ParamSet&apos;,
+        ///			],
+        ///		},
+        ///
+        ///		&apos;libdriver-protocol.so&apos; : {
+        ///			title:&apos;libdriver-protocol.so&apos;,
+        ///
+        ///			&quot;type&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Radar_drivers_schema {
+            get {
+                return ResourceManager.GetString("Radar_drivers_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
         ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/radar&quot;,
         ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
         ///
         ///	&quot;title&quot; : &quot;Radar main.conf&quot;,
+        ///	type:&apos;object&apos;,	
+        ///	format: &apos;tab&apos;,
         ///
         ///	&apos;definitions&apos; : {
         ///
@@ -776,6 +920,7 @@ namespace MyVisualJSONEditor.Properties {
         ///				&quot;QueueSet&quot;:	{ 
         ///
         ///					&apos;type&apos; : &apos;array&apos;,
+        ///					&apos;format&apos;: &apos;list&apos;,
         ///
         ///					&apos;items&apos; : {
         ///
@@ -788,12 +933,61 @@ namespace MyVisualJSONEditor.Properties {
         ///							},
         ///
         ///							&quot;ParamSet&quot; : {
-        ///								&apos;type&apos; : &apos;object&apos;,
-        ///								&apos;oneOf&apos; : [{&apos;$ref&apos;:&apos;definitions#/def [rest of string was truncated]&quot;;.
+        ///								&apos;type [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Radar_schema {
             get {
                 return ResourceManager.GetString("Radar_schema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///  &quot;track_dirpath&quot;: &quot;/var/spool/edge/tr0-sc0-track&quot;,
+        ///  &quot;event_store_workers_amount&quot;: 3,
+        ///  &quot;root_result_dirpath&quot;: &quot;/var/spool/edge/sc0-es0-fact&quot;,
+        ///  &quot;mediastore_endpoint&quot;: &quot;/var/spool/edge/sc0-ms0-uds&quot;,
+        ///  &quot;min_velocity_for_insert&quot;: 0,
+        ///  &quot;channel&quot;: 0,
+        ///  &quot;use_optimistic_load_frame_request&quot;: true,
+        ///}.
+        /// </summary>
+        internal static string SpeedControl {
+            get {
+                return ResourceManager.GetString("SpeedControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/speedcontrol&quot;,
+        ///
+        ///	&apos;title&apos; : &apos;SpeedControl main.conf&apos;,
+        ///
+        ///	&apos;type&apos; : &apos;object&apos;,
+        ///
+        ///	
+        ///	&apos;properties&apos; : {
+        ///		
+        ///		&apos;track_dirpath&apos; : {
+        ///			title:&apos;track_dirpath&apos;,
+        ///			description:&apos;track_dirpath&apos;,
+        ///
+        ///			&apos;type&apos; : &apos;string&apos;,
+        ///		},
+        ///		&apos;event_store_workers_amount&apos; : {
+        ///			title:&apos;event_store_workers_amount&apos;,
+        ///			description:&apos;event_store_workers_amount&apos;,
+        ///
+        ///			&apos;type&apos; : &apos;integer&apos;,
+        ///			minimum: 0,
+        ///		},
+        ///		&apos;root_result_dirpath&apos;  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SpeedControl_schema {
+            get {
+                return ResourceManager.GetString("SpeedControl_schema", resourceCulture);
             }
         }
         
@@ -856,6 +1050,59 @@ namespace MyVisualJSONEditor.Properties {
         internal static string TestSchema {
             get {
                 return ResourceManager.GetString("TestSchema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to { 
+        ///  &quot;result_dirpath&quot;: &quot;/var/spool/edge/tr0-sc0-track&quot;,     
+        ///  &quot;lpr_track_dirpath&quot;: &quot;/var/spool/edge/lr0-tr0-track&quot;,  
+        ///  &quot;composite_dirpath&quot;: &quot;/var/spool/edge/cp0-tr0-scene&quot;,  
+        ///  &quot;annotation_dirpath&quot;: &quot;/var/spool/edge/tr0-os0-scene&quot;, 
+        ///  &quot;gscene_key&quot;: &quot;mg0-scene&quot;,                             
+        ///  &quot;rscene_key&quot;: &quot;ra0-scene&quot;,                             
+        ///  &quot;lscene_key&quot;: &quot;lp0-scene&quot;                              
+        ///}.
+        /// </summary>
+        internal static string Tracker {
+            get {
+                return ResourceManager.GetString("Tracker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///	&quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,
+        ///	&quot;id&quot; : &quot;http://vit.com.ua/edgeserver/tracker&quot;,
+        ///
+        ///	&apos;title&apos; : &apos;Tracker&apos;,
+        ///
+        ///	&apos;type&apos; : &apos;object&apos;,
+        ///	
+        ///	&apos;properties&apos; : {
+        ///		
+        ///		&apos;result_dirpath&apos; : {
+        ///			title:&apos;result_dirpath&apos;,		
+        ///
+        ///			&apos;type&apos; : &apos;string&apos;,
+        ///		},	
+        ///		&apos;lpr_track_dirpath&apos; : {
+        ///			title:&apos;lpr_track_dirpath&apos;,		
+        ///
+        ///			&apos;type&apos; : &apos;string&apos;,
+        ///		},
+        ///		&apos;composite_dirpath&apos; : {
+        ///			title:&apos;composite_dirpath&apos;,		
+        ///
+        ///			&apos;type&apos; : &apos;string&apos;,
+        ///		},
+        ///		&apos;annotation_dirpath&apos; : {
+        ///			title:&apos;annotation_dirpath&apos;,		
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Tracker_schema {
+            get {
+                return ResourceManager.GetString("Tracker_schema", resourceCulture);
             }
         }
     }

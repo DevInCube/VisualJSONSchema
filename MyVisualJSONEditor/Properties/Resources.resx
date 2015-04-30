@@ -190,4 +190,31 @@
   <data name="LPR_Recognizer_Parameters_schema" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\lpr.recognizer.parameters.schema.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="OverlayRender" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\overlayrender.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="OverlayRender_schema" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\overlayrender.schema.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="OverlayServer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\overlayserver.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="OverlayServer_schema" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\overlayserver.schema.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Radar_drivers_schema" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\radar.drivers.schema.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SpeedControl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\speedcontrol.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="SpeedControl_schema" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\speedcontrol.schema.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Tracker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\tracker.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Tracker_schema" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\tracker.schema.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>

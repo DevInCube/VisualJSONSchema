@@ -1,0 +1,9 @@
+﻿{ 
+  "result_dirpath": "/var/spool/edge/tr0-sc0-track",     
+  "lpr_track_dirpath": "/var/spool/edge/lr0-tr0-track",  
+  "composite_dirpath": "/var/spool/edge/cp0-tr0-scene",  
+  "annotation_dirpath": "/var/spool/edge/tr0-os0-scene", 
+  "gscene_key": "mg0-scene",                             
+  "rscene_key": "ra0-scene",                             
+  "lscene_key": "lp0-scene"                              
+}

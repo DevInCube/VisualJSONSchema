@@ -1,0 +1,15 @@
+﻿{
+  "FileApi":
+  {
+    "StreamReact":
+    {
+      "FrameDir":"/var/spool/edge/mc1-os0-frame/",
+      "SceneDir":"/var/spool/edge/tr0-os0-scene/"
+    },
+    "StreamEvent":
+    {
+      "Dir":"/var/spool/edge/os0-ocX-scene/",
+      "Fps":5
+    }
+  }
+}

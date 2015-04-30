@@ -184,6 +184,7 @@ namespace MyVisualJSONEditor.ViewModels
             refResolver.Add(new Uri("http://vit.com.ua/edgeserver/core"), Resources.core );
             refResolver.Add( new Uri("http://vit.com.ua/edgeserver/definitions"),Resources.definitions);
             refResolver.Add(new Uri("http://vit.com.ua/edgeserver/drivers"), Resources.drivers);
+            refResolver.Add(new Uri("http://vit.com.ua/edgeserver/radar.drivers"), Resources.Radar_drivers_schema);
             refResolver.Add(new Uri("http://vit.com.ua/edgeserver/lpr.recognizer.module"), Resources.LPR_Recognizer_Module_schema);
             refResolver.Add(new Uri("http://vit.com.ua/edgeserver/lpr.recognizer.principal"), Resources.LPR_Recognizer_Principal_schema);
             refResolver.Add(new Uri("http://vit.com.ua/edgeserver/lpr.recognizer.parameters"), Resources.LPR_Recognizer_Parameters_schema);
@@ -200,6 +201,12 @@ namespace MyVisualJSONEditor.ViewModels
             Modules.Add(new MediaGrabberVM());
             Modules.Add(new EventStoreVM());
             Modules.Add(new LPRVM());
+            Modules.Add(new RadarVM());
+            Modules.Add(new GrabControlVM());
+            Modules.Add(new SpeedControlVM());
+            Modules.Add(new OverlayServerVM());
+            Modules.Add(new OverlayRenderVM());
+            Modules.Add(new TrackerVM());
 
             SelectedModule = Modules.FirstOrDefault();
         }

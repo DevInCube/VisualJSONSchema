@@ -2,27 +2,27 @@
     "$schema":"http://json-schema.org/draft-04/schema#",
     "id":"http://vit.com.ua/edgeserver/mediagrabber#",
 
-    "type":"object",
-    'format':'tab',
-
 	title:'Media Grabber',
 	description:'Media grabber description',
+
+    type:"object",
+    format:'tab',
 
     "properties":{
 
         "TxPipes":{
             "title":"TxPipes",
+			description:'Множество именованных каналов для передачи событий формирования кадра.',
+
             "type":"array",
-
-            "items": {
-                    "type":"string"
-            },
-
-			"default" : "",
+            "items": { "type":"string", },
+			"default" : "/",
         },
 
         "Driver":{
             "title":"Driver",
+			description:'Параметры камеры',
+
             "type":"object",
 
             "properties":{
@@ -40,52 +40,46 @@
                 },
                 "Id":{
                     "title":"Id",
-                    "type":"string"
+                    "type":"string",
                 },
                 "File":{
                     "title":"File",
-                    "type":"string"
+                    "type":"string",
                 },
                 "ParamSet":{
                     "title":"ParamSet",
+
                     "type":"object",
+
                     "properties":{
 
                     }
                 }
             },
-            "required":[ "Vendor", "Model", "Firmware", "Id", "File", "ParamSet" ],
-			"additionalProperties": false,
-        },
-
-        "FrameExport" : { 
-        	title:'FrameExport',
-        	allOf:[{'$ref' : 'definitions#/definitions/EventDir' }]
-        },
-
-        "SceneExport":{
-            "title":"SceneExport",
-            "type":"object",
-
-            "properties":{
-                "EntrySet":{
-                    "id":"EntrySet",
-                    "type":"array",
-                    "items" : { '$ref' : 'definitions#/definitions/EventDir' },
-                }
-            },
-            "required":[ "EntrySet" ],
+            "required":[ 
+				"Vendor", 
+				"Model", 
+				"Firmware", 
+				"Id", 
+				"File", 
+				"ParamSet", 
+			],
 			"additionalProperties": false,
         },
 
         "FileApi":{
             "title":"FileApi",
+			description:'Параметры доставки реакций и событий через файловые очереди',
+
             "type":"object",
+			format:'tab',
 
             "properties":{
 
                 "HaltEvent":{
                     "title":"HaltEvent",
+					description:'Параметры отправки событий HaltEvent',
+
                     "type":"object",
 
 					'allOf' : [
@@ -94,30 +88,56 @@
 							'properties' : {
 
 								"SignalAbsentTout":{
-									"id":"SignalAbsentTout",
-									"type":"integer"
+									"title":"SignalAbsentTout",
+									"type":"integer",
 								},
 								"DeviceAbsentTout":{
-									"id":"DeviceAbsentTout",
-									"type":"integer"
+									"title":"DeviceAbsentTout",
+									"type":"integer",
 								}
 							},
 
 							"required":[ "SignalAbsentTout", "DeviceAbsentTout" ],
 						}
 					],
-                }
+                },
+
+				'SceneEvent':{
+					title:'SceneEvent',
+
+					type:'array',
+
+					items:{
+						type:'object',
+
+						properties:{
+							"FrameDir":{
+								"title":"FrameDir",
+								"type":"string",
+							},
+							"SceneDir":{
+								"title":"SceneDir",
+								"type":"string",
+							}
+						},	
+						required:[
+							'FrameDir',
+							'SceneDir',
+						],
+					},
+				},
 
             },
-            "required":[ "HaltEvent" ],
+            "required":[ 
+				"HaltEvent", 
+				'SceneEvent' 
+			],
 			"additionalProperties": false,
         }
     },
     "required":[
         "TxPipes",
         "Driver",
-        "FrameExport",
-        "SceneExport",
         "FileApi"
     ],
 	"additionalProperties": false,

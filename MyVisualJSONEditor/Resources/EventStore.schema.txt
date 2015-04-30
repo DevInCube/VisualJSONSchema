@@ -119,9 +119,6 @@
 					"type": "string",
 					"format": "ipv4",
 					"default": "127.0.0.1",
-					"binding" : {
-						"path" : "Host"
-					}
 				},
 				"Port": {
 					"title" : "Port",
@@ -142,20 +139,16 @@
 			"properties" : 
 			{
 				"Channel": {
-					"type": "integer"
-				},
-				"Prefix": {
-					"type": "string"
-				},
-				"Suffix": {
-					"type": "string"
-				},
+					title:'Channel',
+					"type": "integer",
+				},				
 				"Dir": {
-					"type": "string"
+					title:'Dir',
+					"type": "string",
 				},
 			},
 
-			"required" : [ "Channel", "Prefix", "Suffix", "Dir" ],
+			"required" : [ "Channel", "Dir" ],
 			"additionalProperties": false,
 		}
 	},
@@ -163,12 +156,10 @@
 	"properties" : {
 
 		"Store": {
-
-			"id" : "#Store",
 			"title" : "Store",
+
 			"type" : "object",
 			
-
 			"properties" : { 
 
 				"ParamSet" :  {
@@ -190,6 +181,7 @@
 		"SocketApi": {
 				
 			"title" : "Socket API",
+
 			"type" : "object",
 
 			"properties" : {
@@ -200,7 +192,7 @@
 					'format' : 'simple',
 
 					"oneOf": [
-						{ "$ref": "#/definitions/SocketApiImpl.ParamSet" }
+						{ "$ref": "#/definitions/SocketApiImpl.ParamSet" },
 					]
 				}
 			},
@@ -245,15 +237,13 @@
 								]
 							}
 						},
-						"required" : [ "ParamSet" ],
+						"required" : [ "ParamSet", ],
 						"additionalProperties": false,
 					},
 					"default" : {
 						"ParamSet": {
 							"Channel": 0,
-							"Prefix": "",
-							"Suffix": "",
-							"Dir": "/tmp/edge/event_store/store/0"
+							"Dir": "/tmp/edge/event_store/store/0",
 						}
 					}
 				},

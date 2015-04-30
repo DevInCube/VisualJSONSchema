@@ -31,7 +31,8 @@ namespace MyVisualJSONEditor.ViewModels.Injections
             var refResolver = new JSchemaPreloadedResolver();
             refResolver.Add(new Uri("http://vit.com.ua/edgeserver/core"), Resources.core);
             refResolver.Add(new Uri("http://vit.com.ua/edgeserver/definitions"), Resources.definitions);
-            refResolver.Add(new Uri("http://vit.com.ua/edgeserver/drivers"), Resources.drivers);            
+            refResolver.Add(new Uri("http://vit.com.ua/edgeserver/drivers"), Resources.drivers);
+            refResolver.Add(new Uri("http://vit.com.ua/edgeserver/radar.drivers"), Resources.Radar_drivers_schema);
 
             JSchema moduleSchema = JSchema.Parse(Resources.LPR_Recognizer_Module_schema, refResolver);
             ModuleVM = JObjectVM.FromJson(inData, moduleSchema) as JObjectVM;

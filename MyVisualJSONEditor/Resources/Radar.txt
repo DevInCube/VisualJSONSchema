@@ -4,8 +4,15 @@
     "Driver":{
         "File":"/opt/edge/libexec/radar/libdriver-protocol.so",
         "ParamSet":{
+			"PosX":14,    
+			"PosY":14,    
+			"PosZ":14,    
+			"PosH":14,    
+			"AngleXY":14, 
+			"AngleXZ":14, 
+			"AngleYZ":14,  
+		},
 
-        }
     },
     "Tracker":{
         "SceneTout":50,

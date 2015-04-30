@@ -3,21 +3,23 @@
 	"$schema": "http://json-schema.org/draft-04/schema#",
 
 	'title' : 'MediaCodec main.conf',
+
 	'type' : 'object',
+	format:'tab',
 
 	'definitions' : {
 		
-		'FrameParamSet' : {
-			
+		'FrameParamSet' : {			
 			'type' : 'object',
 
 			'properties' : {
-
 				"FrameMeta": {'$ref' : 'definitions#/definitions/EventDir'},
 				"FrameData": {'$ref' : 'definitions#/definitions/EventDir'},
 			},
-
-			"required" : [ 'FrameMeta', "FrameData" ],
+			"required" : [ 
+				'FrameMeta', 
+				"FrameData" 
+			],
 			"additionalProperties": false,
 		},
 	},
@@ -25,6 +27,8 @@
 	'properties' : {
 		
 		'Import' : {
+			title:'Import',
+			description:'Import',
 
 			'type' : 'object',
 
@@ -52,20 +56,32 @@
 
 			'properties' : {
 				'File' : {
+					title:'File',
+
 					'type' : 'string',
 				},
 				'Source' : {
+					title:'Source',
+
 					'type' : 'string',
 				},
 				'Target' : {
+					title:'Target',
+
 					'type' : 'string',
 				},
 				'ParamSet' : {
+					title:'ParamSet',
+
 					'type' : 'object',
 				},
 			},
-
-			"required" : [ 'File', "Source", 'Target', 'ParamSet' ],
+			"required" : [ 
+				'File', 
+				"Source", 
+				'Target', 
+				'ParamSet' 
+			],
 			"additionalProperties": false,
 		},
 
@@ -75,6 +91,7 @@
 
 			'properties' : {
 				'File' : {
+					title:'File',
 					'type' : 'string'
 				},
 				'ParamSet' : {
@@ -87,11 +104,18 @@
 				}
 			},
 
-			"required" : [ 'File', "ParamSet" ],
+			"required" : [ 
+				'File', 
+				"ParamSet" 
+			],
 			"additionalProperties": false,
 		},
 	},
 
-	"required" : [ 'Import', "Codec", 'Export' ],
+	"required" : [ 
+		'Import', 
+		"Codec", 
+		'Export' 
+	],
     "additionalProperties": false,
 }

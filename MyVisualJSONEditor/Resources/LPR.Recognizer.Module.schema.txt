@@ -40,9 +40,9 @@
         },        
     },
     "required":[
-       "generate_tracks",                  
-		"generate_scenes",                 
-		"tracks_only_lost",                
+       "generate_tracks",
+		"generate_scenes",
+		"tracks_only_lost",            
 		"task_valid_time",                 
 		"apply_unique",                    
 		"save_empty_result",               

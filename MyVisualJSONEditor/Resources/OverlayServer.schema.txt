@@ -1,0 +1,81 @@
+﻿{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"id" : "http://vit.com.ua/edgeserver/overlayserver",
+
+	'title' : 'Overlay Server main.conf',
+
+	'type' : 'object',
+
+	
+	'properties' : {
+		
+		'FileApi' : {
+			'title' : 'FileApi',
+
+			'type' : 'object',
+	
+			'properties' : {
+		
+				'StreamReact' : {
+					'title' : 'StreamReact',
+
+					'type' : 'object',
+	
+					'properties' : {
+		
+						'FrameDir' : {
+							'title' : 'FrameDir',
+							type:'string',
+						},	
+						'SceneDir' : {
+							'title' : 'SceneDir',
+							type:'string',
+						},		
+					},
+
+					"required" : [ 
+						"FrameDir",
+						"SceneDir",
+					],
+					"additionalProperties": false,
+				},	
+				'StreamEvent' : {
+					'title' : 'StreamEvent',
+
+					'type' : 'object',
+	
+					'properties' : {
+		
+						'Dir' : {
+							'title' : 'Dir',
+							type:'string',
+						},	
+						'Fps' : {						
+							'title' : 'Fps',
+							
+							type:'integer',
+							minimum: 0,
+						},		
+					},
+
+					"required" : [ 
+						"Dir",
+						"Fps",
+					],
+					"additionalProperties": false,
+				},		
+			},
+
+			"required" : [ 
+				"StreamReact",
+				"StreamEvent",
+			],
+			"additionalProperties": false,
+		},		
+	},
+
+	"required" : [ 
+		"FileApi",
+	],
+    "additionalProperties": false,
+}

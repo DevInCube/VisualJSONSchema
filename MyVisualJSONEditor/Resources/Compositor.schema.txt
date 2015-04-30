@@ -2,8 +2,8 @@
     "$schema":"http://json-schema.org/draft-04/schema#",
     "id":"http://vit.com.ua/edgeserver/compositor#",
 
-	title:'Compositor',
-	description:'Compositor',
+	title: 'Compositor',
+	description: 'Модуль осуществляет синхронизацию событий модулей системы. В результате формируется составное (композитное, агрегированное) событие. Это композитное событие включает данные от всех элементарных событий.',
 
     "type":"object",
 	'format':'tab',

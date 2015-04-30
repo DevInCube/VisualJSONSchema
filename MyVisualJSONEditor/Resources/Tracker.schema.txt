@@ -1,0 +1,59 @@
+﻿{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"id" : "http://vit.com.ua/edgeserver/tracker",
+
+	'title' : 'Tracker',
+
+	'type' : 'object',
+	
+	'properties' : {
+		
+		'result_dirpath' : {
+			title:'result_dirpath',		
+
+			'type' : 'string',
+		},	
+		'lpr_track_dirpath' : {
+			title:'lpr_track_dirpath',		
+
+			'type' : 'string',
+		},
+		'composite_dirpath' : {
+			title:'composite_dirpath',		
+
+			'type' : 'string',
+		},
+		'annotation_dirpath' : {
+			title:'annotation_dirpath',		
+
+			'type' : 'string',
+		},
+		'gscene_key' : {
+			title:'gscene_key',		
+
+			'type' : 'string',
+		},
+		'rscene_key' : {
+			title:'rscene_key',		
+
+			'type' : 'string',
+		},
+		'lscene_key' : {
+			title:'lscene_key',		
+
+			'type' : 'string',
+		},	
+		
+	},
+
+	"required" : [ 
+		"result_dirpath"		,
+		"lpr_track_dirpath"		,
+		"composite_dirpath"		,
+		"annotation_dirpath"	,
+		"gscene_key"			,
+		"rscene_key"			,
+		"lscene_key"			,
+	],
+    "additionalProperties": false,
+}

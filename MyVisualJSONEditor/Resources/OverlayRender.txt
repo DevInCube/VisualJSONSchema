@@ -1,0 +1,4 @@
+﻿{
+  "source_url": "http://192.168.106.200:8080/stream/live", 
+  "sink_dir": "Z:/overlayrender/"                          
+}

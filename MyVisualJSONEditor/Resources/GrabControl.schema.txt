@@ -2,148 +2,128 @@
     "$schema":"http://json-schema.org/draft-04/schema#",
     "id":"http://vit.com.ua/edgeserver/grabcontrol#",
 
+	title:'Grab Control',
+
     "type":"object",
 	'format' : 'tab',
 
     "properties":{
 
         "Analyzer":{
-            "id":"Analyzer",
-            "type":"object",
+            "title":"Analyzer",
+
+            "type":"object",            
 
             "properties":{
 
                 "ParamSet":{
-                    "id":"ParamSet",
+                                
                     "type":"object",
+                    format:'tab',
 
                     "properties":{
 
                         "Target":{
-                            "id":"Target",
+                            "title":"Target",
                             "type":"object",
 
                             "properties":{
 
                                 "Median":{
-                                    "id":"Median",
+                                    "title":"Median",
                                     "type":"array",
 									'format' : 'static',
 
-                                    "items":[
-                                        {
-                                            "id":"0",
-                                            "type":"integer"
-                                        },
-                                        {
-                                            "id":"1",
-                                            "type":"integer"
-                                        }
-                                    ],
-									"required":[ "0", "1" ],
-									"additionalProperties": false,
+                                    "items":{
+										"type":"integer",
+									},
+									minItems:2,
+									maxItems:2,
                                 },
 
                                 "SteadyState":{
-                                    "id":"SteadyState",
+                                    "title":"SteadyState",
                                     "type":"object",
 
                                     "properties":{
                                         "Unstable":{
-                                            "id":"Unstable",
+                                            "title":"Unstable",
                                             "type":"integer"
                                         },
                                         "PreStable":{
-                                            "id":"PreStable",
+                                            "title":"PreStable",
                                             "type":"integer"
                                         },
                                         "Stable":{
-                                            "id":"Stable",
+                                            "title":"Stable",
                                             "type":"integer"
                                         }
                                     },
 
-									"required":[ "Unstable", "PreStable", "Stable" ],
+									"required":[ 
+										"Unstable", 
+										"PreStable", 
+										"Stable" 
+									],
 									"additionalProperties": false,
                                 }
                             },
 
-                            "required":[ "Median", "SteadyState" ],
+                            "required":[ 
+								"Median", 
+								"SteadyState" 
+							],
 							"additionalProperties": false,
                         },
 
                         "Sweep":{
-                            "id":"Sweep",
+                            "title":"Sweep",
                             "type":"object",
 
                             "properties":{
 
                                 "Gain":{
-                                    "id":"Gain",
-                                    "type":"array",
+                                    "title":"Gain",
 									'format' : 'static',
 
-                                    "items":[
-                                        {
-                                            "id":"0",
-                                            "type":"number"
-                                        },
-                                        {
-                                            "id":"1",
-                                            "type":"number"
-                                        },
-                                        {
-                                            "id":"2",
-                                            "type":"number"
-                                        }
-                                    ],
-									"required":[ "0", "1", "2" ],
-									"additionalProperties": false,
+                                    "type":"array",
+
+                                    "items":{ type:'number', },
+									minItems: 3,
+									maxItems: 3,									
                                 },
 
                                 "ExpTime":{
-                                    "id":"ExpTime",
-                                    "type":"array",
+                                    "title":"ExpTime",                                    
 									'format' : 'static',
 
-                                    "items":[
-                                        {
-                                            "id":"0",
-                                            "type":"integer"
-                                        },
-                                        {
-                                            "id":"1",
-                                            "type":"integer"
-                                        },
-                                        {
-                                            "id":"2",
-                                            "type":"integer"
-                                        }
-                                    ],
-									"required":[ "0", "1", "2" ],
-									"additionalProperties": false,
+                                     "type":"array",
+
+                                    "items":{ type:'integer', },
+									minItems: 3,
+									maxItems: 3,	
                                 },
 
                                 "Lut12":{
-                                    "id":"Lut12",
+                                    "title":"Lut12",
                                     "type":"object",
 
                                     "properties":{
-                                        "Day":{
-                                            "id":"Day",
-                                            "type":"string"
+										"Default":{
+                                            "title":"Default",
+                                            "type":"string",
+                                        },
+                                        "Evening":{
+                                            "title":"Evening",
+                                            "type":"string",
                                         },
                                         "Night":{
-                                            "id":"Night",
-                                            "type":"string"
-                                        },
-                                        "Default":{
-                                            "id":"Default",
-                                            "type":"string"
-                                        }
+                                            "title":"Night",
+                                            "type":"string",
+                                        },                                        
                                     },
 
-									"required":[ "Day", "Night", "Default" ],
+									"required":[ "Default", "Evening", "Night" ],
 									"additionalProperties": false,
                                 }
                             },
@@ -161,62 +141,51 @@
             ]
         },
         "FileApi":{
-            "id":"FileApi",
+            "title":"FileApi",
             "type":"object",
 
             "properties":{
 
                 "CheckFrameReact":{
-                    "id":"CheckFrameReact",
+                    "title":"CheckFrameReact",
                     "type":"object",
 
                     "properties":{
 
-                        "Meta":{
-                            "id":"Meta",
-                            "type":"object",
-
-                            "properties":{
-
-                                "ParamSet":{
-                                    "id":"ParamSet",
-                                    "type":"object",
-                                    
-									'oneOf' : [{'$ref' : 'definitions#/definitions/EventDir'}],
-                                }
-                            },
-
-							"required":[ "ParamSet" ],
-							"additionalProperties": false,
+                        "SceneDir":{
+                            "title":"SceneDir",
+                            "type":"string",
+                        },
+						"FrameDir":{
+                            "title":"FrameDir",
+                            "type":"string",
                         },
 
-                        "Data":{
-                            "id":"Data",
-                            "type":"object",
-
-                            "properties":{
-
-                                 "ParamSet":{
-                                    "id":"ParamSet",
-                                    "type":"object",
-                                    
-									'oneOf' : [{'$ref' : 'definitions#/definitions/EventDir'}],
-                                }
-                            },
-
-							"required":[ "ParamSet" ],
-							"additionalProperties": false,
-                        }
                     },
 
-					"required":[ "Meta", "Data" ],
+					"required":[ "SceneDir", "FrameDir" ],
 					"additionalProperties": false,
                 },
 
                 "CheckFrameEvent":{
-                    "id":"CheckFrameEvent",
+                    "title":"CheckFrameEvent",
                     "type":"array",
-                    "items": { '$ref' : 'definitions#/definitions/EventDir' },
+
+                    "items":{
+											
+						"type":"object",
+
+						"properties":{
+
+							"Dir":{
+								"title":"Dir",
+								"type":"string",
+							},							
+						},
+
+						"required":[ "Dir" ],
+						"additionalProperties": false,
+					},
                 }
             },
 

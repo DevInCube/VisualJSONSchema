@@ -7,9 +7,7 @@
 	'type' : 'object',
 
 	'definitions' : {
-
-		
-
+	
 		'Store.ParamSet' : {
 			
 			'type' : 'object',
@@ -17,7 +15,7 @@
 			'properties' : {
 				
 				"RootDir": {
-					'type' : 'string'
+					'type' : 'string',
 				},
 				"Channels": { 
 
@@ -31,7 +29,7 @@
 						"properties" : 
 						{
 							"Name": { 
-								'type' : 'string'
+								'type' : 'string',
 							},
 							"DepthAsMin":{
 								'type' : 'integer',
@@ -39,19 +37,25 @@
 								'default' : 1,
 							}
 						},
-						"required" : [ "Name", 'DepthAsMin' ],
+						"required" : [ 
+							"Name", 
+							'DepthAsMin' 
+						],
 						"additionalProperties": false,
 					},
 
 					"default" : {
 						"Name" : "0",
-						"DepthAsMin" : 30
+						"DepthAsMin" : 30,
 					}
 				}
 
 			},
 
-			"required" : [ 'RootDir', 'Channels' ],
+			"required" : [ 
+				'RootDir', 
+				'Channels' 
+			],
 			"additionalProperties": false,
 		},
 
@@ -62,16 +66,21 @@
 			'properties' : {
 
 				"EndPoint": {
+					title:'EndPoint',
 					'type' : 'string',
 				}, 
 				"MaxClients": {
+					title:'MaxClients',
 					'type' : 'integer',
 					'minimum' : 0,
 					'default' : 1,
 				}
 			},
 
-			"required" : [ 'EndPoint', 'MaxClients' ],
+			"required" : [ 
+				'EndPoint', 
+				'MaxClients' 
+			],
 			"additionalProperties": false,
 		}
 	},
