@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="My.Json.Schema">
-      <HintPath>..\..\..\..\..\..\VIT.Projects\My.Json.Schema\My.Json.Schema\bin\Debug\My.Json.Schema.dll</HintPath>
+      <HintPath>..\..\JsonSchema\My.Json.Schema\bin\Debug\My.Json.Schema.dll</HintPath>
     </Reference>
     <Reference Include="MyToolkit">
       <HintPath>..\packages\MyToolkit.2.3.28.0\lib\portable-net45+wp8+win8+wpa81\MyToolkit.dll</HintPath>
