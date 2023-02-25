@@ -1,0 +1,3 @@
+[submodule "JsonSchema"]
+	path = JsonSchema
+	url = https://github.com/DevInCube/JsonSchema

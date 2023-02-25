@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyVisualJSONEditor", "MyVisualJSONEditor\MyVisualJSONEditor.csproj", "{C0C8E67A-A5E0-49EE-94F0-0425B29AC2BF}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VitML.JsonVM.ConsoleTest", "VitML.JsonVM.ConsoleTest\VitML.JsonVM.ConsoleTest.csproj", "{93744515-2F7F-4709-9DBC-A505D8A4DA4B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VitML.JsonVM.Tests", "VitML.JsonVM.Tests\VitML.JsonVM.Tests.csproj", "{AA4A0D3E-846D-4CCD-9DEE-E69373DB9860}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JsonSchema", "JsonSchema", "{F7B3FC12-7B87-4C96-A874-1602F21C32E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "My.Json.Schema", "JsonSchema\My.Json.Schema\My.Json.Schema.csproj", "{F8792C62-C58F-4FC8-A142-98D74DBDC24F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,8 +43,18 @@ Global
 		{AA4A0D3E-846D-4CCD-9DEE-E69373DB9860}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA4A0D3E-846D-4CCD-9DEE-E69373DB9860}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA4A0D3E-846D-4CCD-9DEE-E69373DB9860}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8792C62-C58F-4FC8-A142-98D74DBDC24F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8792C62-C58F-4FC8-A142-98D74DBDC24F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8792C62-C58F-4FC8-A142-98D74DBDC24F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8792C62-C58F-4FC8-A142-98D74DBDC24F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F8792C62-C58F-4FC8-A142-98D74DBDC24F} = {F7B3FC12-7B87-4C96-A874-1602F21C32E6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8C0F394B-AAB5-4C07-A137-F2D619C64807}
 	EndGlobalSection
 EndGlobal
