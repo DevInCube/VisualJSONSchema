@@ -33,7 +33,7 @@ namespace VitML.JsonVM.Linq
         public PropertyStyle Style 
         { 
             get { return _Style; }
-            private set { _Style = value; OnPropertyChanged("Style"); } 
+            private set => SetProperty(ref _Style, value);
         }
 
         /// <summary>Gets or sets the schema of the token. </summary>
@@ -42,14 +42,14 @@ namespace VitML.JsonVM.Linq
             get { return _Schema;  }
             set 
             {
-                if (_Schema == value) return;
-                _Schema = value;
-                if (_Schema.ExtensionData.ContainsKey(JSchemaExtendedKeywords.Style.Key))
+                if (SetProperty(ref _Schema, value))
                 {
-                    var ext = _Schema.ExtensionData[JSchemaExtendedKeywords.Style.Key];
-                    Style = PropertyStyle.Parse(ext);
+                    if (_Schema.ExtensionData.ContainsKey(JSchemaExtendedKeywords.Style.Key))
+                    {
+                        var ext = _Schema.ExtensionData[JSchemaExtendedKeywords.Style.Key];
+                        Style = PropertyStyle.Parse(ext);
+                    }
                 }
-                OnPropertyChanged("Schema");
             }
         }
 
@@ -61,19 +61,19 @@ namespace VitML.JsonVM.Linq
         public bool HasValue
         {
             get { return _HasValue; }
-            set { _HasValue = value; OnPropertyChanged("HasValue"); }
+            set => SetProperty(ref _HasValue, value);
         }
 
         public bool IsSpecified
         {
             get { return _IsSpecified; }
-            set { _IsSpecified = value; OnPropertyChanged("IsSpecified"); }
+            set => SetProperty(ref _IsSpecified, value);
         }
 
         public bool IsNullable
         {
             get { return _IsNullable; }
-            private set { _IsNullable = value; OnPropertyChanged("IsNullable"); } 
+            set => SetProperty(ref _IsNullable, value);
         }
 
         public List<JSchema> AlternativeSchemas { get; private set; }
@@ -95,7 +95,7 @@ namespace VitML.JsonVM.Linq
             this.AlternativeSchemas = new List<JSchema>();
             foreach (var alt in originalSchema.OneOf)
                 this.AlternativeSchemas.Add(alt);
-            OnPropertyChanged("AlternativeSchemas");
+            OnPropertyChanged(nameof(AlternativeSchemas));
 
             this.Schema = schema;
 

@@ -18,11 +18,17 @@ namespace VitML.JsonVM.Linq
         private ICommand _Command;
 
         public override string DisplayMemberPath { get { return (Value != null) ? Value.ToString() : "<empty>"; } }
-        public JToken Value { get { return _Value; } set { _Value = value; OnPropertyChanged("Value"); } }
+
+        public JToken Value
+        {
+            get { return _Value; }
+            set => SetProperty(ref _Value, value);
+        }
+
         public ICommand Command 
         { 
             get { return _Command; }
-            set { _Command = value; OnPropertyChanged("Command"); }
+            set => SetProperty(ref _Command, value);
         }
 
         /// <summary>Initializes a new instance of the <see cref="JsonValueModel"/> class. </summary>
@@ -33,8 +39,8 @@ namespace VitML.JsonVM.Linq
 
         void JValueVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName.Equals("Value"))
-                OnPropertyChanged("DisplayMemberPath");
+            if (e.PropertyName.Equals(nameof(Value)))
+                OnPropertyChanged(nameof(DisplayMemberPath));
         }
 
         /// <summary>Converts the <see cref="JsonTokenModel"/> to a <see cref="JToken"/>. </summary>

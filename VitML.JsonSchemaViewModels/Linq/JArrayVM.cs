@@ -71,21 +71,13 @@ namespace VitML.JsonVM.Linq
         public ObservableCollection<JTokenVM> Items
         {
             get { return _Items; }
-            private set
-            {
-                _Items = value;
-                OnPropertyChanged("Items");
-            }
+            private set => SetProperty(ref _Items, value);
         }              
 
         public int SelectedIndex
         {
             get { return _SelectedIndex; }
-            set
-            {
-                _SelectedIndex = value;
-                OnPropertyChanged("SelectedIndex");
-            }
+            set => SetProperty(ref _SelectedIndex, value);
         }
         
         public JTokenVM SelectedItem
@@ -109,7 +101,7 @@ namespace VitML.JsonVM.Linq
 
             if (data == null || data.Type == JTokenType.Null)
             {
-                OnPropertyChanged("Items");
+                OnPropertyChanged(nameof(Items));
                 return;//@todo
             }
 
@@ -125,7 +117,7 @@ namespace VitML.JsonVM.Linq
                 var propertySchema = this.Schema.GetItemSchemaByIndex(i).CheckSchema(item);
                 this.Items.Add(JObjectVM.FromJson(item, propertySchema));
             }
-            OnPropertyChanged("Items");
+            OnPropertyChanged(nameof(Items));
         }
 
         public override void SetSchema(JSchema schema)

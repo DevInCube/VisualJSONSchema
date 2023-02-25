@@ -38,31 +38,19 @@ namespace MyVisualJSONEditor.ViewModels
         public TextDocument JsonSchemaDoc
         {
             get { return _JsonSchemaDoc; }
-            set
-            {
-                _JsonSchemaDoc = value;
-                OnPropertyChanged("JsonSchemaDoc");
-            }
+            set => SetProperty(ref _JsonSchemaDoc, value);
         }
 
         public TextDocument JsonDataDoc
         {
             get { return _JsonDataDoc; }
-            set
-            {
-                _JsonDataDoc = value;
-                OnPropertyChanged("JsonDataDoc");
-            }
+            set => SetProperty(ref _JsonDataDoc, value);
         }
 
         public TextDocument ResultDataDoc
         {
             get { return _ResultDataDoc; }
-            set
-            {
-                _ResultDataDoc = value;
-                OnPropertyChanged("ResultDataDoc");
-            }
+            set => SetProperty(ref _ResultDataDoc, value);
         }
 
         public string JsonSchema
@@ -71,8 +59,8 @@ namespace MyVisualJSONEditor.ViewModels
             set
             {
                 JsonSchemaDoc.Text = value;
-                OnPropertyChanged("JsonSchemaDoc");
-                OnPropertyChanged("JsonSchema");
+                OnPropertyChanged(nameof(JsonSchemaDoc));
+                OnPropertyChanged(nameof(JsonSchema));
             }
 
         }
@@ -83,8 +71,8 @@ namespace MyVisualJSONEditor.ViewModels
             set
             {
                 JsonDataDoc.Text = value;
-                OnPropertyChanged("JsonDataDoc");
-                OnPropertyChanged("JsonData");
+                OnPropertyChanged(nameof(JsonDataDoc));
+                OnPropertyChanged(nameof(JsonData));
             }
 
         }
@@ -92,53 +80,31 @@ namespace MyVisualJSONEditor.ViewModels
         public JObjectVM Data
         {
             get { return _Data;  }
-            set 
-            { 
-                _Data = value; 
-                OnPropertyChanged("Data"); 
-            }
+            set => SetProperty(ref _Data, value);
         }
 
         public JSchema JSchema
         {
             get { return _JSchema; }
-            set
-            {
-                _JSchema = value;
-                OnPropertyChanged("JSchema");
-            }
+            set => SetProperty(ref _JSchema, value);
         }
 
         public string SchemaError
         {
             get { return _SchemaError; }
-            set
-            {
-                _SchemaError = value;
-                OnPropertyChanged("SchemaError");
-            }
-
+            set => SetProperty(ref _SchemaError, value);
         }
      
         public string DataError
         {
             get { return _DataError; }
-            set
-            {
-                _DataError = value;
-                OnPropertyChanged("DataError");
-            }
-
+            set => SetProperty(ref _DataError, value);
         }
 
         public ItemsControl Control
         {
             get { return _Control; }
-            set
-            {
-                _Control = value;
-                OnPropertyChanged("Control");
-            }
+            set => SetProperty(ref _Control, value);
         }
 
         public AModuleVM SelectedModule
@@ -146,11 +112,12 @@ namespace MyVisualJSONEditor.ViewModels
             get { return _SelectedModule; }
             set
             {
-                _SelectedModule = value;
-                OnPropertyChanged("SelectedModule");
-                JsonSchema = _SelectedModule.Schema;
-                JsonData = _SelectedModule.Data;
-                Refresh();
+                if (SetProperty(ref _SelectedModule, value))
+                {
+                    JsonSchema = _SelectedModule.Schema;
+                    JsonData = _SelectedModule.Data;
+                    Refresh();
+                }
             }
         }
 
@@ -176,8 +143,8 @@ namespace MyVisualJSONEditor.ViewModels
         {
             _JsonSchemaDoc = new TextDocument();
             _JsonDataDoc = new TextDocument();
-            JsonSchemaDocLostFocusCommand = new RelayCommand(() => { OnPropertyChanged("JsonSchemaDoc"); });
-            JsonDataDocLostFocusCommand = new RelayCommand(() => { OnPropertyChanged("JsonDataDoc"); });
+            JsonSchemaDocLostFocusCommand = new RelayCommand(() => { OnPropertyChanged(nameof(JsonSchemaDoc)); });
+            JsonDataDocLostFocusCommand = new RelayCommand(() => { OnPropertyChanged(nameof(JsonDataDoc)); });
             RefreshCommand = new RelayCommand(Refresh);
 
             refResolver = new JSchemaPreloadedResolver();
@@ -258,7 +225,7 @@ namespace MyVisualJSONEditor.ViewModels
             }
 
             _IsValid = isValid;
-            OnPropertyChanged("DataStatusColor");
+            OnPropertyChanged(nameof(DataStatusColor));
         }
 
         void MainWindowVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -279,7 +246,7 @@ namespace MyVisualJSONEditor.ViewModels
             _IsResultValid = JObject.Parse(result).IsValid(JSchema, out validErrors);
             foreach (var error in validErrors)
                 ResultValidationErrors.Add(error);
-            OnPropertyChanged("ResultDataStatusColor");
+            OnPropertyChanged(nameof(ResultDataStatusColor));
         }
 
     }

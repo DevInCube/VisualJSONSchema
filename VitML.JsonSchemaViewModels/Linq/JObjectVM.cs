@@ -201,7 +201,7 @@ namespace VitML.JsonVM.Linq
                 
                 Properties[property.Key] = tokenVM;
             }     
-            OnPropertyChanged("Properties");
+            OnPropertyChanged(nameof(Properties));
         }        
 
         public static JTokenVM FromSchema(JSchema Schema)
@@ -331,7 +331,7 @@ namespace VitML.JsonVM.Linq
                 string memberPath = ResolveDisplayMemberPath(ParentList.DisplayMemberPathPropertyName);
                 string path = String.Format("{0}.Value", memberPath);
                 if (e.PropertyName.Equals(path))
-                    OnPropertyChanged("DisplayMemberPath");
+                    OnPropertyChanged(nameof(DisplayMemberPath));
             }
         }
     }
