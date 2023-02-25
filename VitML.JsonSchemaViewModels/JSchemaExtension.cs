@@ -124,7 +124,7 @@ namespace VitML.JsonVM
 
         public static JSchema Choose(this IList<JSchema> shList, JToken data)
         {
-            if (data == null) throw new ArgumentNullException("data is null");
+            if (data == null) throw new ArgumentNullException(nameof(data));
             foreach (var sh in shList)
                 if (data.IsValid(sh))
                     return sh;

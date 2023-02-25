@@ -15,14 +15,14 @@ namespace VitML.JsonVM.Generation
 
         public DataGenerator(JSchema schema)
         {
-            if (schema == null) throw new ArgumentNullException("schema");
+            if (schema == null) throw new ArgumentNullException(nameof(schema));
 
             this.schema = schema;
         }
 
         public JToken Generate(DataGenerationSettings settings)
         {
-            if (settings == null) throw new ArgumentNullException("settings");
+            if (settings == null) throw new ArgumentNullException(nameof(settings));
 
             JSchema sh = schema;
 

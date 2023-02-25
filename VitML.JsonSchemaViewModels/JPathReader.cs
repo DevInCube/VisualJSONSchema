@@ -18,7 +18,7 @@ namespace VitML.JsonVM
 
         public object GetValue(string path)
         {
-            if (path == null) throw new ArgumentNullException("path");
+            if (path == null) throw new ArgumentNullException(nameof(path));
 
             if (String.IsNullOrWhiteSpace(path)) return this.tokenVM;
 

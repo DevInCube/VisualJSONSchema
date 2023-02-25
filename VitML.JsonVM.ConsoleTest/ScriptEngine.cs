@@ -198,7 +198,7 @@ namespace VitML.JsonVM.ConsoleTest
         public static Version GetVersion(string language)
         {
             if (language == null)
-                throw new ArgumentNullException("language");
+                throw new ArgumentNullException(nameof(language));
 
             Type engine;
             Guid clsid;
@@ -253,7 +253,7 @@ namespace VitML.JsonVM.ConsoleTest
         public ScriptEngine(string language)
         {
             if (language == null)
-                throw new ArgumentNullException("language");
+                throw new ArgumentNullException(nameof(language));
 
             Type engine;
             Guid clsid;
@@ -391,7 +391,7 @@ namespace VitML.JsonVM.ConsoleTest
         public void SetNamedItem(string name, object value)
         {
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             _engine.AddNamedItem(name, ScriptItem.IsVisible | ScriptItem.IsSource);
             Site.NamedItems[name] = value;
@@ -509,10 +509,10 @@ namespace VitML.JsonVM.ConsoleTest
         public static object Eval(string language, string expression, params KeyValuePair<string, object>[] namedItems)
         {
             if (language == null)
-                throw new ArgumentNullException("language");
+                throw new ArgumentNullException(nameof(language));
 
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
 
             using (ScriptEngine engine = new ScriptEngine(language))
             {
@@ -535,7 +535,7 @@ namespace VitML.JsonVM.ConsoleTest
         public object Eval(string expression)
         {
             if (expression == null)
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
 
             return Parse(expression, true);
         }
@@ -548,7 +548,7 @@ namespace VitML.JsonVM.ConsoleTest
         public ParsedScript Parse(string text)
         {
             if (text == null)
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
 
             return (ParsedScript)Parse(text, false);
         }
@@ -663,7 +663,7 @@ namespace VitML.JsonVM.ConsoleTest
                 throw new InvalidOperationException();
 
             if (methodName == null)
-                throw new ArgumentNullException("methodName");
+                throw new ArgumentNullException(nameof(methodName));
 
             try
             {

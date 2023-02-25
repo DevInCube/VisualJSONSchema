@@ -15,7 +15,7 @@ namespace VitML.JsonVM.Common
 
         public PropertyStyleReader(JObject styleData)
         {
-            if (styleData == null) throw new ArgumentNullException("style");
+            if (styleData == null) throw new ArgumentNullException(nameof(styleData));
 
             this.data = styleData;
         }

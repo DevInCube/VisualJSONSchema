@@ -88,7 +88,7 @@ namespace VitML.JsonVM.Linq
 
         public virtual void SetSchema(JSchema schema)
         {
-            if (schema == null) throw new ArgumentNullException("schema");            
+            if (schema == null) throw new ArgumentNullException(nameof(schema));            
 
             this.originalSchema = schema;
 
@@ -105,7 +105,7 @@ namespace VitML.JsonVM.Linq
 
         public virtual void SetData(JToken data)
         {
-            if (originalSchema == null) throw new ArgumentNullException("originalSchema");
+            if (originalSchema == null) throw new ArgumentNullException(nameof(originalSchema));
 
             Schema = originalSchema.CheckSchema(data);
 
