@@ -49,7 +49,7 @@
                            Theme="{StaticResource metro}">
         <xcad:LayoutRoot x:Name="_layoutRoot">
             <xcad:LayoutPanel Orientation="Horizontal" DockHeight="*">
-                <xcad:LayoutAnchorablePane DockWidth="300">
+                <xcad:LayoutAnchorablePane DockWidth="*">
                     <xcad:LayoutAnchorable ContentId="schema" Title="Schema" CanHide="False" CanClose="False"
                                             AutoHideWidth="240">
                         <DockPanel Margin="5,5,5,5" >
@@ -86,7 +86,7 @@
                         </DockPanel>
                     </xcad:LayoutAnchorable>
                 </xcad:LayoutAnchorablePane>
-            <xcad:LayoutAnchorablePane DockWidth="300" >
+                <xcad:LayoutAnchorablePane DockWidth="*" >
                     <xcad:LayoutAnchorable ContentId="gui" Title="GUI" CanHide="False" CanClose="False"
                                             AutoHideWidth="240">
                         <DockPanel>
@@ -121,7 +121,7 @@
                                                 Style="{StaticResource CodeEditor}"
                                                 Background="{Binding ResultDataStatusColor}"
                                                 Document="{Binding ResultDataDoc}">
-                                </avalonEdit:TextEditor>                               
+                                </avalonEdit:TextEditor>
                             </DockPanel>
                         </Grid>
                     </xcad:LayoutAnchorable>
@@ -130,5 +130,5 @@
             </xcad:LayoutPanel>
         </xcad:LayoutRoot>
     </xcad:DockingManager>
-    
+
 </Window>
