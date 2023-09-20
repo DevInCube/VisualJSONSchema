@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using MyVisualJSONEditor.Properties;
 
 namespace MyVisualJSONEditor
 {
@@ -22,6 +23,11 @@ namespace MyVisualJSONEditor
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            LoadSyntaxDefinitions();
+        }
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
            /* TestWindow w = new TestWindow();
@@ -37,6 +43,19 @@ namespace MyVisualJSONEditor
 
             MainWindow w = new MyVisualJSONEditor.MainWindow();
             w.Show();
+        }
+
+        private static void LoadSyntaxDefinitions()
+        {
+            using (var stream = new System.IO.MemoryStream(SyntaxDefinitions.JSON))
+            {
+                using (var reader = new System.Xml.XmlTextReader(stream))
+                {
+                    var manager = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance;
+                    var definition = ICSharpCode.AvalonEdit.Highlighting.Xshd.HighlightingLoader.Load(reader, manager);
+                    manager.RegisterHighlighting("JSON", new string[0], definition);
+                }
+            }
         }
     }   
 
